@@ -1,0 +1,11 @@
+#galaxy{
+	display:none;
+}
+body{
+  margin:0;
+  overflow:hidden;
+}
+canvas{
+  background:#000;
+  box-shadow:1px 1px 1px rgba(0,0,0,.2);
+}
