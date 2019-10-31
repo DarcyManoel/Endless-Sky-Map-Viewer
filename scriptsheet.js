@@ -1,7 +1,5 @@
 var canvas=document.getElementById("canvas");
 var context=canvas.getContext("2d");
-canvas.height=screen.height;
-canvas.width=screen.width;
 var global={
     scale:1,
     offset:{
@@ -19,13 +17,17 @@ var pan={
         y:0,
     },
 };
+canvas.height=screen.height;
+canvas.width=screen.width;
 draw();
 function draw(){
-    context.setTransform(1,0,0,1,0,0);
-    context.clearRect(0,0,canvas.width,canvas.height);
-    context.translate(pan.offset.x,pan.offset.y);
+    //1750,1090
     img=document.getElementById("galaxy");
-    context.drawImage(img,10,10,1400,1000);
+    context.setTransform(1,0,0,1,0,0);
+    context.scale(.4,.4);
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.translate((pan.offset.x)*2.5,(pan.offset.y)*2.5);
+    context.drawImage(img,0,-160);
 }
 canvas.addEventListener("mousedown",startPan);
 canvas.addEventListener("mouseleave",endPan);
