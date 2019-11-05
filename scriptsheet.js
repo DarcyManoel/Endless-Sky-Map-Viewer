@@ -8,8 +8,22 @@ var global={
     },
 };
 var government={
+    coalition:"rgb(255,153,179)",
+    efret:"rgb(125,84,176)",
+    hai:"rgb(214,107,207)",
+    heliarch:"rgb(255,204,128)",
+    korath:"rgb(204,128,26)",
+    mereti:"rgb(82,92,166)",
+    pirate:"rgb(199,0,0)",
+    pug:"rgb(252,227,179)",
+    quarg:"rgb(224,196,0)",
+    remnant:"rgb(227,97,158)",
     republic:"rgb(232,107,23)",
+    sestor:"rgb(191,69,94)",
+    syndicate:"rgb(0,105,181)",
+    unfettered:"rgb(176,84,209)",
     uninhabited:"rgb(102,102,102)",
+    wanderer:"rgb(179,232,31)",
 };
 var pan={
     start:{
