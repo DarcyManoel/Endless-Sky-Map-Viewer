@@ -46,6 +46,181 @@ function draw(){
     context.scale(.4,.4);
     context.translate((pan.offset.x)*2.5,(pan.offset.y)*2.5);
     context.drawImage(img,0,-160);
+    //1 Axis
+    //-1274.63 267.214
+    context.beginPath();
+    context.arc(475.37,1357.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //10 Pole
+    //-1356.63 19.2137
+    context.beginPath();
+    context.arc(393.37,1109.2137,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //11 Autumn Above
+    //-1278.63 148.214
+    context.beginPath();
+    context.arc(471.37,1238.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //11 Spring Below
+    //-1272.63 380.214
+    context.beginPath();
+    context.arc(477.37,1470.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //12 Autumn Above
+    //-1276.63 -19.7863
+    context.beginPath();
+    context.arc(473.37,1070.2137,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //14 Pole
+    //-1343.63 -119.786
+    context.beginPath();
+    context.arc(406.37,970.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //14 Summer Above
+    //-1436.63 182.214
+    context.beginPath();
+    context.arc(313.37,1272.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //14 Winter Below
+    //-1143.63 341.214
+    context.beginPath();
+    context.arc(606.37,1431.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //16 Autumn Rising
+    //-1305.63 74.2137
+    context.beginPath();
+    context.arc(444.37,1164.2137,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //3 Axis
+    //-1235.63 299.214
+    context.beginPath();
+    context.arc(514.37,1389.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //3 Pole
+    //-1344.63 162.214
+    context.beginPath();
+    context.arc(405.37,1252.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //3 Spring Rising
+    //-1414.63 356.214
+    context.beginPath();
+    context.arc(335.37,1446.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //4 Axis
+    //-1169.63 365.214
+    context.beginPath();
+    context.arc(580.37,1455.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //4 Spring Rising
+    //-1309.63 321.214
+    context.beginPath();
+    context.arc(440.37,1411.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //4 Summer Rising
+    //-1377.63 207.214
+    context.beginPath();
+    context.arc(372.37,1297.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //4 Winter Rising
+    //-1259.63 248.214
+    context.beginPath();
+    context.arc(490.37,1338.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //5 Axis
+    //-1142.63 394.214
+    context.beginPath();
+    context.arc(607.37,1484.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //5 Spring Below
+    //-1213.63 415.214
+    context.beginPath();
+    context.arc(536.37,1505.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //5 Summer Above
+    //-1387.63 118.214
+    context.beginPath();
+    context.arc(362.37,1208.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //5 Winter Above
+    //-1216.63 208.214
+    context.beginPath();
+    context.arc(533.37,1298.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //7 Autumn Rising
+    //-1235.63 177.214
+    context.beginPath();
+    context.arc(514.37,1267.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //8 Winter Below
+    //-1179.63 284.214
+    context.beginPath();
+    context.arc(570.37,1374.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //9 Spring Above
+    //-1377.63 281.214
+    context.beginPath();
+    context.arc(372.37,1371.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Ablodab
+    //-854.587 592.051
+    context.beginPath();
+    context.arc(895.413,1682.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Ablub
+    //-581.587 637.051
+    context.beginPath();
+    context.arc(1168.413,1727.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Acrux
     //-808 192
     context.beginPath();
@@ -200,6 +375,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Ancient Hope
+    //-1159.59 702.051
+    context.beginPath();
+    context.arc(590.41,1792.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Answer
+    //-1086.59 631.051
+    context.beginPath();
+    context.arc(663.41,1721.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Antevorta
     //-36.1297 446.242
     context.beginPath();
@@ -242,6 +431,34 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Beginning
+    //-912.587 694.051
+    context.beginPath();
+    context.arc(837.413,1784.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Belonging
+    //-1007.59 658.051
+    context.beginPath();
+    context.arc(742.41,1748.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Belug
+    //-1024.59 388.051
+    context.beginPath();
+    context.arc(725.41,1478.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Belugt
+    //-838.587 668.051
+    context.beginPath();
+    context.arc(911.413,1758.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Beta Lupi
     //-851 417
     context.beginPath();
@@ -256,12 +473,47 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Bloptab
+    //-813.587 727.051
+    context.beginPath();
+    context.arc(936.413,1817.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Blubipad
+    //-650.587 594.051
+    context.beginPath();
+    context.arc(1099.413,1684.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Blugtad
+    //-771.587 680.051
+    context.beginPath();
+    context.arc(978.413,1770.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Boral
     //-502 331
     context.beginPath();
     context.arc(1248,1421,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Bright Void
+    //-1059.59 605.051
+    context.beginPath();
+    context.arc(690.41,1695.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Broken Bowl
+    //-956.587 566.051
+    context.beginPath();
+    context.arc(793.413,1656.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Caeculus
     //162.87 343.242
@@ -333,6 +585,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Companion
+    //-1032.59 709.051
+    context.beginPath();
+    context.arc(717.41,1799.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Convector
     //-14.1297 379.242
     context.beginPath();
@@ -360,6 +619,20 @@ function draw(){
     context.arc(1511,769,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Dark Hills
+    //-926.587 619.051
+    context.beginPath();
+    context.arc(823.413,1709.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Debrugt
+    //-869.587 513.051
+    context.beginPath();
+    context.arc(880.413,1603.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Delta Sagittarii
     //-414 416
@@ -403,6 +676,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Eblumab
+    //-767.587 703.051
+    context.beginPath();
+    context.arc(982.413,1793.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Edusa
     //273.87 347.242
     context.beginPath();
@@ -445,6 +725,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Fallen Leaf
+    //-903.587 717.051
+    context.beginPath();
+    context.arc(846.413,1807.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Far Horizon
+    //-1108.59 726.051
+    context.beginPath();
+    context.arc(641.41,1816.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Farbutero
     //93.4305 -251.812
     context.beginPath();
@@ -466,6 +760,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Fell Omen
+    //-1156.59 475.051
+    context.beginPath();
+    context.arc(593.41,1565.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Feroteri
     //149.431 -205.812
     context.beginPath();
@@ -480,12 +781,26 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Flugbu
+    //-903.587 534.051
+    context.beginPath();
+    context.arc(846.413,1624.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Fornarep
     //79.4305 -309.812
     context.beginPath();
     context.arc(1829.4305,780.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Four Pillars
+    //-1210.59 772.051
+    context.beginPath();
+    context.arc(539.41,1862.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Furmeliki
     //-35.5695 -281.812
@@ -515,12 +830,26 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Glubatub
+    //-650.587 693.051
+    context.beginPath();
+    context.arc(1099.413,1783.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Gomeisa
     //-600 -161
     context.beginPath();
     context.arc(1150,929,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Good Omen
+    //-941.587 746.051
+    context.beginPath();
+    context.arc(808.413,1836.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Gorvi
     //-250 -483
@@ -535,6 +864,13 @@ function draw(){
     context.arc(966,1607,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Gupta
+    //-808.587 625.051
+    context.beginPath();
+    context.arc(941.413,1715.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Hadar
     //-788 283
@@ -578,12 +914,26 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Homeward
+    //-1045.59 477.051
+    context.beginPath();
+    context.arc(704.41,1567.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Host
     //384.431 -543.812
     context.beginPath();
     context.arc(2134.431,546.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Hunter
+    //-968.587 590.051
+    context.beginPath();
+    context.arc(781.413,1680.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Ildaria
     //-702 317
@@ -683,6 +1033,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Last Word
+    //-1145.59 495.051
+    context.beginPath();
+    context.arc(604.41,1585.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Lesath
     //-516 485
     context.beginPath();
@@ -711,6 +1068,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Lone Cloud
+    //-1239.59 747.051
+    context.beginPath();
+    context.arc(510.41,1837.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Lucina
     //175.504 176.389
     context.beginPath();
@@ -732,6 +1096,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Mebla
+    //-814.587 555.051
+    context.beginPath();
+    context.arc(935.413,1645.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Mebsuta
     //-482 -394
     context.beginPath();
@@ -745,6 +1116,13 @@ function draw(){
     context.arc(1802.4305,813.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Membulem
+    //-722.587 616.051
+    context.beginPath();
+    context.arc(1027.413,1706.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Menkalinan
     //-400 -61
@@ -780,6 +1158,13 @@ function draw(){
     context.arc(1226,1021,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Miblulub
+    //-630.587 670.051
+    context.beginPath();
+    context.arc(1119.413,1760.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Mimosa
     //-895 168
@@ -907,6 +1292,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Pelubta
+    //-757.587 575.051
+    context.beginPath();
+    context.arc(992.413,1665.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Peragenor
     //86.8703 356.242
     context.beginPath();
@@ -963,6 +1355,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Plort
+    //-708.587 723.051
+    context.beginPath();
+    context.arc(1041.413,1813.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Pollux
     //-465 4
     context.beginPath();
@@ -1018,6 +1417,13 @@ function draw(){
     context.arc(1206,1115,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Remembrance
+    //-884.587 641.051
+    context.beginPath();
+    context.arc(865.413,1731.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Rigel
     //-324 -363
@@ -1117,6 +1523,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Silver Bell
+    //-1045.59 541.051
+    context.beginPath();
+    context.arc(704.41,1631.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Silver String
+    //-1022.59 517.051
+    context.beginPath();
+    context.arc(727.41,1607.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Sirius
     //-378 44
     context.beginPath();
@@ -1130,13 +1550,34 @@ function draw(){
     context.arc(1778.4305,750.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
-    context.stroke();
+    context.stroke();    
     //Sol
     //-400 100
     context.beginPath();
     context.arc(1350,1190,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Sol Arach
+    //-711.587 649.051
+    context.beginPath();
+    context.arc(1038.413,1739.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Sol Kimek
+    //-1310.63 227.214
+    context.beginPath();
+    context.arc(439.37,1317.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Sol Saryd
+    //-1037.59 675.051
+    context.beginPath();
+    context.arc(712.41,1765.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Solifar
     //47.4305 -435.812
@@ -1152,12 +1593,26 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Speloog
+    //-967.587 445.051
+    context.beginPath();
+    context.arc(782.413,1535.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Spica
     //-906 120
     context.beginPath();
     context.arc(844,1210,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Steep Roof
+    //-1113.59 570.051
+    context.beginPath();
+    context.arc(636.41,1660.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Stercutus
     //140.87 320.242
@@ -1208,6 +1663,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Tebuteb
+    //-615.587 710.051
+    context.beginPath();
+    context.arc(1134.413,1800.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
+    context.stroke();
     //Tejat
     //-489 -107
     context.beginPath();
@@ -1221,6 +1683,13 @@ function draw(){
     context.arc(1022.01,1066.7509,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Torbab
+    //-949.587 490.051
+    context.beginPath();
+    context.arc(800.413,1580.051,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["coalition"];
     context.stroke();
     //Tortor
     //-255 -424
