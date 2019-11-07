@@ -690,6 +690,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Ekuarik
+    //-1029.63 426.214
+    context.beginPath();
+    context.arc(720.37,1516.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["heliarch"];
+    context.stroke();
     //Elnath
     //-288 -77
     context.beginPath();
@@ -997,6 +1004,13 @@ function draw(){
     context.arc(1294,1440,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Ki War Ek
+    //-1106.63 368.214
+    context.beginPath();
+    context.arc(643.37,1458.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["heliarch"];
     context.stroke();
     //Kochab
     //-731 279
@@ -1382,6 +1396,13 @@ function draw(){
     context.arc(1339,1113,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Quaru
+    //-1080.63 448.214
+    context.beginPath();
+    context.arc(669.37,1538.214,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["heliarch"];
     context.stroke();
     //Rajak
     //-270 -236
