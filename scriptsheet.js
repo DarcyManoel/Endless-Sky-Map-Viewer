@@ -403,6 +403,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Arculus
+    //308.87 393.242
+    context.beginPath();
+    context.arc(2058.87,1483.242,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["remnant"];
+    context.stroke();
     //Ascella
     //-376 328
     context.beginPath();
@@ -577,6 +584,13 @@ function draw(){
     context.arc(1790.4305,875.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Cinxia
+    //265.87 415.242
+    context.beginPath();
+    context.arc(2015.87,1505.242,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["remnant"];
     context.stroke();
     //Coluber
     //149.504 197.389
@@ -1291,6 +1305,13 @@ function draw(){
     context.arc(1756.87033,1519.242,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Pantica
+    //303.87 445.242
+    context.beginPath();
+    context.arc(2053.87,1535.242,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["remnant"];
     context.stroke();
     //Parca
     //150.504 151.389
