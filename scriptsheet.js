@@ -662,6 +662,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Deneb
+    //-348 225
+    context.beginPath();
+    context.arc(1402,1315,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pug"];
+    context.stroke();
     //Denebola
     //-478 70
     context.beginPath();
@@ -1417,6 +1424,13 @@ function draw(){
     context.arc(1339,1113,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Pug Iyik
+    //-361.149 -883.233
+    context.beginPath();
+    context.arc(1388.851,206.767,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pug"];
     context.stroke();
     //Quaru
     //-1080.63 448.214
