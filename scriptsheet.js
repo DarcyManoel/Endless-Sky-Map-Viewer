@@ -1019,6 +1019,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Kashikt
+    //-73.5695 -219.812
+    context.beginPath();
+    context.arc(1676.4305,870.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["efret"];
+    context.stroke();
     //Kasikfar
     //10.4305 -127.812
     context.beginPath();
@@ -1593,6 +1600,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Sevrelect
+    //-114.569 -239.812
+    context.beginPath();
+    context.arc(1635.431,850.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["efret"];
+    context.stroke();
     //Silver Bell
     //-1045.59 541.051
     context.beginPath();
@@ -1705,6 +1719,14 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Sumprast
+    //-101.569 -262.812
+    context.beginPath();
+    context.arc(1648.431,827.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["efret"];
+    context.stroke();
+
     //Tais
     //-346 381
     context.beginPath();
