@@ -711,6 +711,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Ehma Ti
+    //39.1085 -749.244
+    context.beginPath();
+    context.arc(1789.1085,340.756,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["unfettered"];
+    context.stroke();
     //Ekuarik
     //-1029.63 426.214
     context.beginPath();
@@ -927,6 +934,13 @@ function draw(){
     context.arc(1719.4305,902.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Hi Yahr
+    //82.3672 -641.6
+    context.beginPath();
+    context.arc(1832.3672,448.4,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["unfettered"];
     context.stroke();
     //Hintar
     //-422 311
@@ -1802,6 +1816,13 @@ function draw(){
     context.arc(1494,911,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Wah Yoot
+    //40.9382 -685.994
+    context.beginPath();
+    context.arc(1790.9382,404.006,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["unfettered"];
     context.stroke();
     //Wazn
     //-385 -131
