@@ -676,6 +676,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Dokdobaru
+    //-21.5695 -241.812
+    context.beginPath();
+    context.arc(1728.4305,848.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["quarg"];
+    context.stroke();
     //Dschubba
     //-598 501
     context.beginPath();
@@ -738,6 +745,13 @@ function draw(){
     context.arc(1422,1523,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Enif
+    //-177 498
+    context.beginPath();
+    context.arc(1573,1588,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["quarg"];
     context.stroke();
     //Epsilon Leonis
     //-619 -229
@@ -934,6 +948,13 @@ function draw(){
     context.arc(1719.4305,902.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Hevru Hai
+    //-189 -310
+    context.beginPath();
+    context.arc(1561,780,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["quarg"];
     context.stroke();
     //Hi Yahr
     //82.3672 -641.6
@@ -1537,6 +1558,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Sadalmelik
+    //-145 472
+    context.beginPath();
+    context.arc(1605,1562,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["quarg"];
+    context.stroke();
+    //Sadalsuud
+    //-134 508
+    context.beginPath();
+    context.arc(1616,1598,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["quarg"];
+    context.stroke();
     //Sadr
     //-287 543
     context.beginPath();
@@ -1726,7 +1761,6 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["efret"];
     context.stroke();
-
     //Tais
     //-346 381
     context.beginPath();
