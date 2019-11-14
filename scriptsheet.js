@@ -578,6 +578,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Bore Fah
+    //71.7761 -592.536
+    context.beginPath();
+    context.arc(1821.7761,497.464,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
+    //Bote Asu
+    //8.87418 -572.768
+    context.beginPath();
+    context.arc(1758.87418,517.232,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Bright Void
     //-1059.59 605.051
     context.beginPath();
@@ -697,6 +711,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Da Ent
+    //-6.22391 -462.536
+    context.beginPath();
+    context.arc(1743.77609,627.464,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
+    //Da Lest
+    //-23.2239 -413.536
+    context.beginPath();
+    context.arc(1726.7761,676.464,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Dabih
     //-253 427
     context.beginPath();
@@ -788,6 +816,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Due Yoot
+    //-167.547 -426.683
+    context.beginPath();
+    context.arc(1582.453,663.317,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Eber
     //-532 406
     context.beginPath();
@@ -857,6 +892,20 @@ function draw(){
     context.arc(1420,1123,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Fah Root
+    //-264.065 -400.135
+    context.beginPath();
+    context.arc(1485.935,689.865,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
+    //Fah Soom
+    //-179.891 -335.011
+    context.beginPath();
+    context.arc(1570.109,754.989,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Fala
     //-690 64
@@ -1054,6 +1103,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Heia Due
+    //-146.177 -481.694
+    context.beginPath();
+    context.arc(1603.823,608.306,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Hesselpost
     //-30.5695 -187.812
     context.beginPath();
@@ -1117,12 +1173,33 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Imo Dep
+    //-56.2764 -600.1
+    context.beginPath();
+    context.arc(1693.7236,489.9,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Insitor
     //-28.1296 400.242
     context.beginPath();
     context.arc(1721.8704,1490.242,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Io Lowe
+    //-94.7566 -527.728
+    context.beginPath();
+    context.arc(1655.2434,562.272,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
+    //Io Mann
+    //-192.955 -447.669
+    context.beginPath();
+    context.arc(1557.045,642.331,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Ipsing
     //-549 160
@@ -1264,6 +1341,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Lom Tahr
+    //-94.0437 -446.586
+    context.beginPath();
+    context.arc(1655.9563,643.414,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Lone Cloud
     //-1239.59 747.051
     context.beginPath();
@@ -1326,6 +1410,13 @@ function draw(){
     context.arc(1802.4305,813.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Mei Yohn
+    //-106.757 -581.698
+    context.beginPath();
+    context.arc(1643.243,508.302,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Membulem
     //-722.587 616.051
@@ -1676,6 +1767,13 @@ function draw(){
     context.arc(1287,1536,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Rati Cal
+    //-116.765 -391.123
+    context.beginPath();
+    context.arc(1633.235,698.877,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Regor
     //-702 -335
@@ -2034,6 +2132,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Ula Mon
+    //-64.1218 -559.868
+    context.beginPath();
+    context.arc(1685.8782,530.132,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Ultima Thule
     //-336 -211
     context.beginPath();
@@ -2054,6 +2159,13 @@ function draw(){
     context.arc(1040,1495,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Uwa Fahn
+    //35.1585 -491.67
+    context.beginPath();
+    context.arc(1785.1585,598.33,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Vega
     //-402 182
@@ -2076,12 +2188,33 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Wah Ki
+    //14.9925 -612.792
+    context.beginPath();
+    context.arc(1764.9925,477.208,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
+    //Wah Oh
+    //-205.344 -381.381
+    context.beginPath();
+    context.arc(1544.656,708.619,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
+    context.stroke();
     //Wah Yoot
     //40.9382 -685.994
     context.beginPath();
     context.arc(1790.9382,404.006,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["unfettered"];
+    context.stroke();
+    //Waypoint
+    //-184 -515
+    context.beginPath();
+    context.arc(1566,575,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Wazn
     //-385 -131
@@ -2103,6 +2236,13 @@ function draw(){
     context.arc(1086,657,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Ya Hai
+    //-24.9453 -505.571
+    context.beginPath();
+    context.arc(1725.0547,584.429,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Yed Prior
     //-810 374
@@ -2138,6 +2278,13 @@ function draw(){
     context.arc(1110,967,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Zuba Zub
+    //-48.2661 -647.926
+    context.beginPath();
+    context.arc(1701.7339,442.074,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["hai"];
     context.stroke();
     //Zubenelgenubi
     //-710 353
