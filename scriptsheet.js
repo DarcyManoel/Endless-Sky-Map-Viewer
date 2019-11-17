@@ -536,6 +536,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Asikafarnut
+    //253.431 -584.812
+    context.beginPath();
+    context.arc(2003.431,505.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
+    context.stroke();
     //Aspidiske
     //-690 -282
     context.beginPath();
@@ -724,6 +731,13 @@ function draw(){
     context.arc(1289,1372,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Celeborim
+    //181.431 -633.812
+    context.beginPath();
+    context.arc(1931.431,456.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
     context.stroke();
     //Chikatip
     //-77.5695 -307.812
@@ -963,6 +977,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Eneremprukt
+    //311.431 -448.812
+    context.beginPath();
+    context.arc(2061.431,641.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
+    context.stroke();
     //Enif
     //-177 498
     context.beginPath();
@@ -1060,6 +1081,13 @@ function draw(){
     context.arc(1899.431,884.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Ferukistek
+    //307.431 -515.812
+    context.beginPath();
+    context.arc(2057.431,574.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
     context.stroke();
     //Fingol
     //-482 113
@@ -1278,83 +1306,6 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["coalition"];
     context.stroke();
-    //Ka'ch'chrai
-    //-240.163 -822.448
-    context.beginPath();
-    context.arc(1509.837,267.552,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["wanderer"];
-    context.stroke();
-    //Ka'pru
-    //-76.6756 -994.955
-    context.beginPath();
-    context.arc(1673.3244,95.045,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["wanderer"];
-    context.stroke();
-    //Kiro'ku
-    //-131.923 -884.46
-    context.beginPath();
-    context.arc(1618.077,205.54,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["wanderer"];
-    context.stroke();
-    //Kiru'kichi
-    //-195.063 -662.343
-    context.beginPath();
-    context.arc(1554.937,427.657,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["wanderer"];
-    context.stroke();
-    //Kor Ak'Mari
-    //43 42
-    context.beginPath();
-    context.arc(1793,1132,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor En'lakfar
-    //-31 -33
-    context.beginPath();
-    context.arc(1719,1057,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor Fel'tar
-    //29 -66
-    context.beginPath();
-    context.arc(1779,1024,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor Men
-    //6 -5
-    context.beginPath();
-    context.arc(1756,1085,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor Nor'peli
-    //52 160
-    context.beginPath();
-    context.arc(1802,1250,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor Tar'bei
-    //57 106
-    context.beginPath();
-    context.arc(1807,1196,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
-    //Kor Zena'i
-    //-2 83
-    context.beginPath();
-    context.arc(1748,1173,9,0,2*Math.PI);
-    context.lineWidth=3;
-    context.strokeStyle=government["korath"];
-    context.stroke();
     //Ik'kara'ka
     //56.2159 -888.296
     context.beginPath();
@@ -1418,6 +1369,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Ka'ch'chrai
+    //-240.163 -822.448
+    context.beginPath();
+    context.arc(1509.837,267.552,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Ka'pru
+    //-76.6756 -994.955
+    context.beginPath();
+    context.arc(1673.3244,95.045,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Kaliptari
     //85.4305 -402.812
     context.beginPath();
@@ -1467,12 +1432,75 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["heliarch"];
     context.stroke();
+    //Kiro'ku
+    //-131.923 -884.46
+    context.beginPath();
+    context.arc(1618.077,205.54,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Kiru'kichi
+    //-195.063 -662.343
+    context.beginPath();
+    context.arc(1554.937,427.657,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Kochab
     //-731 279
     context.beginPath();
     context.arc(1019,1369,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Kor Ak'Mari
+    //43 42
+    context.beginPath();
+    context.arc(1793,1132,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor En'lakfar
+    //-31 -33
+    context.beginPath();
+    context.arc(1719,1057,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Fel'tar
+    //29 -66
+    context.beginPath();
+    context.arc(1779,1024,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Men
+    //6 -5
+    context.beginPath();
+    context.arc(1756,1085,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Nor'peli
+    //52 160
+    context.beginPath();
+    context.arc(1802,1250,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Tar'bei
+    //57 106
+    context.beginPath();
+    context.arc(1807,1196,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Zena'i
+    //-2 83
+    context.beginPath();
+    context.arc(1748,1173,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
     context.stroke();
     //Kornephoros
     //-612 424
@@ -1571,6 +1599,13 @@ function draw(){
     context.arc(1471,1553,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Makferuti
+    //288.431 -628.812
+    context.beginPath();
+    context.arc(2038.431,461.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
     context.stroke();
     //Markab
     //-241 168
@@ -2202,6 +2237,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["wanderer"];
     context.stroke();
+    //Silikatakfar
+    //248.431 -481.812
+    context.beginPath();
+    context.arc(1998.431,608.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
+    context.stroke();
     //Silver Bell
     //-1045.59 541.051
     context.beginPath();
@@ -2236,6 +2278,13 @@ function draw(){
     context.arc(1445.57,159.312,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Sobarati
+    //277.431 -557.812
+    context.beginPath();
+    context.arc(2027.431,532.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["sestor"];
     context.stroke();
     //Sol
     //-400 100
