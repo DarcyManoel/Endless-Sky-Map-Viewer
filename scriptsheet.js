@@ -459,6 +459,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Ap'arak
+    //-164.62 -781.858
+    context.beginPath();
+    context.arc(1585.38,308.142,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Arcturus
     //-589 226
     context.beginPath();
@@ -500,6 +507,13 @@ function draw(){
     context.arc(1092,773,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Aya'k'k
+    //-434.245 -616.57
+    context.beginPath();
+    context.arc(1315.755,473.43,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
     context.stroke();
     //Beginning
     //-912.587 694.051
@@ -669,12 +683,26 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Chirr'ay'akai
+    //-102.761 -749.614
+    context.beginPath();
+    context.arc(1647.239,340.386,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Chornifath
     //40.4305 -214.812
     context.beginPath();
     context.arc(1790.4305,875.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Chy'chra
+    //85.5308 -829.667
+    context.beginPath();
+    context.arc(1835.5308,260.333,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
     context.stroke();
     //Cinxia
     //265.87 415.242
@@ -851,6 +879,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["unfettered"];
     context.stroke();
+    //Ek'kek'ru
+    //-287.517 -727.738
+    context.beginPath();
+    context.arc(1462.483,362.262,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Ekuarik
     //-1029.63 426.214
     context.beginPath();
@@ -885,6 +920,13 @@ function draw(){
     context.arc(1131,861,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Es'sprak'ai
+    //-469.044 -733.375
+    context.beginPath();
+    context.arc(1280.956,356.625,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
     context.stroke();
     //Eteron
     //-330 33
@@ -1166,6 +1208,41 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["coalition"];
     context.stroke();
+    //Ka'ch'chrai
+    //-240.163 -822.448
+    context.beginPath();
+    context.arc(1509.837,267.552,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Ka'pru
+    //-76.6756 -994.955
+    context.beginPath();
+    context.arc(1673.3244,95.045,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Kiro'ku
+    //-131.923 -884.46
+    context.beginPath();
+    context.arc(1618.077,205.54,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Kiru'kichi
+    //-195.063 -662.343
+    context.beginPath();
+    context.arc(1554.937,427.657,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Ik'kara'ka
+    //56.2159 -888.296
+    context.beginPath();
+    context.arc(1806.2159,201.704,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Ildaria
     //-702 317
     context.beginPath();
@@ -1207,6 +1284,13 @@ function draw(){
     context.arc(1201,1250,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Iyech'yek
+    //-277.37 -693.913
+    context.beginPath();
+    context.arc(1472.63,396.087,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
     context.stroke();
     //Izar
     //-784 231
@@ -1698,6 +1782,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Pik'ro'iyak
+    //-378.845 -677.001
+    context.beginPath();
+    context.arc(1371.155,412.999,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Plort
     //-708.587 723.051
     context.beginPath();
@@ -1725,6 +1816,13 @@ function draw(){
     context.arc(1194,1213,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Prakacha'a
+    //-35.1114 -802.607
+    context.beginPath();
+    context.arc(1714.8886,287.393,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
     context.stroke();
     //Procyon
     //-411 23
@@ -1943,6 +2041,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["syndicate"];
     context.stroke();
+    //Si'yak'ku
+    //-329.235 -760.435
+    context.beginPath();
+    context.arc(1420.765,329.565,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
+    //Sich'ka'ara
+    //-97.1237 -831.921
+    context.beginPath();
+    context.arc(1652.8763,258.079,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Silver Bell
     //-1045.59 541.051
     context.beginPath();
@@ -1970,7 +2082,14 @@ function draw(){
     context.arc(1778.4305,750.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
-    context.stroke();    
+    context.stroke();
+    //Sko'karak
+    //-304.43 -930.688
+    context.beginPath();
+    context.arc(1445.57,159.312,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["wanderer"];
+    context.stroke();
     //Sol
     //-400 100
     context.beginPath();
