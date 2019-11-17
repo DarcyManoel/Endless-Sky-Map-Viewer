@@ -277,6 +277,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Alcyone
+    //-80 -144
+    context.beginPath();
+    context.arc(1670,946,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Aldebaran
     //-356 -26
     context.beginPath();
@@ -297,6 +304,13 @@ function draw(){
     context.arc(1091,1541,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Algenib
+    //-118 341
+    context.beginPath();
+    context.arc(1632,1431,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Algieba
     //-691 -52
@@ -347,6 +361,20 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Almaaz
+    //-349 -538
+    context.beginPath();
+    context.arc(1401,552,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
+    //Almach
+    //-7 232
+    context.beginPath();
+    context.arc(1743,1322,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Alnair
     //-272 314
     context.beginPath();
@@ -360,6 +388,13 @@ function draw(){
     context.arc(1197,1470,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Alnilam
+    //-487 -513
+    context.beginPath();
+    context.arc(1263,577,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Alnitak
     //-331 -412
@@ -452,6 +487,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["coalition"];
     context.stroke();
+    //Antares
+    //-711 541
+    context.beginPath();
+    context.arc(1039,1631,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Antevorta
     //-36.1297 446.242
     context.beginPath();
@@ -479,6 +521,13 @@ function draw(){
     context.arc(2058.87,1483.242,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["remnant"];
+    context.stroke();
+    //Arneb
+    //-523 -580
+    context.beginPath();
+    context.arc(1227,510,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Ascella
     //-376 328
@@ -851,6 +900,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["hai"];
     context.stroke();
+    //Durax
+    //-59 -90
+    context.beginPath();
+    context.arc(1691,1000,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Eber
     //-532 406
     context.beginPath();
@@ -1068,6 +1124,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Gienah
+    //-176 354
+    context.beginPath();
+    context.arc(1574,1444,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Girtab
     //-430 481
     context.beginPath();
@@ -1144,6 +1207,13 @@ function draw(){
     context.arc(1459,803,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Hatysa
+    //-474 -542
+    context.beginPath();
+    context.arc(1276,548,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Heia Due
     //-146.177 -481.694
@@ -1509,6 +1579,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["coalition"];
     context.stroke();
+    //Men
+    //-888 361
+    context.beginPath();
+    context.arc(862,1451,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Menkalinan
     //-400 -61
     context.beginPath();
@@ -1669,6 +1746,20 @@ function draw(){
     context.arc(1283,1262,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Nunki
+    //-393 537
+    context.beginPath();
+    context.arc(1357,1627,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
+    //Oblate
+    //-124 -119
+    context.beginPath();
+    context.arc(1626,971,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Orbona
     //-735.99 -97.2491
@@ -2034,6 +2125,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["efret"];
     context.stroke();
+    //Shaula
+    //-460 527
+    context.beginPath();
+    context.arc(1290,1617,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
+    context.stroke();
     //Sheratan
     //-40 45
     context.beginPath();
@@ -2271,6 +2369,13 @@ function draw(){
     context.arc(1586,1496,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
+    context.stroke();
+    //Unagi
+    //-306 -578
+    context.beginPath();
+    context.arc(1444,512,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["pirate"];
     context.stroke();
     //Unukalhai
     //-710 405
