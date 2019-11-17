@@ -1306,6 +1306,55 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["wanderer"];
     context.stroke();
+    //Kor Ak'Mari
+    //43 42
+    context.beginPath();
+    context.arc(1793,1132,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor En'lakfar
+    //-31 -33
+    context.beginPath();
+    context.arc(1719,1057,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Fel'tar
+    //29 -66
+    context.beginPath();
+    context.arc(1779,1024,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Men
+    //6 -5
+    context.beginPath();
+    context.arc(1756,1085,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Nor'peli
+    //52 160
+    context.beginPath();
+    context.arc(1802,1250,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Tar'bei
+    //57 106
+    context.beginPath();
+    context.arc(1807,1196,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
+    //Kor Zena'i
+    //-2 83
+    context.beginPath();
+    context.arc(1748,1173,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["korath"];
+    context.stroke();
     //Ik'kara'ka
     //56.2159 -888.296
     context.beginPath();
