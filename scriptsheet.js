@@ -746,6 +746,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
     context.stroke();
+    //Chimitarp
+    //150.431 -287.812
+    context.beginPath();
+    context.arc(1900.431,802.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
+    context.stroke();
     //Chirr'ay'akai
     //-102.761 -749.614
     context.beginPath();
@@ -1005,6 +1012,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["wanderer"];
     context.stroke();
+    //Eshkoshtar
+    //156.431 -381.812
+    context.beginPath();
+    context.arc(1906.431,708.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
+    context.stroke();
     //Eteron
     //-330 33
     context.beginPath();
@@ -1060,6 +1074,13 @@ function draw(){
     context.arc(1952.87,1530.242,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Faronektu
+    //292.431 -309.812
+    context.beginPath();
+    context.arc(2042.431,780.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
     context.stroke();
     //Fasitopfar
     //92.4305 -105.812
@@ -1656,6 +1677,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["hai"];
     context.stroke();
+    //Mekislepti
+    //137.431 -335.812
+    context.beginPath();
+    context.arc(1887.431,754.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
+    context.stroke();
     //Membulem
     //-722.587 616.051
     context.beginPath();
@@ -2146,6 +2174,13 @@ function draw(){
     context.lineWidth=3;
     context.strokeStyle=government["republic"];
     context.stroke();
+    //Salipastart
+    //250.431 -370.812
+    context.beginPath();
+    context.arc(2000.431,719.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
+    context.stroke();
     //Sargas
     //-542 445
     context.beginPath();
@@ -2194,6 +2229,13 @@ function draw(){
     context.arc(1725.4305,733.188,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["uninhabited"];
+    context.stroke();
+    //Sepetrosk
+    //192.431 -243.812
+    context.beginPath();
+    context.arc(1942.431,846.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
     context.stroke();
     //Sepriaptu
     //139.431 -448.812
@@ -2257,6 +2299,13 @@ function draw(){
     context.arc(727.41,1607.051,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government["coalition"];
+    context.stroke();
+    //Similisti
+    //210.431 -313.812
+    context.beginPath();
+    context.arc(1960.431,776.188,9,0,2*Math.PI);
+    context.lineWidth=3;
+    context.strokeStyle=government["mereti"];
     context.stroke();
     //Sirius
     //-378 44
