@@ -35,6 +35,7 @@ var pan={
         y:0,
     },
 };
+var zoom=2.5;
 canvas.height=screen.height;
 canvas.width=screen.width;
 function drawSystem(faction,xPos,yPos){
@@ -48,8 +49,8 @@ function initialize(){
     img=document.getElementById("galaxy");
     context.setTransform(1,0,0,1,0,0);
     context.clearRect(0,0,canvas.width,canvas.height);
-    context.scale(.4,.4);
-    context.translate((pan.offset.x)*2.5,(pan.offset.y)*2.5);
+    context.scale(1/zoom,1/zoom);
+    context.translate((pan.offset.x)*zoom,(pan.offset.y)*zoom);
     context.drawImage(img,0,-160);
     //1 Axis
     drawSystem("coalition",-1274.63,267.214);
