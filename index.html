@@ -7,8 +7,34 @@
 		<title>Map Viewer</title>
 	</head>
 	<body onload="initialize()">
-		<canvas id="canvas"></canvas>
-		<img id="galaxy" src="assets/galaxy.png">
+		<div id="dialogScreen" class="hidden">
+			<div class="cover"></div>
+			<img class="dialog" src="assets/dialog.png"/>
+			<input onchange="drawSystems()" class="upload" id="file" type="file"/>
+			<p id="confirm" onclick="toggleDialog()">OK</p>
+		</div>
+		<table>
+			<tr>
+				<td id="left" class="side">
+					<p onclick="toggleDialog()">Load Map</p>
+					<p class="hidden" id="outline" onclick="toggleOutline()">Outline Hidden</p>
+				</td>
+				<td class="leftEdge" onclick="slideLeft()"></td>
+				<td class="main">
+					<canvas id="canvas"></canvas>
+					<img id="galaxy" src="assets/galaxy.png">
+				</td>
+				<td class="rightEdge" onclick="slideRight()"></td>
+				<td id="right" class="side">
+					<div class="hidden" id="coordinates">
+						<p id="xCoordinate">X:</p>
+						<p id="yCoordinate">Y:</p>
+					</div>
+					<br>
+					<p class="hidden" id="points"></p>
+				</td>
+			</tr>
+		</table>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>

@@ -1,12 +1,5 @@
 var canvas=document.getElementById("canvas");
 var context=canvas.getContext("2d");
-var global={
-    scale:1,
-    offset:{
-        x:0,
-        y:0,
-    },
-};
 var government={
     coalition:"rgb(255,153,179)",
     efret:"rgb(125,84,176)",
@@ -25,33 +18,17 @@ var government={
     uninhabited:"rgb(102,102,102)",
     wanderer:"rgb(179,232,31)",
 };
-var pan={
-    start:{
-        x:null,
-        y:null,
-    },
-    offset:{
-        x:0,
-        y:0,
-    },
-};
 var zoom=2.5;
 canvas.height=screen.height;
 canvas.width=screen.width;
 function drawSystem(faction,xPos,yPos){
     context.beginPath();
-    context.arc(xPos+1750,yPos+1090,9,0,2*Math.PI);
+    context.arc(xPos+1750,yPos+1250,9,0,2*Math.PI);
     context.lineWidth=3;
     context.strokeStyle=government[faction];
     context.stroke();
 }
-function initialize(){
-    img=document.getElementById("galaxy");
-    context.setTransform(1,0,0,1,0,0);
-    context.clearRect(0,0,canvas.width,canvas.height);
-    context.scale(1/zoom,1/zoom);
-    context.translate((pan.offset.x)*zoom,(pan.offset.y)*zoom);
-    context.drawImage(img,0,-160);
+function drawSystems(){
     //1 Axis
     drawSystem("coalition",-1274.63,267.214);
     //10 Pole
@@ -801,25 +778,19 @@ function initialize(){
     //Zubeneschamali
     drawSystem("republic",-759,338);
 }
-canvas.addEventListener("mousedown",startPan);
-canvas.addEventListener("mouseleave",endPan);
-canvas.addEventListener("mouseup",endPan);
-function startPan(e){
-    canvas.addEventListener("mousemove",trackMouse);
-    canvas.addEventListener("mousemove",initialize);
-    pan.start.x=e.clientX;
-    pan.start.y=e.clientY;
+function initialize(){
+    img=document.getElementById("galaxy");
+    context.scale(1/zoom,1/zoom);
+    context.drawImage(img,0,0);
 }
-function endPan(e){
-    canvas.removeEventListener("mousemove",trackMouse);
-    pan.start.x=null;
-    pan.start.y=null;
-    global.offset.x=pan.offset.x;
-    global.offset.y=pan.offset.y;
+function slideLeft(){
+	document.getElementById("left").classList.toggle("side");
+	document.getElementById("left").classList.toggle("slide");
 }
-function trackMouse(e){
-    var offsetX=e.clientX-pan.start.x;
-    var offsetY=e.clientY-pan.start.y;
-    pan.offset.x=global.offset.x+offsetX;
-    pan.offset.y=global.offset.y+offsetY;
+function slideRight(){
+	document.getElementById("right").classList.toggle("side");
+	document.getElementById("right").classList.toggle("slide");
+}
+function toggleDialog(){
+	document.getElementById("dialogScreen").classList.toggle("hidden");
 }
