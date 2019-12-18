@@ -10,7 +10,7 @@
 		<div id="dialogScreen" class="hidden">
 			<div class="cover"></div>
 			<img class="dialog" src="assets/dialog.png"/>
-			<input onchange="drawSystems()" class="upload" id="file" type="file"/>
+			<input onchange="drawSystems(this)" class="upload" id="file" type="file"/>
 			<p id="confirm" onclick="toggleDialog()">OK</p>
 		</div>
 		<table>
@@ -31,7 +31,7 @@
 						<p id="yCoordinate">Y:</p>
 					</div>
 					<br>
-					<p class="hidden" id="points"></p>
+					<p id="output"></p>
 				</td>
 			</tr>
 		</table>

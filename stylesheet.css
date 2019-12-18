@@ -24,10 +24,12 @@
 	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
 	color:#fff;
 }
-#points{
+#output{
 	cursor:text;
-	max-height:86vh;
-	overflow:hidden;
+	font-size:12px;
+	max-height:95vh;
+	overflow:scroll;
+	padding-right:1vw;
 	user-select:text;
 }
 .cover{
@@ -67,10 +69,12 @@
 }
 .side{
 	transition:.8s;
+	max-width:16vw;
 	width:16vw;
 }
 .slide{
 	transition:.8s;
+	max-width:24vw;
 	width:24vw;
 }
 .upload{
