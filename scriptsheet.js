@@ -41,14 +41,13 @@ canvas.height=screen.height;
 canvas.width=screen.width;
 function drawSystem(system,faction,xPos,yPos){
 	var factionString=faction;
-	var factionIndex=governmentNames.indexOf(factionString);
-	var factionIndexString=factionIndex.toString();
+	var factionIndex=governmentNames.indexOf(factionString.trim());
 	context.beginPath();
 	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
 	context.lineWidth=3;
 	context.strokeStyle=governmentColours[factionIndex];
 	context.stroke();
-	console.log(system,factionIndex,xPos,yPos);
+	console.log(system,faction,factionIndex,xPos,yPos);
 }
 function drawSystems(that){
 	var reader=new FileReader();
