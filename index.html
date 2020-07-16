@@ -7,16 +7,23 @@
 		<title>Map Viewer</title>
 	</head>
 	<body onload="initialize()">
-		<div id="dialogScreen" class="hidden">
+		<div id="dialogMapScreen" class="hidden">
 			<div class="cover"></div>
 			<img class="dialog" src="assets/dialog.png"/>
 			<input onchange="drawSystems(this)" class="upload" id="file" type="file"/>
-			<p id="confirm" onclick="toggleDialog()">OK</p>
+			<p id="confirm" onclick="toggleMapDialog()">OK</p>
+		</div>
+		<div id="dialogGovernmentScreen" class="hidden">
+			<div class="cover"></div>
+			<img class="dialog" src="assets/dialog.png"/>
+			<input onchange="loadGovernments(this)" class="upload" id="file" type="file"/>
+			<p id="confirm" onclick="toggleGovernmentDialog()">OK</p>
 		</div>
 		<table>
 			<tr>
 				<td id="left" class="side">
-					<p onclick="toggleDialog()">Load Map</p>
+					<p onclick="toggleMapDialog()">Load Map</p>
+					<p onclick="toggleGovernmentDialog()">Load Governments</p>
 				</td>
 				<td class="leftEdge" onclick="slideLeft()"></td>
 				<td class="main">

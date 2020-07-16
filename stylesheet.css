@@ -6,7 +6,10 @@
 	top:50vh;
 	transform:translate(48px,10px);
 }
-#dialogScreen{
+#dialogGovernmentScreen{
+	position:absolute;
+}
+#dialogMapScreen{
 	position:absolute;
 }
 #galaxy{

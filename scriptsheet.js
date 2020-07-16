@@ -1,47 +1,18 @@
 var canvas=document.getElementById(`canvas`);
 var context=canvas.getContext(`2d`);
-var governmentNames=[
-	`"Hai (Unfettered)"`,
-	`"Kor Efret"`,
-	`"Kor Mereti"`,
-	`"Kor Sestor"`,
-	`Coalition`,
-	`Hai`,
-	`Heliarch`,
-	`Korath`,
-	`Pirate`,
-	`Pug`,
-	`Quarg`,
-	`Remnant`,
-	`Republic`,
-	`Syndicate`,
-	`Uninhabited`,
-	`Wanderer`
-];
-var governmentColours=[
-	`rgb(176,84,209)`,
-	`rgb(125,84,176)`,
-	`rgb(82,92,166)`,
-	`rgb(191,69,94)`,
-	`rgb(255,153,179)`,
-	`rgb(214,107,207)`,
-	`rgb(255,204,128)`,
-	`rgb(204,128,26)`,
-	`rgb(199,0,0)`,
-	`rgb(252,227,179)`,
-	`rgb(224,196,0)`,
-	`rgb(227,97,158)`,
-	`rgb(232,107,23)`,
-	`rgb(0,105,181)`,
-	`rgb(102,102,102)`,
-	`rgb(179,232,31)`
-];
+var governmentNames=[];
+var governmentColours=[];
+var governmentsFinal;
+var positionsFinal;
+var systemsFinal;
 var zoom=2.5;
 canvas.height=screen.height;
 canvas.width=screen.width;
-function drawSystem(system,faction,xPos,yPos){
-	var factionString=faction;
-	var factionIndex=governmentNames.indexOf(factionString.trim());
+function colourSystem(system,faction,xPos,yPos){
+	faction.replace(/"/g,``);
+	if(faction.indexOf(` `)<=0)
+		{faction=`"`+faction+`"`;}
+	var factionIndex=governmentNames.indexOf(faction);
 	context.beginPath();
 	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
 	context.lineWidth=3;
@@ -49,41 +20,68 @@ function drawSystem(system,faction,xPos,yPos){
 	context.stroke();
 	console.log(system,faction,factionIndex,xPos,yPos);
 }
+function drawSystem(system,faction,xPos,yPos){
+	context.beginPath();
+	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
+	context.lineWidth=3;
+	context.strokeStyle=`rgb(102,102,102)`;
+	context.stroke();
+}
 function drawSystems(that){
-	var reader=new FileReader();
-	reader.onload=function(e){
+	var reader1=new FileReader();
+	reader1.onload=function(e){
 		var output=e.target.result;
-		var lines=output.split(`\n`).join(`<br>`);
-		var systems1=output.split(`\n`).filter(/./.test,/^system/).join(`<br>`).replace(/system /g,``);
-		var systems2=systems1.split(`<br>`);
-		var positions1=lines.split(`sys`).filter(/./.test,/^tem/).join(`<br>`).replace(/tem /g,``);
-		var positions2=positions1.split(`<br>`).filter(/./.test,/^	pos/).join(`<br>`).replace(/pos /g,``);
-		var positions3=positions2.split(` `).join(`<br>`);
-		var positions4=positions3.split(`<br>`);
-		positions4.unshift(``);
-		var positionsDifference=((positions4.length/2)-systems2.length);
-		if(systems2.length<positions4.length)
-			{positions4.splice(positions4.length-positionsDifference,positionsDifference);}
-		var governments1=lines.split(`sys`).filter(/./.test,/^tem/).join(`<br>`).replace(/tem /g,``);
-		var governments2=governments1.split(`<br>`).filter(/./.test,/^	government/).join(`<br>`).replace(/government /g,``);
-		var governments3=governments2.split(`<br>`);
-		var governmentsDifference=(governments3.length-systems2.length);
-		if(systems2.length<governments3.length)
-			{governments3.splice(governments3.length-governmentsDifference,governmentsDifference);}
-		var i;
-		for(i=0;i<systems2.length;i++)
-			{drawSystem(systems2[i],governments3[i],positions4[((i+1)*2)-1],positions4[(i+1)*2]);}
-		document.getElementById(`output`).innerHTML=governments3.join(`<br>`);
-		console.log(`Systems: `+systems2.length);
-		console.log(`Positions: `+((positions4.length-1)/2));
-		console.log(`Governments: `+governments3.length);
+		var lines=output.split(`\n`).join(`,`);
+		var systems1=output.split(`\n`).filter(/./.test,/^system/).join(`,`).replace(/system /g,``);
+		systemsFinal=systems1.split(`,`);
+		var positions1=lines.split(`sys`).filter(/./.test,/^tem/).join(`,`).replace(/tem /g,``);
+		var positions2=positions1.split(`,`).filter(/./.test,/^	pos/).join(`,`).replace(/pos /g,``);
+		var positions3=positions2.split(` `).join(`,`);
+		positionsFinal=positions3.split(`,`);
+		positionsFinal.unshift(``);
+		var positionsDifference=((positionsFinal.length/2)-systemsFinal.length);
+		if(systemsFinal.length<positionsFinal.length)
+			{positionsFinal.splice(positionsFinal.length-positionsDifference,positionsDifference)};
+		var governments1=lines.split(`sys`).filter(/./.test,/^tem/).join(`,`).replace(/tem /g,``);
+		var governments2=governments1.split(`,`).filter(/./.test,/^	government/).join(`,`).replace(/	government /g,``);
+		governmentsFinal=governments2.split(`,`);
+		var governmentsDifference=(governmentsFinal.length-systemsFinal.length);
+		if(systemsFinal.length<governmentsFinal.length)
+			{governmentsFinal.splice(governmentsFinal.length-governmentsDifference,governmentsDifference)};
+		for(i=0;i<systemsFinal.length;i++)
+			{drawSystem(systemsFinal[i],governmentsFinal[i],positionsFinal[((i+1)*2)-1],positionsFinal[(i+1)*2])};
+		console.log(`Systems: `+systemsFinal.length);
 	};
-	reader.readAsText(that.files[0]);
+	reader1.readAsText(that.files[0]);
 }
 function initialize(){
 	img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,0,0);
+}
+function saveGovernments(system,faction,xPos,yPos){
+	console.log(system,faction,factionIndex,xPos,yPos);
+}
+function loadGovernments(that){
+	var reader2=new FileReader();
+	reader2.onload=function(e){
+		var output=e.target.result;
+		var lines=output.split(`\n`).join(`<br>`);
+		var governments1=output.split(/\ngovern/);
+		var governments2=governments1.filter((government)=>government.includes(`color`));
+		var governments3=governments2.join(``).split(/\n/);
+		governmentNames=governments3.filter(/./.test,/^ment/).join(`,`).replace(/ment /g,``).split(`,`);
+		var colours1=governments3.filter(/./.test,/^	color/).join(`,`).replace(/	color /g,``).split(`,`).join(` `).split(` `);
+		colours1.unshift(``);
+		for(i=0;i<colours1.length;i++)
+			{colours1[i]=Math.round(colours1[i]*255)};
+		for(i=0;i<((colours1.length-1)/3);i++)
+			{governmentColours[i]=`rgb(`+colours1[(i+1)*3-2]+`,`+colours1[(i+1)*3-1]+`,`+colours1[(i+1)*3]+`)`};
+		console.log(`Governments: `+governmentNames.length);
+		for(i=0;i<systemsFinal.length;i++)
+			{colourSystem(systemsFinal[i],governmentsFinal[i],positionsFinal[((i+1)*2)-1],positionsFinal[(i+1)*2])};
+	};
+	reader2.readAsText(that.files[0]);
 }
 function slideLeft(){
 	document.getElementById(`left`).classList.toggle(`side`);
@@ -93,6 +91,9 @@ function slideRight(){
 	document.getElementById(`right`).classList.toggle(`side`);
 	document.getElementById(`right`).classList.toggle(`slide`);
 }
-function toggleDialog(){
-	document.getElementById(`dialogScreen`).classList.toggle(`hidden`);
+function toggleGovernmentDialog(){
+	document.getElementById(`dialogGovernmentScreen`).classList.toggle(`hidden`);
+}
+function toggleMapDialog(){
+	document.getElementById(`dialogMapScreen`).classList.toggle(`hidden`);
 }
