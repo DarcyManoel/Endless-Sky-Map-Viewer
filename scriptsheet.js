@@ -32,13 +32,13 @@ function drawSystems(that){
 	systemsReader.onload=function(e){
 		var output=e.target.result;
 		var lines=output.split(`\n`);
-		systemsFinal=lines.filter(/./.test,/^system/).join(`,`).replace(/system /g,``).split(`,`);
-		positionsFinal=lines.join(`,`).split(`sys`).filter(/./.test,/^tem/).join(`,`).replace(/tem /g,``).split(`,`).filter(/./.test,/^	pos/).join(`,`).replace(/pos /g,``).split(` `).join(`,`).split(`,`);
+		systemsFinal=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
+		positionsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/pos /g,``).split(` `).join(`|`).split(`|`);
 		positionsFinal.unshift(``);
 		var positionsDifference=((positionsFinal.length/2)-systemsFinal.length);
 		if(systemsFinal.length<positionsFinal.length)
 			{positionsFinal.splice(positionsFinal.length-positionsDifference,positionsDifference)};
-		governmentsFinal=lines.join(`,`).split(`sys`).filter(/./.test,/^tem/).join(`,`).replace(/tem /g,``).split(`,`).filter(/./.test,/^	government/).join(`,`).replace(/	government /g,``).split(`,`);
+		governmentsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 		var governmentsDifference=(governmentsFinal.length-systemsFinal.length);
 		if(systemsFinal.length<governmentsFinal.length)
 			{governmentsFinal.splice(governmentsFinal.length-governmentsDifference,governmentsDifference)};
@@ -53,15 +53,12 @@ function initialize(){
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,0,0);
 }
-function saveGovernments(system,faction,xPos,yPos){
-	console.log(system,faction,factionIndex,xPos,yPos);
-}
 function loadGovernments(that){
 	var governmentsReader=new FileReader();
 	governmentsReader.onload=function(e){
-		var governmentsSeperated=e.target.result.split(/\ngovern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
-		governmentNames=governmentsSeperated.filter(/./.test,/^ment/).join(`,`).replace(/ment /g,``).split(`,`);
-		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`,`).replace(/	color /g,``).split(`,`).join(` `).split(` `);
+		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
+		governmentNames=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).split(`|`);
+		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 		coloursSpread.unshift(``);
 		for(i=0;i<coloursSpread.length;i++)
 			{coloursSpread[i]=Math.round(coloursSpread[i]*255)};
