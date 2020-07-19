@@ -9,16 +9,16 @@ var zoom=2.5;
 canvas.height=screen.height;
 canvas.width=screen.width;
 function colourSystem(system,faction,xPos,yPos){
-	faction.replace(/"/g,``);
-	if(faction.indexOf(` `)<=0)
-		{faction=`"`+faction+`"`;}
-	var factionIndex=governmentNames.indexOf(faction);
+	var factionHolding=faction.replace(/"/g,``);
+	if(factionHolding.indexOf(` `)>=0)
+		{factionHolding=`"`+factionHolding+`"`;}
+	var factionIndex=governmentNames.indexOf(factionHolding);
 	context.beginPath();
 	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
 	context.lineWidth=3;
 	context.strokeStyle=governmentColours[factionIndex];
 	context.stroke();
-	console.log(system,faction,factionIndex,xPos,yPos);
+	console.log(system,factionHolding,factionIndex,xPos,yPos);
 }
 function drawSystem(system,faction,xPos,yPos){
 	context.beginPath();
@@ -57,14 +57,23 @@ function loadGovernments(that){
 	var governmentsReader=new FileReader();
 	governmentsReader.onload=function(e){
 		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
-		governmentNames=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).split(`|`);
+		governmentNamesHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
+		for(i=0;i<governmentNamesHolding.length;i++){
+			if(governmentNamesHolding[i].indexOf(` `)>=0)
+				{governmentNamesHolding[i]=`"`+governmentNamesHolding[i]+`"`;}
+		}
+		governmentNames.push(...governmentNamesHolding);
 		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 		coloursSpread.unshift(``);
 		for(i=0;i<coloursSpread.length;i++)
 			{coloursSpread[i]=Math.round(coloursSpread[i]*255)};
+		var governmentColoursHolding=[];
 		for(i=0;i<((coloursSpread.length-1)/3);i++)
-			{governmentColours[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`};
+			{governmentColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`};
+		governmentColours.push(...governmentColoursHolding);
 		console.log(`Governments: `+governmentNames.length);
+		console.log(governmentNames);
+		console.log(governmentColours);
 		for(i=0;i<systemsFinal.length;i++)
 			{colourSystem(systemsFinal[i],governmentsFinal[i],positionsFinal[((i+1)*2)-1],positionsFinal[(i+1)*2])};
 	};
