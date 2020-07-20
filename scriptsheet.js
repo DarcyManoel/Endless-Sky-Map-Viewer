@@ -3,7 +3,7 @@ var context=canvas.getContext(`2d`);
 var governmentNames=[];
 var governmentColours=[];
 var governmentsFinal;
-var positionsFinal;
+var positions;
 var systemsFinal;
 var zoom=2.5;
 canvas.height=screen.height;
@@ -33,17 +33,15 @@ function drawSystems(that){
 		var output=e.target.result;
 		var lines=output.split(`\n`);
 		systemsFinal=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
-		positionsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/pos /g,``).split(` `).join(`|`).split(`|`);
-		positionsFinal.unshift(``);
-		var positionsDifference=((positionsFinal.length/2)-systemsFinal.length);
-		if(systemsFinal.length<positionsFinal.length)
-			{positionsFinal.splice(positionsFinal.length-positionsDifference,positionsDifference)};
+		positions=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
+		for(i=0;i<positions.length;i++)
+			{positions[i]=positions[i].split(' ');}
 		governmentsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 		var governmentsDifference=(governmentsFinal.length-systemsFinal.length);
 		if(systemsFinal.length<governmentsFinal.length)
 			{governmentsFinal.splice(governmentsFinal.length-governmentsDifference,governmentsDifference)};
 		for(i=0;i<systemsFinal.length;i++)
-			{drawSystem(systemsFinal[i],governmentsFinal[i],positionsFinal[((i+1)*2)-1],positionsFinal[(i+1)*2])};
+			{drawSystem(systemsFinal[i],governmentsFinal[i],positions[i][0],positions[i][1])};
 		console.log(`Systems: `+systemsFinal.length);
 	};
 	systemsReader.readAsText(that.files[0]);
@@ -75,7 +73,7 @@ function loadGovernments(that){
 		console.log(governmentNames);
 		console.log(governmentColours);
 		for(i=0;i<systemsFinal.length;i++)
-			{colourSystem(systemsFinal[i],governmentsFinal[i],positionsFinal[((i+1)*2)-1],positionsFinal[(i+1)*2])};
+			{colourSystem(systemsFinal[i],governmentsFinal[i],positions[i][0],positions[i][1])};
 	};
 	governmentsReader.readAsText(that.files[0]);
 }
