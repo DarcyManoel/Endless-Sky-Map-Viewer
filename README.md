@@ -1,4 +1,4 @@
-# Endless Sky Ship Viewer
-Provides various options to help with creating ships, including applying the different swizzle options to your ship, show the collision outline, and generating hardpoint locations for you.
+# Endless Sky Map Viewer
+Provides various options to help with creating systems, including generating maps to show off modded content and territory.
 
-# https://darcman99.github.io/Endless-Sky-Ship-Viewer/
+# https://darcman99.github.io/Endless-Sky-Map-Viewer/
