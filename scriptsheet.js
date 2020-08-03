@@ -20,7 +20,7 @@ function colourSystem(system,faction,xPos,yPos){
 	context.lineWidth=3;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
-	console.log(system,factionHolding,factionIndex,xPos,yPos);
+//	console.log(system,factionHolding,factionIndex,xPos,yPos);
 }
 function drawSystem(system,faction,xPos,yPos){
 	context.beginPath();
@@ -42,7 +42,16 @@ function drawSystems(that){
 		links=output.split(`\nsystem`);
 		links.shift();
 		for(i=0;i<links.length;i++){
-			links[i]=links[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`);
+			links[i]=links[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
+			for(j=0;j<links[i].length;j++){
+				var pos=systems.indexOf(links[i][j]);
+				context.beginPath();
+				context.moveTo(1750+ +positions[i][0],1250+ +positions[i][1]);
+				context.lineTo(1750+ +positions[pos][0],1250+ +positions[pos][1]);
+				context.strokeStyle=`rgb(102,102,102)`;
+				context.stroke();
+//				console.log(systems[i]+` -> `+systems[pos]);
+			};
 		};
 		governmentsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 		var governmentsDifference=(governmentsFinal.length-systems.length);
@@ -53,7 +62,6 @@ function drawSystems(that){
 			drawSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
 		};
 		console.log(`Systems: `+systems.length);
-		console.log(links);
 	};
 	systemsReader.readAsText(that.files[0]);
 }
