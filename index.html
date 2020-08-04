@@ -1,46 +1,94 @@
 <!DOCTYPE html>
 <html>
 	<head>
+
+		<!-- Establish resource links -->
 		<link href="assets/map.png" rel="icon">
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
 		<title>Map Viewer</title>
+
 	</head>
+
+	<!-- Contains all page content, initializes content -->
 	<body onload="initialize()">
+
+		<!-- Map dialog screen, displayed on request -->
 		<div id="dialogMapScreen" class="hidden">
+
+			<!-- Darken background -->
 			<div class="cover"></div>
+
+			<!-- Aesthetic -->
 			<img class="dialog" src="assets/dialog.png"/>
+
+			<!-- File upload prompt for map file -->
 			<input onchange="drawSystems(this)" class="upload" id="file" type="file"/>
+
+			<!-- Close dialog -->
 			<p id="confirm" onclick="toggleMapDialog()">OK</p>
+
 		</div>
+
+		<!-- Government dialog screen, displayed on request -->
 		<div id="dialogGovernmentScreen" class="hidden">
+
+			<!-- Darken background -->
 			<div class="cover"></div>
+
+			<!-- Aesthetic -->W
 			<img class="dialog" src="assets/dialog.png"/>
+
+			<!-- File upload prompt for governments file -->
 			<input onchange="loadGovernments(this)" class="upload" id="file" type="file"/>
+
+			<!-- Close dialog -->
 			<p id="confirm" onclick="toggleGovernmentDialog()">OK</p>
+
 		</div>
+
 		<table>
 			<tr>
 				<td id="left" class="side">
+
+					<!-- Dialog toggles -->
 					<p onclick="toggleMapDialog()">Load Map</p>
 					<p onclick="toggleGovernmentDialog()">Load Governments</p>
+
 				</td>
+
+				<!-- Left sidebar edge -->
 				<td class="leftEdge" onclick="slideLeft()"></td>
+
 				<td class="main">
+
+					<!-- Map board -->
 					<canvas id="canvas"></canvas>
-					<img id="galaxy" src="assets/galaxy.png">
+
+					<!-- Image reference relay, always hidden -->
+					<img id="galaxy" class="hidden" src="assets/galaxy.png">
+
 				</td>
+
+				<!-- Right sidebar edge -->
 				<td class="rightEdge" onclick="slideRight()"></td>
+
 				<td id="right" class="side">
+
+					<!-- Cursor coordinates -->
 					<div class="hidden" id="coordinates">
 						<p id="xCoordinate">X:</p>
 						<p id="yCoordinate">Y:</p>
 					</div>
+
 					<br>
 					<p id="output"></p>
 				</td>
 			</tr>
 		</table>
 	</body>
+
+	<!-- Link page functions to page content -->
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>

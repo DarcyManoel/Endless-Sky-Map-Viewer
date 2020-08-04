@@ -1,4 +1,7 @@
+// Creates global variables to be called to and overwritten
 var canvas=document.getElementById(`canvas`);
+canvas.height=screen.height;
+canvas.width=screen.width;
 var context=canvas.getContext(`2d`);
 var governmentsUnique=[];
 var governmentsColours=[];
@@ -7,28 +10,32 @@ var links;
 var positions;
 var systems;
 var zoom=2.5;
-canvas.height=screen.height;
-canvas.width=screen.width;
-function colourSystem(system,faction,xPos,yPos){
-	var factionHolding=faction.replace(/"/g,``);
-	if(factionHolding.indexOf(` `)>=0){
-		factionHolding=`"`+factionHolding+`"`;
-	};
-	var factionIndex=governmentsUnique.indexOf(factionHolding);
-	context.beginPath();
-	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
-	context.lineWidth=3;
-	context.strokeStyle=governmentsColours[factionIndex];
-	context.stroke();
-//	console.log(system,factionHolding,factionIndex,xPos,yPos);
+
+// Runs on page load, creates the initial canvas
+function initialize(){
+	img=document.getElementById(`galaxy`);
+	context.scale(1/zoom,1/zoom);
+	context.drawImage(img,0,0);
 }
-function drawSystem(system,faction,xPos,yPos){
-	context.beginPath();
-	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
-	context.lineWidth=3;
-	context.strokeStyle=`rgb(102,102,102)`;
-	context.stroke();
+
+// Slides the left sidebar out to cover more of the screen
+function slideLeft(){
+	document.getElementById(`left`).classList.toggle(`side`);
+	document.getElementById(`left`).classList.toggle(`slide`);
 }
+
+// Slides the right sidebar out to cover more of the screen
+function slideRight(){
+	document.getElementById(`right`).classList.toggle(`side`);
+	document.getElementById(`right`).classList.toggle(`slide`);
+}
+
+// Displays the upload file menu for government files
+function toggleMapDialog(){
+	document.getElementById(`dialogMapScreen`).classList.toggle(`hidden`);
+}
+
+// Runs upon uploading a map file; parses system names, links, and system positions
 function drawSystems(that){
 	var systemsReader=new FileReader();
 	systemsReader.onload=function(e){
@@ -50,7 +57,7 @@ function drawSystems(that){
 				context.lineTo(1750+ +positions[pos][0],1250+ +positions[pos][1]);
 				context.strokeStyle=`rgb(102,102,102)`;
 				context.stroke();
-//				console.log(systems[i]+` -> `+systems[pos]);
+//				console.log(systems[i]+` -> `+systems[pos]);	|Write to console links between systems
 			};
 		};
 		governmentsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
@@ -65,11 +72,22 @@ function drawSystems(that){
 	};
 	systemsReader.readAsText(that.files[0]);
 }
-function initialize(){
-	img=document.getElementById(`galaxy`);
-	context.scale(1/zoom,1/zoom);
-	context.drawImage(img,0,0);
+
+// Looped function, runs per system listed and draws systems on canvas
+function drawSystem(system,faction,xPos,yPos){
+	context.beginPath();
+	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
+	context.lineWidth=3;
+	context.strokeStyle=`rgb(102,102,102)`;
+	context.stroke();
 }
+
+// Displays the upload file menu for government files
+function toggleGovernmentDialog(){
+	document.getElementById(`dialogGovernmentScreen`).classList.toggle(`hidden`);
+}
+
+// Runs on uploading a government file; parses government names, and colour values
 function loadGovernments(that){
 	var governmentsReader=new FileReader();
 	governmentsReader.onload=function(e){
@@ -98,17 +116,18 @@ function loadGovernments(that){
 	};
 	governmentsReader.readAsText(that.files[0]);
 }
-function slideLeft(){
-	document.getElementById(`left`).classList.toggle(`side`);
-	document.getElementById(`left`).classList.toggle(`slide`);
-}
-function slideRight(){
-	document.getElementById(`right`).classList.toggle(`side`);
-	document.getElementById(`right`).classList.toggle(`slide`);
-}
-function toggleGovernmentDialog(){
-	document.getElementById(`dialogGovernmentScreen`).classList.toggle(`hidden`);
-}
-function toggleMapDialog(){
-	document.getElementById(`dialogMapScreen`).classList.toggle(`hidden`);
+
+// Looped function, runs per system listed and draws systems with aligned government colours on canvas
+function colourSystem(system,faction,xPos,yPos){
+	var factionHolding=faction.replace(/"/g,``);
+	if(factionHolding.indexOf(` `)>=0){
+		factionHolding=`"`+factionHolding+`"`;
+	};
+	var factionIndex=governmentsUnique.indexOf(factionHolding);
+	context.beginPath();
+	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
+	context.lineWidth=3;
+	context.strokeStyle=governmentsColours[factionIndex];
+	context.stroke();
+//	console.log(system,factionHolding,xPos,yPos);	|Write to console general information of all systems drawn onto canvas
 }
