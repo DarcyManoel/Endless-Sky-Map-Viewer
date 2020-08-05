@@ -2,7 +2,7 @@ body{
 	background-color:#000;
 	background-position:center;
 	background-size:auto 100%;
-	color:#ccc;
+	color:#aaa;
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
@@ -11,6 +11,7 @@ body{
 
 p{
 	text-align:left;
+	font-size:2vh;
 }
 
 table{
@@ -20,8 +21,8 @@ table{
 }
 
 td p{
-	margin:2px 0 2px 0;
-	padding:1px 0 3px 20px;
+	margin:.2vh 0 .2vh 0;
+	padding:.1vh 0 .3vh 2vh;
 }
 
 canvas{
@@ -33,6 +34,43 @@ canvas{
 	display:none;
 }
 
+/* Styling and sizing for page navigation */
+#navMenu{
+	background:url("assets/map viewer.png");
+	background-size:100% 120%;
+	height:5vh;
+	position:absolute;
+	top:1vh;
+	width:100%;
+}
+
+.navSpacing{
+	background-color:#232323;
+	height:1vh;
+	width:100%;
+}
+
+#mapViewer{
+	color:#ccc;
+	font-size:1.2vw;
+	height:4vh;
+	left:2.3vw;
+	position:absolute;
+	text-align:center;
+	top:1vh;
+	width:12vw;
+}
+
+#spreadsheets{
+	font-size:1.2vw;
+	left:14vw;
+	height:4vh;
+	position:absolute;
+	text-align:center;
+	top:1vh;
+	width:12vw;
+}
+
 /* Center canvas in main section */
 .main{
 	text-align:center;
@@ -40,23 +78,23 @@ canvas{
 
 /* Style sidebar content */
 .side,.slide{
-	background-color:#202020;
-	padding:1vh 0 0 0;
+	background-color:#1d1d1d;
+	padding:6vh 0 0 0;
 	vertical-align:top;
 }
 
 /* Sizing for collaped sidebar */
 .side{
 	transition:.8s;
-	max-width:16vw;
-	width:16vw;
+	max-width:16%;
+	width:16%;
 }
 
 /* Sizing for extended sidebar */
 .slide{
 	transition:.8s;
-	max-width:24vw;
-	width:24vw;
+	max-width:24%;
+	width:24%;
 }
 
 /* Affix image for left sidebar edge */
@@ -72,7 +110,7 @@ canvas{
 /* Size stylised sidebar edges */
 .leftEdge,.rightEdge{
 	background-size:100% auto;
-	width:20px;
+	width:2%;
 }
 
 /* Style text displayed on right sidebar */
@@ -88,7 +126,7 @@ canvas{
 /* Highlight general actions on mouse-over */
 #left p:hover{
 	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
-	color:#fff;
+	color:#ccc;
 }
 
 /* Darkens background when dialog pops up */

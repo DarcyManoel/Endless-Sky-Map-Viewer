@@ -13,9 +13,23 @@ var zoom=2.5;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
-	img=document.getElementById(`galaxy`);
+	var img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,0,0);
+}
+
+function switchToMapViewer(){
+	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
+	document.getElementById(`mapViewer`).style.color=`#ccc`;
+	document.getElementById(`spreadsheets`).style.color=`#aaa`;
+	document.getElementById(`mapViewerContent`).classList.remove(`hidden`)
+}
+
+function switchToSpreadsheets(){
+	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
+	document.getElementById(`mapViewer`).style.color=`#aaa`;
+	document.getElementById(`spreadsheets`).style.color=`#ccc`;
+	document.getElementById(`mapViewerContent`).classList.add(`hidden`)
 }
 
 // Slides the left sidebar out to cover more of the screen

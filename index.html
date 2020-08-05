@@ -14,6 +14,18 @@
 	<!-- Contains all page content, initializes content -->
 	<body onload="initialize()">
 
+		<!-- Navigation menu, opens up more than just viewing the map -->
+		<div class="navSpacing" colspan="5">
+		</div>
+		<div id="navMenu">
+			<div id="mapViewer" onclick="switchToMapViewer()">
+				Map Viewer
+			</div>
+			<div id="spreadsheets" onclick="switchToSpreadsheets()">
+				Spreadsheets
+			</div>
+		</div>
+
 		<!-- Map dialog screen, displayed on request -->
 		<div id="dialogMapScreen" class="hidden">
 
@@ -37,7 +49,7 @@
 			<!-- Darken background -->
 			<div class="cover"></div>
 
-			<!-- Aesthetic -->W
+			<!-- Aesthetic -->
 			<img class="dialog" src="assets/dialog.png"/>
 
 			<!-- File upload prompt for governments file -->
@@ -48,7 +60,7 @@
 
 		</div>
 
-		<table>
+		<table id="mapViewerContent">
 			<tr>
 				<td id="left" class="side">
 
