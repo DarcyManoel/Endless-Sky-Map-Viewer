@@ -52,12 +52,6 @@ function slideLeft(){
 	document.getElementById(`left`).classList.toggle(`slide`);
 }
 
-// Slides the right sidebar out to cover more of the screen
-function slideRight(){
-	document.getElementById(`right`).classList.toggle(`side`);
-	document.getElementById(`right`).classList.toggle(`slide`);
-}
-
 // Displays the upload file menu for government files
 function toggleMapDialog(){
 	document.getElementById(`dialogMapScreen`).classList.toggle(`hidden`);

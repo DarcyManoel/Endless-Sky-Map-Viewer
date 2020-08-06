@@ -111,30 +111,11 @@ canvas{
 	width:24%;
 }
 
-/* Affix image for left sidebar edge */
+/* Size stylised sidebar edges */
 .leftEdge{
 	background-image:url("assets/left edge.png");
-}
-
-/* Affix image for right sidebar edge */
-.rightEdge{
-	background-image:url("assets/right edge.png");
-}
-
-/* Size stylised sidebar edges */
-.leftEdge,.rightEdge{
 	background-size:100% auto;
 	width:2%;
-}
-
-/* Style text displayed on right sidebar */
-#output{
-	cursor:text;
-	font-size:12px;
-	max-height:95vh;
-	overflow:scroll;
-	padding-right:1vw;
-	user-select:text;
 }
 
 /* Highlight general actions on mouse-over */
