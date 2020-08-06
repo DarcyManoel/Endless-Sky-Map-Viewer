@@ -18,18 +18,32 @@ function initialize(){
 	context.drawImage(img,0,0);
 }
 
+// Switches page content between map viewer and spreadsheets
 function switchToMapViewer(){
-	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
-	document.getElementById(`mapViewer`).style.color=`#ccc`;
-	document.getElementById(`spreadsheets`).style.color=`#aaa`;
-	document.getElementById(`mapViewerContent`).classList.remove(`hidden`)
+	navAnimation();
+	setTimeout(function(){
+		navAnimation();
+		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
+		document.getElementById(`mapViewer`).style.color=`#ccc`;
+		document.getElementById(`spreadsheets`).style.color=`#aaa`;
+		document.getElementById(`mapViewerContent`).classList.remove(`hidden`);
+	},2000);
 }
-
 function switchToSpreadsheets(){
-	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
-	document.getElementById(`mapViewer`).style.color=`#aaa`;
-	document.getElementById(`spreadsheets`).style.color=`#ccc`;
-	document.getElementById(`mapViewerContent`).classList.add(`hidden`)
+	navAnimation();
+	setTimeout(function(){
+		navAnimation();
+		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
+		document.getElementById(`mapViewer`).style.color=`#aaa`;
+		document.getElementById(`spreadsheets`).style.color=`#ccc`;
+		document.getElementById(`mapViewerContent`).classList.add(`hidden`);
+	},2000);
+}
+function navAnimation(){
+	document.getElementById(`navSpacing`).classList.toggle(`navSpacing`);
+	document.getElementById(`navSpacing`).classList.toggle(`navSpacingAnimation`);
+	document.getElementById(`navMenu`).classList.toggle(`navMenu`);
+	document.getElementById(`navMenu`).classList.toggle(`navMenuAnimation`);
 }
 
 // Slides the left sidebar out to cover more of the screen

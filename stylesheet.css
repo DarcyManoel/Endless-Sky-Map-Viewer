@@ -34,22 +34,37 @@ canvas{
 	display:none;
 }
 
-/* Styling and sizing for page navigation */
-#navMenu{
+/* Styling and animations for page navigation */
+.navMenu{
 	background:url("assets/map viewer.png");
 	background-size:100% 120%;
 	height:5vh;
 	position:absolute;
 	top:1vh;
+	transition:all 2.2s,background 0s;
 	width:100%;
 }
-
+.navMenuAnimation{
+	background:url("assets/map viewer.png");
+	background-size:100% 120%;
+	height:5vh;
+	position:absolute;
+	top:100vh;
+	transition:all 1.8s,background 0s;
+	width:100%;
+}
 .navSpacing{
 	background-color:#232323;
 	height:1vh;
+	transition:all 2.2s;
 	width:100%;
 }
-
+.navSpacingAnimation{
+	background-color:#232323;
+	height:100vh;
+	transition:all 1.8s;
+	width:100%;
+}
 #mapViewer{
 	color:#ccc;
 	font-size:1.2vw;
@@ -60,7 +75,6 @@ canvas{
 	top:1vh;
 	width:12vw;
 }
-
 #spreadsheets{
 	font-size:1.2vw;
 	left:14vw;
