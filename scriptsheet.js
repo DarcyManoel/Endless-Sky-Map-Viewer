@@ -27,7 +27,7 @@ function switchToMapViewer(){
 		document.getElementById(`mapViewer`).style.color=`#ccc`;
 		document.getElementById(`spreadsheets`).style.color=`#aaa`;
 		document.getElementById(`mapViewerContent`).classList.remove(`hidden`);
-	},1200);
+	},450);
 }
 function switchToSpreadsheets(){
 	navAnimation();
@@ -37,7 +37,7 @@ function switchToSpreadsheets(){
 		document.getElementById(`mapViewer`).style.color=`#aaa`;
 		document.getElementById(`spreadsheets`).style.color=`#ccc`;
 		document.getElementById(`mapViewerContent`).classList.add(`hidden`);
-	},1200);
+	},450);
 }
 function navAnimation(){
 	document.getElementById(`navSpacing`).classList.toggle(`navSpacing`);
