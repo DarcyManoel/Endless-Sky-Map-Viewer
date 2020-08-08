@@ -13,6 +13,7 @@ var zoom=2.5;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
+	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
 	var img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,0,0);
@@ -25,6 +26,8 @@ function switchToMapViewer(){
 		navAnimation();
 		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
 		document.getElementById(`mapViewer`).style.color=`#ccc`;
+		document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
+		document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
 		document.getElementById(`spreadsheets`).style.color=`#aaa`;
 		document.getElementById(`mapViewerContent`).classList.remove(`hidden`);
 	},450);
@@ -35,6 +38,8 @@ function switchToSpreadsheets(){
 		navAnimation();
 		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
 		document.getElementById(`mapViewer`).style.color=`#aaa`;
+		document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
+		document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
 		document.getElementById(`spreadsheets`).style.color=`#ccc`;
 		document.getElementById(`mapViewerContent`).classList.add(`hidden`);
 	},450);
