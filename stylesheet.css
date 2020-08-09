@@ -7,15 +7,26 @@ body{
 	user-select:none;
 }
 
-p{
-	text-align:left;
+/* Sidebar styling */
+#mapViewerSidebar p{
 	font-size:2vh;
-}
-
-
-td p{
 	margin:.2vh 0 .2vh 0;
 	padding:.1vh 0 .3vh 2vh;
+	text-align:left;
+}
+#mapViewerSidebar p:hover{
+	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
+	color:#ccc;
+}
+#spreadsheetsSidebar p{
+	font-size:2vh;
+	margin:.2vh 0 .2vh 0;
+	padding:.3vh 2vh .2vh;
+	text-align:right;
+}
+#spreadsheetsSidebar p:hover{
+	background:linear-gradient(to left,#333 70%,rgba(1,1,1,0));
+	color:#ccc;
 }
 
 canvas{
@@ -36,7 +47,7 @@ canvas{
 	top:1vh;
 	transition:all 0.4s,background 0s;
 	width:100%;
-	z-index:2;
+	z-index:-1;
 }
 .navSpacing{
 	background-color:#232323;
@@ -70,7 +81,7 @@ table{
 	position:absolute;
 	top:0;
 	width:100vw;
-	z-index:1;
+	z-index:-2;
 }
 .hiddenLeft{
 	left:-100vw;
@@ -121,12 +132,6 @@ table{
 	background-image:url("assets/right edge.png");
 	background-size:auto 100%;
 	width:1.6%;
-}
-
-/* Highlight general actions on mouse-over */
-.side p:hover,.slide p:hover{
-	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
-	color:#ccc;
 }
 
 /* Darkens background when dialog pops up */
