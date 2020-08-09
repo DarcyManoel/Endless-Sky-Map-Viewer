@@ -30,7 +30,7 @@ function switchToMapViewer(){
 		document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
 		document.getElementById(`spreadsheets`).style.color=`#aaa`;
 		document.getElementById(`mapViewerContent`).classList.remove(`hidden`);
-	},450);
+	},350);
 }
 function switchToSpreadsheets(){
 	navAnimation();
@@ -42,7 +42,7 @@ function switchToSpreadsheets(){
 		document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
 		document.getElementById(`spreadsheets`).style.color=`#ccc`;
 		document.getElementById(`mapViewerContent`).classList.add(`hidden`);
-	},450);
+	},350);
 }
 function navAnimation(){
 	document.getElementById(`navSpacing`).classList.toggle(`navSpacing`);

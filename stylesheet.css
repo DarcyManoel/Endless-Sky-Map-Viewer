@@ -41,7 +41,7 @@ canvas{
 	height:5vh;
 	position:absolute;
 	top:1vh;
-	transition:all 0.55s,background 0s;
+	transition:all 0.4s,background 0s;
 	width:100%;
 }
 .navMenuAnimation{
@@ -50,19 +50,19 @@ canvas{
 	height:5vh;
 	position:absolute;
 	top:100vh;
-	transition:all 0.45s,background 0s;
+	transition:all 0.35s,background 0s;
 	width:100%;
 }
 .navSpacing{
 	background-color:#232323;
 	height:1vh;
-	transition:all 0.55s;
+	transition:all 0.4s;
 	width:100%;
 }
 .navSpacingAnimation{
 	background-color:#232323;
 	height:100vh;
-	transition:all 0.45s;
+	transition:all 0.35s;
 	width:100%;
 }
 #mapViewer{
