@@ -84,11 +84,11 @@ table{
 	z-index:-2;
 }
 .hiddenLeft{
-	left:-100vw;
+	left:100vw;
 	transition:.7s;
 }
 .hiddenRight{
-	left:100vw;
+	left:-100vw;
 	transition:.7s;
 }
 .active{
