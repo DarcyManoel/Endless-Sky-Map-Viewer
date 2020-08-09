@@ -15,8 +15,6 @@
 	<body onload="initialize()">
 
 		<!-- Navigation menu, opens up more than just viewing the map -->
-		<div id="navSpacing" class="navSpacing" colspan="5">
-		</div>
 		<div id="navMenu" class="navMenu">
 			<div id="mapViewer">
 				Map Viewer
@@ -59,10 +57,29 @@
 			<p id="confirm" onclick="toggleGovernmentDialog()">OK</p>
 
 		</div>
-
-		<table id="mapViewerContent">
+		<table id="spreadsheetsContent" class="hiddenLeft">
 			<tr>
-				<td id="left" class="side">
+				<td class="navSpacing" colspan="3">
+				</td>
+			</tr>
+			<tr>
+				<td class="main">
+				</td>
+
+				<!-- Spreadsheet sidebar edge -->
+				<td class="spreadsheetsEdge" onclick="slide()"></td>
+
+				<td id="spreadsheetsSidebar" class="side">
+				</td>
+			</tr>
+		</table>
+		<table id="mapViewerContent" class="active">
+			<tr>
+				<td class="navSpacing" colspan="3">
+				</td>
+			</tr>
+			<tr>
+				<td id="mapViewerSidebar" class="side">
 
 					<!-- Dialog toggles -->
 					<p onclick="toggleMapDialog()">Load Map</p>
@@ -70,8 +87,8 @@
 
 				</td>
 
-				<!-- Left sidebar edge -->
-				<td class="leftEdge" onclick="slideLeft()"></td>
+				<!-- Map viewer sidebar edge -->
+				<td class="mapViewerEdge" onclick="slide()"></td>
 
 				<td class="main">
 

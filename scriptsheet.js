@@ -22,39 +22,33 @@ function initialize(){
 // Switches page content between map viewer and spreadsheets
 function switchToMapViewer(){
 	navAnimation();
-	setTimeout(function(){
-		navAnimation();
-		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
-		document.getElementById(`mapViewer`).style.color=`#ccc`;
-		document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
-		document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
-		document.getElementById(`spreadsheets`).style.color=`#aaa`;
-		document.getElementById(`mapViewerContent`).classList.remove(`hidden`);
-	},350);
+	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
+	document.getElementById(`mapViewer`).style.color=`#ccc`;
+	document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
+	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
+	document.getElementById(`spreadsheets`).style.color=`#aaa`;
 }
 function switchToSpreadsheets(){
 	navAnimation();
-	setTimeout(function(){
-		navAnimation();
-		document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
-		document.getElementById(`mapViewer`).style.color=`#aaa`;
-		document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
-		document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
-		document.getElementById(`spreadsheets`).style.color=`#ccc`;
-		document.getElementById(`mapViewerContent`).classList.add(`hidden`);
-	},350);
+	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
+	document.getElementById(`mapViewer`).style.color=`#aaa`;
+	document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
+	document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
+	document.getElementById(`spreadsheets`).style.color=`#ccc`;
 }
 function navAnimation(){
-	document.getElementById(`navSpacing`).classList.toggle(`navSpacing`);
-	document.getElementById(`navSpacing`).classList.toggle(`navSpacingAnimation`);
-	document.getElementById(`navMenu`).classList.toggle(`navMenu`);
-	document.getElementById(`navMenu`).classList.toggle(`navMenuAnimation`);
+	document.getElementById(`mapViewerContent`).classList.toggle(`hiddenRight`);
+	document.getElementById(`spreadsheetsContent`).classList.toggle(`hiddenLeft`);
+	document.getElementById(`mapViewerContent`).classList.toggle(`active`);
+	document.getElementById(`spreadsheetsContent`).classList.toggle(`active`);
 }
 
-// Slides the left sidebar out to cover more of the screen
-function slideLeft(){
-	document.getElementById(`left`).classList.toggle(`side`);
-	document.getElementById(`left`).classList.toggle(`slide`);
+// Slides the sidebar out to cover more of the screen
+function slide(){
+	document.getElementById(`mapViewerSidebar`).classList.toggle(`side`);
+	document.getElementById(`mapViewerSidebar`).classList.toggle(`slide`);
+	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`side`);
+	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`slide`);
 }
 
 // Displays the upload file menu for government files

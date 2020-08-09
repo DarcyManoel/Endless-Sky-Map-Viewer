@@ -1,7 +1,5 @@
 body{
 	background-color:#000;
-	background-position:center;
-	background-size:auto 100%;
 	color:#aaa;
 	cursor:default;
 	font-family:Ubuntu;
@@ -14,11 +12,6 @@ p{
 	font-size:2vh;
 }
 
-table{
-	border-spacing:0;
-	height:99vh;
-	width:100vw;
-}
 
 td p{
 	margin:.2vh 0 .2vh 0;
@@ -43,26 +36,11 @@ canvas{
 	top:1vh;
 	transition:all 0.4s,background 0s;
 	width:100%;
-}
-.navMenuAnimation{
-	background:url("assets/map viewer.png");
-	background-size:100% 120%;
-	height:5vh;
-	position:absolute;
-	top:100vh;
-	transition:all 0.35s,background 0s;
-	width:100%;
+	z-index:2;
 }
 .navSpacing{
 	background-color:#232323;
 	height:1vh;
-	transition:all 0.4s;
-	width:100%;
-}
-.navSpacingAnimation{
-	background-color:#232323;
-	height:100vh;
-	transition:all 0.35s;
 	width:100%;
 }
 #mapViewer{
@@ -83,6 +61,28 @@ canvas{
 	text-align:center;
 	top:1vh;
 	width:12vw;
+}
+
+/* Styling and transitions for page screens */
+table{
+	border-spacing:0;
+	height:100vh;
+	position:absolute;
+	top:0;
+	width:100vw;
+	z-index:1;
+}
+.hiddenLeft{
+	left:-100vw;
+	transition:.7s;
+}
+.hiddenRight{
+	left:100vw;
+	transition:.7s;
+}
+.active{
+	left:0;
+	transition:.7s;
 }
 
 /* Center canvas in main section */
@@ -112,14 +112,19 @@ canvas{
 }
 
 /* Size stylised sidebar edges */
-.leftEdge{
+.mapViewerEdge{
 	background-image:url("assets/left edge.png");
-	background-size:100% auto;
-	width:2%;
+	background-size:auto 100%;
+	width:1.6%;
+}
+.spreadsheetsEdge{
+	background-image:url("assets/right edge.png");
+	background-size:auto 100%;
+	width:1.6%;
 }
 
 /* Highlight general actions on mouse-over */
-#left p:hover{
+.side p:hover,.slide p:hover{
 	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
 	color:#ccc;
 }
