@@ -103,7 +103,7 @@ function drawSystem(system,faction,xPos,yPos){
 	context.stroke();
 }
 
-// Displays the upload file menu for government files
+// Displays the upload file menu for governments files
 function toggleGovernmentDialog(){
 	document.getElementById(`dialogGovernmentScreen`).classList.toggle(`hidden`);
 }
@@ -113,7 +113,7 @@ function loadGovernments(that){
 	var governmentsReader=new FileReader();
 	governmentsReader.onload=function(e){
 		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
-		governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
+		var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
 		for(i=0;i<governmentsUniqueHolding.length;i++){
 			if(governmentsUniqueHolding[i].indexOf(` `)>=0){
 				governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
@@ -138,7 +138,7 @@ function loadGovernments(that){
 	governmentsReader.readAsText(that.files[0]);
 }
 
-// Looped function, runs per system listed and draws systems with aligned government colours on canvas
+// Looped function, runs per system listed and draws systems with aligned governments colours on canvas
 function colourSystem(system,faction,xPos,yPos){
 	var factionHolding=faction.replace(/"/g,``);
 	if(factionHolding.indexOf(` `)>=0){
@@ -151,4 +151,82 @@ function colourSystem(system,faction,xPos,yPos){
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
 //	console.log(system,factionHolding,xPos,yPos);	|Write to console general information of all systems drawn onto canvas
+}
+
+// Displays the upload file menu for outfits files
+function toggleOutfitsDialog(){
+	document.getElementById(`dialogOutfitsScreen`).classList.toggle(`hidden`);
+}
+
+// Runs on uploading an outfits file; parses outfit names, and stats
+function loadOutfits(that){
+	var outfitsReader=new FileReader();
+	outfitsReader.onload=function(e){
+		var outfitsSeperated=e.target.result.split(/\noutfit /).filter((outfit)=>outfit.includes(`category`)).join(``).split(/\n/);
+		var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
+		console.log(outfitsUniqueHolding);
+
+//		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
+//		var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
+//		for(i=0;i<governmentsUniqueHolding.length;i++){
+//			if(governmentsUniqueHolding[i].indexOf(` `)>=0){
+//				governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
+//			};
+//		};
+//		governmentsUnique.push(...governmentsUniqueHolding);
+//		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
+//		coloursSpread.unshift(``);
+//		for(i=0;i<coloursSpread.length;i++){
+//			coloursSpread[i]=Math.round(coloursSpread[i]*255);
+//		};
+//		var governmentsColoursHolding=[];
+//		for(i=0;i<((coloursSpread.length-1)/3);i++){
+//			governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
+//		};
+//		governmentsColours.push(...governmentsColoursHolding);
+//		console.log(`Governments: `+governmentsUnique.length);
+//		for(i=0;i<systems.length;i++){
+//			colourSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
+//		};
+	};
+	outfitsReader.readAsText(that.files[0]);
+}
+
+// Displays the upload file menu for ships files
+function toggleShipsDialog(){
+	document.getElementById(`dialogShipsScreen`).classList.toggle(`hidden`);
+}
+
+// Runs on uploading an ships file; parses ship names, and stats
+function loadShips(that){
+	var shipsReader=new FileReader();
+	shipsReader.onload=function(e){
+		var shipsSeperated=e.target.result.split(/\nship /).join(``).split(/\n/);
+		var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
+		console.log(shipsUniqueHolding);
+
+//		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
+//		var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
+//		for(i=0;i<governmentsUniqueHolding.length;i++){
+//			if(governmentsUniqueHolding[i].indexOf(` `)>=0){
+//				governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
+//			};
+//		};
+//		governmentsUnique.push(...governmentsUniqueHolding);
+//		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
+//		coloursSpread.unshift(``);
+//		for(i=0;i<coloursSpread.length;i++){
+//			coloursSpread[i]=Math.round(coloursSpread[i]*255);
+//		};
+//		var governmentsColoursHolding=[];
+//		for(i=0;i<((coloursSpread.length-1)/3);i++){
+//			governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
+//		};
+//		governmentsColours.push(...governmentsColoursHolding);
+//		console.log(`Governments: `+governmentsUnique.length);
+//		for(i=0;i<systems.length;i++){
+//			colourSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
+//		};
+	};
+	shipsReader.readAsText(that.files[0]);
 }
