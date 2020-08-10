@@ -96,6 +96,24 @@ table{
 	transition:.7s;
 }
 
+/* Style content area for spreadsheets page */
+#spreadsheetsMain{
+	padding-top:8vh;
+}
+#spreadsheetsMain div{
+	background:url("assets/spreadsheets entry.png");
+	background-size:100%;
+	display:inline-block;
+	height:150px;
+	margin:0 1vw 0 1vw;
+	vertical-align:top;
+	width:150px;
+}
+#spreadsheetsMain div p{
+	height:50px;
+	top:20px;
+}
+
 /* Center canvas in main section */
 .main{
 	text-align:center;
@@ -125,13 +143,13 @@ table{
 /* Size stylised sidebar edges */
 .mapViewerEdge{
 	background-image:url("assets/left edge.png");
-	background-size:auto 100%;
-	width:1.6%;
+	background-size:100% auto;
+	width:2.4%;
 }
 .spreadsheetsEdge{
 	background-image:url("assets/right edge.png");
-	background-size:auto 100%;
-	width:1.6%;
+	background-size:100% auto;
+	width:2.4%;
 }
 
 /* Darkens background when dialog pops up */

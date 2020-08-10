@@ -164,30 +164,10 @@ function loadOutfits(that){
 	outfitsReader.onload=function(e){
 		var outfitsSeperated=e.target.result.split(/\noutfit /).filter((outfit)=>outfit.includes(`category`)).join(``).split(/\n/);
 		var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
-		console.log(outfitsUniqueHolding);
-
-//		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
-//		var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
-//		for(i=0;i<governmentsUniqueHolding.length;i++){
-//			if(governmentsUniqueHolding[i].indexOf(` `)>=0){
-//				governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
-//			};
-//		};
-//		governmentsUnique.push(...governmentsUniqueHolding);
-//		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
-//		coloursSpread.unshift(``);
-//		for(i=0;i<coloursSpread.length;i++){
-//			coloursSpread[i]=Math.round(coloursSpread[i]*255);
-//		};
-//		var governmentsColoursHolding=[];
-//		for(i=0;i<((coloursSpread.length-1)/3);i++){
-//			governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
-//		};
-//		governmentsColours.push(...governmentsColoursHolding);
-//		console.log(`Governments: `+governmentsUnique.length);
-//		for(i=0;i<systems.length;i++){
-//			colourSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
-//		};
+		for(i=0;i<outfitsUniqueHolding.length;i++){
+			document.getElementById(`spreadsheetsMain`).innerHTML+=`<div><p>`+outfitsUniqueHolding[i]+`</p></div>`;
+		}
+//		console.log(outfitsUniqueHolding);
 	};
 	outfitsReader.readAsText(that.files[0]);
 }
@@ -203,30 +183,10 @@ function loadShips(that){
 	shipsReader.onload=function(e){
 		var shipsSeperated=e.target.result.split(/\nship /).join(``).split(/\n/);
 		var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
-		console.log(shipsUniqueHolding);
-
-//		var governmentsSeperated=e.target.result.split(/govern/).filter((government)=>government.includes(`color`)).join(``).split(/\n/);
-//		var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
-//		for(i=0;i<governmentsUniqueHolding.length;i++){
-//			if(governmentsUniqueHolding[i].indexOf(` `)>=0){
-//				governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
-//			};
-//		};
-//		governmentsUnique.push(...governmentsUniqueHolding);
-//		var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
-//		coloursSpread.unshift(``);
-//		for(i=0;i<coloursSpread.length;i++){
-//			coloursSpread[i]=Math.round(coloursSpread[i]*255);
-//		};
-//		var governmentsColoursHolding=[];
-//		for(i=0;i<((coloursSpread.length-1)/3);i++){
-//			governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
-//		};
-//		governmentsColours.push(...governmentsColoursHolding);
-//		console.log(`Governments: `+governmentsUnique.length);
-//		for(i=0;i<systems.length;i++){
-//			colourSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
-//		};
+		for(i=0;i<shipsUniqueHolding.length;i++){
+			document.getElementById(`spreadsheetsMain`).innerHTML+=`<div><p>`+shipsUniqueHolding[i]+`</p></div>`;
+		}
+//		console.log(shipsUniqueHolding);
 	};
 	shipsReader.readAsText(that.files[0]);
 }
