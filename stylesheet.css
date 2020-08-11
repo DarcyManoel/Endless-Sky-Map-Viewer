@@ -4,6 +4,7 @@ body{
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
+	overflow:hidden;
 	user-select:none;
 }
 
@@ -98,7 +99,10 @@ table{
 
 /* Style content area for spreadsheets page */
 #spreadsheetsMain{
+	height:100%;
+	overflow-y:scroll;
 	padding-top:8vh;
+	width:100%;
 }
 #spreadsheetsMain div{
 	background:url("assets/spreadsheets entry.png");
