@@ -109,10 +109,6 @@ table{
 	vertical-align:top;
 	width:150px;
 }
-#spreadsheetsMain div p{
-	height:50px;
-	top:20px;
-}
 
 /* Center canvas in main section */
 .main{

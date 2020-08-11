@@ -33,7 +33,7 @@
 			<img class="dialog" src="assets/dialog.png"/>
 
 			<!-- File upload prompt for map file -->
-			<input onchange="drawSystems(this)" class="upload" id="file" type="file"/>
+			<input onchange="drawSystems(this)" class="upload" id="file" type="file" webkitdirectory/>
 
 			<!-- Close dialog -->
 			<p id="confirm" onclick="toggleMapDialog()">OK</p>
@@ -50,15 +50,15 @@
 			<img class="dialog" src="assets/dialog.png"/>
 
 			<!-- File upload prompt for governments file -->
-			<input onchange="loadGovernments(this)" class="upload" id="file" type="file"/>
+			<input onchange="loadGovernments(this)" class="upload" id="file" type="file" webkitdirectory/>
 
 			<!-- Close dialog -->
 			<p id="confirm" onclick="toggleGovernmentDialog()">OK</p>
 
 		</div>
 
-		<!-- Outfit dialog screen, displayed on request -->
-		<div id="dialogOutfitsScreen" class="hidden">
+		<!-- Ship dialog screen, displayed on request -->
+		<div id="dialogDataScreen" class="hidden">
 
 			<!-- Darken background -->
 			<div class="cover"></div>
@@ -66,28 +66,11 @@
 			<!-- Aesthetic -->
 			<img class="dialog" src="assets/dialog.png"/>
 
-			<!-- File upload prompt for outfits file -->
-			<input onchange="loadOutfits(this)" class="upload" id="file" type="file"/>
-
-			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleOutfitsDialog()">OK</p>
-
-		</div>
-
-		<!-- Ship dialog screen, displayed on request -->
-		<div id="dialogShipsScreen" class="hidden">
-
-			<!-- Darken background -->
-			<div class="cover">ddd</div>
-
-			<!-- Aesthetic -->
-			<img class="dialog" src="assets/dialog.png"/>
-
 			<!-- File upload prompt for ships file -->
-			<input onchange="loadShips(this)" class="upload" id="file" type="file"/>
+			<input onchange="loadData(this)" class="upload" id="file" type="file" webkitdirectory/>
 
 			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleShipsDialog()">OK</p>
+			<p id="confirm" onclick="toggleDataDialog()">OK</p>
 
 		</div>
 
@@ -107,8 +90,7 @@
 				<td id="spreadsheetsSidebar" class="side">
 
 					<!-- Dialog toggles -->
-					<p onclick="toggleOutfitsDialog()">Load Outfits</p>
-					<p onclick="toggleShipsDialog()">Load Ships</p>
+					<p onclick="toggleDataDialog()">Load Data</p>
 
 				</td>
 

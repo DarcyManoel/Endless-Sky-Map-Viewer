@@ -17,7 +17,7 @@ function initialize(){
 	var img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,0,0);
-}
+};
 
 // Switches page content between map viewer and spreadsheets
 function switchToMapViewer(){
@@ -27,7 +27,7 @@ function switchToMapViewer(){
 	document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
 	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
 	document.getElementById(`spreadsheets`).style.color=`#aaa`;
-}
+};
 function switchToSpreadsheets(){
 	navAnimation();
 	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
@@ -35,13 +35,13 @@ function switchToSpreadsheets(){
 	document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
 	document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
 	document.getElementById(`spreadsheets`).style.color=`#ccc`;
-}
+};
 function navAnimation(){
 	document.getElementById(`mapViewerContent`).classList.toggle(`hiddenRight`);
 	document.getElementById(`spreadsheetsContent`).classList.toggle(`hiddenLeft`);
 	document.getElementById(`mapViewerContent`).classList.toggle(`active`);
 	document.getElementById(`spreadsheetsContent`).classList.toggle(`active`);
-}
+};
 
 // Slides the sidebar out to cover more of the screen
 function slide(){
@@ -49,12 +49,12 @@ function slide(){
 	document.getElementById(`mapViewerSidebar`).classList.toggle(`slide`);
 	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`side`);
 	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`slide`);
-}
+};
 
 // Displays the upload file menu for government files
 function toggleMapDialog(){
 	document.getElementById(`dialogMapScreen`).classList.toggle(`hidden`);
-}
+};
 
 // Runs upon uploading a map file; parses system names, links, and system positions
 function drawSystems(that){
@@ -92,7 +92,7 @@ function drawSystems(that){
 		console.log(`Systems: `+systems.length);
 	};
 	systemsReader.readAsText(that.files[0]);
-}
+};
 
 // Looped function, runs per system listed and draws systems on canvas
 function drawSystem(system,faction,xPos,yPos){
@@ -101,12 +101,12 @@ function drawSystem(system,faction,xPos,yPos){
 	context.lineWidth=3;
 	context.strokeStyle=`rgb(102,102,102)`;
 	context.stroke();
-}
+};
 
 // Displays the upload file menu for governments files
 function toggleGovernmentDialog(){
 	document.getElementById(`dialogGovernmentScreen`).classList.toggle(`hidden`);
-}
+};
 
 // Runs on uploading a government file; parses government names, and colour values
 function loadGovernments(that){
@@ -136,7 +136,7 @@ function loadGovernments(that){
 		};
 	};
 	governmentsReader.readAsText(that.files[0]);
-}
+};
 
 // Looped function, runs per system listed and draws systems with aligned governments colours on canvas
 function colourSystem(system,faction,xPos,yPos){
@@ -151,42 +151,51 @@ function colourSystem(system,faction,xPos,yPos){
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
 //	console.log(system,factionHolding,xPos,yPos);	|Write to console general information of all systems drawn onto canvas
-}
-
-// Displays the upload file menu for outfits files
-function toggleOutfitsDialog(){
-	document.getElementById(`dialogOutfitsScreen`).classList.toggle(`hidden`);
-}
-
-// Runs on uploading an outfits file; parses outfit names, and stats
-function loadOutfits(that){
-	var outfitsReader=new FileReader();
-	outfitsReader.onload=function(e){
-		var outfitsSeperated=e.target.result.split(/\noutfit /).filter((outfit)=>outfit.includes(`category`)).join(``).split(/\n/);
-		var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
-		for(i=0;i<outfitsUniqueHolding.length;i++){
-			document.getElementById(`spreadsheetsMain`).innerHTML+=`<div><p>`+outfitsUniqueHolding[i]+`</p></div>`;
-		}
-//		console.log(outfitsUniqueHolding);
-	};
-	outfitsReader.readAsText(that.files[0]);
-}
+};
 
 // Displays the upload file menu for ships files
-function toggleShipsDialog(){
-	document.getElementById(`dialogShipsScreen`).classList.toggle(`hidden`);
-}
+function toggleDataDialog(){
+	document.getElementById(`dialogDataScreen`).classList.toggle(`hidden`);
+};
 
 // Runs on uploading an ships file; parses ship names, and stats
-function loadShips(that){
-	var shipsReader=new FileReader();
-	shipsReader.onload=function(e){
-		var shipsSeperated=e.target.result.split(/\nship /).join(``).split(/\n/);
-		var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^"/).join(`|`).replace(/"/g,``).split(`|`);
-		for(i=0;i<shipsUniqueHolding.length;i++){
-			document.getElementById(`spreadsheetsMain`).innerHTML+=`<div><p>`+shipsUniqueHolding[i]+`</p></div>`;
-		}
-//		console.log(shipsUniqueHolding);
+function loadData(that){
+	var output=document.getElementById("spreadsheetsMain");
+	var files=event.target.files;
+	console.log(files);
+	for(i=0;i<files.length;i++){
+		var shipsReader=new FileReader();
+		shipsReader.onload=function(e){
+			var shipsSeperated=e.target.result.split(/\nsh/).join(``).split(/\n/);
+			var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^ip /).join(`|#`).replace(/#ip |^ip /g,``).replace(/"/g,``).split(`|`);
+			if(shipsUniqueHolding[0]!==``){
+				console.log(shipsUniqueHolding);
+			};
+			for(j=0;j<shipsUniqueHolding.length;j++){
+				var item=document.createElement("div");
+				item.innerHTML=shipsUniqueHolding[j];
+				if(shipsUniqueHolding[j]!==``){
+					output.appendChild(item);
+				};
+			};
+		};
+		shipsReader.readAsText(that.files[i]);
+
+		var outfitsReader=new FileReader();
+		outfitsReader.onload=function(e){
+			var outfitsSeperated=e.target.result.split(/\noutf/).join(``).split(/\n/);
+			var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^it /).join(`|#`).replace(/#it |^it /g,``).replace(/"/g,``).split(`|`);
+			if(outfitsUniqueHolding[0]!==``){
+				console.log(outfitsUniqueHolding);
+			};
+			for(j=0;j<outfitsUniqueHolding.length;j++){
+				var item=document.createElement("div");
+				item.innerHTML=outfitsUniqueHolding[j];
+				if(outfitsUniqueHolding[j]!==``){
+					output.appendChild(item);
+				};
+			};
+		};
+		outfitsReader.readAsText(that.files[i]);
 	};
-	shipsReader.readAsText(that.files[0]);
-}
+};
