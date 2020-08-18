@@ -23,41 +23,7 @@
 			</div>
 		</div>
 
-		<!-- Map dialog screen, displayed on request -->
-		<div id="dialogMapScreen" class="hidden">
-
-			<!-- Darken background -->
-			<div class="cover"></div>
-
-			<!-- Aesthetic -->
-			<img class="dialog" src="assets/dialog.png"/>
-
-			<!-- File upload prompt for map file -->
-			<input onchange="drawSystems(this)" class="upload" id="file" type="file"/>
-
-			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleMapDialog()">OK</p>
-
-		</div>
-
-		<!-- Government dialog screen, displayed on request -->
-		<div id="dialogGovernmentScreen" class="hidden">
-
-			<!-- Darken background -->
-			<div class="cover"></div>
-
-			<!-- Aesthetic -->
-			<img class="dialog" src="assets/dialog.png"/>
-
-			<!-- File upload prompt for governments file -->
-			<input onchange="loadGovernments(this)" class="upload" id="file" type="file"/>
-
-			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleGovernmentDialog()">OK</p>
-
-		</div>
-
-		<!-- Ship dialog screen, displayed on request -->
+		<!-- Data dialog screen, displayed on request -->
 		<div id="dialogDataScreen" class="hidden">
 
 			<!-- Darken background -->
@@ -66,7 +32,7 @@
 			<!-- Aesthetic -->
 			<img class="dialog" src="assets/dialog.png"/>
 
-			<!-- File upload prompt for ships file -->
+			<!-- File upload prompt for data loading -->
 			<input onchange="loadData(this)" class="upload" id="file" type="file" webkitdirectory/>
 
 			<!-- Close dialog -->
@@ -111,9 +77,6 @@
 
 					<!-- Dialog toggles -->
 					<p onclick="toggleDataDialog()">Load Data</p>
-					<br>
-					<p onclick="toggleMapDialog()">Load Map</p>
-					<p onclick="toggleGovernmentDialog()">Load Governments</p>
 
 				</td>
 				<td class="mapViewerEdge" onclick="slide()"></td>
