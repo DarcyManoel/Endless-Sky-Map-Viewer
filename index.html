@@ -13,8 +13,8 @@
 	<!-- Contains all page content, initializes content -->
 	<body onload="initialize()">
 
-		<!-- Navigation menu, opens up more than just viewing the map -->
-		<div id="navMenu" class="navMenu">
+		<!-- Navigation menu, options are map viewer and spreadsheets -->
+		<div id="navMenuMajor" class="navMenuMajor">
 			<div id="mapViewer">
 				Map Viewer
 			</div>
@@ -39,30 +39,6 @@
 			<p id="confirm" onclick="toggleDataDialog()">OK</p>
 
 		</div>
-
-		<!-- Spreadsheets content -->
-		<table id="spreadsheetsContent" class="hiddenLeft">
-			<tr>
-				<td class="navSpacing" colspan="4">
-				</td>
-			</tr>
-			<tr>
-				<td class="mapViewerEdge"></td>
-				<td class="main">
-					<div id="spreadsheetsMain"></div>
-				</td>
-
-				<!-- Spreadsheet sidebar -->
-				<td class="spreadsheetsEdge" onclick="slide()"></td>
-				<td id="spreadsheetsSidebar" class="side">
-
-					<!-- Dialog toggles -->
-					<p onclick="toggleDataDialog()">Load Data</p>
-
-				</td>
-
-			</tr>
-		</table>
 
 		<!-- Map viewer content -->
 		<table id="mapViewerContent" class="active">
@@ -91,6 +67,39 @@
 
 				</td>
 				<td class="spreadsheetsEdge"></td>
+			</tr>
+		</table>
+
+		<!-- Spreadsheets content -->
+		<table id="spreadsheetsContent" class="hiddenLeft">
+			<tr>
+				<td class="navSpacing" colspan="4">
+				</td>
+			</tr>
+			<tr>
+				<td class="mapViewerEdge"></td>
+				<td class="main">
+
+					<!-- Navigation menu for spreadsheet, options are ships and outfits -->
+					<div id="spreadsheetShips" class="spreadsheetShips" onclick="switchToShips()" onload="switchToShips()">
+						Ships
+					</div>
+					<div id="spreadsheetOutfits" class="spreadsheetOutfits" onclick="switchToOutfits()">
+						Outfits
+					</div>
+
+					<div id="spreadsheetsMain"></div>
+				</td>
+
+				<!-- Spreadsheet sidebar -->
+				<td class="spreadsheetsEdge" onclick="slide()"></td>
+				<td id="spreadsheetsSidebar" class="side">
+
+					<!-- Dialog toggles -->
+					<p onclick="toggleDataDialog()">Load Data</p>
+
+				</td>
+
 			</tr>
 		</table>
 

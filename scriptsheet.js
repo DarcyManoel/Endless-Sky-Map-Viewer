@@ -22,7 +22,7 @@ function initialize(){
 // Switches page content between map viewer and spreadsheets
 function switchToMapViewer(){
 	navAnimation();
-	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/map viewer.png")`;
+	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/map viewer.png")`;
 	document.getElementById(`mapViewer`).style.color=`#ccc`;
 	document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
 	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
@@ -30,7 +30,7 @@ function switchToMapViewer(){
 };
 function switchToSpreadsheets(){
 	navAnimation();
-	document.getElementById(`navMenu`).style.backgroundImage=`url("assets/spreadsheets.png")`;
+	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/spreadsheets.png")`;
 	document.getElementById(`mapViewer`).style.color=`#aaa`;
 	document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
 	document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
@@ -41,6 +41,32 @@ function navAnimation(){
 	document.getElementById(`spreadsheetsContent`).classList.toggle(`hiddenLeft`);
 	document.getElementById(`mapViewerContent`).classList.toggle(`active`);
 	document.getElementById(`spreadsheetsContent`).classList.toggle(`active`);
+};
+
+// Switches spreadsheet content between ships and outfits
+function switchToOutfits(){
+	document.getElementById(`spreadsheetOutfits`).style.backgroundImage=`url("assets/spreadsheets active.png")`;
+	document.getElementById(`spreadsheetShips`).style.backgroundImage=`url("assets/spreadsheets inactive.png")`;
+	var outfits=document.getElementsByClassName(`outfit`);
+	for(i=0;i<outfits.length;i++){
+		outfits[i].style.display=`inline-block`;
+	};
+	var ships=document.getElementsByClassName(`ship`);
+	for(i=0;i<ships.length;i++){
+		ships[i].style.display=`none`;
+	};
+};
+function switchToShips(){
+	document.getElementById(`spreadsheetOutfits`).style.backgroundImage=`url("assets/spreadsheets inactive.png")`;
+	document.getElementById(`spreadsheetShips`).style.backgroundImage=`url("assets/spreadsheets active.png")`;
+	var outfits=document.getElementsByClassName(`outfit`);
+	for(i=0;i<outfits.length;i++){
+		outfits[i].style.display=`none`;
+	};
+	var ships=document.getElementsByClassName(`ship`);
+	for(i=0;i<ships.length;i++){
+		ships[i].style.display=`inline-block`;
+	};
 };
 
 // Slides the sidebar out to cover more of the screen
@@ -58,7 +84,6 @@ function toggleDataDialog(){
 
 // Runs on uploading an ships file; parses ship names, and stats
 function loadData(that){
-	var output=document.getElementById("spreadsheetsMain");
 	var files=event.target.files;
 	console.log(files);
 	for(i=0;i<files.length;i++){
@@ -128,23 +153,18 @@ function loadData(that){
 			for(i=0;i<systems.length;i++){
 				drawSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
 			};
-			console.log(systems);
 		};
 		
 		// Parsing ships to display on spreadsheet
 		var shipsReader=new FileReader();
 		shipsReader.onload=function(e){
 			var shipsSeperated=e.target.result.split(/\nsh/).join(``).split(/\n/);
-			var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^ip /).join(`|#`).replace(/#ip |^ip /g,``).replace(/"/g,``).split(`|`);
+			var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^ip /).join(`|#`).replace(/#ip |^ip /g,``).split(`|`);
 //			if(shipsUniqueHolding[0]!==``){
 //				console.log(shipsUniqueHolding);
 //			};
 			for(j=0;j<shipsUniqueHolding.length;j++){
-				var item=document.createElement("div");
-				item.innerHTML=shipsUniqueHolding[j];
-				if(shipsUniqueHolding[j]!==``){
-					output.appendChild(item);
-				};
+				addShipOrOutfit(shipsUniqueHolding[j],`ship`);
 			};
 		};
 		shipsReader.readAsText(that.files[i]);
@@ -158,11 +178,11 @@ function loadData(that){
 //				console.log(outfitsUniqueHolding);
 //			};
 			for(j=0;j<outfitsUniqueHolding.length;j++){
-				var item=document.createElement("div");
-				item.innerHTML=outfitsUniqueHolding[j];
-				if(outfitsUniqueHolding[j]!==``){
-					output.appendChild(item);
-				};
+				addShipOrOutfit(outfitsUniqueHolding[j],`outfit`);
+			};
+			var outfits=document.getElementsByClassName(`outfit`);
+			for(i=0;i<outfits.length;i++){
+				outfits[i].style.display=`none`;
 			};
 		};
 		outfitsReader.readAsText(that.files[i]);
@@ -181,5 +201,21 @@ function drawSystem(system,faction,xPos,yPos){
 	context.lineWidth=3.8;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
-	console.log(system,factionHolding,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+//	console.log(system,factionHolding,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+};
+
+function addShipOrOutfit(name,type){
+	var item=document.createElement(`div`);
+	item.innerHTML=name;
+	if(name!==``){
+		if(type==`ship`){
+			item.classList=`ship`;
+			document.getElementById(`spreadsheetsMain`).appendChild(item);
+			console.log(name);
+		};
+		if(type==`outfit`){
+			item.classList=`outfit`;
+			document.getElementById(`spreadsheetsMain`).appendChild(item);
+		};
+	};
 };

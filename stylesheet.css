@@ -40,7 +40,7 @@ canvas{
 }
 
 /* Styling and animations for page navigation */
-.navMenu{
+.navMenuMajor{
 	background:url("assets/map viewer.png");
 	background-size:100% 120%;
 	height:5vh;
@@ -98,6 +98,34 @@ table{
 }
 
 /* Style content area for spreadsheets page */
+#spreadsheetShips{
+	background:url("assets/spreadsheets active.png");
+	background-repeat:no-repeat;
+	background-size:100%;
+	font-size:1vw;
+	height:4vh;
+	left:1vw;
+	padding-top:0.7vw;
+	position:absolute;
+	bottom:4vw;
+	transition:all 0.4s,background 0s;
+	vertical-align:middle;
+	width:8vw;
+}
+#spreadsheetOutfits{
+	background:url("assets/spreadsheets inactive.png");
+	background-repeat:no-repeat;
+	background-size:100%;
+	font-size:1vw;
+	height:4vh;
+	left:1vw;
+	padding-top:0.7vw;
+	position:absolute;
+	bottom:1vw;
+	transition:all 0.4s,background 0s;
+	vertical-align:middle;
+	width:8vw;
+}
 #spreadsheetsMain{
 	height:100%;
 	overflow-y:scroll;
@@ -106,10 +134,11 @@ table{
 }
 #spreadsheetsMain div{
 	background:url("assets/spreadsheets entry.png");
+	background-repeat:no-repeat;
 	background-size:100%;
 	display:inline-block;
 	height:150px;
-	margin:0 1vw 0 1vw;
+	margin:2vh 1vw 2vh 1vw;
 	vertical-align:top;
 	width:150px;
 }
