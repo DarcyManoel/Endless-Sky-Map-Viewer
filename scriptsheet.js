@@ -4,10 +4,10 @@ canvas.height=screen.height;
 canvas.width=screen.width;
 var context=canvas.getContext(`2d`);
 var governmentsColours=[];
-var governmentsFinal;
 var governmentsUnique=[];
-var links;
-var positions;
+var links=[];
+var positions=[];
+var systemGovernments=[];
 var systems=[];
 var zoom=2.5;
 
@@ -85,7 +85,7 @@ function toggleDataDialog(){
 // Runs on uploading an ships file; parses ship names, and stats
 function loadData(that){
 	var files=event.target.files;
-	console.log(files);
+//	console.log(files);
 	for(i=0;i<files.length;i++){
 
 		// Parsing governments to generate the map image
@@ -101,8 +101,9 @@ function loadData(that){
 					governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
 				};
 			};
-			if(governmentsUniqueHolding!==""){
+			if(governmentsUniqueHolding[0].length>0){
 				governmentsUnique.push(...governmentsUniqueHolding);
+//					console.log(governmentsUnique);
 			};
 			var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 			coloursSpread.unshift(``);
@@ -113,8 +114,9 @@ function loadData(that){
 			for(i=0;i<((coloursSpread.length-1)/3);i++){
 				governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
 			};
-			governmentsColours.push(...governmentsColoursHolding);
-//			console.log(governmentsUnique);
+			if(governmentsUniqueHolding[0].length>1){
+				governmentsColours.push(...governmentsColoursHolding);
+			};
 		};
 
 		// Parsing systems to generate the map image
@@ -123,35 +125,26 @@ function loadData(that){
 		systemsReader.onload=function(e){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
-			systems=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
-			positions=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
-			for(i=0;i<positions.length;i++){
-				positions[i]=positions[i].split(` `);
+			var systemsHolding=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
+			var positionsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
+			for(i=0;i<positionsHolding.length;i++){
+				positionsHolding[i]=positionsHolding[i].split(` `);
 			};
-			links=output.split(`\nsystem`);
-			links.shift();
-			for(i=0;i<links.length;i++){
-				links[i]=links[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
-				for(j=0;j<links[i].length;j++){
-					var pos=systems.indexOf(links[i][j]);
-					var xDifference=(positions[i][0]-positions[pos][0])*0.18;
-					var yDifference=(positions[i][1]-positions[pos][1])*0.18;
-					context.beginPath();
-					context.moveTo((1750+ +positions[i][0])-xDifference,(1250+ +positions[i][1])-yDifference);
-					context.lineTo((1750+ +positions[pos][0])+xDifference,(1250+ +positions[pos][1])+yDifference);
-					context.lineWidth=1.7;
-					context.strokeStyle=`rgb(102,102,102)`;
-					context.stroke();
-//					console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+			var linksHolding=output.split(`\nsystem`);
+			linksHolding.shift();
+			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/^tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
+			var governmentsDifference=(systemGovernmentsHolding.length-systemsHolding.length);
+			if(systemsHolding.length<systemGovernmentsHolding.length){
+				systemGovernmentsHolding.splice(systemGovernmentsHolding.length-governmentsDifference,governmentsDifference);
+			};
+			if(systemsHolding[0].length>0){
+				systems.push(...systemsHolding);
+				positions.push(...positionsHolding);
+				links.push(...linksHolding);
+				systemGovernments.push(...systemGovernmentsHolding);
+				for(i=0;i<systemsHolding.length;i++){
+//					console.log(systemsHolding[i]+` `+systemGovernmentsHolding[i]+` `+positionsHolding[i].join(` `));
 				};
-			};
-			governmentsFinal=lines.join(`|`).split(`sys`).filter(/./.test,/^tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
-			var governmentsDifference=(governmentsFinal.length-systems.length);
-			if(systems.length<governmentsFinal.length){
-				governmentsFinal.splice(governmentsFinal.length-governmentsDifference,governmentsDifference);
-			};
-			for(i=0;i<systems.length;i++){
-				drawSystem(systems[i],governmentsFinal[i],positions[i][0],positions[i][1]);
 			};
 		};
 		
@@ -160,11 +153,11 @@ function loadData(that){
 		shipsReader.onload=function(e){
 			var shipsSeperated=e.target.result.split(/\nsh/).join(``).split(/\n/);
 			var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^ip /).join(`|#`).replace(/#ip |^ip /g,``).split(`|`);
-//			if(shipsUniqueHolding[0]!==``){
-//				console.log(shipsUniqueHolding);
-//			};
-			for(j=0;j<shipsUniqueHolding.length;j++){
-				addShipOrOutfit(shipsUniqueHolding[j],`ship`);
+			if(shipsUniqueHolding[0].length>0){
+//					console.log(shipsUniqueHolding);
+			};
+			for(i=0;i<shipsUniqueHolding.length;i++){
+				addShipOrOutfit(shipsUniqueHolding[i],`ship`);
 			};
 		};
 		shipsReader.readAsText(that.files[i]);
@@ -174,11 +167,11 @@ function loadData(that){
 		outfitsReader.onload=function(e){
 			var outfitsSeperated=e.target.result.split(/\noutf/).join(``).split(/\n/);
 			var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^it /).join(`|#`).replace(/#it |^it /g,``).replace(/"/g,``).split(`|`);
-//			if(outfitsUniqueHolding[0]!==``){
-//				console.log(outfitsUniqueHolding);
-//			};
-			for(j=0;j<outfitsUniqueHolding.length;j++){
-				addShipOrOutfit(outfitsUniqueHolding[j],`outfit`);
+			if(outfitsUniqueHolding[0].length>0){
+//					console.log(outfitsUniqueHolding);
+			};
+			for(i=0;i<outfitsUniqueHolding.length;i++){
+				addShipOrOutfit(outfitsUniqueHolding[i],`outfit`);
 			};
 			var outfits=document.getElementsByClassName(`outfit`);
 			for(i=0;i<outfits.length;i++){
@@ -186,13 +179,35 @@ function loadData(that){
 			};
 		};
 		outfitsReader.readAsText(that.files[i]);
+
+	};
+};
+
+function finishedReading(){
+	for(i=0;i<systems.length;i++){
+		drawSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
+	};
+	for(i=0;i<links.length;i++){
+		links[i]=links[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
+		for(j=0;j<links[i].length;j++){
+			var pos=systems.indexOf(links[i][j]);
+			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
+			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
+			context.beginPath();
+			context.moveTo((1750+ +positions[i][0])-xDifference,(1250+ +positions[i][1])-yDifference);
+			context.lineTo((1750+ +positions[pos][0])+xDifference,(1250+ +positions[pos][1])+yDifference);
+			context.lineWidth=1.7;
+			context.strokeStyle=`rgb(102,102,102)`;
+			context.stroke();
+//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+		};
 	};
 };
 
 // Looped function, runs per system listed and draws systems on canvas
 function drawSystem(system,faction,xPos,yPos){
 	var factionHolding=faction.replace(/"/g,``);
-	if(factionHolding.indexOf(` `)>=0){
+	if(factionHolding.indexOf(` `)>0){
 		factionHolding=`"`+factionHolding+`"`;
 	};
 	var factionIndex=governmentsUnique.indexOf(factionHolding);
@@ -211,11 +226,12 @@ function addShipOrOutfit(name,type){
 		if(type==`ship`){
 			item.classList=`ship`;
 			document.getElementById(`spreadsheetsMain`).appendChild(item);
-			console.log(name);
+//			console.log(name);
 		};
 		if(type==`outfit`){
 			item.classList=`outfit`;
 			document.getElementById(`spreadsheetsMain`).appendChild(item);
+//			console.log(name);
 		};
 	};
 };
