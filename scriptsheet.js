@@ -184,6 +184,8 @@ function loadData(that){
 };
 
 function finishedReading(){
+//	console.log(governmentsUnique);
+//	console.log(governmentsColours);
 	for(i=0;i<systems.length;i++){
 		drawSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
 	};
@@ -202,21 +204,21 @@ function finishedReading(){
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 	};
+	systems=[];
+	systemGovernments=[];
+	positions=[];
+	links=[];
 };
 
 // Looped function, runs per system listed and draws systems on canvas
 function drawSystem(system,faction,xPos,yPos){
-	var factionHolding=faction.replace(/"/g,``);
-	if(factionHolding.indexOf(` `)>0){
-		factionHolding=`"`+factionHolding+`"`;
-	};
-	var factionIndex=governmentsUnique.indexOf(factionHolding);
+	var factionIndex=governmentsUnique.indexOf(faction);
 	context.beginPath();
 	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
 	context.lineWidth=3.8;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
-//	console.log(system,factionHolding,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
 };
 
 function addShipOrOutfit(name,type){
