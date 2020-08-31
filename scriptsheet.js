@@ -94,8 +94,8 @@ function loadData(that){
 		governmentsReader.onload=function(e){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
-			var governmentsSeperated=output.split(/\ngovern/).filter((government)=>government.includes(`	color`)).join(``).split(/\n/);
-			var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/^ment/).join(`|`).replace(/ment /g,``).replace(/"/g,``).split(`|`);
+			var governmentsSeperated=output.split(/gover/).filter((government)=>government.includes(`	color`)).join(``).split(/\n/);
+			var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/nment/).join(`|`).replace(/nment /g,``).replace(/"/g,``).split(`|`);
 			for(i=0;i<governmentsUniqueHolding.length;i++){
 				if(governmentsUniqueHolding[i].indexOf(` `)>=0){
 					governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
@@ -103,7 +103,9 @@ function loadData(that){
 			};
 			if(governmentsUniqueHolding[0].length>0){
 				governmentsUnique.push(...governmentsUniqueHolding);
-//					console.log(governmentsUnique);
+//				console.log(governmentsUnique);
+				console.log(governmentsUniqueHolding);
+
 			};
 			var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 			coloursSpread.unshift(``);
@@ -126,13 +128,13 @@ function loadData(that){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
 			var systemsHolding=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
-			var positionsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/^tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
+			var positionsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
 			for(i=0;i<positionsHolding.length;i++){
 				positionsHolding[i]=positionsHolding[i].split(` `);
 			};
-			var linksHolding=output.split(`\nsystem`);
+			var linksHolding=output.split(`system`);
 			linksHolding.shift();
-			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/^tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
+			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 			var governmentsDifference=(systemGovernmentsHolding.length-systemsHolding.length);
 			if(systemsHolding.length<systemGovernmentsHolding.length){
 				systemGovernmentsHolding.splice(systemGovernmentsHolding.length-governmentsDifference,governmentsDifference);
@@ -201,7 +203,7 @@ function finishedReading(){
 			context.lineWidth=1.7;
 			context.strokeStyle=`rgb(102,102,102)`;
 			context.stroke();
-//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 	};
 	systems=[];
@@ -218,7 +220,7 @@ function drawSystem(system,faction,xPos,yPos){
 	context.lineWidth=3.8;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
-//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
 };
 
 function addShipOrOutfit(name,type){
