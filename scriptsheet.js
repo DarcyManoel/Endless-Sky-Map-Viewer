@@ -188,7 +188,7 @@ function loadData(that){
 function finishedReading(){
 //	console.log(governmentsUnique);
 //	console.log(governmentsColours);
-	for(i=0;i<systems.length;i++){
+	for(i=0;i<positions.length;i++){
 		drawSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
 	};
 	for(i=0;i<links.length;i++){
@@ -203,7 +203,7 @@ function finishedReading(){
 			context.lineWidth=1.7;
 			context.strokeStyle=`rgb(102,102,102)`;
 			context.stroke();
-			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 	};
 	systems=[];
@@ -214,7 +214,7 @@ function finishedReading(){
 
 // Looped function, runs per system listed and draws systems on canvas
 function drawSystem(system,faction,xPos,yPos){
-	var factionIndex=governmentsUnique.indexOf(faction);
+	var factionIndex=governmentsUnique.indexOf(faction.trim());
 	context.beginPath();
 	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
 	context.lineWidth=3.8;
