@@ -104,7 +104,7 @@ function loadData(that){
 			if(governmentsUniqueHolding[0].length>0){
 				governmentsUnique.push(...governmentsUniqueHolding);
 //				console.log(governmentsUnique);
-				console.log(governmentsUniqueHolding);
+//				console.log(governmentsUniqueHolding);
 
 			};
 			var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
@@ -132,7 +132,8 @@ function loadData(that){
 			for(i=0;i<positionsHolding.length;i++){
 				positionsHolding[i]=positionsHolding[i].split(` `);
 			};
-			var linksHolding=output.split(`system`);
+			var linksHolding=`\n`+output;
+			var linksHolding=linksHolding.split(`\nsystem`);
 			linksHolding.shift();
 			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 			var governmentsDifference=(systemGovernmentsHolding.length-systemsHolding.length);
@@ -186,8 +187,6 @@ function loadData(that){
 };
 
 function finishedReading(){
-//	console.log(governmentsUnique);
-//	console.log(governmentsColours);
 	for(i=0;i<positions.length;i++){
 		drawSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
 	};
@@ -205,11 +204,13 @@ function finishedReading(){
 			context.stroke();
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
+		links[i]=links[i].join(`|`)
 	};
-	systems=[];
-	systemGovernments=[];
-	positions=[];
-	links=[];
+//	console.log(governmentsUnique);
+//	console.log(governmentsColours);
+//	console.log(systems);
+//	console.log(positions);
+//	console.log(links);
 };
 
 // Looped function, runs per system listed and draws systems on canvas
@@ -220,7 +221,7 @@ function drawSystem(system,faction,xPos,yPos){
 	context.lineWidth=3.8;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
-	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
 };
 
 function addShipOrOutfit(name,type){
