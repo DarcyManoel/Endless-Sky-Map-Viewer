@@ -9,14 +9,14 @@ var links=[];
 var positions=[];
 var systemGovernments=[];
 var systems=[];
-var zoom=2.5;
+var zoom=3;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
 	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
 	var img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
-	context.drawImage(img,0,0);
+	context.drawImage(img,800,100);
 };
 
 // Switches page content between map viewer and spreadsheets
@@ -197,8 +197,8 @@ function finishedReading(){
 			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
 			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
 			context.beginPath();
-			context.moveTo((1750+ +positions[i][0])-xDifference,(1250+ +positions[i][1])-yDifference);
-			context.lineTo((1750+ +positions[pos][0])+xDifference,(1250+ +positions[pos][1])+yDifference);
+			context.moveTo((2550+ +positions[i][0])-xDifference,(1350+ +positions[i][1])-yDifference);
+			context.lineTo((2550+ +positions[pos][0])+xDifference,(1350+ +positions[pos][1])+yDifference);
 			context.lineWidth=1.7;
 			context.strokeStyle=`rgb(102,102,102)`;
 			context.stroke();
@@ -217,8 +217,8 @@ function finishedReading(){
 function drawSystem(system,faction,xPos,yPos){
 	var factionIndex=governmentsUnique.indexOf(faction.trim());
 	context.beginPath();
-	context.arc(1750+ +xPos,1250+ +yPos,9,0,2*Math.PI);
-	context.lineWidth=3.8;
+	context.arc(2550+ +xPos,1350+ +yPos,9,0,2*Math.PI);
+	context.lineWidth=3.6;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
 //	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
