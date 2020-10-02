@@ -36,7 +36,7 @@
 			<input onchange="loadData(this)" class="upload" id="file" type="file" webkitdirectory/>
 
 			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleDataDialog(),finishedReading()">OK</p>
+			<p id="confirm" onclick="toggleDataDialog(),drawClassicMap()">OK</p>
 
 		</div>
 
@@ -51,8 +51,9 @@
 				<!-- Map viewer sidebar -->
 				<td id="mapViewerSidebar" class="side">
 
-					<!-- Dialog toggles -->
+					<!-- Actions -->
 					<p onclick="toggleDataDialog()">Load Data</p>
+					<p id="mapView" onclick="toggleMapView()" class="hidden">Classic Map View</p>
 
 				</td>
 				<td class="mapViewerEdge" onclick="slide()"></td>

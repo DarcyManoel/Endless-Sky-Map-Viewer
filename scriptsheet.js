@@ -5,7 +5,9 @@ canvas.width=screen.width;
 var context=canvas.getContext(`2d`);
 var governmentsColours=[];
 var governmentsUnique=[];
+var img=document.getElementById(`galaxy`);
 var links=[];
+var mapView=1;
 var positions=[];
 var systemGovernments=[];
 var systems=[];
@@ -14,7 +16,6 @@ var zoom=3;
 // Runs on page load, creates the initial canvas
 function initialize(){
 	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
-	var img=document.getElementById(`galaxy`);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,800,100);
 };
@@ -135,6 +136,9 @@ function loadData(that){
 			var linksHolding=`\n`+output;
 			var linksHolding=linksHolding.split(`\nsystem`);
 			linksHolding.shift();
+			for(i=0;i<linksHolding.length;i++){
+				linksHolding[i]=linksHolding[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
+			};
 			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 			var governmentsDifference=(systemGovernmentsHolding.length-systemsHolding.length);
 			if(systemsHolding.length<systemGovernmentsHolding.length){
@@ -186,12 +190,12 @@ function loadData(that){
 	};
 };
 
-function finishedReading(){
+function drawClassicMap(){
+	document.getElementById("mapView").classList.remove(`hidden`);
 	for(i=0;i<positions.length;i++){
-		drawSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
+		drawClassicSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
 	};
 	for(i=0;i<links.length;i++){
-		links[i]=links[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
 			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
@@ -204,20 +208,61 @@ function finishedReading(){
 			context.stroke();
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
-		links[i]=links[i].join(`|`)
 	};
-//	console.log(governmentsUnique);
-//	console.log(governmentsColours);
-//	console.log(systems);
-//	console.log(positions);
-//	console.log(links);
 };
 
 // Looped function, runs per system listed and draws systems on canvas
-function drawSystem(system,faction,xPos,yPos){
+function drawClassicSystem(system,faction,xPos,yPos){
 	var factionIndex=governmentsUnique.indexOf(faction.trim());
 	context.beginPath();
 	context.arc(2550+ +xPos,1350+ +yPos,9,0,2*Math.PI);
+	context.lineWidth=3.6;
+	context.strokeStyle=governmentsColours[factionIndex];
+	context.stroke();
+//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
+};
+
+function toggleMapView(){
+	if(mapView<2){
+		mapView++;
+	}else{
+		mapView=1;
+	};
+	if(mapView==1){
+		document.getElementById("mapView").innerHTML=`Classic Map View`;
+		context.drawImage(img,800,100);
+		drawClassicMap();
+	}else if(mapView==2){
+		document.getElementById("mapView").innerHTML=`Modern Map View`;
+		context.drawImage(img,800,100);
+		drawModernMap();
+	};
+};
+
+function drawModernMap(){
+	document.getElementById("mapView").classList.remove(`hidden`);
+	for(i=0;i<positions.length;i++){
+		drawModernSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
+	};
+	for(i=0;i<links.length;i++){
+		for(j=0;j<links[i].length;j++){
+			var pos=systems.indexOf(links[i][j]);
+			context.beginPath();
+			context.moveTo(2550+ +positions[i][0],1350+ +positions[i][1]);
+			context.lineTo(2550+ +positions[pos][0],1350+ +positions[pos][1]);
+			context.lineWidth=1.7;
+			context.strokeStyle=`rgb(102,102,102)`;
+			context.stroke();
+//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+		};
+	};
+};
+
+// Looped function, runs per system listed and draws systems on canvas
+function drawModernSystem(system,faction,xPos,yPos){
+	var factionIndex=governmentsUnique.indexOf(faction.trim());
+	context.beginPath();
+	context.arc(2550+ +xPos,1350+ +yPos,0,0,2*Math.PI);
 	context.lineWidth=3.6;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
