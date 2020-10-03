@@ -208,6 +208,9 @@ function toggleMapView(){
 };
 
 function drawClassicMap(){
+	context.drawImage(img,800,100);
+	mapView=1;
+	document.getElementById("mapView").innerHTML=`Classic Map View`;
 	document.getElementById("mapView").classList.remove(`hidden`);
 	for(i=0;i<links.length;i++){
 		context.beginPath();
