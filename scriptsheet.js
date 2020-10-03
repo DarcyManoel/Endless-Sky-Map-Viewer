@@ -202,8 +202,8 @@ function drawClassicMap(){
 			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
 			context.beginPath();
 			context.moveTo((2550+ +positions[i][0])-xDifference,(1350+ +positions[i][1])-yDifference);
-			context.lineTo((2550+ +positions[pos][0])+xDifference,(1350+ +positions[pos][1])+yDifference);
-			context.lineWidth=1.7;
+			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
+			context.lineWidth=2.7;
 			context.strokeStyle=`rgb(102,102,102)`;
 			context.stroke();
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
@@ -245,13 +245,14 @@ function drawModernMap(){
 		drawModernSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
 	};
 	for(i=0;i<links.length;i++){
+		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
 			context.beginPath();
 			context.moveTo(2550+ +positions[i][0],1350+ +positions[i][1]);
-			context.lineTo(2550+ +positions[pos][0],1350+ +positions[pos][1]);
+			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
 			context.lineWidth=1.7;
-			context.strokeStyle=`rgb(102,102,102)`;
+			context.strokeStyle=linkColour;
 			context.stroke();
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
@@ -262,7 +263,7 @@ function drawModernMap(){
 function drawModernSystem(system,faction,xPos,yPos){
 	var factionIndex=governmentsUnique.indexOf(faction.trim());
 	context.beginPath();
-	context.arc(2550+ +xPos,1350+ +yPos,0,0,2*Math.PI);
+	context.arc(2550+ +xPos,1350+ +yPos,2,0,2*Math.PI);
 	context.lineWidth=3.6;
 	context.strokeStyle=governmentsColours[factionIndex];
 	context.stroke();
