@@ -190,38 +190,6 @@ function loadData(that){
 	};
 };
 
-function drawClassicMap(){
-	document.getElementById("mapView").classList.remove(`hidden`);
-	for(i=0;i<positions.length;i++){
-		drawClassicSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
-	};
-	for(i=0;i<links.length;i++){
-		for(j=0;j<links[i].length;j++){
-			var pos=systems.indexOf(links[i][j]);
-			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
-			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
-			context.beginPath();
-			context.moveTo((2550+ +positions[i][0])-xDifference,(1350+ +positions[i][1])-yDifference);
-			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
-			context.lineWidth=2.7;
-			context.strokeStyle=`rgb(102,102,102)`;
-			context.stroke();
-//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
-		};
-	};
-};
-
-// Looped function, runs per system listed and draws systems on canvas
-function drawClassicSystem(system,faction,xPos,yPos){
-	var factionIndex=governmentsUnique.indexOf(faction.trim());
-	context.beginPath();
-	context.arc(2550+ +xPos,1350+ +yPos,9,0,2*Math.PI);
-	context.lineWidth=3.6;
-	context.strokeStyle=governmentsColours[factionIndex];
-	context.stroke();
-//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
-};
-
 function toggleMapView(){
 	if(mapView<2){
 		mapView++;
@@ -239,12 +207,38 @@ function toggleMapView(){
 	};
 };
 
+function drawClassicMap(){
+	document.getElementById("mapView").classList.remove(`hidden`);
+	for(i=0;i<links.length;i++){
+		context.beginPath();
+		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
+		context.lineWidth=3.6;
+		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
+		context.stroke();
+		for(j=0;j<links[i].length;j++){
+			var pos=systems.indexOf(links[i][j]);
+			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
+			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
+			context.beginPath();
+			context.moveTo((2550+ +positions[i][0])-xDifference,(1350+ +positions[i][1])-yDifference);
+			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
+			context.lineWidth=2.7;
+			context.strokeStyle=`rgb(102,102,102)`;
+			context.stroke();
+//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
+		};
+	};
+};
+
 function drawModernMap(){
 	document.getElementById("mapView").classList.remove(`hidden`);
-	for(i=0;i<positions.length;i++){
-		drawModernSystem(systems[i],systemGovernments[i],positions[i][0],positions[i][1]);
-	};
 	for(i=0;i<links.length;i++){
+		var factionIndex=governmentsUnique.indexOf(systemGovernments[i].trim());
+		context.beginPath();
+		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI);
+		context.lineWidth=3.6;
+		context.strokeStyle=governmentsColours[factionIndex];
+		context.stroke();
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
@@ -257,17 +251,6 @@ function drawModernMap(){
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 	};
-};
-
-// Looped function, runs per system listed and draws systems on canvas
-function drawModernSystem(system,faction,xPos,yPos){
-	var factionIndex=governmentsUnique.indexOf(faction.trim());
-	context.beginPath();
-	context.arc(2550+ +xPos,1350+ +yPos,2,0,2*Math.PI);
-	context.lineWidth=3.6;
-	context.strokeStyle=governmentsColours[factionIndex];
-	context.stroke();
-//	console.log(system,faction,factionIndex,xPos,yPos);	//Write to console general information of all systems drawn onto canvas
 };
 
 function addShipOrOutfit(name,type){
