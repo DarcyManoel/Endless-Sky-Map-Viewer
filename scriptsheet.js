@@ -15,7 +15,7 @@ var zoom=3;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
-	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
+	document.getElementById(`spreadsheets`).addEventListener(`click`,switchToSpreadsheets);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,800,100);
 };
@@ -25,16 +25,16 @@ function switchToMapViewer(){
 	navAnimation();
 	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/map viewer.png")`;
 	document.getElementById(`mapViewer`).style.color=`#ccc`;
-	document.getElementById(`mapViewer`).removeEventListener("click",switchToMapViewer);
-	document.getElementById(`spreadsheets`).addEventListener("click",switchToSpreadsheets);
+	document.getElementById(`mapViewer`).removeEventListener(`click`,switchToMapViewer);
+	document.getElementById(`spreadsheets`).addEventListener(`click`,switchToSpreadsheets);
 	document.getElementById(`spreadsheets`).style.color=`#aaa`;
 };
 function switchToSpreadsheets(){
 	navAnimation();
 	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/spreadsheets.png")`;
 	document.getElementById(`mapViewer`).style.color=`#aaa`;
-	document.getElementById(`mapViewer`).addEventListener("click",switchToMapViewer);
-	document.getElementById(`spreadsheets`).removeEventListener("click",switchToSpreadsheets);
+	document.getElementById(`mapViewer`).addEventListener(`click`,switchToMapViewer);
+	document.getElementById(`spreadsheets`).removeEventListener(`click`,switchToSpreadsheets);
 	document.getElementById(`spreadsheets`).style.color=`#ccc`;
 };
 function navAnimation(){
@@ -197,21 +197,23 @@ function toggleMapView(){
 		mapView=1;
 	};
 	if(mapView==1){
-		document.getElementById("mapView").innerHTML=`Classic Map View`;
+		document.getElementById(`mapView`).innerHTML=`Classic Map View`;
 		context.drawImage(img,800,100);
 		drawClassicMap();
+		document.getElementById(`confirm`).setAttribute(`onClick`,`toggleDataDialog(),drawClassicMap()`);
 	}else if(mapView==2){
-		document.getElementById("mapView").innerHTML=`Modern Map View`;
+		document.getElementById(`mapView`).innerHTML=`Modern Map View`;
 		context.drawImage(img,800,100);
 		drawModernMap();
+		document.getElementById(`confirm`).setAttribute(`onClick`,`toggleDataDialog(),drawModernMap()`);
 	};
 };
 
 function drawClassicMap(){
 	context.drawImage(img,800,100);
 	mapView=1;
-	document.getElementById("mapView").innerHTML=`Classic Map View`;
-	document.getElementById("mapView").classList.remove(`hidden`);
+	document.getElementById(`mapView`).innerHTML=`Classic Map View`;
+	document.getElementById(`mapView`).classList.remove(`hidden`);
 	for(i=0;i<links.length;i++){
 		context.beginPath();
 		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
@@ -234,7 +236,10 @@ function drawClassicMap(){
 };
 
 function drawModernMap(){
-	document.getElementById("mapView").classList.remove(`hidden`);
+	context.drawImage(img,800,100);
+	mapView=2;
+	document.getElementById(`mapView`).innerHTML=`Modern Map View`;
+	document.getElementById(`mapView`).classList.remove(`hidden`);
 	for(i=0;i<links.length;i++){
 		var factionIndex=governmentsUnique.indexOf(systemGovernments[i].trim());
 		context.beginPath();
