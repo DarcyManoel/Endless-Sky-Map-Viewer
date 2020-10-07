@@ -15,67 +15,14 @@ var zoom=3;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
-	document.getElementById(`spreadsheets`).addEventListener(`click`,switchToSpreadsheets);
 	context.scale(1/zoom,1/zoom);
 	context.drawImage(img,800,100);
-};
-
-// Switches page content between map viewer and spreadsheets
-function switchToMapViewer(){
-	navAnimation();
-	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/map viewer.png")`;
-	document.getElementById(`mapViewer`).style.color=`#ccc`;
-	document.getElementById(`mapViewer`).removeEventListener(`click`,switchToMapViewer);
-	document.getElementById(`spreadsheets`).addEventListener(`click`,switchToSpreadsheets);
-	document.getElementById(`spreadsheets`).style.color=`#aaa`;
-};
-function switchToSpreadsheets(){
-	navAnimation();
-	document.getElementById(`navMenuMajor`).style.backgroundImage=`url("assets/spreadsheets.png")`;
-	document.getElementById(`mapViewer`).style.color=`#aaa`;
-	document.getElementById(`mapViewer`).addEventListener(`click`,switchToMapViewer);
-	document.getElementById(`spreadsheets`).removeEventListener(`click`,switchToSpreadsheets);
-	document.getElementById(`spreadsheets`).style.color=`#ccc`;
-};
-function navAnimation(){
-	document.getElementById(`mapViewerContent`).classList.toggle(`hiddenRight`);
-	document.getElementById(`spreadsheetsContent`).classList.toggle(`hiddenLeft`);
-	document.getElementById(`mapViewerContent`).classList.toggle(`active`);
-	document.getElementById(`spreadsheetsContent`).classList.toggle(`active`);
-};
-
-// Switches spreadsheet content between ships and outfits
-function switchToOutfits(){
-	document.getElementById(`spreadsheetOutfits`).style.backgroundImage=`url("assets/spreadsheets active.png")`;
-	document.getElementById(`spreadsheetShips`).style.backgroundImage=`url("assets/spreadsheets inactive.png")`;
-	var outfits=document.getElementsByClassName(`outfit`);
-	for(i=0;i<outfits.length;i++){
-		outfits[i].style.display=`inline-block`;
-	};
-	var ships=document.getElementsByClassName(`ship`);
-	for(i=0;i<ships.length;i++){
-		ships[i].style.display=`none`;
-	};
-};
-function switchToShips(){
-	document.getElementById(`spreadsheetOutfits`).style.backgroundImage=`url("assets/spreadsheets inactive.png")`;
-	document.getElementById(`spreadsheetShips`).style.backgroundImage=`url("assets/spreadsheets active.png")`;
-	var outfits=document.getElementsByClassName(`outfit`);
-	for(i=0;i<outfits.length;i++){
-		outfits[i].style.display=`none`;
-	};
-	var ships=document.getElementsByClassName(`ship`);
-	for(i=0;i<ships.length;i++){
-		ships[i].style.display=`inline-block`;
-	};
 };
 
 // Slides the sidebar out to cover more of the screen
 function slide(){
 	document.getElementById(`mapViewerSidebar`).classList.toggle(`side`);
 	document.getElementById(`mapViewerSidebar`).classList.toggle(`slide`);
-	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`side`);
-	document.getElementById(`spreadsheetsSidebar`).classList.toggle(`slide`);
 };
 
 // Displays the upload file menu for ships files
@@ -154,39 +101,6 @@ function loadData(that){
 				};
 			};
 		};
-		
-		// Parsing ships to display on spreadsheet
-		var shipsReader=new FileReader();
-		shipsReader.onload=function(e){
-			var shipsSeperated=e.target.result.split(/\nsh/).join(``).split(/\n/);
-			var shipsUniqueHolding=shipsSeperated.filter(/./.test,/^ip /).join(`|#`).replace(/#ip |^ip /g,``).split(`|`);
-			if(shipsUniqueHolding[0].length>0){
-//					console.log(shipsUniqueHolding);
-			};
-			for(i=0;i<shipsUniqueHolding.length;i++){
-				addShipOrOutfit(shipsUniqueHolding[i],`ship`);
-			};
-		};
-		shipsReader.readAsText(that.files[i]);
-
-		// Parsing outfits to display on spreadsheet
-		var outfitsReader=new FileReader();
-		outfitsReader.onload=function(e){
-			var outfitsSeperated=e.target.result.split(/\noutf/).join(``).split(/\n/);
-			var outfitsUniqueHolding=outfitsSeperated.filter(/./.test,/^it /).join(`|#`).replace(/#it |^it /g,``).replace(/"/g,``).split(`|`);
-			if(outfitsUniqueHolding[0].length>0){
-//					console.log(outfitsUniqueHolding);
-			};
-			for(i=0;i<outfitsUniqueHolding.length;i++){
-				addShipOrOutfit(outfitsUniqueHolding[i],`outfit`);
-			};
-			var outfits=document.getElementsByClassName(`outfit`);
-			for(i=0;i<outfits.length;i++){
-				outfits[i].style.display=`none`;
-			};
-		};
-		outfitsReader.readAsText(that.files[i]);
-
 	};
 };
 
@@ -257,23 +171,6 @@ function drawModernMap(){
 			context.strokeStyle=linkColour;
 			context.stroke();
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
-		};
-	};
-};
-
-function addShipOrOutfit(name,type){
-	var item=document.createElement(`div`);
-	item.innerHTML=name;
-	if(name!==``){
-		if(type==`ship`){
-			item.classList=`ship`;
-			document.getElementById(`spreadsheetsMain`).appendChild(item);
-//			console.log(name);
-		};
-		if(type==`outfit`){
-			item.classList=`outfit`;
-			document.getElementById(`spreadsheetsMain`).appendChild(item);
-//			console.log(name);
 		};
 	};
 };

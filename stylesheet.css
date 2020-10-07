@@ -19,23 +19,13 @@ body{
 	background:linear-gradient(to right,#333 70%,rgba(1,1,1,0));
 	color:#ccc;
 }
-#spreadsheetsSidebar p{
-	font-size:2vh;
-	margin:.2vh 0 .2vh 0;
-	padding:.3vh 2vh .2vh;
-	text-align:right;
-}
-#spreadsheetsSidebar p:hover{
-	background:linear-gradient(to left,#333 70%,rgba(1,1,1,0));
-	color:#ccc;
-}
 
 canvas{
 	left:0;
 	position:absolute;
 	top:0;
 	width:100%;
-	z-index:-1
+	z-index:-1;
 }
 
 /* Hide affixed-to elements */
@@ -52,7 +42,6 @@ canvas{
 	top:1vh;
 	transition:all 0.4s,background 0s;
 	width:100%;
-	z-index:-1;
 }
 .navSpacing{
 	background-color:#232323;
@@ -69,9 +58,9 @@ canvas{
 	top:1vh;
 	width:12vw;
 }
-#spreadsheets{
+#otherTools{
 	font-size:1.2vw;
-	left:14vw;
+	left:14.2vw;
 	height:4vh;
 	position:absolute;
 	text-align:center;
@@ -86,65 +75,7 @@ table{
 	position:absolute;
 	top:0;
 	width:100vw;
-	z-index:-2;
-}
-.hiddenLeft{
-	left:100vw;
-	transition:.7s;
-}
-.hiddenRight{
-	left:-100vw;
-	transition:.7s;
-}
-.active{
-	left:0;
-	transition:.7s;
-}
-
-/* Style content area for spreadsheets page */
-#spreadsheetShips{
-	background:url("assets/spreadsheets active.png");
-	background-repeat:no-repeat;
-	background-size:100%;
-	font-size:1vw;
-	height:4vh;
-	left:1vw;
-	padding-top:0.7vw;
-	position:absolute;
-	bottom:4vw;
-	transition:all 0.4s,background 0s;
-	vertical-align:middle;
-	width:8vw;
-}
-#spreadsheetOutfits{
-	background:url("assets/spreadsheets inactive.png");
-	background-repeat:no-repeat;
-	background-size:100%;
-	font-size:1vw;
-	height:4vh;
-	left:1vw;
-	padding-top:0.7vw;
-	position:absolute;
-	bottom:1vw;
-	transition:all 0.4s,background 0s;
-	vertical-align:middle;
-	width:8vw;
-}
-#spreadsheetsMain{
-	height:100%;
-	overflow-y:scroll;
-	padding-top:8vh;
-	width:100%;
-}
-#spreadsheetsMain div{
-	background:url("assets/spreadsheets entry.png");
-	background-repeat:no-repeat;
-	background-size:100%;
-	display:inline-block;
-	height:150px;
-	margin:2vh 1vw 2vh 1vw;
-	vertical-align:top;
-	width:150px;
+	z-index:-1;
 }
 
 /* Center canvas in main section */
@@ -176,11 +107,6 @@ table{
 /* Size stylised sidebar edges */
 .mapViewerEdge{
 	background-image:url("assets/left edge.png");
-	background-size:100% auto;
-	width:2.4%;
-}
-.spreadsheetsEdge{
-	background-image:url("assets/right edge.png");
 	background-size:100% auto;
 	width:2.4%;
 }

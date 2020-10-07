@@ -7,19 +7,19 @@
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 
-		<title>Endless Parser</title>
+		<title>Map Viewer</title>
 	</head>
 
 	<!-- Contains all page content, initializes content -->
 	<body onload="initialize()">
 
-		<!-- Navigation menu, options are map viewer and spreadsheets -->
+		<!-- Navigation menu, options are map viewer and other tools -->
 		<div id="navMenuMajor" class="navMenuMajor">
 			<div id="mapViewer">
 				Map Viewer
 			</div>
-			<div id="spreadsheets">
-				Spreadsheets
+			<div id="otherTools">
+				Other Tools &crarr;
 			</div>
 		</div>
 
@@ -41,7 +41,7 @@
 		</div>
 
 		<!-- Map viewer content -->
-		<table id="mapViewerContent" class="active">
+		<table id="mapViewerContent">
 			<tr>
 				<td class="navSpacing" colspan="4">
 				</td>
@@ -68,39 +68,6 @@
 
 				</td>
 				<td class="spreadsheetsEdge"></td>
-			</tr>
-		</table>
-
-		<!-- Spreadsheets content -->
-		<table id="spreadsheetsContent" class="hiddenLeft">
-			<tr>
-				<td class="navSpacing" colspan="4">
-				</td>
-			</tr>
-			<tr>
-				<td class="mapViewerEdge"></td>
-				<td class="main">
-
-					<!-- Navigation menu for spreadsheet, options are ships and outfits -->
-					<div id="spreadsheetShips" class="spreadsheetShips" onclick="switchToShips()" onload="switchToShips()">
-						Ships
-					</div>
-					<div id="spreadsheetOutfits" class="spreadsheetOutfits" onclick="switchToOutfits()">
-						Outfits
-					</div>
-
-					<div id="spreadsheetsMain"></div>
-				</td>
-
-				<!-- Spreadsheet sidebar -->
-				<td class="spreadsheetsEdge" onclick="slide()"></td>
-				<td id="spreadsheetsSidebar" class="side">
-
-					<!-- Dialog toggles -->
-					<p onclick="toggleDataDialog()">Load Data</p>
-
-				</td>
-
 			</tr>
 		</table>
 
