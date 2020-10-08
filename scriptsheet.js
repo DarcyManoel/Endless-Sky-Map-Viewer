@@ -87,9 +87,14 @@ function loadData(that){
 				linksHolding[i]=linksHolding[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
 			};
 			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
-			var governmentsDifference=(systemGovernmentsHolding.length-systemsHolding.length);
+			if(positionsHolding.length<systemsHolding.length){
+				systemsHolding.splice(systemsHolding.length-(systemsHolding.length-positionsHolding.length),systemsHolding.length-positionsHolding.length);
+			};
+			if(positionsHolding.length<linksHolding.length){
+				linksHolding.splice(linksHolding.length-(linksHolding.length-positionsHolding.length),linksHolding.length-positionsHolding.length);
+			};
 			if(systemsHolding.length<systemGovernmentsHolding.length){
-				systemGovernmentsHolding.splice(systemGovernmentsHolding.length-governmentsDifference,governmentsDifference);
+				systemGovernmentsHolding.splice(systemGovernmentsHolding.length-(systemGovernmentsHolding.length-systemsHolding.length),systemGovernmentsHolding.length-systemsHolding.length);
 			};
 			if(systemsHolding[0].length>0){
 				systems.push(...systemsHolding);
@@ -128,6 +133,9 @@ function drawClassicMap(){
 	mapView=1;
 	document.getElementById(`mapView`).innerHTML=`Classic Map View`;
 	document.getElementById(`mapView`).classList.remove(`hidden`);
+//	console.log(`systems `+systems.length);
+//	console.log(`positions `+positions.length);
+//	console.log(`links `+links.length);
 	for(i=0;i<links.length;i++){
 		context.beginPath();
 		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
@@ -154,6 +162,9 @@ function drawModernMap(){
 	mapView=2;
 	document.getElementById(`mapView`).innerHTML=`Modern Map View`;
 	document.getElementById(`mapView`).classList.remove(`hidden`);
+//	console.log(`systems `+systems.length);
+//	console.log(`positions `+positions.length);
+//	console.log(`links `+links.length);
 	for(i=0;i<links.length;i++){
 		var factionIndex=governmentsUnique.indexOf(systemGovernments[i].trim());
 		context.beginPath();
