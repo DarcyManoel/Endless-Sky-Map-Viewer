@@ -166,11 +166,10 @@ function drawModernMap(){
 //	console.log(`positions `+positions.length);
 //	console.log(`links `+links.length);
 	for(i=0;i<links.length;i++){
-		var factionIndex=governmentsUnique.indexOf(systemGovernments[i].trim());
 		context.beginPath();
 		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI);
 		context.lineWidth=3.6;
-		context.strokeStyle=governmentsColours[factionIndex];
+		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		context.stroke();
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
