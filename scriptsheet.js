@@ -142,25 +142,19 @@ function toggleMapView(){
 };
 
 function drawClassicMap(){
+    context.restore();
+    context.save();
 	context.drawImage(img,800,100);
 	mapView=1;
 	document.getElementById(`mapView`).innerHTML=`Classic Map View`;
 	document.getElementById(`mapView`).classList.remove(`hidden`);
 	wormholes=[];
 	for(i=0;i<links.length;i++){
-		context.beginPath();
-		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
-		context.setLineDash([]);
-		context.lineWidth=3.6;
-		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
-		context.stroke();
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			var xDifference=(positions[i][0]-positions[pos][0])*0.18;
-			var yDifference=(positions[i][1]-positions[pos][1])*0.18;
 			context.beginPath();
-			context.moveTo((2550+ +positions[i][0])-xDifference,(1350+ +positions[i][1])-yDifference);
-			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
+			context.moveTo(2550+ +positions[i][0],1350+ +positions[i][1]);
+			context.lineTo(2550+ +positions[pos][0],1350+ +positions[pos][1]);
 			context.setLineDash([]);
 			context.lineWidth=2.7;
 			context.strokeStyle=`rgb(102,102,102)`;
@@ -218,9 +212,28 @@ function drawClassicMap(){
 			context.stroke();
 		};
 	};
+	context.beginPath();
+	for(i=0;i<links.length;i++){
+		context.moveTo(2550+ +positions[i][0]+20,1350+ +positions[i][1]);
+		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],18,0,2*Math.PI);
+	};
+	context.clip();
+	context.drawImage(img,800,100);
+	context.strokeStyle=`rgba(0,0,0,0)`;
+	context.stroke();
+	for(i=0;i<links.length;i++){
+		context.beginPath();
+		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
+		context.setLineDash([]);
+		context.lineWidth=3.6;
+		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
+		context.stroke();
+	};
 };
 
 function drawModernMap(){
+    context.restore();
+    context.save();
 	context.drawImage(img,800,100);
 	mapView=2;
 	document.getElementById(`mapView`).innerHTML=`Modern Map View`;
