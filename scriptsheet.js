@@ -209,7 +209,7 @@ function drawClassicMap(){
 			context.moveTo(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1]);
 			if((j+1)!==wormholes[i].length){
 				context.lineTo(2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1]);
-			}else{
+			}else if(wormholes[i].length>2){
 				context.lineTo(2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1]);
 			};
 			context.setLineDash([]);
