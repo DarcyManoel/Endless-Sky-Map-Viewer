@@ -4,6 +4,7 @@ canvas.height=screen.height;
 canvas.width=screen.width;
 var context=canvas.getContext(`2d`);
 var governmentsColours=[];
+var governmentColourWormhole=`rgba(128,51,230,1)`;
 var governmentsUnique=[];
 var img=document.getElementById(`galaxy`);
 var links=[];
@@ -208,7 +209,7 @@ function drawClassicMap(){
 			};
 			context.setLineDash([]);
 			context.lineWidth=2.7;
-			context.strokeStyle=`rgba(128,51,230,.6)`;
+			context.strokeStyle=governmentColourWormhole;
 			context.stroke();
 		};
 	};
@@ -305,7 +306,7 @@ function drawModernMap(){
 			};
 			context.setLineDash([24,6,6]);
 			context.lineWidth=2.7;
-			context.strokeStyle=`rgba(128,51,230,.6)`;
+			context.strokeStyle=governmentColourWormhole;
 			context.stroke();
 		};
 	};
