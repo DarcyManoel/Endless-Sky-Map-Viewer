@@ -153,13 +153,7 @@ function drawClassicMap(){
 	for(i=0;i<links.length;i++){
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			context.beginPath();
-			context.moveTo(2550+ +positions[i][0],1350+ +positions[i][1]);
-			context.lineTo(2550+ +positions[pos][0],1350+ +positions[pos][1]);
-			context.setLineDash([]);
-			context.lineWidth=2.7;
-			context.strokeStyle=`rgb(102,102,102)`;
-			context.stroke();
+			drawLine(2550+ +positions[i][0],1350+ +positions[i][1],2550+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -200,17 +194,11 @@ function drawClassicMap(){
 	};
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
-			context.beginPath();
-			context.moveTo(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1]);
 			if((j+1)!==wormholes[i].length){
-				context.lineTo(2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1]);
+				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[],2.7,governmentColourWormhole);
 			}else if(wormholes[i].length>2){
-				context.lineTo(2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1]);
+				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[],2.7,governmentColourWormhole);
 			};
-			context.setLineDash([]);
-			context.lineWidth=2.7;
-			context.strokeStyle=governmentColourWormhole;
-			context.stroke();
 		};
 	};
 	context.beginPath();
@@ -223,12 +211,7 @@ function drawClassicMap(){
 	context.strokeStyle=`rgba(0,0,0,0)`;
 	context.stroke();
 	for(i=0;i<links.length;i++){
-		context.beginPath();
-		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI);
-		context.setLineDash([]);
-		context.lineWidth=3.6;
-		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
-		context.stroke();
+		drawArc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())])
 	};
 };
 
@@ -241,22 +224,11 @@ function drawModernMap(){
 	document.getElementById(`mapView`).classList.remove(`hidden`);
 //	console.log(planets);
 	for(i=0;i<links.length;i++){
-		context.beginPath();
-		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI);
-		context.setLineDash([]);
-		context.lineWidth=3.6;
-		context.strokeStyle=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
-		context.stroke();
+		drawArc(2550+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			context.beginPath();
-			context.moveTo(2550+ +positions[i][0],1350+ +positions[i][1]);
-			context.lineTo((2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2));
-			context.setLineDash([]);
-			context.lineWidth=1.7;
-			context.strokeStyle=linkColour;
-			context.stroke();
+			drawLine(2550+ +positions[i][0],1350+ +positions[i][1],(2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -297,17 +269,29 @@ function drawModernMap(){
 	};
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
-			context.beginPath();
-			context.moveTo(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1]);
 			if((j+1)!==wormholes[i].length){
-				context.lineTo(2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1]);
+				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole)
 			}else{
-				context.lineTo(2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1]);
+				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole)
 			};
-			context.setLineDash([24,6,6]);
-			context.lineWidth=2.7;
-			context.strokeStyle=governmentColourWormhole;
-			context.stroke();
 		};
 	};
+};
+
+// Call-to functions, pre-defined functions that cut down individual processing
+function drawArc(x,y,radius,start,end,colour){
+		context.beginPath();
+		context.arc(x,y,radius,start,end);
+		context.lineWidth=3.6;
+		context.strokeStyle=colour;
+		context.stroke();
+};
+function drawLine(startX,startY,endX,endY,lineDash,width,colour){
+		context.beginPath();
+		context.moveTo(startX,startY);
+		context.lineTo(endX,endY);
+		context.setLineDash(lineDash);
+		context.lineWidth=width;
+		context.strokeStyle=colour;
+		context.stroke();
 };
