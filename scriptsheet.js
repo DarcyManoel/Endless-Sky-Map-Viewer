@@ -50,9 +50,9 @@ function loadData(that){
 			var lines=output.split(`\n`);
 			var governmentsSeperated=output.split(/gover/).filter((government)=>government.includes(`	color`)).join(``).split(/\n/);
 			var governmentsUniqueHolding=governmentsSeperated.filter(/./.test,/nment/).join(`|`).replace(/nment /g,``).replace(/"/g,``).split(`|`);
-			for(i=0;i<governmentsUniqueHolding.length;i++){
-				if(governmentsUniqueHolding[i].indexOf(` `)>=0){
-					governmentsUniqueHolding[i]=`"`+governmentsUniqueHolding[i]+`"`;
+			for(j=0;j<governmentsUniqueHolding.length;j++){
+				if(governmentsUniqueHolding[j].indexOf(` `)>=0){
+					governmentsUniqueHolding[j]=`"`+governmentsUniqueHolding[j]+`"`;
 				};
 			};
 			if(governmentsUniqueHolding[0].length>0){
@@ -62,12 +62,12 @@ function loadData(that){
 			};
 			var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 			coloursSpread.unshift(``);
-			for(i=0;i<coloursSpread.length;i++){
-				coloursSpread[i]=Math.round(coloursSpread[i]*255);
+			for(j=0;j<coloursSpread.length;j++){
+				coloursSpread[j]=Math.round(coloursSpread[j]*255);
 			};
 			var governmentsColoursHolding=[];
-			for(i=0;i<((coloursSpread.length-1)/3);i++){
-				governmentsColoursHolding[i]=`rgb(`+coloursSpread[(i+1)*3-2]+`,`+coloursSpread[(i+1)*3-1]+`,`+coloursSpread[(i+1)*3]+`)`;
+			for(j=0;j<((coloursSpread.length-1)/3);j++){
+				governmentsColoursHolding[j]=`rgb(`+coloursSpread[(j+1)*3-2]+`,`+coloursSpread[(j+1)*3-1]+`,`+coloursSpread[(j+1)*3]+`)`;
 			};
 			if(governmentsUniqueHolding[0].length>1){
 				governmentsColours.push(...governmentsColoursHolding);
@@ -83,20 +83,20 @@ function loadData(that){
 			var systemsHolding=lines.filter(/./.test,/^system/).join(`|`).replace(/system /g,``).split(`|`);
 			var systemGovernmentsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem /).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	government/).join(`|`).replace(/	government /g,``).split(`|`);
 			var positionsHolding=lines.join(`|`).split(`sys`).filter(/./.test,/tem/).join(`|`).replace(/tem /g,``).split(`|`).filter(/./.test,/^	pos/).join(`|`).replace(/	pos /g,``).split(`|`);
-			for(i=0;i<positionsHolding.length;i++){
-				positionsHolding[i]=positionsHolding[i].split(` `);
+			for(j=0;j<positionsHolding.length;j++){
+				positionsHolding[j]=positionsHolding[j].split(` `);
 			};
 			var linksHolding=`\n`+output;
 			var linksHolding=linksHolding.split(`\nsystem`);
 			linksHolding.shift();
-			for(i=0;i<linksHolding.length;i++){
-				linksHolding[i]=linksHolding[i].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
+			for(j=0;j<linksHolding.length;j++){
+				linksHolding[j]=linksHolding[j].split(`\n`).filter(/./.test,/^	link /).join(`|`).replace(/	link /g,``).split(`|`).filter(Boolean);
 			};
 			var planetsHolding=`\n`+output;
 			var planetsHolding=planetsHolding.split(`\nsystem`);
 			planetsHolding.shift();
-			for(i=0;i<planetsHolding.length;i++){
-				planetsHolding[i]=planetsHolding[i].split(`\n`).filter(/./.test,/^	object /).join(`|`).replace(/	object /g,``).split(`|`).filter(Boolean);
+			for(j=0;j<planetsHolding.length;j++){
+				planetsHolding[j]=planetsHolding[j].split(`\n`).filter(/./.test,/^	object /).join(`|`).replace(/	object /g,``).split(`|`).filter(Boolean);
 			};
 			if(positionsHolding.length<systemsHolding.length){
 				systemsHolding.splice(systemsHolding.length-(systemsHolding.length-positionsHolding.length),systemsHolding.length-positionsHolding.length);
@@ -116,8 +116,8 @@ function loadData(that){
 				positions.push(...positionsHolding);
 				links.push(...linksHolding);
 				planets.push(...planetsHolding);
-				for(i=0;i<systemsHolding.length;i++){
-//					console.log(systemsHolding[i]+` `+systemGovernmentsHolding[i]+` `+positionsHolding[i].join(` `));
+				for(j=0;j<systemsHolding.length;j++){
+//					console.log(systemsHolding[j]+` `+systemGovernmentsHolding[j]+` `+positionsHolding[j].join(` `));
 				};
 			};
 		};
