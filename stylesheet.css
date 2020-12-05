@@ -1,6 +1,5 @@
 body{
 	background-color:#000;
-	color:#aaa;
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
@@ -14,7 +13,6 @@ canvas{
 	position:absolute;
 	top:0;
 	width:100%;
-	z-index:-1;
 }
 
 .blurred{
@@ -27,30 +25,46 @@ canvas{
 }
 
 /* Button inputs */
-#loadFiles{
-	animation:highlightOff .5s;
+#loadFilesInitial{
 	cursor:pointer;
 	font-size:2vw;
 	left:40vw;
 	position:absolute;
 	text-align:center;
 	top:50vh;
+	user-select:none;
 	width:20vw;
 }
 
-#loadFiles:hover{
-	animation:highlightOn .5s forwards;
-}
-
-#mapStyle{
-	animation:highlightOff .5s;
+#loadFiles{
 	cursor:pointer;
 	left:2vw;
 	position:absolute;
 	top:4vh;
 }
 
-#mapStyle:hover{
+#mapStyle{
+	cursor:pointer;
+	left:2vw;
+	position:absolute;
+	top:8vh;
+}
+
+.greyOut{
+	color:#555;
+	animation:darkenOff .5s;
+}
+
+.greyOut:hover{
+	animation:darkenOn .5s forwards;
+}
+
+.highlight{
+	animation:highlightOff .5s;
+	color:#aaa;
+}
+
+.highlight:hover{
 	animation:highlightOn .5s forwards;
 }
 
@@ -82,5 +96,20 @@ canvas{
 	}
 	100%{
 		color:#aaa;
+	}
+}
+
+@keyframes darkenOn{
+	100%{
+		color:#333;
+	}
+}
+
+@keyframes darkenOff{
+	0%{
+		color:#333;
+	}
+	100%{
+		color:#555;
 	}
 }

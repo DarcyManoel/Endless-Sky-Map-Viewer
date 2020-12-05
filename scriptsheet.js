@@ -25,9 +25,20 @@ function initialize(){
 	context.drawImage(img,400,100);
 };
 
+function chosenFilesInitial(){
+	document.getElementById(`loadFilesInitial`).innerHTML=`Load Map`;
+	document.getElementById(`loadFilesInitial`).removeAttribute(`for`);
+	document.getElementById(`loadFiles`).setAttribute(`for`,`file`);
+	document.getElementById(`loadFiles`).setAttribute(`onclick`,`drawMap()`);
+};
+
 function chosenFiles(){
-	document.getElementById(`loadFiles`).innerHTML=`Load Map`;
-	document.getElementById(`loadFiles`).removeAttribute(`for`);
+	document.getElementById(`loadFilesInitial`).innerHTML=`Load Map`;
+	document.getElementById(`loadFilesInitial`).removeAttribute(`for`);
+	document.getElementById('loadFilesInitial').classList.remove('hidden');
+	document.getElementById('canvas').classList.add('blurred');
+	document.getElementById('loadFiles').classList.add('greyOut');
+	document.getElementById('loadFiles').classList.remove('highlight');
 };
 
 // Runs on uploading an ships file; parses ship names, and stats
@@ -136,7 +147,13 @@ function toggleMapStyle(){
 
 // Decides which style to draw the map in, acts as a passthrough decider function
 function drawMap(){
-	document.getElementById(`loadFiles`).setAttribute(`onclick`,`drawMap(),document.getElementById('loadFiles').classList.add('hidden'),document.getElementById('canvas').classList.remove('blurred')`);
+	document.getElementById(`loadFilesInitial`).setAttribute(
+		`onclick`,`
+		drawMap()
+		document.getElementById('loadFilesInitial').classList.add('hidden')
+		document.getElementById('canvas').classList.remove('blurred')
+		document.getElementById('loadFiles').classList.remove('greyOut')
+		document.getElementById('loadFiles').classList.add('highlight')`);
 	if(mapStyle==1){
 		drawClassicMap();
 	}else if(mapStyle==2){
