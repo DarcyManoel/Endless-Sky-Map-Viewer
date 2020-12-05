@@ -226,7 +226,7 @@ function drawModernMap(){
 	document.getElementById(`mapStyle`).classList.remove(`hidden`);
 //	console.log(planets);
 	for(i=0;i<links.length;i++){
-		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
+		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],4,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
