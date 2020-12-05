@@ -13,65 +13,17 @@
 	<!-- Contains all page content, initializes content -->
 	<body onload="initialize()">
 
-		<!-- Navigation menu, options are map viewer and other tools -->
-		<div id="navMenuMajor" class="navMenuMajor">
-			<div id="mapViewer">
-				Map Viewer
-			</div>
-			<div id="otherTools">
-				<a href="https://github.com/Endless-Sky-Tools">
-					Other Tools &crarr;
-				</a>
-			</div>
-		</div>
+		<!-- Map board -->
+		<canvas id="canvas" class="blurred"></canvas>
 
-		<!-- Data dialog screen, displayed on request -->
-		<div id="dialogDataScreen" class="hidden">
+		<!-- Image reference relay, always hidden -->
+		<img id="galaxy" class="hidden" src="assets/galaxy.png">
 
-			<!-- Darken background -->
-			<div class="cover"></div>
+		<!-- Actions -->
+		<label id="loadFiles" for="file" onclick="drawMap()">&#10162; Upload Files</label>
+		<input onchange="chosenFiles(),loadFiles(this)" class="upload hidden" id="file" type="file" webkitdirectory/>
 
-			<!-- Aesthetic -->
-			<img class="dialog" src="assets/dialog.png"/>
-
-			<!-- File upload prompt for data loading -->
-			<input onchange="loadData(this)" class="upload" id="file" type="file" webkitdirectory/>
-
-			<!-- Close dialog -->
-			<p id="confirm" onclick="toggleDataDialog(),drawClassicMap()">OK</p>
-
-		</div>
-
-		<!-- Map viewer content -->
-		<table id="mapViewerContent">
-			<tr>
-				<td class="navSpacing" colspan="4">
-				</td>
-			</tr>
-			<tr>
-
-				<!-- Map viewer sidebar -->
-				<td id="mapViewerSidebar" class="side">
-
-					<!-- Actions -->
-					<p onclick="toggleDataDialog()">Load Data</p>
-					<p id="mapView" onclick="toggleMapView()" class="hidden">Classic Map View</p>
-
-				</td>
-				<td class="mapViewerEdge" onclick="slide()"></td>
-
-				<td class="main">
-
-					<!-- Map board -->
-					<canvas id="canvas"></canvas>
-
-					<!-- Image reference relay, always hidden -->
-					<img id="galaxy" class="hidden" src="assets/galaxy.png">
-
-				</td>
-				<td class="spreadsheetsEdge"></td>
-			</tr>
-		</table>
+		<div id="mapStyle" onclick="toggleMapStyle()">Classic Map View</div>
 
 	</body>
 

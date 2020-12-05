@@ -8,7 +8,7 @@ var governmentColourWormhole=`rgba(128,51,230,1)`;
 var governmentsUnique=[];
 var img=document.getElementById(`galaxy`);
 var links=[];
-var mapView=1;
+var mapStyle=1;
 var planets=[];
 var planetsUnique=[];
 var positions=[];
@@ -22,22 +22,16 @@ var zoom=3;
 // Runs on page load, creates the initial canvas
 function initialize(){
 	context.scale(1/zoom,1/zoom);
-	context.drawImage(img,800,100);
+	context.drawImage(img,400,100);
 };
 
-// Slides the sidebar out to cover more of the screen
-function slide(){
-	document.getElementById(`mapViewerSidebar`).classList.toggle(`side`);
-	document.getElementById(`mapViewerSidebar`).classList.toggle(`slide`);
-};
-
-// Displays the upload file menu for ships files
-function toggleDataDialog(){
-	document.getElementById(`dialogDataScreen`).classList.toggle(`hidden`);
+function chosenFiles(){
+	document.getElementById(`loadFiles`).innerHTML=`Load Map`;
+	document.getElementById(`loadFiles`).removeAttribute(`for`);
 };
 
 // Runs on uploading an ships file; parses ship names, and stats
-function loadData(that){
+function loadFiles(that){
 	var files=event.target.files;
 //	console.log(files);
 	for(i=0;i<files.length;i++){
@@ -125,35 +119,43 @@ function loadData(that){
 };
 
 // Toggle function between classic and modern map views, handles canvas rendering for both styles
-function toggleMapView(){
-	if(mapView<2){
-		mapView++;
+function toggleMapStyle(){
+	if(mapStyle<2){
+		mapStyle++;
 	}else{
-		mapView=1;
+		mapStyle=1;
 	};
-	if(mapView==1){
-		document.getElementById(`mapView`).innerHTML=`Classic Map View`;
+	if(mapStyle==1){
+		document.getElementById(`mapStyle`).innerHTML=`Classic Map View`;
 		drawClassicMap();
-		document.getElementById(`confirm`).setAttribute(`onClick`,`toggleDataDialog(),drawClassicMap()`);
-	}else if(mapView==2){
-		document.getElementById(`mapView`).innerHTML=`Modern Map View`;
+	}else if(mapStyle==2){
+		document.getElementById(`mapStyle`).innerHTML=`Modern Map View`;
 		drawModernMap();
-		document.getElementById(`confirm`).setAttribute(`onClick`,`toggleDataDialog(),drawModernMap()`);
+	};
+};
+
+// Decides which style to draw the map in, acts as a passthrough decider function
+function drawMap(){
+	document.getElementById(`loadFiles`).setAttribute(`onclick`,`drawMap(),document.getElementById('loadFiles').classList.add('hidden'),document.getElementById('canvas').classList.remove('blurred')`);
+	if(mapStyle==1){
+		drawClassicMap();
+	}else if(mapStyle==2){
+		drawModernMap();
 	};
 };
 
 function drawClassicMap(){
     context.restore();
     context.save();
-	context.drawImage(img,800,100);
-	mapView=1;
-	document.getElementById(`mapView`).innerHTML=`Classic Map View`;
-	document.getElementById(`mapView`).classList.remove(`hidden`);
+	context.drawImage(img,400,100);
+	mapStyle=1;
+	document.getElementById(`mapStyle`).innerHTML=`Classic Map View`;
+	document.getElementById(`mapStyle`).classList.remove(`hidden`);
 	wormholes=[];
 	for(i=0;i<links.length;i++){
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			drawLine(2550+ +positions[i][0],1350+ +positions[i][1],2550+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
+			drawLine(2150+ +positions[i][0],1350+ +positions[i][1],2150+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -195,40 +197,40 @@ function drawClassicMap(){
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
 			if((j+1)!==wormholes[i].length){
-				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[],2.7,governmentColourWormhole);
+				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[],2.7,governmentColourWormhole);
 			}else if(wormholes[i].length>2){
-				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[],2.7,governmentColourWormhole);
+				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[],2.7,governmentColourWormhole);
 			};
 		};
 	};
 	context.beginPath();
 	for(i=0;i<links.length;i++){
-		context.moveTo(2550+ +positions[i][0]+20,1350+ +positions[i][1]);
-		context.arc(2550+ +positions[i][0],1350+ +positions[i][1],18,0,2*Math.PI);
+		context.moveTo(2150+ +positions[i][0]+20,1350+ +positions[i][1]);
+		context.arc(2150+ +positions[i][0],1350+ +positions[i][1],18,0,2*Math.PI);
 	};
 	context.clip();
-	context.drawImage(img,800,100);
+	context.drawImage(img,400,100);
 	context.strokeStyle=`rgba(0,0,0,0)`;
 	context.stroke();
 	for(i=0;i<links.length;i++){
-		drawArc(2550+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())])
+		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())])
 	};
 };
 
 function drawModernMap(){
     context.restore();
     context.save();
-	context.drawImage(img,800,100);
-	mapView=2;
-	document.getElementById(`mapView`).innerHTML=`Modern Map View`;
-	document.getElementById(`mapView`).classList.remove(`hidden`);
+	context.drawImage(img,400,100);
+	mapStyle=2;
+	document.getElementById(`mapStyle`).innerHTML=`Modern Map View`;
+	document.getElementById(`mapStyle`).classList.remove(`hidden`);
 //	console.log(planets);
 	for(i=0;i<links.length;i++){
-		drawArc(2550+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
+		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],2,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			drawLine(2550+ +positions[i][0],1350+ +positions[i][1],(2550+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
+			drawLine(2150+ +positions[i][0],1350+ +positions[i][1],(2150+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -270,9 +272,9 @@ function drawModernMap(){
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
 			if((j+1)!==wormholes[i].length){
-				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole)
+				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole)
 			}else{
-				drawLine(2550+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2550+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole)
+				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole)
 			};
 		};
 	};
