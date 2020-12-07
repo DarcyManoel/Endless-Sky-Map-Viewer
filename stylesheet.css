@@ -27,7 +27,7 @@ canvas{
 /* Button inputs */
 #loadFilesInitial{
 	cursor:pointer;
-	font-size:2vw;
+	font-size:3vw;
 	left:40vw;
 	position:absolute;
 	text-align:center;
