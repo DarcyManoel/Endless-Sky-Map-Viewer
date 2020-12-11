@@ -35,7 +35,6 @@ canvas{
 	position:absolute;
 	text-align:center;
 	top:50vh;
-	user-select:none;
 	width:20vw;
 }
 
@@ -55,7 +54,6 @@ canvas{
 	animation:darkenOff .5s;
 	color:#555;
 	pointer-events:none;
-	cursor:pointer;
 }
 
 .greyOut:hover{
