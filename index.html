@@ -21,10 +21,10 @@
 
 		<!-- Actions -->
 		<label id="loadFilesInitial" class="highlight" for="fileInitial" onclick="drawMap()">&#10162; Upload Files</label>
-		<input id="fileInitial" onChange="chosenFilesInitial(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
+		<input id="fileInitial" onchange="chosenFilesInitial(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
 
-		<label id="loadFiles" class="greyOut">&#10162; Upload Files</label>
-		<input id="file" onChange="chosenFiles(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
+		<label id="loadFiles" class="greyOut" for="file" onclick="drawMap()">&#10162; Upload Files</label>
+		<input id="file" onchange="chosenFiles(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
 
 		<div id="mapStyle" class="highlight" onclick="toggleMapStyle()">Classic Map View</div>
 

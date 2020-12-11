@@ -28,8 +28,6 @@ function initialize(){
 function chosenFilesInitial(){
 	document.getElementById(`loadFilesInitial`).innerHTML=`Load Map`;
 	document.getElementById(`loadFilesInitial`).removeAttribute(`for`);
-	document.getElementById(`loadFiles`).setAttribute(`for`,`file`);
-	document.getElementById(`loadFiles`).setAttribute(`onclick`,`drawMap()`);
 };
 
 function chosenFiles(){
