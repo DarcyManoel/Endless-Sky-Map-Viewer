@@ -4,7 +4,11 @@ body{
 	font-family:Ubuntu;
 	margin:0;
 	overflow:hidden;
+
+	/* USER SELECT */
 	user-select:none;
+	-webkit-user-select:none;
+	
 }
 
 canvas{
@@ -26,7 +30,6 @@ canvas{
 
 /* Button inputs */
 #loadFilesInitial{
-	cursor:pointer;
 	font-size:3vw;
 	left:40vw;
 	position:absolute;
@@ -37,22 +40,21 @@ canvas{
 }
 
 #loadFiles{
-	cursor:pointer;
 	left:2vw;
 	position:absolute;
 	top:4vh;
 }
 
 #mapStyle{
-	cursor:pointer;
 	left:2vw;
 	position:absolute;
 	top:8vh;
 }
 
 .greyOut{
-	color:#555;
 	animation:darkenOff .5s;
+	color:#555;
+	cursor:pointer;
 }
 
 .greyOut:hover{
@@ -62,6 +64,7 @@ canvas{
 .highlight{
 	animation:highlightOff .5s;
 	color:#aaa;
+	cursor:pointer;
 }
 
 .highlight:hover{
@@ -84,21 +87,6 @@ canvas{
 	}
 }
 
-@keyframes highlightOn{
-	100%{
-		color:#eee;
-	}
-}
-
-@keyframes highlightOff{
-	0%{
-		color:#eee;
-	}
-	100%{
-		color:#aaa;
-	}
-}
-
 @keyframes darkenOn{
 	100%{
 		color:#333;
@@ -111,5 +99,20 @@ canvas{
 	}
 	100%{
 		color:#555;
+	}
+}
+
+@keyframes highlightOn{
+	100%{
+		color:#eee;
+	}
+}
+
+@keyframes highlightOff{
+	0%{
+		color:#eee;
+	}
+	100%{
+		color:#aaa;
 	}
 }
