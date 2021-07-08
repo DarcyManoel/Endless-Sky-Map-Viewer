@@ -297,18 +297,18 @@ function drawModernMap(){
 
 // Call-to functions, pre-defined functions that cut down individual processing
 function drawArc(x,y,radius,start,end,colour){
-		context.beginPath();
-		context.arc(x,y,radius,start,end);
-		context.lineWidth=3.6;
-		context.strokeStyle=colour;
-		context.stroke();
+	context.beginPath();
+	context.arc(x,y,radius,start,end);
+	context.lineWidth=3.6;
+	context.strokeStyle=colour;
+	context.stroke();
 };
 function drawLine(startX,startY,endX,endY,lineDash,width,colour){
-		context.beginPath();
-		context.moveTo(startX,startY);
-		context.lineTo(endX,endY);
-		context.setLineDash(lineDash);
-		context.lineWidth=width;
-		context.strokeStyle=colour;
-		context.stroke();
+	context.beginPath();
+	context.moveTo(startX,startY);
+	context.lineTo(endX,endY);
+	context.setLineDash(lineDash);
+	context.lineWidth=width;
+	context.strokeStyle=colour;
+	context.stroke();
 };
