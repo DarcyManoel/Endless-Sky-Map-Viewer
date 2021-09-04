@@ -334,19 +334,23 @@ function drawModernMap(){
 
 function newSystem(){
 	systemCount++;
-	coordinates.push(`system "`+systemCount+`"`);
-	coordinates.push(`\t`+`pos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350));
-	document.getElementById(`systems`).innerHTML=coordinates.join(`<br>`);
 	systems.push(systemCount);
 	systemGovernments.push(`Uninhabited`);
 	positions.push([(xCoordinate*3)-2150,(yCoordinate*3)-1350]);
 	links.push([]);
 	planets.push([]);
 	drawMap();
+	document.getElementById(`systems`).innerHTML+=`<p id="sys`+systemCount+`" class="greyOutSelect system" onclick="copySystem(this.id)">system "`+systemCount+`"\n\tpos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350)+`</p><br>`;
 };
-
 function copySystems(){
-	navigator.clipboard.writeText(coordinates.join(`\n`));
+	var systemCompile=[];
+	for(i=0;i<systemCount;i++){
+		systemCompile.push(document.getElementById(`sys`+(i+1)).innerHTML);
+	};
+	navigator.clipboard.writeText(systemCompile.join(`\n`));
+};
+function copySystem(id){
+	navigator.clipboard.writeText(document.getElementById(id).innerHTML);
 };
 
 // Call-to functions, pre-defined functions that cut down individual processing

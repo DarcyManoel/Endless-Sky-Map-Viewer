@@ -54,6 +54,12 @@ canvas{
 	pointer-events:none;
 }.greyOut:hover{
 	animation:darkenOn .5s forwards;
+}.greyOutSelect{
+	animation:darkenOff .5s;
+	color:#555;
+	cursor:pointer;
+}.greyOutSelect:hover{
+	animation:highlightOn .5s forwards;
 }.highlight{
 	animation:highlightOff .5s;
 	color:#aaa;
@@ -62,18 +68,32 @@ canvas{
 	animation:highlightOn .5s forwards;
 }
 
-#systems{
+#copyAll{
+	position:absolute;
+	right:7vw;
+	top:4vh;
+}#linkingMode{
+	position:absolute;
+	right:15vw;
+	top:4vh;
+}#copyMode{
+	position:absolute;
+	right:15vw;
+	top:8vh;
+}#systems{
 	font-size:1.5vh;
-	line-height:3vh;
 	max-height:85vh;
 	overflow-x:hidden;
 	overflow-y:scroll;
 	position:absolute;
 	right:0;
 	text-align:left;
-	top:2vh;
+	top:8vh;
 	white-space:pre;
-	width:14vw;
+	width:10vw;
+}p{
+	margin-bottom:-2px;
+	margin-top:-2px;
 }
 
 /* Keyframes */
