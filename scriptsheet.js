@@ -333,7 +333,7 @@ function drawModernMap(){
 function newSystem(){
 	systemCount++;
 	coordinates.push(`system "`+systemCount+`"`);
-	coordinates.push(`\t`+`pos `+(xCoordinate*3)-2150+` `+(yCoordinate*3)-1350);
+	coordinates.push(`\t`+`pos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350));
 	document.getElementById(`systems`).innerHTML=coordinates.join(`<br>`);
 };
 
