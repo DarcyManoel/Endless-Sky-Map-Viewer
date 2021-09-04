@@ -39,6 +39,8 @@ function onMouseMove(event){
 	if(!isDragging){
 		return;
 	};
+	xCoordinate=event.offsetX;
+	yCoordinate=event.offsetY;
 	interactableContext.clearRect(0,0,canvas.width,canvas.height);
 	drawLine(interactableContext,event.offsetX-7,event.offsetY,event.offsetX+7,event.offsetY,[],1.1,`#f00`);
 	drawLine(interactableContext,event.offsetX,event.offsetY-7,event.offsetX,event.offsetY+7,[],1.1,`#f00`);
@@ -335,6 +337,12 @@ function newSystem(){
 	coordinates.push(`system "`+systemCount+`"`);
 	coordinates.push(`\t`+`pos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350));
 	document.getElementById(`systems`).innerHTML=coordinates.join(`<br>`);
+	systems.push(systemCount);
+	systemGovernments.push(`Uninhabited`);
+	positions.push([(xCoordinate*3)-2150,(yCoordinate*3)-1350]);
+	links.push([]);
+	planets.push([]);
+	drawMap();
 };
 
 function copySystems(){
