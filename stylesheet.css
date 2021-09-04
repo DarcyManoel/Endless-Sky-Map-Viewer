@@ -36,38 +36,44 @@ canvas{
 	text-align:center;
 	top:50vh;
 	width:20vw;
-}
-
-#loadFiles{
+}#loadFiles{
 	left:2vw;
 	position:absolute;
 	top:4vh;
-}
-
-#mapStyle{
+}#mapStyle{
+	left:2vw;
+	position:absolute;
+	bottom:4vh;
+}#createSystem{
 	left:2vw;
 	position:absolute;
 	top:8vh;
-}
-
-.greyOut{
+}.greyOut{
 	animation:darkenOff .5s;
 	color:#555;
 	pointer-events:none;
-}
-
-.greyOut:hover{
+}.greyOut:hover{
 	animation:darkenOn .5s forwards;
-}
-
-.highlight{
+}.highlight{
 	animation:highlightOff .5s;
 	color:#aaa;
 	cursor:pointer;
+}.highlight:hover{
+	animation:highlightOn .5s forwards;
 }
 
-.highlight:hover{
-	animation:highlightOn .5s forwards;
+#systems{
+	font-size:1.5vh;
+	line-height:3vh;
+	max-height:85vh;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	position:absolute;
+	right:0;
+	text-align:left;
+	top:2vh;
+	white-space:pre;
+	width:14vw;
 }
 
 /* Keyframes */
@@ -75,39 +81,29 @@ canvas{
 	100%{
 		filter:blur(3px);
 	}
-}
-
-@keyframes blurOff{
+}@keyframes blurOff{
 	0%{
 		filter:blur(3px);
 	}
 	100%{
 		filter:blur(0px);
 	}
-}
-
-@keyframes darkenOn{
+}@keyframes darkenOn{
 	100%{
 		color:#333;
 	}
-}
-
-@keyframes darkenOff{
+}@keyframes darkenOff{
 	0%{
 		color:#333;
 	}
 	100%{
 		color:#555;
 	}
-}
-
-@keyframes highlightOn{
+}@keyframes highlightOn{
 	100%{
 		color:#eee;
 	}
-}
-
-@keyframes highlightOff{
+}@keyframes highlightOff{
 	0%{
 		color:#eee;
 	}

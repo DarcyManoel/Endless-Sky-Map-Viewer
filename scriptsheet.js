@@ -2,27 +2,58 @@
 var canvas=document.getElementById(`canvas`);
 canvas.height=screen.height;
 canvas.width=screen.width;
-var context=canvas.getContext(`2d`);
-var governmentsColours=[];
+var canvasContext=canvas.getContext(`2d`);
+var coordinates=[];
 var governmentColourWormhole=`rgba(128,51,230,1)`;
+var governmentsColours=[];
 var governmentsUnique=[];
 var img=document.getElementById(`galaxy`);
+var interactable=document.getElementById(`interactable`);
+interactable.height=screen.height;
+interactable.width=screen.width;
+var interactableContext=interactable.getContext(`2d`);
+var isDragging;
 var links=[];
 var mapStyle=1;
 var planets=[];
 var planetsUnique=[];
 var positions=[];
+var systemCount=0;
 var systemGovernments=[];
 var systems=[];
 var wormholeNames=[];
 var wormholes=[];
 var wormholesHoldingSingle=[];
+var xCoordinate;
+var yCoordinate;
 var zoom=3;
 
 // Runs on page load, creates the initial canvas
 function initialize(){
-	context.scale(1/zoom,1/zoom);
-	context.drawImage(img,400,100);
+	canvasContext.scale(1/zoom,1/zoom);
+	canvasContext.drawImage(img,400,100);
+};
+
+// Controls the selection reticle and writes to coordinates when dragging
+function onMouseMove(event){
+	if(!isDragging){
+		return;
+	};
+	interactableContext.clearRect(0,0,canvas.width,canvas.height);
+	drawLine(interactableContext,event.offsetX-7,event.offsetY,event.offsetX+7,event.offsetY,[],1.1,`#f00`);
+	drawLine(interactableContext,event.offsetX,event.offsetY-7,event.offsetX,event.offsetY+7,[],1.1,`#f00`);
+};function onMouseDown(event){
+	document.getElementById('createSystem').classList.remove('greyOut');
+	document.getElementById('createSystem').classList.add('highlight');
+	document.getElementById(`createSystem`).setAttribute(`onclick`,`newSystem()`);
+	isDragging=true;
+	xCoordinate=event.offsetX;
+	yCoordinate=event.offsetY;
+	interactableContext.clearRect(0,0,canvas.width,canvas.height);
+	drawLine(interactableContext,event.offsetX-7,event.offsetY,event.offsetX+7,event.offsetY,[],1.1,`#f00`);
+	drawLine(interactableContext,event.offsetX,event.offsetY-7,event.offsetX,event.offsetY+7,[],1.1,`#f00`);
+};function onMouseUp(event){
+	isDragging=false;
 };
 
 function chosenFilesInitial(){
@@ -41,6 +72,9 @@ function chosenFiles(){
 
 // Runs on uploading an ships file; parses ship names, and stats
 function loadFiles(that){
+	interactable.addEventListener(`mousedown`,onMouseDown);
+	interactable.addEventListener(`mousemove`,onMouseMove);
+	document.body.addEventListener(`mouseup`,onMouseUp);
 	var files=event.target.files;
 //	console.log(files);
 	for(i=0;i<files.length;i++){
@@ -151,7 +185,8 @@ function drawMap(){
 		document.getElementById('loadFilesInitial').classList.add('hidden')
 		document.getElementById('canvas').classList.remove('blurred')
 		document.getElementById('loadFiles').classList.remove('greyOut')
-		document.getElementById('loadFiles').classList.add('highlight')`);
+		document.getElementById('loadFiles').classList.add('highlight')`
+	);
 	if(mapStyle==1){
 		drawClassicMap();
 	}else if(mapStyle==2){
@@ -160,9 +195,9 @@ function drawMap(){
 };
 
 function drawClassicMap(){
-    context.restore();
-    context.save();
-	context.drawImage(img,400,100);
+    canvasContext.restore();
+    canvasContext.save();
+	canvasContext.drawImage(img,400,100);
 	mapStyle=1;
 	document.getElementById(`mapStyle`).innerHTML=`Classic Map View`;
 	document.getElementById(`mapStyle`).classList.remove(`hidden`);
@@ -170,7 +205,7 @@ function drawClassicMap(){
 	for(i=0;i<links.length;i++){
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			drawLine(2150+ +positions[i][0],1350+ +positions[i][1],2150+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
+			drawLine(canvasContext,2150+ +positions[i][0],1350+ +positions[i][1],2150+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -212,30 +247,30 @@ function drawClassicMap(){
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
 			if((j+1)!==wormholes[i].length){
-				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[],2.7,governmentColourWormhole);
+				drawLine(canvasContext,2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole);
 			}else if(wormholes[i].length>2){
-				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[],2.7,governmentColourWormhole);
+				drawLine(canvasContext,2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole);
 			};
 		};
 	};
-	context.beginPath();
+	canvasContext.beginPath();
 	for(i=0;i<links.length;i++){
-		context.moveTo(2150+ +positions[i][0]+20,1350+ +positions[i][1]);
-		context.arc(2150+ +positions[i][0],1350+ +positions[i][1],18,0,2*Math.PI);
+		canvasContext.moveTo(2150+ +positions[i][0]+20,1350+ +positions[i][1]);
+		canvasContext.arc(2150+ +positions[i][0],1350+ +positions[i][1],18,0,2*Math.PI);
 	};
-	context.clip();
-	context.drawImage(img,400,100);
-	context.strokeStyle=`rgba(0,0,0,0)`;
-	context.stroke();
+	canvasContext.clip();
+	canvasContext.drawImage(img,400,100);
+	canvasContext.strokeStyle=`rgba(0,0,0,0)`;
+	canvasContext.stroke();
 	for(i=0;i<links.length;i++){
 		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())])
 	};
 };
 
 function drawModernMap(){
-    context.restore();
-    context.save();
-	context.drawImage(img,400,100);
+    canvasContext.restore();
+    canvasContext.save();
+	canvasContext.drawImage(img,400,100);
 	mapStyle=2;
 	document.getElementById(`mapStyle`).innerHTML=`Modern Map View`;
 	document.getElementById(`mapStyle`).classList.remove(`hidden`);
@@ -245,7 +280,7 @@ function drawModernMap(){
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
-			drawLine(2150+ +positions[i][0],1350+ +positions[i][1],(2150+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
+			drawLine(canvasContext,2150+ +positions[i][0],1350+ +positions[i][1],(2150+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
 //			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
@@ -287,28 +322,40 @@ function drawModernMap(){
 	for(i=0;i<wormholes.length;i++){
 		for(j=0;j<wormholes[i].length;j++){
 			if((j+1)!==wormholes[i].length){
-				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole)
-			}else{
-				drawLine(2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole)
+				drawLine(canvasContext,2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][j+1][0],1350+ +wormholes[i][j+1][1],[24,6,6],2.7,governmentColourWormhole)
+			}else if(wormholes[i].length>2){
+				drawLine(canvasContext,2150+ +wormholes[i][j][0],1350+ +wormholes[i][j][1],2150+ +wormholes[i][0][0],1350+ +wormholes[i][0][1],[24,6,6],2.7,governmentColourWormhole)
 			};
 		};
 	};
 };
 
+function newSystem(){
+	systemCount++;
+	coordinates.push(`system "`+systemCount+`"`);
+	coordinates.push(`\t`+`pos `+(xCoordinate*3)-2150+` `+(yCoordinate*3)-1350);
+	document.getElementById(`systems`).innerHTML=coordinates.join(`<br>`);
+};
+
+function copySystems(){
+	navigator.clipboard.writeText(coordinates.join(`\n`));
+};
+
 // Call-to functions, pre-defined functions that cut down individual processing
 function drawArc(x,y,radius,start,end,colour){
-	context.beginPath();
-	context.arc(x,y,radius,start,end);
-	context.lineWidth=3.6;
-	context.strokeStyle=colour;
-	context.stroke();
+	canvasContext.beginPath();
+	canvasContext.arc(x,y,radius,start,end);
+	canvasContext.lineWidth=3.6;
+	canvasContext.setLineDash([]);
+	canvasContext.strokeStyle=colour;
+	canvasContext.stroke();
 };
-function drawLine(startX,startY,endX,endY,lineDash,width,colour){
-	context.beginPath();
-	context.moveTo(startX,startY);
-	context.lineTo(endX,endY);
-	context.setLineDash(lineDash);
-	context.lineWidth=width;
-	context.strokeStyle=colour;
-	context.stroke();
+function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
+	target.beginPath();
+	target.moveTo(startX,startY);
+	target.lineTo(endX,endY);
+	target.setLineDash(lineDash);
+	target.lineWidth=width;
+	target.strokeStyle=colour;
+	target.stroke();
 };

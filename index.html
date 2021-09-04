@@ -15,6 +15,7 @@
 
 		<!-- Map board -->
 		<canvas id="canvas" class="blurred"></canvas>
+		<canvas id="interactable"></canvas>
 
 		<!-- Image reference relay, always hidden -->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
@@ -27,6 +28,11 @@
 		<input id="file" onchange="chosenFiles(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
 
 		<div id="mapStyle" class="highlight" onclick="toggleMapStyle()">Classic Map View</div>
+
+		<div id="createSystem" class="greyOut">Create System</div>
+
+		<!-- System Coordinates -->
+		<p id="systems" class="highlight" onclick="copySystems()"></p>
 
 	</body>
 
