@@ -12,6 +12,7 @@ var interactable=document.getElementById(`interactable`);
 interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
+var interactMode=1;
 var isDragging;
 var links=[];
 var mapStyle=1;
@@ -342,15 +343,44 @@ function newSystem(){
 	drawMap();
 	document.getElementById(`systems`).innerHTML+=`<p id="sys`+systemCount+`" class="greyOutSelect system" onclick="copySystem(this.id)">system "`+systemCount+`"\n\tpos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350)+`</p><br>`;
 };
+
+// Toggle function between linking and copy mode, handles interaction with the system list
+function toggleInteract(){
+	if(interactMode<2){
+		interactMode++;
+	}else{
+		interactMode=1;
+	};
+	if(interactMode==1){
+		document.getElementById(`interactMode`).innerHTML=`Linking Mode`;
+		for(i=0;i<systemCount;i++){
+			document.getElementById(`sys`+(i+1)).classList.remove(`highlight`);
+			document.getElementById(`sys`+(i+1)).classList.add(`greyOutSelect`);
+			document.getElementById(`sys`+(i+1)).setAttribute(`onclick`,`linkSystem(this.id)`);
+		};
+	}else if(interactMode==2){
+		document.getElementById(`interactMode`).innerHTML=`Copy Mode`;
+		for(i=0;i<systemCount;i++){
+			document.getElementById(`sys`+(i+1)).classList.remove(`greyOutSelect`);
+			document.getElementById(`sys`+(i+1)).classList.add(`highlight`);
+			document.getElementById(`sys`+(i+1)).setAttribute(`onclick`,`copySystem(this.id)`);
+		};
+	};
+};function copySystem(id){
+	navigator.clipboard.writeText(document.getElementById(id).innerHTML);
+};function linkSystem(id){
+	document.getElementById(id).classList.toggle(`greyOutSelect`);
+	document.getElementById(id).classList.toggle(`highlight`);
+	var position=document.getElementById(id).innerHTML;
+	console.log(position);
+};
+
 function copySystems(){
 	var systemCompile=[];
 	for(i=0;i<systemCount;i++){
 		systemCompile.push(document.getElementById(`sys`+(i+1)).innerHTML);
 	};
 	navigator.clipboard.writeText(systemCompile.join(`\n`));
-};
-function copySystem(id){
-	navigator.clipboard.writeText(document.getElementById(id).innerHTML);
 };
 
 // Call-to functions, pre-defined functions that cut down individual processing
@@ -361,8 +391,7 @@ function drawArc(x,y,radius,start,end,colour){
 	canvasContext.setLineDash([]);
 	canvasContext.strokeStyle=colour;
 	canvasContext.stroke();
-};
-function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
+};function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.beginPath();
 	target.moveTo(startX,startY);
 	target.lineTo(endX,endY);

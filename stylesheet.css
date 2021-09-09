@@ -72,17 +72,13 @@ canvas{
 	position:absolute;
 	right:7vw;
 	top:4vh;
-}#linkingMode{
+}#interactMode{
 	position:absolute;
 	right:15vw;
 	top:4vh;
-}#copyMode{
-	position:absolute;
-	right:15vw;
-	top:8vh;
 }#systems{
 	font-size:1.5vh;
-	max-height:85vh;
+	max-height:88vh;
 	overflow-x:hidden;
 	overflow-y:scroll;
 	position:absolute;
