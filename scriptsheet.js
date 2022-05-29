@@ -1,17 +1,8 @@
-// Creates global variables to be called to and overwritten
-var canvas=document.getElementById(`canvas`);
-canvas.height=screen.height;
-canvas.width=screen.width;
-var canvasContext=canvas.getContext(`2d`);
 var coordinates=[];
 var governmentColourWormhole=`rgba(128,51,230,1)`;
 var governmentsColours=[];
 var governmentsUnique=[];
 var img=document.getElementById(`galaxy`);
-var interactable=document.getElementById(`interactable`);
-interactable.height=screen.height;
-interactable.width=screen.width;
-var interactableContext=interactable.getContext(`2d`);
 var interactMode=1;
 var isDragging;
 var links=[];
@@ -28,42 +19,44 @@ var wormholesHoldingSingle=[];
 var xCoordinate;
 var yCoordinate;
 var zoom=3;
-
-// Runs on page load, creates the initial canvas
+//	Establish canvas structure
+var canvas=document.getElementById(`canvas`);
+canvas.height=screen.height;
+canvas.width=screen.width;
+var canvasContext=canvas.getContext(`2d`);
+var interactable=document.getElementById(`interactable`);
+interactable.height=screen.height;
+interactable.width=screen.width;
+var interactableContext=interactable.getContext(`2d`);
+//	Draw canvas on page load
 function initialize(){
 	canvasContext.scale(1/zoom,1/zoom);
 	canvasContext.drawImage(img,400,100);
 };
-
-// Controls the selection reticle and writes to coordinates when dragging
+//	Coordinate tracking on mouse actions
+function onMouseDown(event){
+	isDragging=true;
+	xCoordinate=event.offsetX;
+	yCoordinate=event.offsetY;
+};
 function onMouseMove(event){
 	if(!isDragging){
 		return;
 	};
 	xCoordinate=event.offsetX;
 	yCoordinate=event.offsetY;
-	interactableContext.clearRect(0,0,canvas.width,canvas.height);
-	drawLine(interactableContext,event.offsetX-7,event.offsetY,event.offsetX+7,event.offsetY,[],1.1,`#f00`);
-	drawLine(interactableContext,event.offsetX,event.offsetY-7,event.offsetX,event.offsetY+7,[],1.1,`#f00`);
-};function onMouseDown(event){
-	document.getElementById('createSystem').classList.remove('greyOut');
-	document.getElementById('createSystem').classList.add('highlight');
-	document.getElementById(`createSystem`).setAttribute(`onclick`,`newSystem()`);
-	isDragging=true;
+};
+function onMouseUp(event){
+	isDragging=false;
 	xCoordinate=event.offsetX;
 	yCoordinate=event.offsetY;
-	interactableContext.clearRect(0,0,canvas.width,canvas.height);
-	drawLine(interactableContext,event.offsetX-7,event.offsetY,event.offsetX+7,event.offsetY,[],1.1,`#f00`);
-	drawLine(interactableContext,event.offsetX,event.offsetY-7,event.offsetX,event.offsetY+7,[],1.1,`#f00`);
-};function onMouseUp(event){
-	isDragging=false;
 };
-
+//	Initial file upload
 function chosenFilesInitial(){
 	document.getElementById(`loadFilesInitial`).innerHTML=`Load Map`;
 	document.getElementById(`loadFilesInitial`).removeAttribute(`for`);
 };
-
+//	Additional file upload
 function chosenFiles(){
 	document.getElementById(`loadFilesInitial`).innerHTML=`Load Map`;
 	document.getElementById(`loadFilesInitial`).removeAttribute(`for`);
@@ -72,17 +65,14 @@ function chosenFiles(){
 	document.getElementById('loadFiles').classList.add('greyOut');
 	document.getElementById('loadFiles').classList.remove('highlight');
 };
-
-// Runs on uploading an ships file; parses ship names, and stats
+//	Parses files to generate map display
 function loadFiles(that){
 	interactable.addEventListener(`mousedown`,onMouseDown);
 	interactable.addEventListener(`mousemove`,onMouseMove);
 	document.body.addEventListener(`mouseup`,onMouseUp);
 	var files=event.target.files;
-//	console.log(files);
 	for(i=0;i<files.length;i++){
-
-		// Parsing governments to generate the map image
+		//	Governments
 		var governmentsReader=new FileReader();
 		governmentsReader.readAsText(files[i]);
 		governmentsReader.onload=function(e){
@@ -97,8 +87,6 @@ function loadFiles(that){
 			};
 			if(governmentsUniqueHolding[0].length>0){
 				governmentsUnique.push(...governmentsUniqueHolding);
-//				console.log(governmentsUnique);
-//				console.log(governmentsUniqueHolding);
 			};
 			var coloursSpread=governmentsSeperated.filter(/./.test,/^	color/).join(`|`).replace(/	color /g,``).split(`|`).join(` `).split(` `);
 			coloursSpread.unshift(``);
@@ -113,8 +101,7 @@ function loadFiles(that){
 				governmentsColours.push(...governmentsColoursHolding);
 			};
 		};
-
-		// Parsing systems to generate the map image
+		// Systems
 		var systemsReader=new FileReader();
 		systemsReader.readAsText(files[i]);
 		systemsReader.onload=function(e){
@@ -157,14 +144,13 @@ function loadFiles(that){
 				links.push(...linksHolding);
 				planets.push(...planetsHolding);
 				for(j=0;j<systemsHolding.length;j++){
-//					console.log(systemsHolding[j]+` `+systemGovernmentsHolding[j]+` `+positionsHolding[j].join(` `));
+					console.log(systemsHolding[j]+` `+systemGovernmentsHolding[j]+` `+positionsHolding[j].join(` `));
 				};
 			};
 		};
 	};
 };
-
-// Toggle function between classic and modern map views, handles canvas rendering for both styles
+//	Display style toggle
 function toggleMapStyle(){
 	if(mapStyle<2){
 		mapStyle++;
@@ -179,8 +165,7 @@ function toggleMapStyle(){
 		drawModernMap();
 	};
 };
-
-// Decides which style to draw the map in, acts as a passthrough decider function
+//	Display style decider
 function drawMap(){
 	document.getElementById(`loadFilesInitial`).setAttribute(
 		`onclick`,`
@@ -196,7 +181,7 @@ function drawMap(){
 		drawModernMap();
 	};
 };
-
+//	Classic display
 function drawClassicMap(){
     canvasContext.restore();
     canvasContext.save();
@@ -209,7 +194,6 @@ function drawClassicMap(){
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
 			drawLine(canvasContext,2150+ +positions[i][0],1350+ +positions[i][1],2150+ +positions[pos][0],1350+ +positions[pos][1],[],2.7,`rgb(102,102,102)`)
-//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
 			if(planetsUnique.indexOf(planets[i][j])==-1){
@@ -269,7 +253,7 @@ function drawClassicMap(){
 		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],9,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())])
 	};
 };
-
+//	Modern display
 function drawModernMap(){
     canvasContext.restore();
     canvasContext.save();
@@ -277,14 +261,12 @@ function drawModernMap(){
 	mapStyle=2;
 	document.getElementById(`mapStyle`).innerHTML=`Modern Map View`;
 	document.getElementById(`mapStyle`).classList.remove(`hidden`);
-//	console.log(planets);
 	for(i=0;i<links.length;i++){
 		drawArc(2150+ +positions[i][0],1350+ +positions[i][1],4,0,2*Math.PI,governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())]);
 		var linkColour=governmentsColours[governmentsUnique.indexOf(systemGovernments[i].trim())];
 		for(j=0;j<links[i].length;j++){
 			var pos=systems.indexOf(links[i][j]);
 			drawLine(canvasContext,2150+ +positions[i][0],1350+ +positions[i][1],(2150+ +positions[pos][0])+((positions[i][0]-positions[pos][0])/2),(1350+ +positions[pos][1])+((positions[i][1]-positions[pos][1])/2),[],1.7,linkColour)
-//			console.log(systems[i]+` -> `+systems[pos]);	//Write to console links between systems
 		};
 		for(j=0;j<planets[i].length;j++){
 			if(planetsUnique.indexOf(planets[i][j])==-1){
@@ -332,58 +314,7 @@ function drawModernMap(){
 		};
 	};
 };
-
-function newSystem(){
-	systemCount++;
-	systems.push(systemCount);
-	systemGovernments.push(`Uninhabited`);
-	positions.push([(xCoordinate*3)-2150,(yCoordinate*3)-1350]);
-	links.push([]);
-	planets.push([]);
-	drawMap();
-	document.getElementById(`systems`).innerHTML+=`<p id="sys`+systemCount+`" class="greyOutSelect system" onclick="copySystem(this.id)">system "`+systemCount+`"\n\tpos `+((xCoordinate*3)-2150)+` `+((yCoordinate*3)-1350)+`</p><br>`;
-};
-
-// Toggle function between linking and copy mode, handles interaction with the system list
-function toggleInteract(){
-	if(interactMode<2){
-		interactMode++;
-	}else{
-		interactMode=1;
-	};
-	if(interactMode==1){
-		document.getElementById(`interactMode`).innerHTML=`Linking Mode`;
-		for(i=0;i<systemCount;i++){
-			document.getElementById(`sys`+(i+1)).classList.remove(`highlight`);
-			document.getElementById(`sys`+(i+1)).classList.add(`greyOutSelect`);
-			document.getElementById(`sys`+(i+1)).setAttribute(`onclick`,`linkSystem(this.id)`);
-		};
-	}else if(interactMode==2){
-		document.getElementById(`interactMode`).innerHTML=`Copy Mode`;
-		for(i=0;i<systemCount;i++){
-			document.getElementById(`sys`+(i+1)).classList.remove(`greyOutSelect`);
-			document.getElementById(`sys`+(i+1)).classList.add(`highlight`);
-			document.getElementById(`sys`+(i+1)).setAttribute(`onclick`,`copySystem(this.id)`);
-		};
-	};
-};function copySystem(id){
-	navigator.clipboard.writeText(document.getElementById(id).innerHTML);
-};function linkSystem(id){
-	document.getElementById(id).classList.toggle(`greyOutSelect`);
-	document.getElementById(id).classList.toggle(`highlight`);
-	var position=document.getElementById(id).innerHTML;
-	console.log(position);
-};
-
-function copySystems(){
-	var systemCompile=[];
-	for(i=0;i<systemCount;i++){
-		systemCompile.push(document.getElementById(`sys`+(i+1)).innerHTML);
-	};
-	navigator.clipboard.writeText(systemCompile.join(`\n`));
-};
-
-// Call-to functions, pre-defined functions that cut down individual processing
+//	Canvas pre-defined actions
 function drawArc(x,y,radius,start,end,colour){
 	canvasContext.beginPath();
 	canvasContext.arc(x,y,radius,start,end);
@@ -391,7 +322,8 @@ function drawArc(x,y,radius,start,end,colour){
 	canvasContext.setLineDash([]);
 	canvasContext.strokeStyle=colour;
 	canvasContext.stroke();
-};function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
+};
+function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.beginPath();
 	target.moveTo(startX,startY);
 	target.lineTo(endX,endY);

@@ -1,16 +1,13 @@
+/*Constants*/
 body{
+	-webkit-user-select:none;
 	background-color:#000;
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
 	overflow:hidden;
-
-	/* USER SELECT */
 	user-select:none;
-	-webkit-user-select:none;
-	
 }
-
 canvas{
 	animation:blurOff 1s;
 	left:0;
@@ -18,17 +15,10 @@ canvas{
 	top:0;
 	width:100%;
 }
-
-.blurred{
-	animation:blurOn 1s forwards;
-}
-
-/* Hide affixed-to elements */
 .hidden{
 	display:none;
 }
-
-/* Button inputs */
+/*Interactables*/
 #loadFilesInitial{
 	font-size:3vw;
 	left:40vw;
@@ -36,94 +26,55 @@ canvas{
 	text-align:center;
 	top:50vh;
 	width:20vw;
-}#loadFiles{
+}
+#loadFiles{
 	left:2vw;
 	position:absolute;
 	top:4vh;
-}#mapStyle{
+}
+#mapStyle{
 	left:2vw;
 	position:absolute;
 	bottom:4vh;
-}#createSystem{
-	left:2vw;
-	position:absolute;
-	top:8vh;
-}.greyOut{
+}
+/*Blur*/
+.blurred{
+	animation:blurOn 1s forwards;
+}
+@keyframes blurOn{
+	100%{filter:blur(3px);}
+}
+@keyframes blurOff{
+	0%{filter:blur(3px);}
+	100%{filter:blur(0px);}
+}
+/*Darken*/
+.greyOut{
 	animation:darkenOff .5s;
 	color:#555;
 	pointer-events:none;
 }.greyOut:hover{
 	animation:darkenOn .5s forwards;
-}.greyOutSelect{
-	animation:darkenOff .5s;
-	color:#555;
-	cursor:pointer;
-}.greyOutSelect:hover{
-	animation:highlightOn .5s forwards;
-}.highlight{
+}
+@keyframes darkenOn{
+	100%{color:#333;}
+}
+@keyframes darkenOff{
+	0%{color:#333;}
+	100%{color:#555;}
+}
+/*Highlight*/
+.highlight{
 	animation:highlightOff .5s;
 	color:#aaa;
 	cursor:pointer;
 }.highlight:hover{
 	animation:highlightOn .5s forwards;
 }
-
-#copyAll{
-	position:absolute;
-	right:7vw;
-	top:4vh;
-}#interactMode{
-	position:absolute;
-	right:15vw;
-	top:4vh;
-}#systems{
-	font-size:1.5vh;
-	max-height:88vh;
-	overflow-x:hidden;
-	overflow-y:scroll;
-	position:absolute;
-	right:0;
-	text-align:left;
-	top:8vh;
-	white-space:pre;
-	width:10vw;
-}p{
-	margin-bottom:-2px;
-	margin-top:-2px;
+@keyframes highlightOn{
+	100%{color:#eee;}
 }
-
-/* Keyframes */
-@keyframes blurOn{
-	100%{
-		filter:blur(3px);
-	}
-}@keyframes blurOff{
-	0%{
-		filter:blur(3px);
-	}
-	100%{
-		filter:blur(0px);
-	}
-}@keyframes darkenOn{
-	100%{
-		color:#333;
-	}
-}@keyframes darkenOff{
-	0%{
-		color:#333;
-	}
-	100%{
-		color:#555;
-	}
-}@keyframes highlightOn{
-	100%{
-		color:#eee;
-	}
-}@keyframes highlightOff{
-	0%{
-		color:#eee;
-	}
-	100%{
-		color:#aaa;
-	}
+@keyframes highlightOff{
+	0%{color:#eee;}
+	100%{color:#aaa;}
 }
