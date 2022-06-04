@@ -8,17 +8,13 @@
 	</head>
 	<body onload="initialize()">
 	<!--Canvas-->
-		<canvas id="canvas" class="blurred"></canvas>
+		<canvas id="canvas"></canvas>
 		<canvas id="interactable"></canvas>
 	<!--Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
-	<!--Display Styles-->
-		<div id="mapStyle" class="highlight" onclick="toggleMapStyle()">Classic Map View</div>
 	<!--Misc-->
-		<label id="loadFilesInitial" class="highlight" for="fileInitial" onclick="drawMap()">&#10162; Upload Files</label>
-		<input id="fileInitial" onchange="chosenFilesInitial(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
-		<label id="loadFiles" class="greyOut" for="file" onclick="drawMap()">&#10162; Upload Files</label>
-		<input id="file" onchange="chosenFiles(),loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
+		<label id="loadFiles" class="highlight" for="file">&#10162; Upload Files</label>
+		<input id="file" onchange="loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>
