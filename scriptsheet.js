@@ -12,10 +12,15 @@ interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
 //	Map elements
+//		Systems
 var systemCount=0;
 var systems=[];
+//		Governments
 var governmentCount=0;
 var governments=[];
+//		Wormholes
+var globalObjects=[];
+var wormholes=[];
 //	Draw canvas on page load
 function initialize(){
 	canvasContext.scale(1/3,1/3);
@@ -93,6 +98,9 @@ function loadFiles(that){
 					systems[systemCount].push([`attributes`,attributes]);
 					systems[systemCount].push([`links`,links]);
 					systems[systemCount].push([`objects`,objects]);
+					for(k=0;k<objects.length;k++){
+						globalObjects.push([objects[k],systems[systemCount][1][1][0],systems[systemCount][1][1][1]]);
+					};
 					systemCount++;
 				}else if(lines[j].startsWith(`system `)){
 					systems.push([[`system`,lines[j].slice(7)]]);
@@ -133,6 +141,9 @@ function loadFiles(that){
 					systems[systemCount].push([`attributes`,attributes]);
 					systems[systemCount].push([`links`,links]);
 					systems[systemCount].push([`objects`,objects]);
+					for(k=0;k<objects.length;k++){
+						globalObjects.push([objects[k],systems[systemCount][1][1][0],systems[systemCount][1][1][1]]);
+					};
 					systemCount++;
 				};
 				//	Governments
@@ -152,6 +163,7 @@ function loadFiles(that){
 			if(systems.length>0){
 				console.log(systems);
 				console.log(governments);
+				console.log(globalObjects);
 			};
 		};
 	};
@@ -162,9 +174,8 @@ function drawMap(){
 	canvasContext.restore();
 	canvasContext.save();
 	canvasContext.drawImage(img,400,100);
-	//	Secondary elements
+	//	Links
 	for(i=0;i<systems.length;i++){
-		//	Links
 		for(j=0;j<systems[i][4][1].length;j++){
 			//	Find system link endpoint
 			var linkTarget=``;
@@ -177,13 +188,15 @@ function drawMap(){
 		};
 	};
 	//	Systems
+	//		Clip regions for layering
 	canvasContext.beginPath();
 	for(i=0;i<systems.length;i++){
 		canvasContext.moveTo(2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1]);
-		canvasContext.arc(2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],18,0,2*Math.PI);
+		canvasContext.arc(2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],16,0,2*Math.PI);
 	};
 	canvasContext.clip();
 	canvasContext.drawImage(img,400,100);
+	//		Draw systems
 	for(i=0;i<systems.length;i++){
 		//	Find government color
 		var governmentTarget=``;
@@ -197,6 +210,17 @@ function drawMap(){
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
 		}else{
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
+		};
+	};
+	canvasContext.restore();
+	//	Wormholes
+	//		Draw wormholes
+	for(i=0;i<globalObjects.length;i++){
+		for(j=i+1;j<globalObjects.length;j++){
+			if(globalObjects[i][0]==globalObjects[j][0]){
+				drawLine(canvasContext,2150+ +globalObjects[i][1],1350+ +globalObjects[i][2],2150+ +globalObjects[j][1],1350+ +globalObjects[j][2],[],1,`rgb(128,51,230)`);
+				break;
+			};
 		};
 	};
 };
