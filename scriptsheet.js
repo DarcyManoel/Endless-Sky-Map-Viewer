@@ -184,7 +184,7 @@ function drawMap(){
 					linkTarget=k;
 				};
 			};
-			drawLine(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],2150+ +systems[linkTarget][1][1][0],1350+ +systems[linkTarget][1][1][1],[],1,`rgb(102,102,102)`);
+			drawLine(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],2150+ +systems[linkTarget][1][1][0],1350+ +systems[linkTarget][1][1][1],[],2,`rgb(102,102,102)`);
 		};
 	};
 	//	Systems
@@ -221,6 +221,37 @@ function drawMap(){
 				drawLine(canvasContext,2150+ +globalObjects[i][1],1350+ +globalObjects[i][2],2150+ +globalObjects[j][1],1350+ +globalObjects[j][2],[],1,`rgb(128,51,230)`);
 				break;
 			};
+		};
+	};
+	//		Clip regions for layering
+	canvasContext.save();
+	canvasContext.beginPath();
+	for(i=0;i<globalObjects.length;i++){
+		for(j=i+1;j<globalObjects.length;j++){
+			if(globalObjects[i][0]==globalObjects[j][0]){
+				canvasContext.moveTo(2150+ +globalObjects[i][1],1350+ +globalObjects[i][2]);
+				canvasContext.arc(2150+ +globalObjects[i][1],1350+ +globalObjects[i][2],16,0,2*Math.PI);
+				canvasContext.moveTo(2150+ +globalObjects[j][1],1350+ +globalObjects[j][2]);
+				canvasContext.arc(2150+ +globalObjects[j][1],1350+ +globalObjects[j][2],16,0,2*Math.PI);
+				break;
+			};
+		};
+	};
+	canvasContext.clip();
+	canvasContext.drawImage(img,400,100);
+	for(i=0;i<systems.length;i++){
+		//	Find government color
+		var governmentTarget=``;
+		for(j=0;j<governments.length;j++){
+			if(governments[j][0]==systems[i][2][1]){
+				governmentTarget=j;
+			};
+		};
+		//	Visible blips
+		if(systems[i][5][1].length>0){
+			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
+		}else{
+			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
 		};
 	};
 };
