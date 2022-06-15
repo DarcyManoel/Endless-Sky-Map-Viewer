@@ -60,20 +60,21 @@ function loadFiles(that){
 			for(j=0;j<lines.length;j++){
 				//	Systems
 				if(lines[j].startsWith(`system "`)){
-					systems.push([[`system`,lines[j].slice(7)]]);
+					var position=[];
+					var government;
 					var attributes=[];
 					var links=[];
 					var objects=[];
 					for(k=j+1;k<lines.length;k++){
 						//	List system position
 						if(lines[k].startsWith(`\tpos `)){
-							systems[systemCount].push([`position`,lines[k].replace(`	pos `,``).split(` `)]);
+							position.push(lines[k].replace(`	pos `,``).split(` `));
 						};
 						//	List system government
 						if(lines[k].startsWith(`\tgovernment "`)){
-							systems[systemCount].push([`government`,lines[k].slice(13,-1)]);
+							government=lines[k].slice(13,-1);
 						}else if(lines[k].startsWith(`\tgovernment `)){
-							systems[systemCount].push([`government`,lines[k].slice(12)]);
+							government=lines[k].slice(12);
 						};
 						//	List system attributes
 						if(lines[k].startsWith(`\tattributes `)){
@@ -91,32 +92,38 @@ function loadFiles(that){
 							objects.push(lines[k].slice(9));
 						};
 						//	End the loop prematurely
-						if(lines[k].startsWith(`\t`)&&!lines[k+1].startsWith(`\t`)){
+						if(!lines[k].startsWith(`\t`)){
 							break;
 						};
 					};
-					systems[systemCount].push([`attributes`,attributes]);
-					systems[systemCount].push([`links`,links]);
-					systems[systemCount].push([`objects`,objects]);
+					if(government.length&&position.length){
+						systems.push([[`system`,lines[j].slice(7)]]);
+						systems[systemCount].push([`position`,position[0]]);
+						systems[systemCount].push([`government`,government]);
+						systems[systemCount].push([`attributes`,attributes]);
+						systems[systemCount].push([`links`,links]);
+						systems[systemCount].push([`objects`,objects]);
+					};
 					for(k=0;k<objects.length;k++){
-						globalObjects.push([objects[k],systems[systemCount][1][1][0],systems[systemCount][1][1][1]]);
+						globalObjects.push([objects[k],position[0]]);
 					};
 					systemCount++;
 				}else if(lines[j].startsWith(`system `)){
-					systems.push([[`system`,lines[j].slice(7)]]);
+					var position=[];
+					var government;
 					var attributes=[];
 					var links=[];
 					var objects=[];
 					for(k=j+1;k<lines.length;k++){
 						//	List system position
 						if(lines[k].startsWith(`\tpos `)){
-							systems[systemCount].push([`position`,lines[k].replace(`	pos `,``).split(` `)]);
+							position.push(lines[k].replace(`	pos `,``).split(` `));
 						};
 						//	List system government
 						if(lines[k].startsWith(`\tgovernment "`)){
-							systems[systemCount].push([`government`,lines[k].slice(13,-1)]);
+							government=lines[k].slice(13,-1);
 						}else if(lines[k].startsWith(`\tgovernment `)){
-							systems[systemCount].push([`government`,lines[k].slice(12)]);
+							government=lines[k].slice(12);
 						};
 						//	List system attributes
 						if(lines[k].startsWith(`\tattributes `)){
@@ -134,30 +141,39 @@ function loadFiles(that){
 							objects.push(lines[k].slice(9));
 						};
 						//	End the loop prematurely
-						if(lines[k].startsWith(`\t`)&&!lines[k+1].startsWith(`\t`)){
+						if(!lines[k].startsWith(`\t`)){
 							break;
 						};
 					};
-					systems[systemCount].push([`attributes`,attributes]);
-					systems[systemCount].push([`links`,links]);
-					systems[systemCount].push([`objects`,objects]);
+					if(government.length&&position.length){
+						systems.push([[`system`,lines[j].slice(7)]]);
+						systems[systemCount].push([`position`,position[0]]);
+						systems[systemCount].push([`government`,government]);
+						systems[systemCount].push([`attributes`,attributes]);
+						systems[systemCount].push([`links`,links]);
+						systems[systemCount].push([`objects`,objects]);
+					};
 					for(k=0;k<objects.length;k++){
-						globalObjects.push([objects[k],systems[systemCount][1][1][0],systems[systemCount][1][1][1]]);
+						globalObjects.push([objects[k],position[0]]);
 					};
 					systemCount++;
 				};
 				//	Governments
 				if(lines[j].startsWith(`government "`)){
-					governments.push([lines[j].slice(12,-1)]);
+					var color=0;
 					for(h=j+1;h<lines.length;h++){
 						if(lines[h].startsWith(`\tcolor `)){
-							governments[governmentCount].push([`color`,lines[h].replace(`	color `,``).split(` `)]);
+							color=lines[h].replace(`	color `,``).split(` `);
 						};
-						if(lines[h].startsWith(`government `)){
+						if(!lines[h].startsWith(`\t`)){
 							break;
 						};
 					};
-					governmentCount++;
+					if(color.length){
+						governments.push([lines[j].slice(12,-1)]);
+						governments[governmentCount].push([`color`,color]);
+						governmentCount++;
+					};
 				};
 			};
 			if(systems.length>0){
@@ -218,7 +234,7 @@ function drawMap(){
 	for(i=0;i<globalObjects.length;i++){
 		for(j=i+1;j<globalObjects.length;j++){
 			if(globalObjects[i][0]==globalObjects[j][0]){
-				drawLine(canvasContext,2150+ +globalObjects[i][1],1350+ +globalObjects[i][2],2150+ +globalObjects[j][1],1350+ +globalObjects[j][2],[],1,`rgb(128,51,230)`);
+				drawLine(canvasContext,2150+ +globalObjects[i][1][0],1350+ +globalObjects[i][1][1],2150+ +globalObjects[j][1][0],1350+ +globalObjects[j][1][1],[],1,`rgb(128,51,230)`);
 				break;
 			};
 		};
