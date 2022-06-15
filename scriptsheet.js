@@ -59,56 +59,7 @@ function loadFiles(that){
 			var lines=output.split(`\n`);
 			for(j=0;j<lines.length;j++){
 				//	Systems
-				if(lines[j].startsWith(`system "`)){
-					var position=[];
-					var government;
-					var attributes=[];
-					var links=[];
-					var objects=[];
-					for(k=j+1;k<lines.length;k++){
-						//	List system position
-						if(lines[k].startsWith(`\tpos `)){
-							position.push(lines[k].replace(`	pos `,``).split(` `));
-						};
-						//	List system government
-						if(lines[k].startsWith(`\tgovernment "`)){
-							government=lines[k].slice(13,-1);
-						}else if(lines[k].startsWith(`\tgovernment `)){
-							government=lines[k].slice(12);
-						};
-						//	List system attributes
-						if(lines[k].startsWith(`\tattributes `)){
-							attributes=lines[k].slice(13,-1).split(`" "`);
-						};
-						//	List system links
-						if(lines[k].startsWith(`\tlink `)){
-							links.push(lines[k].slice(6));
-						};
-						//	List system objects
-						if(lines[k].startsWith(`\tobject `)){
-							objects.push(lines[k].slice(8));
-						};
-						if(lines[k].startsWith(`\t\tobject `)){
-							objects.push(lines[k].slice(9));
-						};
-						//	End the loop prematurely
-						if(!lines[k].startsWith(`\t`)){
-							break;
-						};
-					};
-					if(government.length&&position.length){
-						systems.push([[`system`,lines[j].slice(7)]]);
-						systems[systemCount].push([`position`,position[0]]);
-						systems[systemCount].push([`government`,government]);
-						systems[systemCount].push([`attributes`,attributes]);
-						systems[systemCount].push([`links`,links]);
-						systems[systemCount].push([`objects`,objects]);
-					};
-					for(k=0;k<objects.length;k++){
-						globalObjects.push([objects[k],position[0]]);
-					};
-					systemCount++;
-				}else if(lines[j].startsWith(`system `)){
+				if(lines[j].startsWith(`system `)){
 					var position=[];
 					var government;
 					var attributes=[];
