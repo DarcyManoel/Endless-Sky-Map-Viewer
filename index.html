@@ -12,6 +12,12 @@
 		<canvas id="interactable"></canvas>
 	<!--Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
+	<!--Map Options-->
+		<div onclick="switchAllocation()">
+			<label id="allocation">System Allocation</label>
+			<label id="inhabited">Inhabited</label>
+			<label id="claimed" class="hidden">Claimed</label>
+		</div>
 	<!--Misc-->
 		<label id="loadFiles" class="highlight" for="file">&#10162; Upload Files</label>
 		<input id="file" onchange="loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>

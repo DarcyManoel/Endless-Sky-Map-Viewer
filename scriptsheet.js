@@ -1,6 +1,3 @@
-var isDragging;
-var xCoordinate;
-var yCoordinate;
 //	Establish canvas structure
 var canvas=document.getElementById(`canvas`);
 canvas.height=screen.height;
@@ -21,6 +18,12 @@ var governments=[];
 //		Wormholes
 var globalObjects=[];
 var wormholes=[];
+//	Positional variables
+var isDragging;
+var xCoordinate;
+var yCoordinate;
+//	Map options
+var systemAllocation;
 //	Draw canvas on page load
 function initialize(){
 	canvasContext.scale(1/3,1/3);
@@ -128,9 +131,9 @@ function loadFiles(that){
 				};
 			};
 			if(systems.length>0){
-				console.log(systems);
-				console.log(governments);
-				console.log(globalObjects);
+//				console.log(systems);
+//				console.log(governments);
+//				console.log(globalObjects);
 			};
 		};
 	};
@@ -173,7 +176,7 @@ function drawMap(){
 			};
 		};
 		//	Visible blips
-		if(systems[i][5][1].length>0){
+		if(systems[i][5][1].length>0||systemAllocation){
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
 		}else{
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
@@ -215,12 +218,25 @@ function drawMap(){
 			};
 		};
 		//	Visible blips
-		if(systems[i][5][1].length>0){
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
-		}else{
+		if(!systems[i][5][1].length&&!systemAllocation){
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
+		}else{
+			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
 		};
 	};
+};
+//	Map Options
+function switchAllocation(){
+	if(systemAllocation){
+		systemAllocation=0;
+		document.getElementById(`inhabited`).classList.toggle(`hidden`);
+		document.getElementById(`claimed`).classList.toggle(`hidden`);
+	}else{
+		systemAllocation=1;
+		document.getElementById(`inhabited`).classList.toggle(`hidden`);
+		document.getElementById(`claimed`).classList.toggle(`hidden`);
+	};
+	drawMap();
 };
 //	Pre-defined canvas actions
 function drawArc(target,x,y,radius,fill,start,end,colour){

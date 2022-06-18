@@ -1,7 +1,9 @@
 /*Constants*/
 body{
 	-webkit-user-select:none;
+	animation:highlightOff .5s;
 	background-color:#000;
+	color:#aaa;
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
@@ -15,27 +17,37 @@ canvas{
 	top:0;
 	width:100%;
 }
+label{
+	padding:6px;
+}
+label:hover{
+	animation:highlightOn .5s forwards;
+	cursor:pointer;
+}
 .hidden{
 	display:none;
 }
 /*Interactables*/
-#loadFilesInitial{
-	font-size:3vw;
-	left:40vw;
-	position:absolute;
-	text-align:center;
-	top:50vh;
-	width:20vw;
-}
 #loadFiles{
-	left:2vw;
+	left:30px;
 	position:absolute;
-	top:4vh;
+	top:20px;
 }
-#mapStyle{
-	left:2vw;
+#allocation{
 	position:absolute;
-	bottom:4vh;
+	right:20px;
+	text-decoration:underline;
+	top:20px;
+}
+#inhabited{
+	position:absolute;
+	right:50px;
+	top:40px;
+}
+#claimed{
+	position:absolute;
+	right:55px;
+	top:40px;
 }
 /*Blur*/
 .blurred{
@@ -48,29 +60,7 @@ canvas{
 	0%{filter:blur(3px);}
 	100%{filter:blur(0px);}
 }
-/*Darken*/
-.greyOut{
-	animation:darkenOff .5s;
-	color:#555;
-	pointer-events:none;
-}.greyOut:hover{
-	animation:darkenOn .5s forwards;
-}
-@keyframes darkenOn{
-	100%{color:#333;}
-}
-@keyframes darkenOff{
-	0%{color:#333;}
-	100%{color:#555;}
-}
 /*Highlight*/
-.highlight{
-	animation:highlightOff .5s;
-	color:#aaa;
-	cursor:pointer;
-}.highlight:hover{
-	animation:highlightOn .5s forwards;
-}
 @keyframes highlightOn{
 	100%{color:#eee;}
 }
