@@ -75,9 +75,17 @@ function loadFiles(that){
 						};
 						//	List system government
 						if(lines[k].startsWith(`\tgovernment "`)){
-							government=lines[k].slice(13,-1);
+							if(lines[k].endsWith(`\r`)){
+								government=lines[k].slice(13,-2);
+							}else{
+								government=lines[k].slice(13,-1);
+							};
 						}else if(lines[k].startsWith(`\tgovernment `)){
-							government=lines[k].slice(12);
+							if(lines[k].endsWith(`\r`)){
+								government=lines[k].slice(12,-1);
+							}else{
+								government=lines[k].slice(12);
+							};
 						};
 						//	List system attributes
 						if(lines[k].startsWith(`\tattributes `)){
@@ -99,7 +107,7 @@ function loadFiles(that){
 							break;
 						};
 					};
-					if(government.length&&position.length){
+					if(government&&position.length){
 						systems.push([[`system`,lines[j].slice(7)]]);
 						systems[systemCount].push([`position`,position[0]]);
 						systems[systemCount].push([`government`,government]);
@@ -124,6 +132,9 @@ function loadFiles(that){
 						};
 					};
 					if(color.length){
+						color[0]=color[0]*255;
+						color[1]=color[1]*255;
+						color[2]=color[2]*255;
 						governments.push([lines[j].slice(12,-1)]);
 						governments[governmentCount].push([`color`,color]);
 						governmentCount++;
@@ -169,15 +180,15 @@ function drawMap(){
 	//		Draw systems
 	for(i=0;i<systems.length;i++){
 		//	Find government color
-		var governmentTarget=``;
+		var governmentTarget=0;
 		for(j=0;j<governments.length;j++){
 			if(governments[j][0]==systems[i][2][1]){
 				governmentTarget=j;
 			};
 		};
 		//	Visible blips
-		if(systems[i][5][1].length>0||systemAllocation){
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
+		if(governmentTarget&&systems[i][5][1].length>0||systemAllocation){
+			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]+`,`+governments[governmentTarget][1][1][1]+`,`+governments[governmentTarget][1][1][2]+`)`);
 		}else{
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
 		};
@@ -211,7 +222,7 @@ function drawMap(){
 	canvasContext.drawImage(img,400,100);
 	for(i=0;i<systems.length;i++){
 		//	Find government color
-		var governmentTarget=``;
+		var governmentTarget=0;
 		for(j=0;j<governments.length;j++){
 			if(governments[j][0]==systems[i][2][1]){
 				governmentTarget=j;
@@ -221,7 +232,7 @@ function drawMap(){
 		if(!systems[i][5][1].length&&!systemAllocation){
 			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
 		}else{
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]*255+`,`+governments[governmentTarget][1][1][1]*255+`,`+governments[governmentTarget][1][1][2]*255+`)`);
+			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]+`,`+governments[governmentTarget][1][1][1]+`,`+governments[governmentTarget][1][1][2]+`)`);
 		};
 	};
 };
