@@ -71,52 +71,36 @@ function loadFiles(that){
 					for(k=j+1;k<lines.length;k++){
 						//	List system position
 						if(lines[k].startsWith(`\tpos `)){
-							position.push(lines[k].replace(`	pos `,``).split(` `));
-						};
+							position.push(lines[k].replace(`\tpos `,``).replaceAll(`\r`,``).split(` `));
 						//	List system government
-						if(lines[k].startsWith(`\tgovernment "`)){
-							if(lines[k].endsWith(`\r`)){
-								government=lines[k].slice(13,-2);
-							}else{
-								government=lines[k].slice(13,-1);
-							};
 						}else if(lines[k].startsWith(`\tgovernment `)){
-							if(lines[k].endsWith(`\r`)){
-								government=lines[k].slice(12,-1);
-							}else{
-								government=lines[k].slice(12);
-							};
-						};
+							government=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
 						//	List system attributes
-						if(lines[k].startsWith(`\tattributes `)){
-							attributes=lines[k].slice(13,-1).split(`" "`);
-						};
+						}else if(lines[k].startsWith(`\tattributes `)){
+							attributes=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 						//	List system links
-						if(lines[k].startsWith(`\tlink `)){
-							links.push(lines[k].slice(6));
-						};
+						}else if(lines[k].startsWith(`\tlink `)){
+							links.push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
 						//	List system objects
-						if(lines[k].startsWith(`\tobject `)){
-							objects.push(lines[k].slice(8));
-						};
-						if(lines[k].startsWith(`\t\tobject `)){
-							objects.push(lines[k].slice(9));
-						};
+						}else if(lines[k].startsWith(`\tobject `)){
+							objects.push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+						}else if(lines[k].startsWith(`\t\tobject `)){
+							objects.push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
 						//	End the loop prematurely
-						if(!lines[k].startsWith(`\t`)){
+						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
 					};
-					if(government&&position.length){
-						systems.push([[`system`,lines[j].slice(7)]]);
+					if(government.length&&position.length){
+						systems.push([[`system`,lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)]]);
 						systems[systemCount].push([`position`,position[0]]);
 						systems[systemCount].push([`government`,government]);
 						systems[systemCount].push([`attributes`,attributes]);
 						systems[systemCount].push([`links`,links]);
 						systems[systemCount].push([`objects`,objects]);
-					};
-					for(k=0;k<objects.length;k++){
-						globalObjects.push([objects[k],position[0]]);
+						for(k=0;k<objects.length;k++){
+							globalObjects.push([objects[k],position[0]]);
+						};
 					};
 					systemCount++;
 				};
@@ -125,7 +109,7 @@ function loadFiles(that){
 					var color=0;
 					for(h=j+1;h<lines.length;h++){
 						if(lines[h].startsWith(`\tcolor `)){
-							color=lines[h].replace(`	color `,``).split(` `);
+							color=lines[h].replace(`\tcolor `,``).split(` `);
 						};
 						if(!lines[h].startsWith(`\t`)){
 							break;
@@ -135,16 +119,16 @@ function loadFiles(that){
 						color[0]=color[0]*255;
 						color[1]=color[1]*255;
 						color[2]=color[2]*255;
-						governments.push([lines[j].slice(12,-1)]);
+						governments.push([lines[j].slice(11).replaceAll(`"`,``)]);
 						governments[governmentCount].push([`color`,color]);
 						governmentCount++;
 					};
 				};
 			};
 			if(systems.length>0){
-//				console.log(systems);
-//				console.log(governments);
-//				console.log(globalObjects);
+				console.log(systems);
+				console.log(governments);
+				console.log(globalObjects);
 			};
 		};
 	};
