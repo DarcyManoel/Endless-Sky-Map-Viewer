@@ -114,9 +114,9 @@ function drawMap(){
 		for(j=0;j<elements[1].length;j++,loop++){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(elements[0][i][4].length>0||systemAllocation){
-					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
 				}else{
-					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
+					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,2*Math.PI,`rgb(102,102,102)`);
 				};
 				break;
 			};
@@ -153,16 +153,13 @@ function switchAllocation(){
 	drawMap();
 };
 //	Pre-defined canvas actions
-function drawArc(target,x,y,radius,fill,start,end,colour){
+function drawArc(target,x,y,radius,start,end,colour){
 	target.beginPath();
 	target.arc(x,y,radius,start,end);
 	target.lineWidth=3.6;
 	target.setLineDash([]);
 	target.strokeStyle=colour;
 	target.stroke();
-	if(fill==1){
-		target.fill();
-	};
 };
 function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.beginPath();
