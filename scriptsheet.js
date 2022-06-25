@@ -11,7 +11,7 @@ interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
 //	Elements
-var elements=[[],[]];
+var elements=[[],[],[]];
 //	Positional variables
 var isDragging;
 var xCoordinate;
@@ -76,6 +76,16 @@ function loadFiles(that){
 					for(k=j+1;k<lines.length;k++,loadLoop++){
 						if(lines[k].startsWith(`\tcolor `)){
 							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+							break;
+						}else if(!lines[k].startsWith(`\t`)){
+							break;
+						};
+					};
+				}else if(lines[j].startsWith(`galaxy `)){
+					elements[2].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+					for(k=j+1;k<lines.length;k++,loadLoop++){
+						if(lines[k].startsWith(`\tpos `)){
+							elements[2][elements[2].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 							break;
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
