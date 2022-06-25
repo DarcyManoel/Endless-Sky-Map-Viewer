@@ -180,8 +180,8 @@ function switchAllocation(){
 function switchScale(){
 	canvasContext.scale(3*scale,3*scale);
 	if(document.getElementById(`scale1`).innerHTML==1){
-		scale=1.75;
-	}else if(document.getElementById(`scale1`).innerHTML==1.75){
+		scale=1.5;
+	}else if(document.getElementById(`scale1`).innerHTML==1.5){
 		scale=2.5;
 	}else if(document.getElementById(`scale1`).innerHTML==2.5){
 		scale=1;
