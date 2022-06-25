@@ -105,7 +105,7 @@ function drawMap(){
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
-	canvasContext.clearRect(0,0,10000,10000);
+	canvasContext.clearRect(0,0,100000,100000);
 	canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	if(elements[0].length){
 		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
