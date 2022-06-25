@@ -1,4 +1,5 @@
-var loop=0;
+var loadLoop=0
+var drawLoop=0;
 //	Establish canvas structure
 var canvas=document.getElementById(`canvas`);
 canvas.height=screen.height;
@@ -42,21 +43,22 @@ function onMouseUp(event){
 };
 //	Parses files to generate map display
 function loadFiles(that){
+	loadLoop=0
 	interactable.addEventListener(`mousedown`,onMouseDown);
 	interactable.addEventListener(`mousemove`,onMouseMove);
 	document.body.addEventListener(`mouseup`,onMouseUp);
 	var files=event.target.files;
-	for(i=0;i<files.length;i++,loop++){
+	for(i=0;i<files.length;i++,loadLoop++){
 		// Systems
 		var systemsReader=new FileReader();
 		systemsReader.readAsText(files[i]);
 		systemsReader.onload=function(e){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
-			for(j=0;j<lines.length;j++,loop++){
+			for(j=0;j<lines.length;j++,loadLoop++){
 				if(lines[j].startsWith(`system `)){
 					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[]]);
-					for(k=j+1;k<lines.length;k++,loop++){
+					for(k=j+1;k<lines.length;k++,loadLoop++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 						}else if(lines[k].startsWith(`\tgovernment `)){
@@ -71,7 +73,7 @@ function loadFiles(that){
 					};
 				}else if(lines[j].startsWith(`government `)){
 					elements[1].push([lines[j].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(k=j+1;k<lines.length;k++,loop++){
+					for(k=j+1;k<lines.length;k++,loadLoop++){
 						if(lines[k].startsWith(`\tcolor `)){
 							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 							break;
@@ -87,13 +89,15 @@ function loadFiles(that){
 };
 //	Map drawing
 function drawMap(){
+	drawLoop=0;
+	console.clear();
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
 	canvasContext.drawImage(img,400,100);
 	//	Links
-	for(i=0;i<elements[0].length;i++,loop++){
-		for(j=0;j<elements[0][i][3].length;j++,loop++){
+	for(i=0;i<elements[0].length;i++,drawLoop++){
+		for(j=0;j<elements[0][i][3].length;j++,drawLoop++){
 			for(k=0;k<elements[0].length;k++){
 				if(elements[0][i][3][j]==elements[0][k][0]){
 					drawLine(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],2150+ +elements[0][k][1][0],1350+ +elements[0][k][1][1],[],2,`rgb(102,102,102)`);
@@ -103,15 +107,15 @@ function drawMap(){
 	};
 	//	Systems
 	canvasContext.beginPath();
-	for(i=0;i<elements[0].length;i++,loop++){
+	for(i=0;i<elements[0].length;i++,drawLoop++){
 		canvasContext.moveTo(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1]);
 		canvasContext.arc(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],16,0,2*Math.PI);
 	};
 	canvasContext.clip();
 	canvasContext.drawImage(img,400,100);
 	canvasContext.restore();
-	for(i=0;i<elements[0].length;i++,loop++){
-		for(j=0;j<elements[1].length;j++,loop++){
+	for(i=0;i<elements[0].length;i++,drawLoop++){
+		for(j=0;j<elements[1].length;j++,drawLoop++){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(elements[0][i][4].length>0||systemAllocation){
 					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
@@ -124,20 +128,21 @@ function drawMap(){
 	};
 	//	Wormholes
 	var wormholes=[];
-	for(i=0;i<elements[0].length;i++,loop++){
-		for(j=0;j<elements[0][i][4].length;j++,loop++){
+	for(i=0;i<elements[0].length;i++,drawLoop++){
+		for(j=0;j<elements[0][i][4].length;j++,drawLoop++){
 			wormholes.push([elements[0][i][4][j],elements[0][i][1][0],elements[0][i][1][1]]);
 		};
 	};
-	for(i=0;i<wormholes.length;i++,loop++){
-		for(j=i+1;j<wormholes.length;j++,loop++){
+	for(i=0;i<wormholes.length;i++,drawLoop++){
+		for(j=i+1;j<wormholes.length;j++,drawLoop++){
 			if(wormholes[i][0]==wormholes[j][0]){
 				drawLine(canvasContext,2150+ +wormholes[i][1],1350+ +wormholes[i][2],2150+ +wormholes[j][1],1350+ +wormholes[j][2],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
 	};
-	console.log(loop);
+	console.log(loadLoop);
+	console.log(drawLoop);
 };
 //	Map Options
 function switchAllocation(){
