@@ -15,8 +15,11 @@
 	<!--Map Options-->
 		<div onclick="switchAllocation()">
 			<label id="allocation">System Allocation</label>
-			<label id="inhabited">Inhabited</label>
-			<label id="claimed" class="hidden">Claimed</label>
+			<label id="inhabited" class="systemAllocation idleSelection">Inhabited</label>
+			<label id="claimed" class="hidden systemAllocation idleSelection">Claimed</label>
+		</div>
+		<div id="switchGalaxy" class="hidden">
+			<label id="viewed">Galaxy Viewed</label>
 		</div>
 	<!--Misc-->
 		<label id="loadFiles" class="highlight" for="file">&#10162; Upload Files</label>

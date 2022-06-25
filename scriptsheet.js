@@ -12,6 +12,7 @@ interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
 //	Elements
 var elements=[[],[],[]];
+var galaxyPosition=[0,0];
 //	Positional variables
 var isDragging;
 var xCoordinate;
@@ -82,7 +83,7 @@ function loadFiles(that){
 						};
 					};
 				}else if(lines[j].startsWith(`galaxy `)){
-					elements[2].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+					elements[2].push([lines[j].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
 					for(k=j+1;k<lines.length;k++,loadLoop++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[2][elements[2].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
@@ -100,17 +101,23 @@ function loadFiles(that){
 //	Map drawing
 function drawMap(){
 	drawLoop=0;
-	console.clear();
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
-	canvasContext.drawImage(img,400,100);
+	canvasContext.clearRect(0,0,5000,5000);
+	canvasContext.drawImage(img,400-galaxyPosition[0],100-galaxyPosition[1]);
+	document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
+	for(i=0;i<elements[2].length;i++,drawLoop++){
+		document.getElementById(`switchGalaxy`).innerHTML+=`
+			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(100+(20*i))+`px;">`+elements[2][i][0]+`</label>
+			`;
+	};
 	//	Links
 	for(i=0;i<elements[0].length;i++,drawLoop++){
 		for(j=0;j<elements[0][i][3].length;j++,drawLoop++){
 			for(k=0;k<elements[0].length;k++){
 				if(elements[0][i][3][j]==elements[0][k][0]){
-					drawLine(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],2150+ +elements[0][k][1][0],1350+ +elements[0][k][1][1],[],2,`rgb(102,102,102)`);
+					drawLine(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],2150+ +elements[0][k][1][0]-galaxyPosition[0],1350+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 				};
 			};
 		};
@@ -118,19 +125,19 @@ function drawMap(){
 	//	Systems
 	canvasContext.beginPath();
 	for(i=0;i<elements[0].length;i++,drawLoop++){
-		canvasContext.moveTo(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1]);
-		canvasContext.arc(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],16,0,2*Math.PI);
+		canvasContext.moveTo(2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1]);
+		canvasContext.arc(2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 	};
 	canvasContext.clip();
-	canvasContext.drawImage(img,400,100);
+	canvasContext.drawImage(img,400-galaxyPosition[0],100-galaxyPosition[1]);
 	canvasContext.restore();
 	for(i=0;i<elements[0].length;i++,drawLoop++){
 		for(j=0;j<elements[1].length;j++,drawLoop++){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(elements[0][i][4].length>0||systemAllocation){
-					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					drawArc(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
 				}else{
-					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,2*Math.PI,`rgb(102,102,102)`);
+					drawArc(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
 				};
 				break;
 			};
@@ -146,7 +153,7 @@ function drawMap(){
 	for(i=0;i<wormholes.length;i++,drawLoop++){
 		for(j=i+1;j<wormholes.length;j++,drawLoop++){
 			if(wormholes[i][0]==wormholes[j][0]){
-				drawLine(canvasContext,2150+ +wormholes[i][1],1350+ +wormholes[i][2],2150+ +wormholes[j][1],1350+ +wormholes[j][2],[],2,`rgb(128,51,230)`);
+				drawLine(canvasContext,2150+ +wormholes[i][1]-galaxyPosition[0],1350+ +wormholes[i][2]-galaxyPosition[1],2150+ +wormholes[j][1]-galaxyPosition[0],1350+ +wormholes[j][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
@@ -164,6 +171,16 @@ function switchAllocation(){
 		systemAllocation=1;
 		document.getElementById(`inhabited`).classList.toggle(`hidden`);
 		document.getElementById(`claimed`).classList.toggle(`hidden`);
+	};
+	drawMap();
+};
+function switchGalaxy(id){
+	for(i=0;i<elements[2].length;i++){
+		if(id==elements[2][i][0]){
+			galaxyPosition=elements[2][i][1];
+			console.log(galaxyPosition);
+			break;
+		};
 	};
 	drawMap();
 };

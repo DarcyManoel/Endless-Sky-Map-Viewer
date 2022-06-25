@@ -39,15 +39,21 @@ label:hover{
 	text-decoration:underline;
 	top:20px;
 }
-#inhabited{
+.systemAllocation{
 	position:absolute;
-	right:50px;
+	right:30px;
 	top:40px;
 }
-#claimed{
+#viewed{
 	position:absolute;
-	right:55px;
-	top:40px;
+	right:20px;
+	text-decoration:underline;
+	top:80px;
+}
+.galaxyViewed{
+	position:absolute;
+	right:30px;
+	top:100px;
 }
 /*Blur*/
 .blurred{
