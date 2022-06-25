@@ -8,16 +8,8 @@ var interactable=document.getElementById(`interactable`);
 interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
-//	Map elements
-//		Systems
-var systemCount=0;
-var systems=[];
-//		Governments
-var governmentCount=0;
-var governments=[];
-//		Wormholes
-var globalObjects=[];
-var wormholes=[];
+//	Elements
+var elements=[[],[]];
 //	Positional variables
 var isDragging;
 var xCoordinate;
@@ -61,74 +53,31 @@ function loadFiles(that){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
 			for(j=0;j<lines.length;j++){
-				//	Systems
 				if(lines[j].startsWith(`system `)){
-					var position=[];
-					var government;
-					var attributes=[];
-					var links=[];
-					var objects=[];
+					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[]]);
 					for(k=j+1;k<lines.length;k++){
-						//	List system position
 						if(lines[k].startsWith(`\tpos `)){
-							position.push(lines[k].replace(`\tpos `,``).replaceAll(`\r`,``).split(` `));
-						//	List system government
+							elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 						}else if(lines[k].startsWith(`\tgovernment `)){
-							government=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-						//	List system attributes
-						}else if(lines[k].startsWith(`\tattributes `)){
-							attributes=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						//	List system links
+							elements[0][elements[0].length-1][2]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
 						}else if(lines[k].startsWith(`\tlink `)){
-							links.push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
-						//	List system objects
+							elements[0][elements[0].length-1][3].push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
 						}else if(lines[k].startsWith(`\tobject `)){
-							objects.push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
-						}else if(lines[k].startsWith(`\t\tobject `)){
-							objects.push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
-						//	End the loop prematurely
+							elements[0][elements[0].length-1][4].push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
 					};
-					if(government.length&&position.length){
-						systems.push([[`system`,lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)]]);
-						systems[systemCount].push([`position`,position[0]]);
-						systems[systemCount].push([`government`,government]);
-						systems[systemCount].push([`attributes`,attributes]);
-						systems[systemCount].push([`links`,links]);
-						systems[systemCount].push([`objects`,objects]);
-						for(k=0;k<objects.length;k++){
-							globalObjects.push([objects[k],position[0]]);
-						};
-					};
-					systemCount++;
-				};
-				//	Governments
-				if(lines[j].startsWith(`government "`)){
-					var color=0;
-					for(h=j+1;h<lines.length;h++){
-						if(lines[h].startsWith(`\tcolor `)){
-							color=lines[h].replace(`\tcolor `,``).split(` `);
-						};
-						if(!lines[h].startsWith(`\t`)){
+				}else if(lines[j].startsWith(`government `)){
+					elements[1].push([lines[j].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+					for(k=j+1;k<lines.length;k++){
+						if(lines[k].startsWith(`\tcolor `)){
+							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
 					};
-					if(color.length){
-						color[0]=color[0]*255;
-						color[1]=color[1]*255;
-						color[2]=color[2]*255;
-						governments.push([lines[j].slice(11).replaceAll(`"`,``)]);
-						governments[governmentCount].push([`color`,color]);
-						governmentCount++;
-					};
 				};
-			};
-			if(systems.length>0){
-				console.log(systems);
-				console.log(governments);
-				console.log(globalObjects);
 			};
 		};
 	};
@@ -136,89 +85,56 @@ function loadFiles(that){
 };
 //	Map drawing
 function drawMap(){
+	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
 	canvasContext.drawImage(img,400,100);
 	//	Links
-	for(i=0;i<systems.length;i++){
-		for(j=0;j<systems[i][4][1].length;j++){
-			//	Find system link endpoint
-			var linkTarget=``;
-			for(k=0;k<systems.length;k++){
-				if(systems[k][0][1]==systems[i][4][1][j]){
-					linkTarget=k;
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[0][i][3].length;j++){
+			for(k=0;k<elements[0].length;k++){
+				if(elements[0][i][3][j]==elements[0][k][0]){
+					drawLine(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],2150+ +elements[0][k][1][0],1350+ +elements[0][k][1][1],[],2,`rgb(102,102,102)`);
 				};
 			};
-			drawLine(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],2150+ +systems[linkTarget][1][1][0],1350+ +systems[linkTarget][1][1][1],[],2,`rgb(102,102,102)`);
 		};
 	};
 	//	Systems
-	//		Clip regions for layering
 	canvasContext.beginPath();
-	for(i=0;i<systems.length;i++){
-		canvasContext.moveTo(2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1]);
-		canvasContext.arc(2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],16,0,2*Math.PI);
+	for(i=0;i<elements[0].length;i++){
+		canvasContext.moveTo(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1]);
+		canvasContext.arc(2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],16,0,2*Math.PI);
 	};
 	canvasContext.clip();
 	canvasContext.drawImage(img,400,100);
-	//		Draw systems
-	for(i=0;i<systems.length;i++){
-		//	Find government color
-		var governmentTarget=0;
-		for(j=0;j<governments.length;j++){
-			if(governments[j][0]==systems[i][2][1]){
-				governmentTarget=j;
-			};
-		};
-		//	Visible blips
-		if(governmentTarget&&systems[i][5][1].length>0||systemAllocation){
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]+`,`+governments[governmentTarget][1][1][1]+`,`+governments[governmentTarget][1][1][2]+`)`);
-		}else{
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
-		};
-	};
 	canvasContext.restore();
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[1].length;j++){
+			if(elements[0][i][2]==elements[1][j][0]){
+				if(elements[0][i][4].length>0||systemAllocation){
+					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+				}else{
+					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
+				};
+			};
+		};
+	};
 	//	Wormholes
-	//		Draw wormholes
-	for(i=0;i<globalObjects.length;i++){
-		for(j=i+1;j<globalObjects.length;j++){
-			if(globalObjects[i][0]==globalObjects[j][0]){
-				drawLine(canvasContext,2150+ +globalObjects[i][1][0],1350+ +globalObjects[i][1][1],2150+ +globalObjects[j][1][0],1350+ +globalObjects[j][1][1],[],1,`rgb(128,51,230)`);
+	var wormholes=[];
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[0][i][4].length;j++){
+			wormholes.push([elements[0][i][4][j],elements[0][i][1][0],elements[0][i][1][1]]);
+		};
+	};
+	for(i=0;i<wormholes.length;i++){
+		for(j=i+1;j<wormholes.length;j++){
+			if(wormholes[i][0]==wormholes[j][0]){
+				drawLine(canvasContext,2150+ +wormholes[i][1],1350+ +wormholes[i][2],2150+ +wormholes[j][1],1350+ +wormholes[j][2],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
 	};
-	//		Clip regions for layering
-	canvasContext.save();
-	canvasContext.beginPath();
-	for(i=0;i<globalObjects.length;i++){
-		for(j=i+1;j<globalObjects.length;j++){
-			if(globalObjects[i][0]==globalObjects[j][0]){
-				canvasContext.moveTo(2150+ +globalObjects[i][1],1350+ +globalObjects[i][2]);
-				canvasContext.arc(2150+ +globalObjects[i][1],1350+ +globalObjects[i][2],16,0,2*Math.PI);
-				canvasContext.moveTo(2150+ +globalObjects[j][1],1350+ +globalObjects[j][2]);
-				canvasContext.arc(2150+ +globalObjects[j][1],1350+ +globalObjects[j][2],16,0,2*Math.PI);
-				break;
-			};
-		};
-	};
-	canvasContext.clip();
-	canvasContext.drawImage(img,400,100);
-	for(i=0;i<systems.length;i++){
-		//	Find government color
-		var governmentTarget=0;
-		for(j=0;j<governments.length;j++){
-			if(governments[j][0]==systems[i][2][1]){
-				governmentTarget=j;
-			};
-		};
-		//	Visible blips
-		if(!systems[i][5][1].length&&!systemAllocation){
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
-		}else{
-			drawArc(canvasContext,2150+ +systems[i][1][1][0],1350+ +systems[i][1][1][1],9,0,0,2*Math.PI,`rgb(`+governments[governmentTarget][1][1][0]+`,`+governments[governmentTarget][1][1][1]+`,`+governments[governmentTarget][1][1][2]+`)`);
-		};
-	};
+	console.log(wormholes);
 };
 //	Map Options
 function switchAllocation(){
