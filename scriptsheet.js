@@ -74,6 +74,7 @@ function loadFiles(that){
 					for(k=j+1;k<lines.length;k++,loop++){
 						if(lines[k].startsWith(`\tcolor `)){
 							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+							break;
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
@@ -117,6 +118,7 @@ function drawMap(){
 				}else{
 					drawArc(canvasContext,2150+ +elements[0][i][1][0],1350+ +elements[0][i][1][1],9,0,0,2*Math.PI,`rgb(102,102,102)`);
 				};
+				break;
 			};
 		};
 	};
