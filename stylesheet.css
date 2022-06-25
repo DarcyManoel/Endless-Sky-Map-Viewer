@@ -44,16 +44,26 @@ label:hover{
 	right:30px;
 	top:40px;
 }
-#viewed{
+#scale{
 	position:absolute;
 	right:20px;
 	text-decoration:underline;
 	top:80px;
 }
-.galaxyViewed{
+#scale1{
 	position:absolute;
 	right:30px;
 	top:100px;
+}
+#viewed{
+	position:absolute;
+	right:20px;
+	text-decoration:underline;
+	top:140px;
+}
+.galaxyViewed{
+	position:absolute;
+	right:30px;
 }
 /*Blur*/
 .blurred{

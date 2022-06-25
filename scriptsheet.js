@@ -10,6 +10,7 @@ var interactable=document.getElementById(`interactable`);
 interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
+var scale=1;
 //	Elements
 var elements=[[],[],[]];
 var galaxyPosition=[0,0];
@@ -21,7 +22,7 @@ var yCoordinate;
 var systemAllocation;
 //	Draw canvas on page load
 function initialize(){
-	canvasContext.scale(1/3,1/3);
+	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	canvasContext.drawImage(img,400,100);
 };
 //	Coordinate tracking on mouse actions
@@ -104,12 +105,14 @@ function drawMap(){
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
-	canvasContext.clearRect(0,0,5000,5000);
-	canvasContext.drawImage(img,400-galaxyPosition[0],100-galaxyPosition[1]);
-	document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
+	canvasContext.clearRect(0,0,10000,10000);
+	canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
+	if(elements[0].length){
+		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
+	};
 	for(i=0;i<elements[2].length;i++,drawLoop++){
 		document.getElementById(`switchGalaxy`).innerHTML+=`
-			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(100+(20*i))+`px;">`+elements[2][i][0]+`</label>
+			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(160+(20*i))+`px;">`+elements[2][i][0]+`</label>
 			`;
 	};
 	//	Links
@@ -117,7 +120,7 @@ function drawMap(){
 		for(j=0;j<elements[0][i][3].length;j++,drawLoop++){
 			for(k=0;k<elements[0].length;k++){
 				if(elements[0][i][3][j]==elements[0][k][0]){
-					drawLine(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],2150+ +elements[0][k][1][0]-galaxyPosition[0],1350+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+					drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 				};
 			};
 		};
@@ -125,19 +128,19 @@ function drawMap(){
 	//	Systems
 	canvasContext.beginPath();
 	for(i=0;i<elements[0].length;i++,drawLoop++){
-		canvasContext.moveTo(2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1]);
-		canvasContext.arc(2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
+		canvasContext.moveTo(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1]);
+		canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 	};
 	canvasContext.clip();
-	canvasContext.drawImage(img,400-galaxyPosition[0],100-galaxyPosition[1]);
+	canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	canvasContext.restore();
 	for(i=0;i<elements[0].length;i++,drawLoop++){
 		for(j=0;j<elements[1].length;j++,drawLoop++){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(elements[0][i][4].length>0||systemAllocation){
-					drawArc(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
 				}else{
-					drawArc(canvasContext,2150+ +elements[0][i][1][0]-galaxyPosition[0],1350+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
+					drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
 				};
 				break;
 			};
@@ -153,7 +156,7 @@ function drawMap(){
 	for(i=0;i<wormholes.length;i++,drawLoop++){
 		for(j=i+1;j<wormholes.length;j++,drawLoop++){
 			if(wormholes[i][0]==wormholes[j][0]){
-				drawLine(canvasContext,2150+ +wormholes[i][1]-galaxyPosition[0],1350+ +wormholes[i][2]-galaxyPosition[1],2150+ +wormholes[j][1]-galaxyPosition[0],1350+ +wormholes[j][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
+				drawLine(canvasContext,2150*scale+ +wormholes[i][1]-galaxyPosition[0],1350*scale+ +wormholes[i][2]-galaxyPosition[1],2150*scale+ +wormholes[j][1]-galaxyPosition[0],1350*scale+ +wormholes[j][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
@@ -174,11 +177,23 @@ function switchAllocation(){
 	};
 	drawMap();
 };
+function switchScale(){
+	canvasContext.scale(3*scale,3*scale);
+	if(document.getElementById(`scale1`).innerHTML==1){
+		scale=1.75;
+	}else if(document.getElementById(`scale1`).innerHTML==1.75){
+		scale=2.5;
+	}else if(document.getElementById(`scale1`).innerHTML==2.5){
+		scale=1;
+	};
+	document.getElementById(`scale1`).innerHTML=scale;
+	canvasContext.scale((1/3)/scale,(1/3)/scale);
+	drawMap();
+};
 function switchGalaxy(id){
 	for(i=0;i<elements[2].length;i++){
 		if(id==elements[2][i][0]){
 			galaxyPosition=elements[2][i][1];
-			console.log(galaxyPosition);
 			break;
 		};
 	};
