@@ -64,7 +64,6 @@ label:hover{
 #styleActive{
 	position:absolute;
 	right:30px;
-	text-decoration:underline;
 	top:100px;
 }
 #viewed{
