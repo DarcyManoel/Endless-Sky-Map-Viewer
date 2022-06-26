@@ -29,9 +29,20 @@ label:hover{
 }
 /*Interactables*/
 #loadFiles{
-	left:30px;
+	left:20px;
 	position:absolute;
 	top:20px;
+}
+#scale{
+	position:absolute;
+	left:20px;
+	text-decoration:underline;
+	top:60px;
+}
+#scaleActive{
+	position:absolute;
+	left:30px;
+	top:80px;
 }
 #allocation{
 	position:absolute;
@@ -44,15 +55,16 @@ label:hover{
 	right:30px;
 	top:40px;
 }
-#scale{
+#style{
 	position:absolute;
 	right:20px;
 	text-decoration:underline;
 	top:80px;
 }
-#scale1{
+#styleActive{
 	position:absolute;
 	right:30px;
+	text-decoration:underline;
 	top:100px;
 }
 #viewed{

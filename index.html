@@ -13,14 +13,18 @@
 	<!--Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
 	<!--Map Options-->
+		<div id="switchScale" onclick="switchScale()">
+			<label id="scale">Scale</label>
+			<label id="scaleActive">1</label>
+		</div>
 		<div onclick="switchAllocation()">
 			<label id="allocation">System Allocation</label>
 			<label id="inhabited" class="systemAllocation">Inhabited</label>
 			<label id="claimed" class="hidden systemAllocation">Claimed</label>
 		</div>
-		<div id="switchScale" onclick="switchScale()">
-			<label id="scale">Scale</label>
-			<label id="scale1">1</label>
+		<div id="switchStyle" onclick="switchStyle()">
+			<label id="style">Map Style</label>
+			<label id="styleActive">Original</label>
 		</div>
 		<div id="switchGalaxy" class="hidden">
 			<label id="viewed">Galaxy Viewed</label>

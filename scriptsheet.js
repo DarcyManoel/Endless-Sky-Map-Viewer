@@ -11,6 +11,7 @@ interactable.height=screen.height;
 interactable.width=screen.width;
 var interactableContext=interactable.getContext(`2d`);
 var scale=1;
+var style=`Original`
 //	Elements
 var elements=[[],[],[]];
 var galaxyPosition=[0,0];
@@ -118,29 +119,52 @@ function drawMap(){
 	//	Links
 	for(i=0;i<elements[0].length;i++,drawLoop++){
 		for(j=0;j<elements[0][i][3].length;j++,drawLoop++){
-			for(k=0;k<elements[0].length;k++){
+			for(k=0;k<elements[0].length;k++,drawLoop++){
 				if(elements[0][i][3][j]==elements[0][k][0]){
-					drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+					if(style==`Original`){
+						drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+					}else if(style==`Modern`){
+						for(l=0;l<elements[1].length;l++,drawLoop++){
+							if(elements[0][i][2]==elements[1][l][0]){
+								if(elements[0][i][4].length>0||systemAllocation){
+									drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-((elements[0][k][1][0]-elements[0][i][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-((elements[0][k][1][1]-elements[0][i][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][l][1][0]*255+`,`+elements[1][l][1][1]*255+`,`+elements[1][l][1][2]*255+`)`);
+								}else{
+									drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-((elements[0][k][1][0]-elements[0][i][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-((elements[0][k][1][1]-elements[0][i][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+								};
+								break;
+							};
+						};
+					};
 				};
 			};
 		};
 	};
 	//	Systems
-	canvasContext.beginPath();
-	for(i=0;i<elements[0].length;i++,drawLoop++){
-		canvasContext.moveTo(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1]);
-		canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
+	if(style==`Original`){
+		canvasContext.beginPath();
+		for(i=0;i<elements[0].length;i++,drawLoop++){
+			canvasContext.moveTo(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1]);
+			canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
+		};
+		canvasContext.clip();
+		canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	};
-	canvasContext.clip();
-	canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	canvasContext.restore();
 	for(i=0;i<elements[0].length;i++,drawLoop++){
 		for(j=0;j<elements[1].length;j++,drawLoop++){
 			if(elements[0][i][2]==elements[1][j][0]){
-				if(elements[0][i][4].length>0||systemAllocation){
-					drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
-				}else{
-					drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
+				if(style==`Original`){
+					if(elements[0][i][4].length>0||systemAllocation){
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					}else{
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
+					};
+				}else if(style==`Modern`){
+					if(elements[0][i][4].length>0||systemAllocation){
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					}else{
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,0,2*Math.PI,`rgb(102,102,102)`);
+					};
 				};
 				break;
 			};
@@ -165,6 +189,19 @@ function drawMap(){
 	console.log(drawLoop);
 };
 //	Map Options
+function switchScale(){
+	canvasContext.scale(3*scale,3*scale);
+	if(document.getElementById(`scaleActive`).innerHTML==1){
+		scale=1.5;
+	}else if(document.getElementById(`scaleActive`).innerHTML==1.5){
+		scale=2.5;
+	}else if(document.getElementById(`scaleActive`).innerHTML==2.5){
+		scale=1;
+	};
+	document.getElementById(`scaleActive`).innerHTML=scale;
+	canvasContext.scale((1/3)/scale,(1/3)/scale);
+	drawMap();
+};
 function switchAllocation(){
 	if(systemAllocation){
 		systemAllocation=0;
@@ -177,17 +214,13 @@ function switchAllocation(){
 	};
 	drawMap();
 };
-function switchScale(){
-	canvasContext.scale(3*scale,3*scale);
-	if(document.getElementById(`scale1`).innerHTML==1){
-		scale=1.5;
-	}else if(document.getElementById(`scale1`).innerHTML==1.5){
-		scale=2.5;
-	}else if(document.getElementById(`scale1`).innerHTML==2.5){
-		scale=1;
-	};
-	document.getElementById(`scale1`).innerHTML=scale;
-	canvasContext.scale((1/3)/scale,(1/3)/scale);
+function switchStyle(){
+	if(document.getElementById(`styleActive`).innerHTML==`Original`){
+		style=`Modern`;
+	}else if(document.getElementById(`styleActive`).innerHTML==`Modern`){
+		style=`Original`;
+	}
+	document.getElementById(`styleActive`).innerHTML=style;
 	drawMap();
 };
 function switchGalaxy(id){
