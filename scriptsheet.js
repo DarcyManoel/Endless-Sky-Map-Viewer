@@ -202,6 +202,15 @@ function switchScale(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	drawMap();
 };
+function switchStyle(){
+	if(document.getElementById(`styleActive`).innerHTML==`Original`){
+		style=`Modern`;
+	}else if(document.getElementById(`styleActive`).innerHTML==`Modern`){
+		style=`Original`;
+	}
+	document.getElementById(`styleActive`).innerHTML=style;
+	drawMap();
+};
 function switchAllocation(){
 	if(systemAllocation){
 		systemAllocation=0;
@@ -212,15 +221,6 @@ function switchAllocation(){
 		document.getElementById(`inhabited`).classList.toggle(`hidden`);
 		document.getElementById(`claimed`).classList.toggle(`hidden`);
 	};
-	drawMap();
-};
-function switchStyle(){
-	if(document.getElementById(`styleActive`).innerHTML==`Original`){
-		style=`Modern`;
-	}else if(document.getElementById(`styleActive`).innerHTML==`Modern`){
-		style=`Original`;
-	}
-	document.getElementById(`styleActive`).innerHTML=style;
 	drawMap();
 };
 function switchGalaxy(id){
