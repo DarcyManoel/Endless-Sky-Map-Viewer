@@ -33,11 +33,12 @@ function onMouseDown(event){
 	yCoordinate=event.offsetY;
 };
 function onMouseMove(event){
-	if(!isDragging){
+	if(isDragging){
 		return;
 	};
-	xCoordinate=event.offsetX;
-	yCoordinate=event.offsetY;
+	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
+	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
+	console.log(xCoordinate,yCoordinate);
 };
 function onMouseUp(event){
 	isDragging=false;
