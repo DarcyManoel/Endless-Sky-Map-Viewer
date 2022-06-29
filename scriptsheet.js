@@ -14,7 +14,8 @@ var style=`Original`
 var elements=[[],[],[]];
 var galaxyPosition=[0,0];
 //	Positional variables
-var isDragging;
+var oldTarget=0;
+var target=0;
 var xCoordinate;
 var yCoordinate;
 //	Map options
@@ -29,7 +30,6 @@ function initialize(){
 function onMouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
-	var target;
 	var distance=100000;
 	for(i=0;i<elements[0].length;i++){
 		if(Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
@@ -37,8 +37,9 @@ function onMouseMove(event){
 			distance=Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate);
 		};
 	};
-	interactableContext.clearRect(0,0,100000,100000);
-	if(distance<100){
+	if(oldTarget!==target&&distance<100){
+		oldTarget=target;
+		interactableContext.clearRect(0,0,100000,100000);
 		if(style==`Original`){
 			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
@@ -60,8 +61,10 @@ function onMouseMove(event){
 				};
 			};
 		};
+	}else if(distance>=100){
+		oldTarget=0;
+		interactableContext.clearRect(0,0,100000,100000);
 	};
-	console.log(elements[0][target][0]);
 };
 //	Parses files to generate map display
 function loadFiles(that){
