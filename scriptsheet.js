@@ -26,15 +26,7 @@ function initialize(){
 	canvasContext.drawImage(img,400,100);
 };
 //	Coordinate tracking on mouse actions
-function onMouseDown(event){
-	isDragging=true;
-	xCoordinate=event.offsetX;
-	yCoordinate=event.offsetY;
-};
 function onMouseMove(event){
-	if(isDragging){
-		return;
-	};
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
 	var target;
@@ -71,16 +63,9 @@ function onMouseMove(event){
 	};
 	console.log(elements[0][target][0]);
 };
-function onMouseUp(event){
-	isDragging=false;
-	xCoordinate=event.offsetX;
-	yCoordinate=event.offsetY;
-};
 //	Parses files to generate map display
 function loadFiles(that){
-	interactable.addEven;Listener(`mousedown`,onMouseDown);
 	interactable.addEventListener(`mousemove`,onMouseMove);
-	document.body.addEventListener(`mouseup`,onMouseUp);
 	var files=event.target.files;
 	for(i=0;i<files.length;i++){
 		// Systems
