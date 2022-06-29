@@ -29,48 +29,49 @@ label:hover{
 }
 /*Interactables*/
 #loadFiles{
-	left:20px;
+	left:50%;
+	transform:translate(-50%,0);
 	position:absolute;
-	top:20px;
+	top:5px;
 }
 #scale{
 	position:absolute;
-	left:20px;
+	left:40%;
 	text-decoration:underline;
-	top:60px;
+	top:5px;
 }
 #scaleActive{
 	position:absolute;
-	left:30px;
-	top:80px;
+	left:41%;
+	top:25px;
 }
 #style{
 	position:absolute;
-	right:20px;
+	left:57%;
 	text-decoration:underline;
-	top:20px;
+	top:5px;
 }
 #styleActive{
 	position:absolute;
-	right:30px;
-	top:40px;
+	left:57.5%;
+	top:25px;
 }
 #allocation{
 	position:absolute;
-	right:20px;
+	left:65%;
 	text-decoration:underline;
-	top:80px;
+	top:5px;
 }
 .systemAllocation{
 	position:absolute;
-	right:30px;
-	top:100px;
+	left:67%;
+	top:25px;
 }
 #viewed{
 	position:absolute;
 	right:20px;
 	text-decoration:underline;
-	top:140px;
+	top:5px;
 }
 .galaxyViewed{
 	position:absolute;

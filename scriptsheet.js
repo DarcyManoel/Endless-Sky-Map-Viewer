@@ -131,7 +131,7 @@ function drawMap(){
 	};
 	for(i=0;i<elements[2].length;i++){
 		document.getElementById(`switchGalaxy`).innerHTML+=`
-			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(160+(20*i))+`px;">`+elements[2][i][0]+`</label>
+			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(35+(20*i))+`px;">`+elements[2][i][0]+`</label>
 			`;
 	};
 	//	Links
