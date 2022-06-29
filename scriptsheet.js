@@ -38,14 +38,14 @@ function onMouseMove(event){
 		};
 	};
 	if(oldTarget!==target&&distance<100){
-		oldTarget=target;
-		HUDContext.clearRect(0,0,100000,100000);
-		if(style==`Original`){
-			drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
-			drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-		}else if(style==`Modern`){
-			for(i=0;i<elements[1].length;i++){
-				if(elements[0][target][2]==elements[1][i][0]){
+		for(i=0;i<elements[1].length;i++){
+			if(elements[0][target][2]==elements[1][i][0]){
+				oldTarget=target;
+				HUDContext.clearRect(0,0,100000,100000);
+				if(style==`Original`){
+					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+				}else if(style==`Modern`){
 					if(elements[0][target][4].length>0||systemAllocation){
 						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
 						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
@@ -267,6 +267,11 @@ function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.lineWidth=width;
 	target.strokeStyle=colour;
 	target.stroke();
+};
+function drawText(target,x,y,text,size,colour){
+	target.font=size*scale+`px Ubuntu`;
+	target.fillStyle=colour;
+	target.fillText(text,x,y);
 };
 Math.dist=function(x1,y1,x2,y2){ 
 	if(!x2)x2=0; 
