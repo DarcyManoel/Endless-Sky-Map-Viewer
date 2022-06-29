@@ -24,6 +24,7 @@ var systemAllocation;
 //	Draw canvas on page load
 function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
+	interactableContext.scale((1/3)/scale,(1/3)/scale);
 	canvasContext.drawImage(img,400,100);
 };
 //	Coordinate tracking on mouse actions
@@ -38,7 +39,39 @@ function onMouseMove(event){
 	};
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
-	console.log(xCoordinate,yCoordinate);
+	var target;
+	var distance=100000;
+	for(i=0;i<elements[0].length;i++){
+		if(Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i;
+			distance=Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate);
+		};
+	};
+	interactableContext.clearRect(0,0,100000,100000);
+	if(distance<100){
+		if(style==`Original`){
+			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+		}else if(style==`Modern`){
+			for(i=0;i<elements[1].length;i++){
+				if(elements[0][target][2]==elements[1][i][0]){
+					if(elements[0][target][4].length>0||systemAllocation){
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+					}else{
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+					};
+					break;
+				};
+			};
+		};
+	};
+	console.log(elements[0][target][0]);
 };
 function onMouseUp(event){
 	isDragging=false;
@@ -156,15 +189,15 @@ function drawMap(){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(style==`Original`){
 					if(elements[0][i][4].length>0||systemAllocation){
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
 					}else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,0,2*Math.PI,`rgb(102,102,102)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,3.6,`rgb(102,102,102)`);
 					};
 				}else if(style==`Modern`){
 					if(elements[0][i][4].length>0||systemAllocation){
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,0,2*Math.PI,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
 					}else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,0,2*Math.PI,`rgb(102,102,102)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,3.6,`rgb(102,102,102)`);
 					};
 				};
 				break;
@@ -192,6 +225,7 @@ function drawMap(){
 //	Map Options
 function switchScale(){
 	canvasContext.scale(3*scale,3*scale);
+	interactableContext.scale(3*scale,3*scale);
 	if(document.getElementById(`scaleActive`).innerHTML==1){
 		scale=1.5;
 	}else if(document.getElementById(`scaleActive`).innerHTML==1.5){
@@ -201,6 +235,7 @@ function switchScale(){
 	};
 	document.getElementById(`scaleActive`).innerHTML=scale;
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
+	interactableContext.scale((1/3)/scale,(1/3)/scale);
 	drawMap();
 };
 function switchStyle(){
@@ -234,10 +269,10 @@ function switchGalaxy(id){
 	drawMap();
 };
 //	Pre-defined canvas actions
-function drawArc(target,x,y,radius,start,end,colour){
+function drawArc(target,x,y,radius,width,colour){
 	target.beginPath();
-	target.arc(x,y,radius,start,end);
-	target.lineWidth=3.6;
+	target.arc(x,y,radius,0,2*Math.PI);
+	target.lineWidth=width;
 	target.setLineDash([]);
 	target.strokeStyle=colour;
 	target.stroke();
@@ -250,4 +285,9 @@ function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.lineWidth=width;
 	target.strokeStyle=colour;
 	target.stroke();
+};
+Math.dist=function(x1,y1,x2,y2){ 
+	if(!x2)x2=0; 
+	if(!y2)y2=0;
+	return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)); 
 };
