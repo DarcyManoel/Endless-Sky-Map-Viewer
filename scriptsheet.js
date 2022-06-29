@@ -1,5 +1,3 @@
-var loadLoop=0
-var drawLoop=0;
 //	Establish canvas structure
 var canvas=document.getElementById(`canvas`);
 canvas.height=screen.height;
@@ -80,22 +78,21 @@ function onMouseUp(event){
 };
 //	Parses files to generate map display
 function loadFiles(that){
-	loadLoop=0
-	interactable.addEventListener(`mousedown`,onMouseDown);
+	interactable.addEven;Listener(`mousedown`,onMouseDown);
 	interactable.addEventListener(`mousemove`,onMouseMove);
 	document.body.addEventListener(`mouseup`,onMouseUp);
 	var files=event.target.files;
-	for(i=0;i<files.length;i++,loadLoop++){
+	for(i=0;i<files.length;i++){
 		// Systems
 		var systemsReader=new FileReader();
 		systemsReader.readAsText(files[i]);
 		systemsReader.onload=function(e){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
-			for(j=0;j<lines.length;j++,loadLoop++){
+			for(j=0;j<lines.length;j++){
 				if(lines[j].startsWith(`system `)){
 					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[]]);
-					for(k=j+1;k<lines.length;k++,loadLoop++){
+					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 						}else if(lines[k].startsWith(`\tgovernment `)){
@@ -110,7 +107,7 @@ function loadFiles(that){
 					};
 				}else if(lines[j].startsWith(`government `)){
 					elements[1].push([lines[j].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(k=j+1;k<lines.length;k++,loadLoop++){
+					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tcolor `)){
 							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 							break;
@@ -120,7 +117,7 @@ function loadFiles(that){
 					};
 				}else if(lines[j].startsWith(`galaxy `)){
 					elements[2].push([lines[j].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(k=j+1;k<lines.length;k++,loadLoop++){
+					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[2][elements[2].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 							break;
@@ -136,7 +133,6 @@ function loadFiles(that){
 };
 //	Map drawing
 function drawMap(){
-	drawLoop=0;
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
@@ -145,20 +141,20 @@ function drawMap(){
 	if(elements[0].length){
 		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
 	};
-	for(i=0;i<elements[2].length;i++,drawLoop++){
+	for(i=0;i<elements[2].length;i++){
 		document.getElementById(`switchGalaxy`).innerHTML+=`
 			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(160+(20*i))+`px;">`+elements[2][i][0]+`</label>
 			`;
 	};
 	//	Links
-	for(i=0;i<elements[0].length;i++,drawLoop++){
-		for(j=0;j<elements[0][i][3].length;j++,drawLoop++){
-			for(k=0;k<elements[0].length;k++,drawLoop++){
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[0][i][3].length;j++){
+			for(k=0;k<elements[0].length;k++){
 				if(elements[0][i][3][j]==elements[0][k][0]){
 					if(style==`Original`){
 						drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 					}else if(style==`Modern`){
-						for(l=0;l<elements[1].length;l++,drawLoop++){
+						for(l=0;l<elements[1].length;l++){
 							if(elements[0][i][2]==elements[1][l][0]){
 								if(elements[0][i][4].length>0||systemAllocation){
 									drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-((elements[0][k][1][0]-elements[0][i][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-((elements[0][k][1][1]-elements[0][i][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][l][1][0]*255+`,`+elements[1][l][1][1]*255+`,`+elements[1][l][1][2]*255+`)`);
@@ -176,7 +172,7 @@ function drawMap(){
 	//	Systems
 	if(style==`Original`){
 		canvasContext.beginPath();
-		for(i=0;i<elements[0].length;i++,drawLoop++){
+		for(i=0;i<elements[0].length;i++){
 			canvasContext.moveTo(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1]);
 			canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 		};
@@ -184,8 +180,8 @@ function drawMap(){
 		canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	};
 	canvasContext.restore();
-	for(i=0;i<elements[0].length;i++,drawLoop++){
-		for(j=0;j<elements[1].length;j++,drawLoop++){
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[1].length;j++){
 			if(elements[0][i][2]==elements[1][j][0]){
 				if(style==`Original`){
 					if(elements[0][i][4].length>0||systemAllocation){
@@ -206,21 +202,19 @@ function drawMap(){
 	};
 	//	Wormholes
 	var wormholes=[];
-	for(i=0;i<elements[0].length;i++,drawLoop++){
-		for(j=0;j<elements[0][i][4].length;j++,drawLoop++){
+	for(i=0;i<elements[0].length;i++){
+		for(j=0;j<elements[0][i][4].length;j++){
 			wormholes.push([elements[0][i][4][j],elements[0][i][1][0],elements[0][i][1][1]]);
 		};
 	};
-	for(i=0;i<wormholes.length;i++,drawLoop++){
-		for(j=i+1;j<wormholes.length;j++,drawLoop++){
+	for(i=0;i<wormholes.length;i++){
+		for(j=i+1;j<wormholes.length;j++){
 			if(wormholes[i][0]==wormholes[j][0]){
 				drawLine(canvasContext,2150*scale+ +wormholes[i][1]-galaxyPosition[0],1350*scale+ +wormholes[i][2]-galaxyPosition[1],2150*scale+ +wormholes[j][1]-galaxyPosition[0],1350*scale+ +wormholes[j][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
 	};
-	console.log(loadLoop);
-	console.log(drawLoop);
 };
 //	Map Options
 function switchScale(){
