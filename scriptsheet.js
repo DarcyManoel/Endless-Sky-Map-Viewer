@@ -4,10 +4,10 @@ canvas.height=screen.height;
 canvas.width=screen.width;
 var canvasContext=canvas.getContext(`2d`);
 var img=document.getElementById(`galaxy`);
-var interactable=document.getElementById(`interactable`);
-interactable.height=screen.height;
-interactable.width=screen.width;
-var interactableContext=interactable.getContext(`2d`);
+var HUDisplay=document.getElementById(`HUDisplay`);
+HUDisplay.height=screen.height;
+HUDisplay.width=screen.width;
+var HUDContext=HUDisplay.getContext(`2d`);
 var scale=1;
 var style=`Original`
 //	Elements
@@ -23,7 +23,7 @@ var systemAllocation;
 //	Draw canvas on page load
 function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
-	interactableContext.scale((1/3)/scale,(1/3)/scale);
+	HUDContext.scale((1/3)/scale,(1/3)/scale);
 	canvasContext.drawImage(img,400,100);
 };
 //	Coordinate tracking on mouse actions
@@ -39,23 +39,23 @@ function onMouseMove(event){
 	};
 	if(oldTarget!==target&&distance<100){
 		oldTarget=target;
-		interactableContext.clearRect(0,0,100000,100000);
+		HUDContext.clearRect(0,0,100000,100000);
 		if(style==`Original`){
-			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
-			drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+			drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+			drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 		}else if(style==`Modern`){
 			for(i=0;i<elements[1].length;i++){
 				if(elements[0][target][2]==elements[1][i][0]){
 					if(elements[0][target][4].length>0||systemAllocation){
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
 					}else{
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-						drawArc(interactableContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 					};
 					break;
 				};
@@ -63,12 +63,12 @@ function onMouseMove(event){
 		};
 	}else if(distance>=100){
 		oldTarget=0;
-		interactableContext.clearRect(0,0,100000,100000);
+		HUDContext.clearRect(0,0,100000,100000);
 	};
 };
 //	Parses files to generate map display
 function loadFiles(that){
-	interactable.addEventListener(`mousemove`,onMouseMove);
+	HUDisplay.addEventListener(`mousemove`,onMouseMove);
 	var files=event.target.files;
 	for(i=0;i<files.length;i++){
 		// Systems
@@ -207,7 +207,7 @@ function drawMap(){
 //	Map Options
 function switchScale(){
 	canvasContext.scale(3*scale,3*scale);
-	interactableContext.scale(3*scale,3*scale);
+	HUDContext.scale(3*scale,3*scale);
 	if(document.getElementById(`scaleActive`).innerHTML==1){
 		scale=1.5;
 	}else if(document.getElementById(`scaleActive`).innerHTML==1.5){
@@ -217,7 +217,7 @@ function switchScale(){
 	};
 	document.getElementById(`scaleActive`).innerHTML=scale;
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
-	interactableContext.scale((1/3)/scale,(1/3)/scale);
+	HUDContext.scale((1/3)/scale,(1/3)/scale);
 	drawMap();
 };
 function switchStyle(){
