@@ -232,23 +232,18 @@ function switchScale(){
 	drawMap();
 };
 function switchStyle(){
-	if(document.getElementById(`styleActive`).innerHTML==`Original`){
+	if(style==`Original`){
 		style=`Modern`;
-	}else if(document.getElementById(`styleActive`).innerHTML==`Modern`){
+	}else if(style==`Modern`){
 		style=`Original`;
 	}
-	document.getElementById(`styleActive`).innerHTML=style;
 	drawMap();
 };
 function switchAllocation(){
 	if(systemAllocation){
 		systemAllocation=0;
-		document.getElementById(`inhabited`).classList.toggle(`hidden`);
-		document.getElementById(`claimed`).classList.toggle(`hidden`);
 	}else{
 		systemAllocation=1;
-		document.getElementById(`inhabited`).classList.toggle(`hidden`);
-		document.getElementById(`claimed`).classList.toggle(`hidden`);
 	};
 	drawMap();
 };

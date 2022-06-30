@@ -58,28 +58,6 @@ label:hover{
 	left:41%;
 	top:25px;
 }
-#style{
-	position:absolute;
-	left:57%;
-	text-decoration:underline;
-	top:5px;
-}
-#styleActive{
-	position:absolute;
-	left:57.5%;
-	top:25px;
-}
-#allocation{
-	position:absolute;
-	left:65%;
-	text-decoration:underline;
-	top:5px;
-}
-.systemAllocation{
-	position:absolute;
-	left:67%;
-	top:25px;
-}
 #viewed{
 	position:absolute;
 	right:20px;
