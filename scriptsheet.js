@@ -3,7 +3,8 @@ var canvas=document.getElementById(`canvas`);
 canvas.height=screen.height;
 canvas.width=screen.width;
 var canvasContext=canvas.getContext(`2d`);
-var img=document.getElementById(`galaxy`);
+var galaxy=document.getElementById(`galaxy`);
+var system=document.getElementById(`system`);
 var HUDisplay=document.getElementById(`HUDisplay`);
 HUDisplay.height=screen.height;
 HUDisplay.width=screen.width;
@@ -24,7 +25,7 @@ var systemAllocation;
 function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	HUDContext.scale((1/3)/scale,(1/3)/scale);
-	canvasContext.drawImage(img,400,100);
+	canvasContext.drawImage(galaxy,400,100);
 };
 //	Coordinate tracking on mouse actions
 function onMouseMove(event){
@@ -42,6 +43,9 @@ function onMouseMove(event){
 			if(elements[0][target][2]==elements[1][i][0]){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
+				HUDContext.drawImage(system,0,0,556*scale,250*scale);
+				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
+				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				if(style==`Original`){
 					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
@@ -64,6 +68,9 @@ function onMouseMove(event){
 	}else if(distance>=100){
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
+		HUDContext.drawImage(system,0,0,556*scale,250*scale);
+		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
+		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 	};
 };
 //	Parses files to generate map display
@@ -125,7 +132,7 @@ function drawMap(){
 	canvasContext.restore();
 	canvasContext.save();
 	canvasContext.clearRect(0,0,100000,100000);
-	canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
+	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	if(elements[0].length){
 		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
 	};
@@ -165,7 +172,7 @@ function drawMap(){
 			canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 		};
 		canvasContext.clip();
-		canvasContext.drawImage(img,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
+		canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	};
 	canvasContext.restore();
 	for(i=0;i<elements[0].length;i++){
@@ -203,6 +210,10 @@ function drawMap(){
 			};
 		};
 	};
+	HUDContext.clearRect(0,0,100000,100000);
+	HUDContext.drawImage(system,0,0,556*scale,250*scale);
+	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
+	document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 };
 //	Map Options
 function switchScale(){

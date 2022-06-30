@@ -3,7 +3,7 @@ body{
 	-webkit-user-select:none;
 	animation:highlightOff .5s;
 	background-color:#000;
-	color:#aaa;
+	color:#9f9f9f;
 	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
@@ -26,6 +26,19 @@ label:hover{
 }
 .hidden{
 	display:none;
+}
+/*Informational*/
+#systemDisplay{
+	font-size:14px;
+	left:10px;
+	position:absolute;
+	top:27px;
+}
+#governmentDisplay{
+	font-size:14px;
+	left:10px;
+	position:absolute;
+	top:46px;
 }
 /*Interactables*/
 #loadFiles{

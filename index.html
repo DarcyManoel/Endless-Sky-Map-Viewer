@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="assets/map.png" rel="icon">
+		<link href="assets/icon.png" rel="icon">
 		<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<title>Map Viewer</title>
@@ -12,6 +12,10 @@
 		<canvas id="HUDisplay"></canvas>
 	<!--Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
+		<img id="system" class="hidden" src="assets/system.png">
+	<!--Informational-->
+		<label id="systemDisplay"></label>
+		<label id="governmentDisplay"></label>
 	<!--Map Options-->
 		<div id="switchScale" onclick="switchScale()">
 			<label id="scale">Scale</label>
