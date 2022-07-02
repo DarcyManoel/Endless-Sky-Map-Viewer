@@ -18,7 +18,8 @@ canvas{
 	width:100%;
 }
 label{
-	padding:6px;
+	animation:highlightOff .5s;
+	-webkit-animation:highlightOff .5s;
 }
 label:hover{
 	animation:highlightOn .5s forwards;
@@ -30,39 +31,39 @@ label:hover{
 /*Informational*/
 #systemDisplay{
 	font-size:14px;
-	left:10px;
+	left:16px;
 	position:absolute;
-	top:27px;
+	top:33px;
 }
 #governmentDisplay{
 	font-size:14px;
-	left:10px;
+	left:16px;
 	position:absolute;
-	top:46px;
+	top:52px;
 }
 /*Interactables*/
 #loadFiles{
 	left:50%;
 	transform:translate(-50%,0);
 	position:absolute;
-	top:5px;
+	top:10px;
 }
 #scale{
 	position:absolute;
 	left:40%;
 	text-decoration:underline;
-	top:5px;
+	top:10px;
 }
 #scaleActive{
 	position:absolute;
 	left:41%;
-	top:25px;
+	top:30px;
 }
 #viewed{
 	position:absolute;
 	right:20px;
 	text-decoration:underline;
-	top:5px;
+	top:10px;
 }
 .galaxyViewed{
 	position:absolute;
@@ -80,10 +81,10 @@ label:hover{
 	100%{filter:blur(0px);}
 }
 /*Highlight*/
-@keyframes highlightOn{
-	100%{color:#eee;}
-}
 @keyframes highlightOff{
 	0%{color:#eee;}
-	100%{color:#aaa;}
+	100%{color:#9f9f9f;}
+}
+@keyframes highlightOn{
+	100%{color:#eee;}
 }
