@@ -9,8 +9,6 @@ var HUDisplay=document.getElementById(`HUDisplay`);
 HUDisplay.height=screen.height;
 HUDisplay.width=screen.width;
 var HUDContext=HUDisplay.getContext(`2d`);
-var scale=1;
-var style=`Original`
 //	Elements
 var elements=[[],[],[]];
 var galaxyPosition=[0,0];
@@ -19,7 +17,9 @@ var oldTarget=0;
 var target=0;
 var xCoordinate;
 var yCoordinate;
-//	Map options
+//	Options
+var scale=1;
+var style=`Original`
 var systemAllocation;
 //	Draw canvas on page load
 function initialize(){
