@@ -70,12 +70,6 @@ label:hover{
 	right:30px;
 }
 /*Blur*/
-.blurred{
-	animation:blurOn 1s forwards;
-}
-@keyframes blurOn{
-	100%{filter:blur(3px);}
-}
 @keyframes blurOff{
 	0%{filter:blur(3px);}
 	100%{filter:blur(0px);}
