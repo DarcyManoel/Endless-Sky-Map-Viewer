@@ -135,6 +135,7 @@ function drawMap(){
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	if(elements[0].length){
 		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
+		document.getElementById(`switchScale`).classList.remove(`hidden`);
 	};
 	for(i=0;i<elements[2].length;i++){
 		document.getElementById(`switchGalaxy`).innerHTML+=`

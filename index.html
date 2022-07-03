@@ -10,23 +10,22 @@
 	<!--Canvas-->
 		<canvas id="canvas"></canvas>
 		<canvas id="HUDisplay"></canvas>
-	<!--Reference Relay, Always Hidden-->
+	<!--Image Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
 		<img id="system" class="hidden" src="assets/system.png">
 	<!--Informational-->
 		<label id="systemDisplay" onclick="switchStyle()"></label>
 		<label id="governmentDisplay" onclick="switchAllocation()"></label>
-	<!--Map Options-->
-		<div id="switchScale" onclick="switchScale()">
+	<!--Options-->
+		<label id="loadFiles" for="file">&#10162; Upload Files</label>
+		<input id="file" onchange="loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
+		<div id="switchScale" class="hidden" onclick="switchScale()">
 			<label id="scale">Scale</label>
 			<label id="scaleActive">1</label>
 		</div>
 		<div id="switchGalaxy" class="hidden">
 			<label id="viewed">Galaxy Viewed</label>
 		</div>
-	<!--Misc-->
-		<label id="loadFiles" for="file">&#10162; Upload Files</label>
-		<input id="file" onchange="loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>
