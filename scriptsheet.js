@@ -75,7 +75,6 @@ function onMouseMove(event){
 };
 //	Parses files to generate map display
 function loadFiles(that){
-	HUDisplay.addEventListener(`mousemove`,onMouseMove);
 	var files=event.target.files;
 	for(i=0;i<files.length;i++){
 		// Systems
@@ -128,6 +127,7 @@ function loadFiles(that){
 };
 //	Map drawing
 function drawMap(){
+	HUDisplay.addEventListener(`mousemove`,onMouseMove);
 	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
