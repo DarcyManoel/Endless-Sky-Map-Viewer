@@ -104,6 +104,8 @@ function loadFiles(that){
 							elements[0][elements[0].length-1][3].push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
 						}else if(lines[k].startsWith(`\tobject `)){
 							elements[0][elements[0].length-1][4].push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+						}else if(lines[k].startsWith(`\t\tobject `)){
+							elements[0][elements[0].length-1][4].push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
