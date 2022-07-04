@@ -56,7 +56,8 @@ function onMouseMove(event){
 				document.getElementById(`tradeContainer`).innerHTML=``;
 				if(elements[0][target][5].length){
 					HUDContext.drawImage(trade,0,250+361*elements[0][target][4].length,556*scale,639*scale);
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;width:150px;">`+elements[0][target][5].join(`<br>`)+`</label>`
+					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
+					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][1].join(`<br>`)+`</label>`
 				};
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
@@ -101,7 +102,7 @@ function loadFiles(that){
 			var lines=output.split(`\n`);
 			for(j=0;j<lines.length;j++){
 				if(lines[j].startsWith(`system `)){
-					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[]]);
+					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
 					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
@@ -130,7 +131,8 @@ function loadFiles(that){
 								elements[0][elements[0].length-1][4].push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
 							};
 						}else if(lines[k].startsWith(`\ttrade `)){
-							elements[0][elements[0].length-1][5].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``));
+							elements[0][elements[0].length-1][5][0].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
+							elements[0][elements[0].length-1][5][1].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g));
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
