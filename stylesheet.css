@@ -30,16 +30,16 @@ label:hover{
 }
 /*Informational*/
 #systemDisplay{
-	font-size:14px;
+	font-size:13px;
 	left:16px;
 	position:absolute;
-	top:33px;
+	top:35px;
 }
 #governmentDisplay{
-	font-size:14px;
+	font-size:13px;
 	left:16px;
 	position:absolute;
-	top:52px;
+	top:53px;
 }
 /*Interactables*/
 #loadFiles{

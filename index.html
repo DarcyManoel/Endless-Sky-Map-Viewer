@@ -13,9 +13,11 @@
 	<!--Image Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
 		<img id="system" class="hidden" src="assets/system.png">
+		<img id="planet" class="hidden" src="assets/planet.png">
 	<!--Informational-->
 		<label id="systemDisplay" onclick="switchStyle()"></label>
 		<label id="governmentDisplay" onclick="switchAllocation()"></label>
+		<div id="planetsContainer"></div>
 	<!--Options-->
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input id="file" onchange="loadFiles(this)" class="upload hidden" type="file" webkitdirectory/>

@@ -5,6 +5,7 @@ canvas.width=screen.width;
 var canvasContext=canvas.getContext(`2d`);
 var galaxy=document.getElementById(`galaxy`);
 var system=document.getElementById(`system`);
+var planet=document.getElementById(`planet`);
 var HUDisplay=document.getElementById(`HUDisplay`);
 HUDisplay.height=screen.height;
 HUDisplay.width=screen.width;
@@ -44,6 +45,13 @@ function onMouseMove(event){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
 				HUDContext.drawImage(system,0,0,556*scale,250*scale);
+				document.getElementById(`planetsContainer`).innerHTML=``;
+				if(elements[0][target][4].length){
+					for(j=0;j<elements[0][target][4].length;j++){
+						HUDContext.drawImage(planet,0,250+(361*j),556*scale,389*scale);
+						document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:29px;position:absolute;top:`+parseInt(100+(120*j))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
+					};
+				};
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				if(style==`Original`){
@@ -69,6 +77,7 @@ function onMouseMove(event){
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
 		HUDContext.drawImage(system,0,0,556*scale,250*scale);
+		document.getElementById(`planetsContainer`).innerHTML=``;
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 	};
