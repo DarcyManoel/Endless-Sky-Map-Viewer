@@ -13,6 +13,8 @@ HUDisplay.width=screen.width;
 var HUDContext=HUDisplay.getContext(`2d`);
 //	Elements
 var elements=[[],[],[]];
+var tradeCompendium;
+var tradeAverage;
 var galaxyPosition=[0,0];
 //	Positional variables
 var oldTarget=0;
@@ -46,6 +48,8 @@ function onMouseMove(event){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
 				HUDContext.drawImage(system,0,0,556*scale,250*scale);
+				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
+				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				document.getElementById(`planetsContainer`).innerHTML=``;
 				if(elements[0][target][4].length){
 					for(j=0;j<elements[0][target][4].length;j++){
@@ -59,8 +63,6 @@ function onMouseMove(event){
 					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][1].join(`<br>`)+`</label>`
 				};
-				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
-				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				if(style==`Original`){
 					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
@@ -88,6 +90,9 @@ function onMouseMove(event){
 		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 		document.getElementById(`planetsContainer`).innerHTML=``;
 		document.getElementById(`tradeContainer`).innerHTML=``;
+		HUDContext.drawImage(trade,0,250,556*scale,639*scale);
+		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
+		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`
 	};
 };
 //	Parses files to generate map display
@@ -132,7 +137,7 @@ function loadFiles(that){
 							};
 						}else if(lines[k].startsWith(`\ttrade `)){
 							elements[0][elements[0].length-1][5][0].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
-							elements[0][elements[0].length-1][5][1].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g));
+							elements[0][elements[0].length-1][5][1].push(parseInt(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
@@ -161,7 +166,26 @@ function loadFiles(that){
 			};
 		};
 	};
-	setTimeout(drawMap,1000);
+	tradeCompendium=[];
+	tradeAverage=[[],[]];
+	setTimeout(function(){
+		for(i=0;i<10;i++){
+			tradeCompendium.push([]);
+			tradeAverage[0].push([]);
+			tradeAverage[1].push([0]);
+			for(j=0;j<elements[0].length;j++){
+				if(elements[0][j][5][1][i]){
+					tradeCompendium[i].push(elements[0][j][5][1][i]);
+					tradeAverage[0][i]=elements[0][j][5][0][i];
+				};
+			};
+			for(j=0;j<tradeCompendium[i].length;j++){
+				tradeAverage[1][i]=eval(tradeAverage[1][i]+tradeCompendium[i][j]);
+			};
+			tradeAverage[1][i]=Math.round(tradeAverage[1][i]/tradeCompendium[i].length);
+		};
+		drawMap();
+	},1000);
 };
 //	Map drawing
 function drawMap(){
@@ -253,6 +277,10 @@ function drawMap(){
 	HUDContext.drawImage(system,0,0,556*scale,250*scale);
 	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 	document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
+	HUDContext.drawImage(trade,0,250,556*scale,639*scale);
+	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
+	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`
+	console.log(tradeAverage);
 };
 //	Map Options
 function switchScale(){
