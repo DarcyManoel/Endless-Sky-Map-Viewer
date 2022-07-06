@@ -58,10 +58,14 @@ function onMouseMove(event){
 					};
 				};
 				document.getElementById(`tradeContainer`).innerHTML=``;
-				if(elements[0][target][5].length){
-					HUDContext.drawImage(trade,0,250+361*elements[0][target][4].length,556*scale,639*scale);
-					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
-					document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][1].join(`<br>`)+`</label>`
+				HUDContext.drawImage(trade,0,250+361*elements[0][target][4].length,556*scale,639*scale);
+				document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
+				for(j=0;j<tradeAverage[1].length;j++){
+					if(elements[0][target][5][1][j]>tradeAverage[1][j]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+					}else if(elements[0][target][5][1][j]<tradeAverage[1][j]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+					};
 				};
 				if(style==`Original`){
 					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
