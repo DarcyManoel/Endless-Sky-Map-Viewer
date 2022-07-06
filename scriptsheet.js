@@ -56,9 +56,19 @@ function onMouseMove(event){
 					for(j=0;j<elements[0][target][4].length;j++){
 						for(k=0;k<elements[3].length;k++){
 							if(elements[0][target][4][j]==elements[3][k][0]){
-								if(!elements[3][k][1].includes(`requires:`)){
+								if(!elements[3][k][1].includes(`requires: inaccessible`)){
 									HUDContext.drawImage(planet,0,250+(361*accessiblePlanets),556*scale,389*scale);
-									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:29px;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
+									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
+									if(elements[3][k][3]){
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
+									}else{
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
+									};
+									if(elements[3][k][4]){
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
+									}else{
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
+									};
 									accessiblePlanets++;
 								};
 							};
@@ -173,12 +183,16 @@ function loadFiles(that){
 						};
 					};
 				}else if(lines[j].startsWith(`planet `)){
-					elements[3].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,false]);
+					elements[3].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
 					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tattributes `)){
-							elements[3][elements[3].length-1][1]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+							elements[3][elements[3].length-1][1]=lines[k].slice(12).replaceAll(`\r`,``);
 						}else if(lines[k].startsWith(`\tspaceport `)){
 							elements[3][elements[3].length-1][2]=true;
+						}else if(lines[k].startsWith(`\tshipyard `)){
+							elements[3][elements[3].length-1][3]=true;
+						}else if(lines[k].startsWith(`\toutfitter `)){
+							elements[3][elements[3].length-1][4]=true;
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
