@@ -80,9 +80,11 @@ function onMouseMove(event){
 				document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 				for(j=0;j<tradeAverage[1].length;j++){
 					if(elements[0][target][5][1][j]>tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">+`+eval(elements[0][target][5][1][j]-tradeAverage[1][j])+`</label>`
 					}else if(elements[0][target][5][1][j]<tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+eval(elements[0][target][5][1][j]-tradeAverage[1][j])+`</label>`
+					}else if(elements[0][target][5][1][j]==tradeAverage[1][j]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
 					};
 				};
 				if(style==`Original`){
