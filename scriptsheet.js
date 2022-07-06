@@ -12,7 +12,7 @@ HUDisplay.height=screen.height;
 HUDisplay.width=screen.width;
 var HUDContext=HUDisplay.getContext(`2d`);
 //	Elements
-var elements=[[],[],[]];
+var elements=[[],[],[],[]];
 var tradeCompendium;
 var tradeAverage;
 var galaxyPosition=[0,0];
@@ -51,20 +51,28 @@ function onMouseMove(event){
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				document.getElementById(`planetsContainer`).innerHTML=``;
+				var accessiblePlanets=0;
 				if(elements[0][target][4].length){
 					for(j=0;j<elements[0][target][4].length;j++){
-						HUDContext.drawImage(planet,0,250+(361*j),556*scale,389*scale);
-						document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:29px;position:absolute;top:`+parseInt(101+(120*j))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
+						for(k=0;k<elements[3].length;k++){
+							if(elements[0][target][4][j]==elements[3][k][0]){
+								if(!elements[3][k][1].includes(`requires:`)){
+									HUDContext.drawImage(planet,0,250+(361*accessiblePlanets),556*scale,389*scale);
+									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:29px;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
+									accessiblePlanets++;
+								};
+							};
+						};
 					};
 				};
 				document.getElementById(`tradeContainer`).innerHTML=``;
-				HUDContext.drawImage(trade,0,250+361*elements[0][target][4].length,556*scale,639*scale);
-				document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*elements[0][target][4].length))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
+				HUDContext.drawImage(trade,0,250+361*accessiblePlanets,556*scale,639*scale);
+				document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 				for(j=0;j<tradeAverage[1].length;j++){
 					if(elements[0][target][5][1][j]>tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
 					}else if(elements[0][target][5][1][j]<tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*elements[0][target][4].length)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
 					};
 				};
 				if(style==`Original`){
@@ -151,7 +159,6 @@ function loadFiles(that){
 					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tcolor `)){
 							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-							break;
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
@@ -161,7 +168,17 @@ function loadFiles(that){
 					for(k=j+1;k<lines.length;k++){
 						if(lines[k].startsWith(`\tpos `)){
 							elements[2][elements[2].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+						}else if(!lines[k].startsWith(`\t`)){
 							break;
+						};
+					};
+				}else if(lines[j].startsWith(`planet `)){
+					elements[3].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,false]);
+					for(k=j+1;k<lines.length;k++){
+						if(lines[k].startsWith(`\tattributes `)){
+							elements[3][elements[3].length-1][1]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+						}else if(lines[k].startsWith(`\tspaceport `)){
+							elements[3][elements[3].length-1][2]=true;
 						}else if(!lines[k].startsWith(`\t`)){
 							break;
 						};
