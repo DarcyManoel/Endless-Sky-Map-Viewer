@@ -13,10 +13,13 @@ HUDisplay.width=screen.width;
 var HUDContext=HUDisplay.getContext(`2d`);
 //	Elements
 var elements=[[],[],[],[]];
+var galaxyPosition=[0,0];
 var tradeCompendium;
 var tradeAverage;
-var galaxyPosition=[0,0];
+//	Selection variables
+var systemsSelected=[];
 //	Positional variables
+var distance;
 var oldTarget=0;
 var target=0;
 var xCoordinate;
@@ -35,7 +38,7 @@ function initialize(){
 function onMouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
-	var distance=100000;
+	distance=100000;
 	for(i=0;i<elements[0].length;i++){
 		if(Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
 			target=i;
@@ -75,9 +78,8 @@ function onMouseMove(event){
 						};
 					};
 				};
-				document.getElementById(`tradeContainer`).innerHTML=``;
 				HUDContext.drawImage(trade,0,250+361*accessiblePlanets,556*scale,639*scale);
-				document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
+				document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 				for(j=0;j<tradeAverage[1].length;j++){
 					if(elements[0][target][5][1][j]>tradeAverage[1][j]){
 						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">+`+eval(elements[0][target][5][1][j]-tradeAverage[1][j])+`</label>`
@@ -106,6 +108,7 @@ function onMouseMove(event){
 				};
 			};
 		};
+		drawSelected();
 	}else if(distance>=100){
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
@@ -115,9 +118,46 @@ function onMouseMove(event){
 		document.getElementById(`planetsContainer`).innerHTML=``;
 		document.getElementById(`tradeContainer`).innerHTML=``;
 		HUDContext.drawImage(trade,0,250,556*scale,639*scale);
-		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
-		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`
+		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
+		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`
+		drawSelected();
 	};
+};
+function drawSelected(){
+	for(i=0;i<systemsSelected.length;i++){
+		if(style==`Original`){
+			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+		}else if(style==`Modern`){
+			if(elements[0][systemsSelected[i]][4].length>0||systemAllocation){
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
+			}else{
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
+				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+			};
+		};
+	};
+};
+function onMouseDown(){
+	if(distance<100){
+		var spliced=0;
+		for(i=0;i<systemsSelected.length;i++){
+			if(systemsSelected[i]==target){
+				systemsSelected.splice(i,1);
+				spliced=1;
+				break;
+			};
+		};
+		if(!spliced){
+			systemsSelected.push(target);
+		};
+	};
+	tradeAverages();
 };
 //	Parses files to generate map display
 function loadFiles(that){
@@ -203,29 +243,46 @@ function loadFiles(that){
 			};
 		};
 	};
+	setTimeout(tradeAverages,1000);
+	setTimeout(drawMap,1000);
+};
+function tradeAverages(){
 	tradeCompendium=[];
 	tradeAverage=[[],[]];
-	setTimeout(function(){
-		for(i=0;i<10;i++){
-			tradeCompendium.push([]);
-			tradeAverage[0].push([]);
-			tradeAverage[1].push([0]);
+	for(i=0;i<10;i++){
+		tradeCompendium.push([]);
+		tradeAverage[0].push([]);
+		tradeAverage[1].push([0]);
+		if(systemsSelected.length){
+			for(j=0;j<systemsSelected.length;j++){
+				if(elements[0][systemsSelected[j]][5][1][i]){
+					tradeCompendium[i].push(elements[0][systemsSelected[j]][5][1][i]);
+					tradeAverage[0][i]=elements[0][systemsSelected[j]][5][0][i];
+				};
+			};
+		}else{
 			for(j=0;j<elements[0].length;j++){
 				if(elements[0][j][5][1][i]){
 					tradeCompendium[i].push(elements[0][j][5][1][i]);
 					tradeAverage[0][i]=elements[0][j][5][0][i];
 				};
 			};
-			for(j=0;j<tradeCompendium[i].length;j++){
-				tradeAverage[1][i]=eval(tradeAverage[1][i]+tradeCompendium[i][j]);
-			};
-			tradeAverage[1][i]=Math.round(tradeAverage[1][i]/tradeCompendium[i].length);
 		};
-		drawMap();
-	},1000);
+		for(j=0;j<tradeCompendium[i].length;j++){
+			tradeAverage[1][i]=tradeCompendium[i][j]+ +tradeAverage[1][i];
+		};
+		tradeAverage[1][i]=Math.round(tradeAverage[1][i]/tradeCompendium[i].length);
+	};
+	console.log(`systemsSelected`);
+	console.log(systemsSelected);
+	console.log(`tradeCompendium`);
+	console.log(tradeCompendium);
+	console.log(`tradeAverage`);
+	console.log(tradeAverage);
 };
 //	Map drawing
 function drawMap(){
+	HUDisplay.addEventListener(`mousedown`,onMouseDown);
 	HUDisplay.addEventListener(`mousemove`,onMouseMove);
 	console.log(elements);
 	canvasContext.restore();
@@ -317,7 +374,6 @@ function drawMap(){
 	HUDContext.drawImage(trade,0,250,556*scale,639*scale);
 	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
 	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`
-	console.log(tradeAverage);
 };
 //	Map Options
 function switchScale(){
