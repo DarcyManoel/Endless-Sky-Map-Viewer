@@ -240,21 +240,8 @@
 					};
 					if(style==`Original`){
 						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
-						drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-					}else if(style==`Modern`){
-						if(elements[0][target][4].length>0||systemAllocation){
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
-						}else{
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-							drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-						};
-						break;
 					};
+					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 				};
 			};
 			drawSelected();
@@ -290,21 +277,9 @@
 	function drawSelected(){
 		for(i=0;i<systemsSelected.length;i++){
 			if(style==`Original`){
-				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
-				drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-			}else if(style==`Modern`){
-				if(elements[0][systemsSelected[i]][4].length>0||systemAllocation){
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],4.6,3.6,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(`+elements[1][i][1][0]*255+`,`+elements[1][i][1][1]*255+`,`+elements[1][i][1][2]*255+`)`);
-				}else{
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],1,3.6,`rgb(255,255,255)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],4.6,3.6,`rgb(102,102,102)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,.5,`rgb(255,255,255)`);
-					drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-				};
+				drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 			};
+			drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 		};};
 //	Map drawing
 	function drawMap(){
