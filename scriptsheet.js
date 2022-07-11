@@ -214,7 +214,7 @@
 			document.getElementById(`planetsContainer`).innerHTML=``;
 			document.getElementById(`tradeContainer`).innerHTML=``;
 			HUDContext.drawImage(trade,0,250,556*scale,639*scale);
-			document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
+			document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`
 			document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`
 			drawSelected();
 		};};
@@ -234,6 +234,8 @@
 			};
 		};
 		tradeAverages();};
+	function resetSelected(){
+		systemsSelected=[];};
 	function drawSelected(){
 		for(i=0;i<systemsSelected.length;i++){
 			if(style==`Original`){
