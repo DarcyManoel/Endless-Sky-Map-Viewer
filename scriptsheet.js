@@ -138,46 +138,6 @@
 		console.log(tradeCompendium);
 		console.log(`tradeAverage`);
 		console.log(tradeAverage);};
-//	Map Options
-	var scale=1;
-	function switchScale(){
-		canvasContext.scale(3*scale,3*scale);
-		HUDContext.scale(3*scale,3*scale);
-		if(document.getElementById(`scaleActive`).innerHTML==1){
-			scale=1.5;
-		}else if(document.getElementById(`scaleActive`).innerHTML==1.5){
-			scale=2.5;
-		}else if(document.getElementById(`scaleActive`).innerHTML==2.5){
-			scale=1;
-		};
-		document.getElementById(`scaleActive`).innerHTML=scale;
-		canvasContext.scale((1/3)/scale,(1/3)/scale);
-		HUDContext.scale((1/3)/scale,(1/3)/scale);
-		drawMap();};
-	var style=`Original`;
-	function switchStyle(){
-		if(style==`Original`){
-			style=`Modern`;
-		}else if(style==`Modern`){
-			style=`Original`;
-		}
-		drawMap();};
-	var systemAllocation=0;
-	function switchAllocation(){
-		if(systemAllocation){
-			systemAllocation=0;
-		}else{
-			systemAllocation=1;
-		};
-		drawMap();};
-	function switchGalaxy(id){
-		for(i=0;i<elements[2].length;i++){
-			if(id==elements[2][i][0]){
-				galaxyPosition=elements[2][i][1];
-				break;
-			};
-		};
-		drawMap();};
 //	Mouse Events
 	var xCoordinate;
 	var yCoordinate;
@@ -281,7 +241,7 @@
 			};
 			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 		};};
-//	Map drawing
+//	Map Drawing
 	function drawMap(){
 		HUDisplay.addEventListener(`mousedown`,onMouseDown);
 		HUDisplay.addEventListener(`mousemove`,onMouseMove);
@@ -375,7 +335,47 @@
 		HUDContext.drawImage(trade,0,250,556*scale,639*scale);
 		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
 		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`};
-//	Pre-defined canvas actions
+//	Map Options
+	var scale=1;
+	function switchScale(){
+		canvasContext.scale(3*scale,3*scale);
+		HUDContext.scale(3*scale,3*scale);
+		if(document.getElementById(`scaleActive`).innerHTML==1){
+			scale=1.5;
+		}else if(document.getElementById(`scaleActive`).innerHTML==1.5){
+			scale=2.5;
+		}else if(document.getElementById(`scaleActive`).innerHTML==2.5){
+			scale=1;
+		};
+		document.getElementById(`scaleActive`).innerHTML=scale;
+		canvasContext.scale((1/3)/scale,(1/3)/scale);
+		HUDContext.scale((1/3)/scale,(1/3)/scale);
+		drawMap();};
+	var style=`Original`;
+	function switchStyle(){
+		if(style==`Original`){
+			style=`Modern`;
+		}else if(style==`Modern`){
+			style=`Original`;
+		}
+		drawMap();};
+	var systemAllocation=0;
+	function switchAllocation(){
+		if(systemAllocation){
+			systemAllocation=0;
+		}else{
+			systemAllocation=1;
+		};
+		drawMap();};
+	function switchGalaxy(id){
+		for(i=0;i<elements[2].length;i++){
+			if(id==elements[2][i][0]){
+				galaxyPosition=elements[2][i][1];
+				break;
+			};
+		};
+		drawMap();};
+//	Pre-defined Canvas Actions
 	function drawArc(target,x,y,radius,width,colour){
 		target.beginPath();
 		target.arc(x,y,radius,0,2*Math.PI);
