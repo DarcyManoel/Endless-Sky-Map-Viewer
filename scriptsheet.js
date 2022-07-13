@@ -169,7 +169,7 @@
 							for(k=0;k<elements[3].length;k++){
 								if(elements[0][target][4][j]==elements[3][k][0]){
 									if(!elements[3][k][1].includes(`requires: inaccessible`)){
-										HUDContext.drawImage(planet,0,250+(361*accessiblePlanets),556*scale,389*scale);
+										HUDContext.drawImage(planet,0,(250+361*accessiblePlanets)*scale,556*scale,389*scale);
 										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
 										if(elements[3][k][3]){
 											document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
@@ -187,7 +187,7 @@
 							};
 						};
 					};
-					HUDContext.drawImage(trade,0,250+361*accessiblePlanets,556*scale,639*scale);
+					HUDContext.drawImage(trade,0,(250+361*accessiblePlanets)*scale,556*scale,639*scale);
 					document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 					for(j=0;j<tradeAverage[1].length;j++){
 						if(elements[0][target][5][1][j]>tradeAverage[1][j]){
@@ -212,10 +212,10 @@
 			document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 			document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 			document.getElementById(`planetsContainer`).innerHTML=``;
+			HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
 			document.getElementById(`tradeContainer`).innerHTML=``;
-			HUDContext.drawImage(trade,0,250,556*scale,639*scale);
-			document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`
-			document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`
+			document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
+			document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
 			drawSelected();
 		};};
 	var systemsSelected=[];
@@ -334,9 +334,10 @@
 		HUDContext.drawImage(system,0,0,556*scale,250*scale);
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
-		HUDContext.drawImage(trade,0,250,556*scale,639*scale);
-		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;">`+tradeAverage[0].join(`<br>`)+`</label>`
-		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(122,122,122);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;">`+tradeAverage[1].join(`<br>`)+`</label>`};
+		HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
+		document.getElementById(`tradeContainer`).innerHTML=``;
+		document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
+		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;};
 //	Map Options
 	var scale=1;
 	function switchScale(){
