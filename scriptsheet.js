@@ -412,11 +412,6 @@ function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.lineWidth=width;
 	target.strokeStyle=colour;
 	target.stroke();};
-//	Draw text on canvas
-function drawText(target,x,y,text,size,colour){
-	target.font=size*scale+`px Ubuntu`;
-	target.fillStyle=colour;
-	target.fillText(text,x,y);};
 //	Calculate distance between two unaligned points
 Math.dist=function(x1,y1,x2,y2){ 
 	if(!x2)x2=0; 
