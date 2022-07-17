@@ -34,7 +34,8 @@
 function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	HUDContext.scale((1/3)/scale,(1/3)/scale);
-	canvasContext.drawImage(galaxy,400,100);};
+	canvasContext.drawImage(galaxy,400,100);
+	};
 //	Data parsing
 function loadFiles(that){
 	var files=event.target.files;
@@ -43,115 +44,162 @@ function loadFiles(that){
 		systemsReader.readAsText(files[i1]);
 		systemsReader.onload=function(e){
 			var output=e.target.result;
-			var lines=output.split(`\n`);
+			lines=output.split(`\n`);
 			for(i2=0;i2<lines.length;i2++){
-				//	Systems
-				if(lines[i2].startsWith(`system `)){
-					test:{
+				parseLine:{
+					//	Systems
+					if(lines[i2].startsWith(`system `)){
+						//	Override
 						for(i3=0;i3<elements[0].length;i3++){
 							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
-									if(lines[i4].startsWith(`\tpos `)){
-										elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-									}else if(lines[i4].startsWith(`\tgovernment `)){
-										elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-									}else if(lines[i4].startsWith(`\tadd link `)){
-										elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
-									}else if(lines[i4].startsWith(`\tadd object `)){
-										var segmented=0;
-										for(i5=0;i5<elements[0][i3][4].length;i5++){
-											if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
-												segmented=1;
-											};
-										};
-										if(segmented==0){
-											elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
-										};
-									}else if(!lines[i4].startsWith(`\t`)){
+									if(!lines[i4].startsWith(`\t`)){
 										break;
 									};
+									overrideSystem();
 								};
-								break test;
+								break parseLine;
 							};
 						};
+						//	Define
 						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
 						for(i3=i2+1;i3<lines.length;i3++){
-							if(lines[i3].startsWith(`\tpos `)){
-								elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-							}else if(lines[i3].startsWith(`\tgovernment `)){
-								elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-							}else if(lines[i3].startsWith(`\tlink `)){
-								elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
-							}else if(lines[i3].startsWith(`\tobject `)){
-								var segmented=0;
-								for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-									if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
-										segmented=1;
-									};
-								};
-								if(segmented==0){
-									elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
-								};
-							}else if(lines[i3].startsWith(`\t\tobject `)){
-								var segmented=0;
-								for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-									if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
-										segmented=1;
-									};
-								};
-								if(segmented==0){
-									elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
-								};
-							}else if(lines[i3].startsWith(`\ttrade `)){
-								elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
-								elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
-							}else if(!lines[i3].startsWith(`\t`)){
+							if(!lines[i3].startsWith(`\t`)){
 								break;
 							};
+							defineSystem();
 						};
-					};
-				//	Governments
-				}else if(lines[i2].startsWith(`government `)){
-					elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(i3=i2+1;i3<lines.length;i3++){
-						if(lines[i3].startsWith(`\tcolor `)){
-							elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						}else if(!lines[i3].startsWith(`\t`)){
-							break;
+						break parseLine;
+					//	Governments
+					}else if(lines[i2].startsWith(`government `)){
+						//	Override
+						for(i3=0;i3<elements[1].length;i3++){
+							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[1][i3][0]){
+								for(i4=i2+1;i4<lines.length;i4++){
+									if(!lines[i4].startsWith(`\t`)){
+										break;
+									};
+									overrideGovernment();
+								};
+								break parseLine;
+							};
 						};
-					};
-				//	Galaxies
-				}else if(lines[i2].startsWith(`galaxy `)){
-					elements[2].push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(i3=i2+1;i3<lines.length;i3++){
-						if(lines[i3].startsWith(`\tpos `)){
-							elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						}else if(!lines[i3].startsWith(`\t`)){
-							break;
+						//	Define
+						elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+						for(i3=i2+1;i3<lines.length;i3++){
+							if(!lines[i3].startsWith(`\t`)){
+								break;
+							};
+							defineGovernment();
 						};
-					};
-				//	Planets
-				}else if(lines[i2].startsWith(`planet `)){
-					elements[3].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
-					for(i3=i2+1;i3<lines.length;i3++){
-						if(lines[i3].startsWith(`\tattributes `)){
-							elements[3][elements[3].length-1][1]=lines[i3].slice(12).replaceAll(`\r`,``);
-						}else if(lines[i3].startsWith(`\tspaceport `)){
-							elements[3][elements[3].length-1][2]=true;
-						}else if(lines[i3].startsWith(`\tshipyard `)){
-							elements[3][elements[3].length-1][3]=true;
-						}else if(lines[i3].startsWith(`\toutfitter `)){
-							elements[3][elements[3].length-1][4]=true;
-						}else if(!lines[i3].startsWith(`\t`)){
-							break;
+						break parseLine;
+					//	Galaxies
+					}else if(lines[i2].startsWith(`galaxy `)){
+						//	Define
+						elements[2].push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+						for(i3=i2+1;i3<lines.length;i3++){
+							if(!lines[i3].startsWith(`\t`)){
+								break;
+							};
+							defineGalaxy();
 						};
+						break parseLine;
+					//	Planets
+					}else if(lines[i2].startsWith(`planet `)){
+						//	Define
+						elements[3].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
+						for(i3=i2+1;i3<lines.length;i3++){
+							if(!lines[i3].startsWith(`\t`)){
+								break;
+							};
+							definePlanet();
+						};
+						break parseLine;
 					};
 				};
 			};
 		};
 	};
 	setTimeout(tradeAverages,1000);
-	setTimeout(drawMap,1000);};
+	setTimeout(drawMap,1000);
+	};
+function overrideSystem(){
+	if(lines[i4].startsWith(`\tpos `)){
+		elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	}else if(lines[i4].startsWith(`\tgovernment `)){
+		elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+	}else if(lines[i4].startsWith(`\tadd link `)){
+		elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
+	}else if(lines[i4].startsWith(`\tadd object `)){
+		var segmented=0;
+		for(i5=0;i5<elements[0][i3][4].length;i5++){
+			if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
+				segmented=1;
+			};
+		};
+		if(segmented==0){
+			elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
+		};
+	};
+	};
+function defineSystem(){
+	if(lines[i3].startsWith(`\tpos `)){
+		elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	}else if(lines[i3].startsWith(`\tgovernment `)){
+		elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+	}else if(lines[i3].startsWith(`\tlink `)){
+		elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
+	}else if(lines[i3].startsWith(`\tobject `)){
+		var segmented=0;
+		for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+			if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
+				segmented=1;
+			};
+		};
+		if(segmented==0){
+			elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+		};
+	}else if(lines[i3].startsWith(`\t\tobject `)){
+		var segmented=0;
+		for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+			if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
+				segmented=1;
+			};
+		};
+		if(segmented==0){
+			elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
+		};
+	}else if(lines[i3].startsWith(`\ttrade `)){
+		elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
+		elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
+	};
+	};
+function overrideGovernment(){
+	if(lines[i3].startsWith(`\tcolor `)){
+		elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	};
+	};
+function defineGovernment(){
+	if(lines[i3].startsWith(`\tcolor `)){
+		elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	};
+	};
+function defineGalaxy(){
+	if(lines[i3].startsWith(`\tpos `)){
+		elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	};
+	};
+function definePlanet(){
+	if(lines[i3].startsWith(`\tattributes `)){
+		elements[3][elements[3].length-1][1]=lines[i3].slice(12).replaceAll(`\r`,``);
+	}else if(lines[i3].startsWith(`\tspaceport `)){
+		elements[3][elements[3].length-1][2]=true;
+	}else if(lines[i3].startsWith(`\tshipyard `)){
+		elements[3][elements[3].length-1][3]=true;
+	}else if(lines[i3].startsWith(`\toutfitter `)){
+		elements[3][elements[3].length-1][4]=true;
+	};
+	};
 //	Decide trade prices
 function tradeAverages(){
 	tradeCompendium=[];
@@ -185,7 +233,8 @@ function tradeAverages(){
 	console.log(`tradeCompendium`);
 	console.log(tradeCompendium);
 	console.log(`tradeAverage`);
-	console.log(tradeAverage);};
+	console.log(tradeAverage);
+	};
 //	Draw HUD elements
 function onMouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
@@ -260,7 +309,8 @@ function onMouseMove(event){
 		document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
 		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
 		drawSelected();
-	};};
+	};
+	};
 //	Select new system
 function onMouseDown(){
 	if(distance<100){
@@ -276,10 +326,12 @@ function onMouseDown(){
 			systemsSelected.push(target);
 		};
 	};
-	tradeAverages();};
+	tradeAverages();
+	};
 //	Deselect all systems
 function resetSelected(){
-	systemsSelected=[];};
+	systemsSelected=[];
+	};
 //	Draw indicators for selected systems
 function drawSelected(){
 	for(i1=0;i1<systemsSelected.length;i1++){
@@ -287,7 +339,8 @@ function drawSelected(){
 			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 		};
 		drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-	};};
+	};
+	};
 //	Draw map from parsed data
 function drawMap(){
 	headsUp.addEventListener(`mousedown`,onMouseDown);
@@ -382,7 +435,8 @@ function drawMap(){
 	HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
 	document.getElementById(`tradeContainer`).innerHTML=``;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
-	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;};
+	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
+	};
 //	Toggle for map scale
 function switchScale(){
 	canvasContext.scale(3*scale,3*scale);
@@ -397,7 +451,8 @@ function switchScale(){
 	document.getElementById(`scaleActive`).innerHTML=scale;
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	HUDContext.scale((1/3)/scale,(1/3)/scale);
-	drawMap();};
+	drawMap();
+	};
 //	Toggle for map style
 function switchStyle(){
 	if(style==`Original`){
@@ -405,7 +460,8 @@ function switchStyle(){
 	}else if(style==`Modern`){
 		style=`Original`;
 	}
-	drawMap();};
+	drawMap();
+	};
 //	Toggle for map claims
 function switchAllocation(){
 	if(systemAllocation){
@@ -413,7 +469,8 @@ function switchAllocation(){
 	}else{
 		systemAllocation=1;
 	};
-	drawMap();};
+	drawMap();
+	};
 //	Decide drawing offset for alternate galaxies
 function switchGalaxy(id){
 	for(i1=0;i1<elements[2].length;i1++){
@@ -422,7 +479,8 @@ function switchGalaxy(id){
 			break;
 		};
 	};
-	drawMap();};
+	drawMap();
+	};
 //	Draw circle on canvas
 function drawArc(target,x,y,radius,width,colour){
 	target.beginPath();
@@ -430,7 +488,8 @@ function drawArc(target,x,y,radius,width,colour){
 	target.lineWidth=width;
 	target.setLineDash([]);
 	target.strokeStyle=colour;
-	target.stroke();};
+	target.stroke();
+	};
 //	Draw line on canvas
 function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.beginPath();
@@ -439,9 +498,11 @@ function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
 	target.setLineDash(lineDash);
 	target.lineWidth=width;
 	target.strokeStyle=colour;
-	target.stroke();};
+	target.stroke();
+	};
 //	Calculate distance between two unaligned points
 Math.dist=function(x1,y1,x2,y2){ 
 	if(!x2)x2=0; 
 	if(!y2)y2=0;
-	return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)); };
+	return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+	};
