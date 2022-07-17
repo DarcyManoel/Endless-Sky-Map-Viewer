@@ -47,39 +47,67 @@ function loadFiles(that){
 			for(j=0;j<lines.length;j++){
 				//	Systems
 				if(lines[j].startsWith(`system `)){
-					elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
-					for(k=j+1;k<lines.length;k++){
-						if(lines[k].startsWith(`\tpos `)){
-							elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						}else if(lines[k].startsWith(`\tgovernment `)){
-							elements[0][elements[0].length-1][2]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-						}else if(lines[k].startsWith(`\tlink `)){
-							elements[0][elements[0].length-1][3].push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
-						}else if(lines[k].startsWith(`\tobject `)){
-							var segmented=0;
-							for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
-								if(elements[0][elements[0].length-1][4][l]==lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
-									segmented=1;
+					test:{
+						for(k=0;k<elements[0].length;k++){
+							if(lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][k][0]){
+								for(l=j+1;l<lines.length;l++){
+									if(lines[l].startsWith(`\tpos `)){
+										elements[0][k][1]=lines[l].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+									}else if(lines[l].startsWith(`\tgovernment `)){
+										elements[0][k][2]=lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+									}else if(lines[l].startsWith(`\tadd link `)){
+										elements[0][k][3].push(lines[l].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
+									}else if(lines[l].startsWith(`\tadd object `)){
+										var segmented=0;
+										for(m=0;m<elements[0][k][4].length;m++){
+											if(elements[0][k][4][m]==lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
+												segmented=1;
+											};
+										};
+										if(segmented==0){
+											elements[0][k][4].push(lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
+										};
+									}else if(!lines[l].startsWith(`\t`)){
+										break;
+									};
 								};
+								break test;
 							};
-							if(segmented==0){
-								elements[0][elements[0].length-1][4].push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
-							};
-						}else if(lines[k].startsWith(`\t\tobject `)){
-							var segmented=0;
-							for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
-								if(elements[0][elements[0].length-1][4][l]==lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
-									segmented=1;
+						};
+						elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
+						for(k=j+1;k<lines.length;k++){
+							if(lines[k].startsWith(`\tpos `)){
+								elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+							}else if(lines[k].startsWith(`\tgovernment `)){
+								elements[0][elements[0].length-1][2]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+							}else if(lines[k].startsWith(`\tlink `)){
+								elements[0][elements[0].length-1][3].push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
+							}else if(lines[k].startsWith(`\tobject `)){
+								var segmented=0;
+								for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
+									if(elements[0][elements[0].length-1][4][l]==lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
+										segmented=1;
+									};
 								};
+								if(segmented==0){
+									elements[0][elements[0].length-1][4].push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+								};
+							}else if(lines[k].startsWith(`\t\tobject `)){
+								var segmented=0;
+								for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
+									if(elements[0][elements[0].length-1][4][l]==lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
+										segmented=1;
+									};
+								};
+								if(segmented==0){
+									elements[0][elements[0].length-1][4].push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
+								};
+							}else if(lines[k].startsWith(`\ttrade `)){
+								elements[0][elements[0].length-1][5][0].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
+								elements[0][elements[0].length-1][5][1].push(parseInt(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
+							}else if(!lines[k].startsWith(`\t`)){
+								break;
 							};
-							if(segmented==0){
-								elements[0][elements[0].length-1][4].push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
-							};
-						}else if(lines[k].startsWith(`\ttrade `)){
-							elements[0][elements[0].length-1][5][0].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
-							elements[0][elements[0].length-1][5][1].push(parseInt(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
-						}else if(!lines[k].startsWith(`\t`)){
-							break;
 						};
 					};
 				//	Governments
