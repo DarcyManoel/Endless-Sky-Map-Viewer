@@ -38,111 +38,111 @@ function initialize(){
 //	Data parsing
 function loadFiles(that){
 	var files=event.target.files;
-	for(i=0;i<files.length;i++){
+	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader();
-		systemsReader.readAsText(files[i]);
+		systemsReader.readAsText(files[i1]);
 		systemsReader.onload=function(e){
 			var output=e.target.result;
 			var lines=output.split(`\n`);
-			for(j=0;j<lines.length;j++){
+			for(i2=0;i2<lines.length;i2++){
 				//	Systems
-				if(lines[j].startsWith(`system `)){
+				if(lines[i2].startsWith(`system `)){
 					test:{
-						for(k=0;k<elements[0].length;k++){
-							if(lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][k][0]){
-								for(l=j+1;l<lines.length;l++){
-									if(lines[l].startsWith(`\tpos `)){
-										elements[0][k][1]=lines[l].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-									}else if(lines[l].startsWith(`\tgovernment `)){
-										elements[0][k][2]=lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-									}else if(lines[l].startsWith(`\tadd link `)){
-										elements[0][k][3].push(lines[l].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
-									}else if(lines[l].startsWith(`\tadd object `)){
+						for(i3=0;i3<elements[0].length;i3++){
+							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][i3][0]){
+								for(i4=i2+1;i4<lines.length;i4++){
+									if(lines[i4].startsWith(`\tpos `)){
+										elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+									}else if(lines[i4].startsWith(`\tgovernment `)){
+										elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+									}else if(lines[i4].startsWith(`\tadd link `)){
+										elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
+									}else if(lines[i4].startsWith(`\tadd object `)){
 										var segmented=0;
-										for(m=0;m<elements[0][k][4].length;m++){
-											if(elements[0][k][4][m]==lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
+										for(i5=0;i5<elements[0][i3][4].length;i5++){
+											if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
 												segmented=1;
 											};
 										};
 										if(segmented==0){
-											elements[0][k][4].push(lines[l].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
+											elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
 										};
-									}else if(!lines[l].startsWith(`\t`)){
+									}else if(!lines[i4].startsWith(`\t`)){
 										break;
 									};
 								};
 								break test;
 							};
 						};
-						elements[0].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
-						for(k=j+1;k<lines.length;k++){
-							if(lines[k].startsWith(`\tpos `)){
-								elements[0][elements[0].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-							}else if(lines[k].startsWith(`\tgovernment `)){
-								elements[0][elements[0].length-1][2]=lines[k].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-							}else if(lines[k].startsWith(`\tlink `)){
-								elements[0][elements[0].length-1][3].push(lines[k].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
-							}else if(lines[k].startsWith(`\tobject `)){
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
+						for(i3=i2+1;i3<lines.length;i3++){
+							if(lines[i3].startsWith(`\tpos `)){
+								elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+							}else if(lines[i3].startsWith(`\tgovernment `)){
+								elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+							}else if(lines[i3].startsWith(`\tlink `)){
+								elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
+							}else if(lines[i3].startsWith(`\tobject `)){
 								var segmented=0;
-								for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
-									if(elements[0][elements[0].length-1][4][l]==lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
+								for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+									if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
 										segmented=1;
 									};
 								};
 								if(segmented==0){
-									elements[0][elements[0].length-1][4].push(lines[k].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+									elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
 								};
-							}else if(lines[k].startsWith(`\t\tobject `)){
+							}else if(lines[i3].startsWith(`\t\tobject `)){
 								var segmented=0;
-								for(l=0;l<elements[0][elements[0].length-1][4].length;l++){
-									if(elements[0][elements[0].length-1][4][l]==lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
+								for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+									if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
 										segmented=1;
 									};
 								};
 								if(segmented==0){
-									elements[0][elements[0].length-1][4].push(lines[k].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
+									elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
 								};
-							}else if(lines[k].startsWith(`\ttrade `)){
-								elements[0][elements[0].length-1][5][0].push(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
-								elements[0][elements[0].length-1][5][1].push(parseInt(lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
-							}else if(!lines[k].startsWith(`\t`)){
+							}else if(lines[i3].startsWith(`\ttrade `)){
+								elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
+								elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
+							}else if(!lines[i3].startsWith(`\t`)){
 								break;
 							};
 						};
 					};
 				//	Governments
-				}else if(lines[j].startsWith(`government `)){
-					elements[1].push([lines[j].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(k=j+1;k<lines.length;k++){
-						if(lines[k].startsWith(`\tcolor `)){
-							elements[1][elements[1].length-1][1]=lines[k].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						}else if(!lines[k].startsWith(`\t`)){
+				}else if(lines[i2].startsWith(`government `)){
+					elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+					for(i3=i2+1;i3<lines.length;i3++){
+						if(lines[i3].startsWith(`\tcolor `)){
+							elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+						}else if(!lines[i3].startsWith(`\t`)){
 							break;
 						};
 					};
 				//	Galaxies
-				}else if(lines[j].startsWith(`galaxy `)){
-					elements[2].push([lines[j].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
-					for(k=j+1;k<lines.length;k++){
-						if(lines[k].startsWith(`\tpos `)){
-							elements[2][elements[2].length-1][1]=lines[k].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-						}else if(!lines[k].startsWith(`\t`)){
+				}else if(lines[i2].startsWith(`galaxy `)){
+					elements[2].push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
+					for(i3=i2+1;i3<lines.length;i3++){
+						if(lines[i3].startsWith(`\tpos `)){
+							elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+						}else if(!lines[i3].startsWith(`\t`)){
 							break;
 						};
 					};
 				//	Planets
-				}else if(lines[j].startsWith(`planet `)){
-					elements[3].push([lines[j].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
-					for(k=j+1;k<lines.length;k++){
-						if(lines[k].startsWith(`\tattributes `)){
-							elements[3][elements[3].length-1][1]=lines[k].slice(12).replaceAll(`\r`,``);
-						}else if(lines[k].startsWith(`\tspaceport `)){
+				}else if(lines[i2].startsWith(`planet `)){
+					elements[3].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
+					for(i3=i2+1;i3<lines.length;i3++){
+						if(lines[i3].startsWith(`\tattributes `)){
+							elements[3][elements[3].length-1][1]=lines[i3].slice(12).replaceAll(`\r`,``);
+						}else if(lines[i3].startsWith(`\tspaceport `)){
 							elements[3][elements[3].length-1][2]=true;
-						}else if(lines[k].startsWith(`\tshipyard `)){
+						}else if(lines[i3].startsWith(`\tshipyard `)){
 							elements[3][elements[3].length-1][3]=true;
-						}else if(lines[k].startsWith(`\toutfitter `)){
+						}else if(lines[i3].startsWith(`\toutfitter `)){
 							elements[3][elements[3].length-1][4]=true;
-						}else if(!lines[k].startsWith(`\t`)){
+						}else if(!lines[i3].startsWith(`\t`)){
 							break;
 						};
 					};
@@ -156,29 +156,29 @@ function loadFiles(that){
 function tradeAverages(){
 	tradeCompendium=[];
 	tradeAverage=[[],[]];
-	for(i=0;i<10;i++){
+	for(i1=0;i1<10;i1++){
 		tradeCompendium.push([]);
 		tradeAverage[0].push([]);
 		tradeAverage[1].push([0]);
 		if(systemsSelected.length){
-			for(j=0;j<systemsSelected.length;j++){
-				if(elements[0][systemsSelected[j]][5][1][i]){
-					tradeCompendium[i].push(elements[0][systemsSelected[j]][5][1][i]);
-					tradeAverage[0][i]=elements[0][systemsSelected[j]][5][0][i];
+			for(i2=0;i2<systemsSelected.length;i2++){
+				if(elements[0][systemsSelected[i2]][5][1][i1]){
+					tradeCompendium[i1].push(elements[0][systemsSelected[i2]][5][1][i1]);
+					tradeAverage[0][i1]=elements[0][systemsSelected[i2]][5][0][i1];
 				};
 			};
 		}else{
-			for(j=0;j<elements[0].length;j++){
-				if(elements[0][j][5][1][i]){
-					tradeCompendium[i].push(elements[0][j][5][1][i]);
-					tradeAverage[0][i]=elements[0][j][5][0][i];
+			for(i2=0;i2<elements[0].length;i2++){
+				if(elements[0][i2][5][1][i1]){
+					tradeCompendium[i1].push(elements[0][i2][5][1][i1]);
+					tradeAverage[0][i1]=elements[0][i2][5][0][i1];
 				};
 			};
 		};
-		for(j=0;j<tradeCompendium[i].length;j++){
-			tradeAverage[1][i]=tradeCompendium[i][j]+ +tradeAverage[1][i];
+		for(i2=0;i2<tradeCompendium[i1].length;i2++){
+			tradeAverage[1][i1]=tradeCompendium[i1][i2]+ +tradeAverage[1][i1];
 		};
-		tradeAverage[1][i]=Math.round(tradeAverage[1][i]/tradeCompendium[i].length);
+		tradeAverage[1][i1]=Math.round(tradeAverage[1][i1]/tradeCompendium[i1].length);
 	};
 	console.log(`systemsSelected`);
 	console.log(systemsSelected);
@@ -191,15 +191,15 @@ function onMouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale);
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale);
 	distance=100000;
-	for(i=0;i<elements[0].length;i++){
-		if(Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-			target=i;
-			distance=Math.dist(elements[0][i][1][0]-galaxyPosition[0],elements[0][i][1][1]-galaxyPosition[1],xCoordinate,yCoordinate);
+	for(i1=0;i1<elements[0].length;i1++){
+		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i1;
+			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate);
 		};
 	};
 	if(oldTarget!==target&&distance<100){
-		for(i=0;i<elements[1].length;i++){
-			if(elements[0][target][2]==elements[1][i][0]){
+		for(i1=0;i1<elements[1].length;i1++){
+			if(elements[0][target][2]==elements[1][i1][0]){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
 				HUDContext.drawImage(system,0,0,556*scale,250*scale);
@@ -208,18 +208,18 @@ function onMouseMove(event){
 				document.getElementById(`planetsContainer`).innerHTML=``;
 				var accessiblePlanets=0;
 				if(elements[0][target][4].length){
-					for(j=0;j<elements[0][target][4].length;j++){
-						for(k=0;k<elements[3].length;k++){
-							if(elements[0][target][4][j]==elements[3][k][0]){
-								if(!elements[3][k][1].includes(`requires: inaccessible`)){
+					for(i2=0;i2<elements[0][target][4].length;i2++){
+						for(i3=0;i3<elements[3].length;i3++){
+							if(elements[0][target][4][i2]==elements[3][i3][0]){
+								if(!elements[3][i3][1].includes(`requires: inaccessible`)){
 									HUDContext.drawImage(planet,0,(250+361*accessiblePlanets)*scale,556*scale,389*scale);
-									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][j]+`</label>`
-									if(elements[3][k][3]){
+									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][i2]+`</label>`
+									if(elements[3][i3][3]){
 										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
 									}else{
 										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
 									};
-									if(elements[3][k][4]){
+									if(elements[3][i3][4]){
 										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
 									}else{
 										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
@@ -232,13 +232,13 @@ function onMouseMove(event){
 				};
 				HUDContext.drawImage(trade,0,(250+361*accessiblePlanets)*scale,556*scale,639*scale);
 				document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
-				for(j=0;j<tradeAverage[1].length;j++){
-					if(elements[0][target][5][1][j]>tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">+`+eval(elements[0][target][5][1][j]-tradeAverage[1][j])+`</label>`
-					}else if(elements[0][target][5][1][j]<tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+eval(elements[0][target][5][1][j]-tradeAverage[1][j])+`</label>`
-					}else if(elements[0][target][5][1][j]==tradeAverage[1][j]){
-						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*j))+`px;width:30px;">`+elements[0][target][5][1][j]+`</label>`
+				for(i2=0;i2<tradeAverage[1].length;i2++){
+					if(elements[0][target][5][1][i2]>tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">+`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
+					}else if(elements[0][target][5][1][i2]<tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
+					}else if(elements[0][target][5][1][i2]==tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+elements[0][target][5][1][i2]+`</label>`
 					};
 				};
 				if(style==`Original`){
@@ -265,9 +265,9 @@ function onMouseMove(event){
 function onMouseDown(){
 	if(distance<100){
 		var spliced=0;
-		for(i=0;i<systemsSelected.length;i++){
-			if(systemsSelected[i]==target){
-				systemsSelected.splice(i,1);
+		for(i1=0;i1<systemsSelected.length;i1++){
+			if(systemsSelected[i1]==target){
+				systemsSelected.splice(i1,1);
 				spliced=1;
 				break;
 			};
@@ -282,11 +282,11 @@ function resetSelected(){
 	systemsSelected=[];};
 //	Draw indicators for selected systems
 function drawSelected(){
-	for(i=0;i<systemsSelected.length;i++){
+	for(i1=0;i1<systemsSelected.length;i1++){
 		if(style==`Original`){
-			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 		};
-		drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
+		drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 	};};
 //	Draw map from parsed data
 function drawMap(){
@@ -301,25 +301,25 @@ function drawMap(){
 		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
 		document.getElementById(`switchScale`).classList.remove(`hidden`);
 	};
-	for(i=0;i<elements[2].length;i++){
+	for(i1=0;i1<elements[2].length;i1++){
 		document.getElementById(`switchGalaxy`).innerHTML+=`
-			<label id="`+elements[2][i][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(35+(20*i))+`px;">`+elements[2][i][0]+`</label>
+			<label id="`+elements[2][i1][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(35+(20*i1))+`px;">`+elements[2][i1][0]+`</label>
 			`;
 	};
 	//	Links
-	for(i=0;i<elements[0].length;i++){
-		for(j=0;j<elements[0][i][3].length;j++){
-			for(k=0;k<elements[0].length;k++){
-				if(elements[0][i][3][j]==elements[0][k][0]){
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[0][i1][3].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i1][3][i2]==elements[0][i3][0]){
 					if(style==`Original`){
-						drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+						drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 					}else if(style==`Modern`){
-						for(l=0;l<elements[1].length;l++){
-							if(elements[0][i][2]==elements[1][l][0]){
-								if(elements[0][i][4].length>0||systemAllocation){
-									drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-((elements[0][k][1][0]-elements[0][i][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-((elements[0][k][1][1]-elements[0][i][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][l][1][0]*255+`,`+elements[1][l][1][1]*255+`,`+elements[1][l][1][2]*255+`)`);
+						for(i4=0;i4<elements[1].length;i4++){
+							if(elements[0][i1][2]==elements[1][i4][0]){
+								if(elements[0][i1][4].length>0||systemAllocation){
+									drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][i4][1][0]*255+`,`+elements[1][i4][1][1]*255+`,`+elements[1][i4][1][2]*255+`)`);
 								}else{
-									drawLine(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],2150*scale+ +elements[0][k][1][0]-((elements[0][k][1][0]-elements[0][i][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][k][1][1]-((elements[0][k][1][1]-elements[0][i][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+									drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 								};
 								break;
 							};
@@ -332,28 +332,28 @@ function drawMap(){
 	//	Systems
 	if(style==`Original`){
 		canvasContext.beginPath();
-		for(i=0;i<elements[0].length;i++){
-			canvasContext.moveTo(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1]);
-			canvasContext.arc(2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],16,0,2*Math.PI);
+		for(i1=0;i1<elements[0].length;i1++){
+			canvasContext.moveTo(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1]);
+			canvasContext.arc(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 		};
 		canvasContext.clip();
 		canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	};
 	canvasContext.restore();
-	for(i=0;i<elements[0].length;i++){
-		for(j=0;j<elements[1].length;j++){
-			if(elements[0][i][2]==elements[1][j][0]){
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[1].length;i2++){
+			if(elements[0][i1][2]==elements[1][i2][0]){
 				if(style==`Original`){
-					if(elements[0][i][4].length>0||systemAllocation){
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					if(elements[0][i1][4].length>0||systemAllocation){
+						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
 					}else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],9,3.6,`rgb(102,102,102)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(102,102,102)`);
 					};
 				}else if(style==`Modern`){
-					if(elements[0][i][4].length>0||systemAllocation){
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][j][1][0]*255+`,`+elements[1][j][1][1]*255+`,`+elements[1][j][1][2]*255+`)`);
+					if(elements[0][i1][4].length>0||systemAllocation){
+						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
 					}else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i][1][1]-galaxyPosition[1],1,3.6,`rgb(102,102,102)`);
+						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(102,102,102)`);
 					};
 				};
 				break;
@@ -362,15 +362,15 @@ function drawMap(){
 	};
 	//	Wormholes
 	var wormholes=[];
-	for(i=0;i<elements[0].length;i++){
-		for(j=0;j<elements[0][i][4].length;j++){
-			wormholes.push([elements[0][i][4][j],elements[0][i][1][0],elements[0][i][1][1]]);
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[0][i1][4].length;i2++){
+			wormholes.push([elements[0][i1][4][i2],elements[0][i1][1][0],elements[0][i1][1][1]]);
 		};
 	};
-	for(i=0;i<wormholes.length;i++){
-		for(j=i+1;j<wormholes.length;j++){
-			if(wormholes[i][0]==wormholes[j][0]){
-				drawLine(canvasContext,2150*scale+ +wormholes[i][1]-galaxyPosition[0],1350*scale+ +wormholes[i][2]-galaxyPosition[1],2150*scale+ +wormholes[j][1]-galaxyPosition[0],1350*scale+ +wormholes[j][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
+	for(i1=0;i1<wormholes.length;i1++){
+		for(i2=i1+1;i2<wormholes.length;i2++){
+			if(wormholes[i1][0]==wormholes[i2][0]){
+				drawLine(canvasContext,2150*scale+ +wormholes[i1][1]-galaxyPosition[0],1350*scale+ +wormholes[i1][2]-galaxyPosition[1],2150*scale+ +wormholes[i2][1]-galaxyPosition[0],1350*scale+ +wormholes[i2][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
 				break;
 			};
 		};
@@ -416,9 +416,9 @@ function switchAllocation(){
 	drawMap();};
 //	Decide drawing offset for alternate galaxies
 function switchGalaxy(id){
-	for(i=0;i<elements[2].length;i++){
-		if(id==elements[2][i][0]){
-			galaxyPosition=elements[2][i][1];
+	for(i1=0;i1<elements[2].length;i1++){
+		if(id==elements[2][i1][0]){
+			galaxyPosition=elements[2][i1][1];
 			break;
 		};
 	};
