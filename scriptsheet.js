@@ -195,11 +195,11 @@ function drawMap(){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					if(style==`Original`)drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
-					else if(style==`Modern`){
+					if(style==`original`)drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+					else if(style==`modern`){
 						for(i4=0;i4<elements[1].length;i4++){
 							if(elements[0][i1][2]==elements[1][i4][0]){
-								if(elements[0][i1][4].length>0||systemAllocation)drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][i4][1][0]*255+`,`+elements[1][i4][1][1]*255+`,`+elements[1][i4][1][2]*255+`)`);
+								if(elements[0][i1][4].length>0||systemAllocation==`claimed`)drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][i4][1][0]*255+`,`+elements[1][i4][1][1]*255+`,`+elements[1][i4][1][2]*255+`)`);
 								else drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 								break;
 							};
@@ -210,7 +210,7 @@ function drawMap(){
 		};
 	};
 	//	Systems
-	if(style==`Original`){
+	if(style==`original`){
 		canvasContext.beginPath();
 		for(i1=0;i1<elements[0].length;i1++){
 			canvasContext.moveTo(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1]);
@@ -223,11 +223,11 @@ function drawMap(){
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2]==elements[1][i2][0]){
-				if(style==`Original`){
-					if(elements[0][i1][4].length>0||systemAllocation)drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
+				if(style==`original`){
+					if(elements[0][i1][4].length>0||systemAllocation==`claimed`)drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
 					else drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(102,102,102)`);
-				}else if(style==`Modern`){
-					if(elements[0][i1][4].length>0||systemAllocation)drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
+				}else if(style==`modern`){
+					if(elements[0][i1][4].length>0||systemAllocation==`claimed`)drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
 					else drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(102,102,102)`);
 				};
 				break;
@@ -262,17 +262,17 @@ function drawMap(){
 	};
 //	Preferences
 	var scale=1;
-	var style=`Original`;
-	var systemAllocation=0;
+	var style=`original`;
+	var systemAllocation=`inhabited`;
 	var galaxyPosition=[0,0];
 function switchStyle(){
-	if(style==`Original`)style=`Modern`;
-	else if(style==`Modern`)style=`Original`;
+	if(style==`original`)style=`modern`;
+	else if(style==`modern`)style=`original`;
 	drawMap();
 	};
 function switchAllocation(){
-	if(systemAllocation)systemAllocation=0;
-	else systemAllocation=1;
+	if(systemAllocation==`inhabited`)systemAllocation=`claimed`;
+	else if(systemAllocation==`claimed`)systemAllocation=`inhabited`;
 	drawMap();
 	};
 function switchScale(){
@@ -346,7 +346,7 @@ function onMouseMove(event){
 					else if(elements[0][target][5][1][i2]<tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
 					else if(elements[0][target][5][1][i2]==tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+elements[0][target][5][1][i2]+`</label>`
 				};
-				if(style==`Original`)drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+				if(style==`original`)drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 				drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 			};
 		};
@@ -381,7 +381,7 @@ function onMouseDown(){
 	};
 function drawSelected(){
 	for(i1=0;i1<systemsSelected.length;i1++){
-		if(style==`Original`)drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+		if(style==`original`)drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
 		drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
 	};
 	};
