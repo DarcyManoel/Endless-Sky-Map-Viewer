@@ -38,7 +38,7 @@ function loadFiles(that){
 							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`))break;
-									overrideSystem();
+									defineSystem(1);
 								};
 								break parseLine;
 							};
@@ -47,7 +47,7 @@ function loadFiles(that){
 						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`))break;
-							defineSystem();
+							defineSystem(0);
 						};
 						break parseLine;
 					//	Governments
@@ -57,7 +57,7 @@ function loadFiles(that){
 							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[1][i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`))break;
-									overrideGovernment();
+									defineGovernment(1);
 								};
 								break parseLine;
 							};
@@ -66,7 +66,7 @@ function loadFiles(that){
 						elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`))break;
-							defineGovernment();
+							defineGovernment(0);
 						};
 						break parseLine;
 					//	Galaxies
@@ -96,44 +96,46 @@ function loadFiles(that){
 	setTimeout(drawMap,300);
 	console.timeEnd(`Processing`);
 	};
-function overrideSystem(){
-	if(lines[i4].startsWith(`\tpos `))elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-	else if(lines[i4].startsWith(`\tgovernment `))elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-	else if(lines[i4].startsWith(`\tadd link `))elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
-	else if(lines[i4].startsWith(`\tadd object `)){
-		var segmented=0;
-		for(i5=0;i5<elements[0][i3][4].length;i5++){
-			if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
+function defineSystem(override){
+	if(override){
+		if(lines[i4].startsWith(`\tpos `))elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+		else if(lines[i4].startsWith(`\tgovernment `))elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+		else if(lines[i4].startsWith(`\tadd link `))elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``));
+		else if(lines[i4].startsWith(`\tadd object `)){
+			var segmented=0;
+			for(i5=0;i5<elements[0][i3][4].length;i5++){
+				if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
+			};
+			if(segmented==0)elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
 		};
-		if(segmented==0)elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``));
-	};
-	};
-function defineSystem(){
-	if(lines[i3].startsWith(`\tpos `))elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
-	else if(lines[i3].startsWith(`\tgovernment `))elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
-	else if(lines[i3].startsWith(`\tlink `))elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
-	else if(lines[i3].startsWith(`\tobject `)){
-		var segmented=0;
-		for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-			if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
+	}else{
+		if(lines[i3].startsWith(`\tpos `))elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+		else if(lines[i3].startsWith(`\tgovernment `))elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``);
+		else if(lines[i3].startsWith(`\tlink `))elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``));
+		else if(lines[i3].startsWith(`\tobject `)){
+			var segmented=0;
+			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+				if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
+			};
+			if(segmented==0)elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
+		}else if(lines[i3].startsWith(`\t\tobject `)){
+			var segmented=0;
+			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
+				if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
+			};
+			if(segmented==0)elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
+		}else if(lines[i3].startsWith(`\ttrade `)){
+			elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
+			elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
 		};
-		if(segmented==0)elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``));
-	}else if(lines[i3].startsWith(`\t\tobject `)){
-		var segmented=0;
-		for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-			if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))segmented=1;
-		};
-		if(segmented==0)elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``));
-	}else if(lines[i3].startsWith(`\ttrade `)){
-		elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `));
-		elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)));
 	};
 	};
-function overrideGovernment(){
-	if(lines[i3].startsWith(`\tcolor `))elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+function defineGovernment(override){
+	if(override){
+		if(lines[i3].startsWith(`\tcolor `))elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
+	}else{
+		if(lines[i3].startsWith(`\tcolor `))elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 	};
-function defineGovernment(){
-	if(lines[i3].startsWith(`\tcolor `))elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
 	};
 function defineGalaxy(){
 	if(lines[i3].startsWith(`\tpos `))elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
