@@ -21,6 +21,7 @@ function initialize(){
 	var tradeCompendium;
 	var tradeAverage;
 function loadFiles(that){
+	console.time(`Processing`);
 	var files=event.target.files;
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader();
@@ -93,6 +94,7 @@ function loadFiles(that){
 	};
 	setTimeout(tradeAverages,1000);
 	setTimeout(drawMap,1000);
+	console.timeEnd(`Processing`);
 	};
 function overrideSystem(){
 	if(lines[i4].startsWith(`\tpos `))elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `);
@@ -167,18 +169,12 @@ function tradeAverages(){
 		for(i2=0;i2<tradeCompendium[i1].length;i2++)tradeAverage[1][i1]=tradeCompendium[i1][i2]+ +tradeAverage[1][i1];
 		tradeAverage[1][i1]=Math.round(tradeAverage[1][i1]/tradeCompendium[i1].length);
 	};
-	console.log(`systemsSelected`);
-	console.log(systemsSelected);
-	console.log(`tradeCompendium`);
-	console.log(tradeCompendium);
-	console.log(`tradeAverage`);
-	console.log(tradeAverage);
 	};
 //	Execution
 function drawMap(){
+	console.time(`Execution`);
 	headsUp.addEventListener(`mousedown`,onMouseDown);
 	headsUp.addEventListener(`mousemove`,onMouseMove);
-	console.log(elements);
 	canvasContext.restore();
 	canvasContext.save();
 	canvasContext.clearRect(0,0,100000,100000);
@@ -259,6 +255,8 @@ function drawMap(){
 	document.getElementById(`tradeContainer`).innerHTML=``;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
+	console.timeEnd(`Execution`);
+	console.log(elements);
 	};
 //	Preferences
 	var scale=1;
