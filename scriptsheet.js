@@ -92,8 +92,8 @@ function loadFiles(that){
 			};
 		};
 	};
-	setTimeout(tradeAverages,1000);
-	setTimeout(drawMap,1000);
+	setTimeout(tradeAverages,300);
+	setTimeout(drawMap,300);
 	console.timeEnd(`Processing`);
 	};
 function overrideSystem(){
