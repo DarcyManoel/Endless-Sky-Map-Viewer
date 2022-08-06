@@ -252,7 +252,9 @@ function drawMap(){
 	HUDContext.clearRect(0,0,100000,100000);
 	HUDContext.drawImage(system,0,0,556*scale,250*scale);
 	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
+	document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
 	document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
+	document.getElementById(`governmentDisplay`).style.color=`rgb(102,102,102)`;
 	HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
 	document.getElementById(`tradeContainer`).innerHTML=``;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
@@ -319,7 +321,9 @@ function onMouseMove(event){
 				HUDContext.clearRect(0,0,100000,100000);
 				HUDContext.drawImage(system,0,0,556*scale,250*scale);
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
+				document.getElementById(`systemDisplay`).style.color=``;
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
+				document.getElementById(`governmentDisplay`).style.color=``;
 				document.getElementById(`planetsContainer`).innerHTML=``;
 				var accessiblePlanets=0;
 				if(elements[0][target][4].length){
@@ -356,7 +360,9 @@ function onMouseMove(event){
 		HUDContext.clearRect(0,0,100000,100000);
 		HUDContext.drawImage(system,0,0,556*scale,250*scale);
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
+		document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
 		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
+		document.getElementById(`governmentDisplay`).style.color=`rgb(102,102,102)`;
 		document.getElementById(`planetsContainer`).innerHTML=``;
 		HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
 		document.getElementById(`tradeContainer`).innerHTML=``;
