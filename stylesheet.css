@@ -29,6 +29,14 @@ label:hover{
 	display:none;
 }
 /*Informational*/
+#galaxyDisplay{
+	font-size:13px;
+	position:absolute;
+	right:20px;
+	text-align:center;
+	top:5px;
+	width:115px;
+}
 #systemDisplay{
 	font-size:13px;
 	left:16px;
@@ -64,10 +72,6 @@ label:hover{
 	right:20px;
 	text-decoration:underline;
 	top:10px;
-}
-.galaxyViewed{
-	position:absolute;
-	right:30px;
 }
 /*Blur*/
 @keyframes blurOff{

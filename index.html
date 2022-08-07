@@ -12,10 +12,12 @@
 		<canvas id="headsUp"></canvas>
 	<!--Image Reference Relay, Always Hidden-->
 		<img id="galaxy" class="hidden" src="assets/galaxy.png">
+		<img id="galaxies" class="hidden" src="assets/galaxies.png">
 		<img id="system" class="hidden" src="assets/system.png">
 		<img id="planet" class="hidden" src="assets/planet.png">
 		<img id="trade" class="hidden" src="assets/trade.png">
 	<!--Informational-->
+		<label id="galaxyDisplay" onclick="switchGalaxy()"></label>
 		<label id="systemDisplay" onclick="switchStyle()"></label>
 		<label id="governmentDisplay" onclick="switchAllocation()"></label>
 		<div id="planetsContainer"></div>
@@ -26,9 +28,6 @@
 		<div id="switchScale" class="hidden" onclick="switchScale()">
 			<label id="scale">Scale</label>
 			<label id="scaleActive">1</label>
-		</div>
-		<div id="switchGalaxy" class="hidden">
-			<label id="viewed">Galaxy Viewed</label>
 		</div>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>

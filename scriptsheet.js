@@ -8,6 +8,7 @@
 	headsUp.width=screen.width;
 	var HUDContext=headsUp.getContext(`2d`);
 	var galaxy=document.getElementById(`galaxy`);
+	var galaxies=document.getElementById(`galaxies`);
 	var system=document.getElementById(`system`);
 	var planet=document.getElementById(`planet`);
 	var trade=document.getElementById(`trade`);
@@ -181,14 +182,9 @@ function drawMap(){
 	canvasContext.save();
 	canvasContext.clearRect(0,0,100000,100000);
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
+	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0];
 	if(elements[0].length){
-		document.getElementById(`switchGalaxy`).classList.remove(`hidden`);
 		document.getElementById(`switchScale`).classList.remove(`hidden`);
-	};
-	for(i1=0;i1<elements[2].length;i1++){
-		document.getElementById(`switchGalaxy`).innerHTML+=`
-			<label id="`+elements[2][i1][0]+`"class="galaxyViewed idleSelection" onclick="switchGalaxy(this.id);" style="top:`+parseInt(35+(20*i1))+`px;">`+elements[2][i1][0]+`</label>
-			`;
 	};
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
@@ -249,7 +245,9 @@ function drawMap(){
 			};
 		};
 	};
+	//	User Interface
 	HUDContext.clearRect(0,0,100000,100000);
+	HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
 	HUDContext.drawImage(system,0,0,556*scale,250*scale);
 	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 	document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
@@ -266,7 +264,16 @@ function drawMap(){
 	var scale=1;
 	var style=`original`;
 	var systemAllocation=`inhabited`;
+	var galaxySelected=0;
 	var galaxyPosition=[0,0];
+function switchGalaxy(id){
+	galaxySelected++;
+	if(galaxySelected==elements[2].length){
+		galaxySelected=0;
+	};
+	galaxyPosition=elements[2][galaxySelected][1];
+	drawMap();
+	};
 function switchStyle(){
 	if(style==`original`)style=`modern`;
 	else if(style==`modern`)style=`original`;
@@ -286,15 +293,6 @@ function switchScale(){
 	document.getElementById(`scaleActive`).innerHTML=scale;
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	HUDContext.scale((1/3)/scale,(1/3)/scale);
-	drawMap();
-	};
-function switchGalaxy(id){
-	for(i1=0;i1<elements[2].length;i1++){
-		if(id==elements[2][i1][0]){
-			galaxyPosition=elements[2][i1][1];
-			break;
-		};
-	};
 	drawMap();
 	};
 //	Mouse events
@@ -319,6 +317,7 @@ function onMouseMove(event){
 			if(elements[0][target][2]==elements[1][i1][0]){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
+				HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
 				HUDContext.drawImage(system,0,0,556*scale,250*scale);
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
 				document.getElementById(`systemDisplay`).style.color=``;
@@ -358,6 +357,7 @@ function onMouseMove(event){
 	}else if(distance>=100){
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
+		HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
 		HUDContext.drawImage(system,0,0,556*scale,250*scale);
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 		document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
