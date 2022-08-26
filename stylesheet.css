@@ -32,10 +32,10 @@ label:hover{
 #galaxyDisplay{
 	font-size:13px;
 	position:absolute;
-	right:20px;
+	right:10px;
 	text-align:center;
 	top:5px;
-	width:115px;
+	width:160px;
 }
 #systemDisplay{
 	font-size:13px;

@@ -247,7 +247,7 @@ function drawMap(){
 	};
 	//	User Interface
 	HUDContext.clearRect(0,0,100000,100000);
-	HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
+	HUDContext.drawImage(galaxies,canvas.width*scale*2.52,0,galaxies.width*1.4*scale,galaxies.height*1.4*scale);
 	HUDContext.drawImage(system,0,0,556*scale,250*scale);
 	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 	document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
@@ -317,8 +317,8 @@ function onMouseMove(event){
 			if(elements[0][target][2]==elements[1][i1][0]){
 				oldTarget=target;
 				HUDContext.clearRect(0,0,100000,100000);
-				HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
-				HUDContext.drawImage(system,0,0,556*scale,250*scale);
+				HUDContext.drawImage(galaxies,canvas.width*scale*2.52,0,galaxies.width*1.4*scale,galaxies.height*1.4*scale);
+				HUDContext.drawImage(system,0,0,system.width*1.4*scale,system.height*1.4*scale);
 				document.getElementById(`systemDisplay`).innerHTML=elements[0][target][0];
 				document.getElementById(`systemDisplay`).style.color=``;
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
@@ -330,19 +330,19 @@ function onMouseMove(event){
 						for(i3=0;i3<elements[3].length;i3++){
 							if(elements[0][target][4][i2]==elements[3][i3][0]){
 								if(!elements[3][i3][1].includes(`requires: inaccessible`)){
-									HUDContext.drawImage(planet,0,(250+361*accessiblePlanets)*scale,556*scale,389*scale);
-									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(101+(120*accessiblePlanets))+`px;width:150px;">`+elements[0][target][4][i2]+`</label>`
-									if(elements[3][i3][3])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
-									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(120+(120*accessiblePlanets))+`px;width:150px;">Shipyard</label>`
-									if(elements[3][i3][4])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
-									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(138+(120*accessiblePlanets))+`px;width:150px;">Outfitter</label>`
+									HUDContext.drawImage(planet,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,planet.width*1.4*scale,planet.height*1.4*scale);
+									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.4)+`px;width:150px;">`+elements[0][target][4][i2]+`</label>`
+									if(elements[3][i3][3])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
+									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
+									if(elements[3][i3][4])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
+									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
 									accessiblePlanets++;
 								};
 							};
 						};
 					};
 				};
-				HUDContext.drawImage(trade,0,(250+361*accessiblePlanets)*scale,556*scale,639*scale);
+				HUDContext.drawImage(trade,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,trade.width*1.4*scale,trade.height*1.4*scale);
 				document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 				for(i2=0;i2<tradeAverage[1].length;i2++){
 					if(elements[0][target][5][1][i2]>tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">+`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
@@ -357,7 +357,7 @@ function onMouseMove(event){
 	}else if(distance>=100){
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
-		HUDContext.drawImage(galaxies,3720*scale,0,600*scale,1200*scale);
+		HUDContext.drawImage(galaxies,canvas.width*scale*2.52,0,galaxies.width*1.4*scale,galaxies.height*1.4*scale);
 		HUDContext.drawImage(system,0,0,556*scale,250*scale);
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 		document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
