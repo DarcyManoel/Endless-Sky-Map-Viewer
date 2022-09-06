@@ -6,14 +6,29 @@ function drawArc(target,x,y,radius,width,colour){
 	target.strokeStyle=colour;
 	target.stroke();
 }
-function drawLine(target,startX,startY,endX,endY,lineDash,width,colour){
-	target.beginPath();
-	target.moveTo(startX,startY);
-	target.lineTo(endX,endY);
-	target.setLineDash(lineDash);
-	target.lineWidth=width;
-	target.strokeStyle=colour;
-	target.stroke();
+function drawLinkColour(startX,startY,endX,endY,systemGovernment){
+	canvasContext.beginPath();
+	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
+	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.lineWidth=2;
+	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`;
+	canvasContext.stroke();
+}
+function drawLink(startX,startY,endX,endY){
+	canvasContext.beginPath();
+	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
+	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.lineWidth=2;
+	canvasContext.strokeStyle=`rgb(102,102,102)`;
+	canvasContext.stroke();
+}
+function drawWormhole(startX,startY,endX,endY){
+	canvasContext.beginPath();
+	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
+	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.lineWidth=2;
+	canvasContext.strokeStyle=`rgb(128,51,230)`;
+	canvasContext.stroke();
 }
 //	Calculate distance between two unaligned points
 Math.dist=function(x1,y1,x2,y2){ 

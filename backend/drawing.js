@@ -16,16 +16,16 @@ function drawMap(){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
 					if(style==`original`){
-						drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+						drawLink(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-galaxyPosition[0],elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
 					}
 					else if(style==`modern`){
 						for(i4=0;i4<elements[1].length;i4++){
 							if(elements[0][i1][2]==elements[1][i4][0]){
 								if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
-									drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(`+elements[1][i4][1][0]*255+`,`+elements[1][i4][1][1]*255+`,`+elements[1][i4][1][2]*255+`)`);
+									drawLinkColour(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],elements[1][i4][1]);
 								}
 								else{
-									drawLine(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],2150*scale+ +elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],1350*scale+ +elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+									drawLink(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1]);
 								}
 								break;
 							}
@@ -78,7 +78,7 @@ function drawMap(){
 	for(i1=0;i1<wormholes.length;i1++){
 		for(i2=i1+1;i2<wormholes.length;i2++){
 			if(wormholes[i1][0]==wormholes[i2][0]){
-				drawLine(canvasContext,2150*scale+ +wormholes[i1][1]-galaxyPosition[0],1350*scale+ +wormholes[i1][2]-galaxyPosition[1],2150*scale+ +wormholes[i2][1]-galaxyPosition[0],1350*scale+ +wormholes[i2][2]-galaxyPosition[1],[],2,`rgb(128,51,230)`);
+				drawWormhole(wormholes[i1][1]-galaxyPosition[0],wormholes[i1][2]-galaxyPosition[1],wormholes[i2][1]-galaxyPosition[0],wormholes[i2][2]-galaxyPosition[1]);
 				break;
 			}
 		}
