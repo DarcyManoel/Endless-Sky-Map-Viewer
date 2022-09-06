@@ -15,4 +15,4 @@ function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale);
 	HUDContext.scale((1/3)/scale,(1/3)/scale);
 	canvasContext.drawImage(galaxy,400,100);
-	};
+}

@@ -13,8 +13,8 @@ function onMouseMove(event){
 		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
 			target=i1;
 			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate);
-		};
-	};
+		}
+	}
 	if(oldTarget!==target&&distance<100){
 		for(i1=0;i1<elements[1].length;i1++){
 			if(elements[0][target][2]==elements[1][i1][0]){
@@ -35,27 +35,43 @@ function onMouseMove(event){
 								if(!elements[3][i3][1].includes(`requires: inaccessible`)){
 									HUDContext.drawImage(planet,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,planet.width*1.4*scale,planet.height*1.4*scale);
 									document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(112,112,112);font-size:13px;height:15px;left:29px;overflow:hidden;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.4)+`px;width:150px;">`+elements[0][target][4][i2]+`</label>`
-									if(elements[3][i3][3])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
-									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
-									if(elements[3][i3][4])document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
-									else document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
+									if(elements[3][i3][3]){
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
+									}
+									else{
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.475)+`px;width:150px;">Shipyard</label>`
+									}
+									if(elements[3][i3][4]){
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
+									}
+									else{
+										document.getElementById(`planetsContainer`).innerHTML+=`<label style="animation:none;color:rgb(70,70,70);font-size:13px;left:38px;position:absolute;top:`+parseInt(planet.height*1.299*scale*accessiblePlanets/3+system.height*1.4*scale*.55)+`px;width:150px;">Outfitter</label>`
+									}
 									accessiblePlanets++;
-								};
-							};
-						};
-					};
-				};
+								}
+							}
+						}
+					}
+				}
 				HUDContext.drawImage(trade,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,trade.width*1.4*scale,trade.height*1.4*scale);
 				document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(120*accessiblePlanets))+`px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
 				for(i2=0;i2<tradeAverage[1].length;i2++){
-					if(elements[0][target][5][1][i2]>tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">+`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
-					else if(elements[0][target][5][1][i2]<tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
-					else if(elements[0][target][5][1][i2]==tradeAverage[1][i2])document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+elements[0][target][5][1][i2]+`</label>`
-				};
-				if(style==`original`)drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+					if(elements[0][target][5][1][i2]>tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(88,166,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">+`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
+					}
+					else if(elements[0][target][5][1][i2]<tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(166,88,88);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+eval(elements[0][target][5][1][i2]-tradeAverage[1][i2])+`</label>`
+					}
+					else if(elements[0][target][5][1][i2]==tradeAverage[1][i2]){
+						document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(120*accessiblePlanets)+(18*i2))+`px;width:30px;">`+elements[0][target][5][1][i2]+`</label>`
+					}
+				}
+				if(style==`original`){
+					drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+				}
 				drawArc(HUDContext,2150*scale+ +elements[0][target][1][0]-galaxyPosition[0],1350*scale+ +elements[0][target][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-			};
-		};
+			}
+		}
 		drawSelected();
 	}else if(distance>=100){
 		accessiblePlanets=0;
@@ -73,8 +89,8 @@ function onMouseMove(event){
 		document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
 		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
 		drawSelected();
-	};
-	};
+	}
+}
 function onMouseDown(){
 	if(distance<100){
 		var spliced=0;
@@ -83,18 +99,22 @@ function onMouseDown(){
 				systemsSelected.splice(i1,1);
 				spliced=1;
 				break;
-			};
-		};
-		if(!spliced)systemsSelected.push(target);
-	};
+			}
+		}
+		if(!spliced){
+			systemsSelected.push(target);
+		}
+	}
 	tradeAverages();
-	};
+}
 function drawSelected(){
 	for(i1=0;i1<systemsSelected.length;i1++){
-		if(style==`original`)drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+		if(style==`original`){
+			drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],18,1.5,`rgb(255,255,255)`);
+		}
 		drawArc(HUDContext,2150*scale+ +elements[0][systemsSelected[i1]][1][0]-galaxyPosition[0],1350*scale+ +elements[0][systemsSelected[i1]][1][1]-galaxyPosition[1],100,1,`rgb(102,102,102)`);
-	};
-	};
+	}
+}
 function resetSelected(){
 	systemsSelected=[];
-	};
+}
