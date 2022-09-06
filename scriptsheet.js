@@ -248,12 +248,12 @@ function drawMap(){
 	//	User Interface
 	HUDContext.clearRect(0,0,100000,100000);
 	HUDContext.drawImage(galaxies,canvas.width*scale*2.52,0,galaxies.width*1.4*scale,galaxies.height*1.4*scale);
-	HUDContext.drawImage(system,0,0,556*scale,250*scale);
+	HUDContext.drawImage(system,0,0,system.width*1.4*scale,system.height*1.4*scale);
 	document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 	document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
 	document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 	document.getElementById(`governmentDisplay`).style.color=`rgb(102,102,102)`;
-	HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
+	HUDContext.drawImage(trade,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,trade.width*1.4*scale,trade.height*1.4*scale);
 	document.getElementById(`tradeContainer`).innerHTML=``;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
 	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
@@ -296,6 +296,7 @@ function switchScale(){
 	drawMap();
 	};
 //	Mouse events
+	var accessiblePlanets=0;
 	var xCoordinate;
 	var yCoordinate;
 	var oldTarget=0;
@@ -324,7 +325,7 @@ function onMouseMove(event){
 				document.getElementById(`governmentDisplay`).innerHTML=elements[0][target][2];
 				document.getElementById(`governmentDisplay`).style.color=``;
 				document.getElementById(`planetsContainer`).innerHTML=``;
-				var accessiblePlanets=0;
+				accessiblePlanets=0;
 				if(elements[0][target][4].length){
 					for(i2=0;i2<elements[0][target][4].length;i2++){
 						for(i3=0;i3<elements[3].length;i3++){
@@ -355,16 +356,17 @@ function onMouseMove(event){
 		};
 		drawSelected();
 	}else if(distance>=100){
+		accessiblePlanets=0;
 		oldTarget=0;
 		HUDContext.clearRect(0,0,100000,100000);
 		HUDContext.drawImage(galaxies,canvas.width*scale*2.52,0,galaxies.width*1.4*scale,galaxies.height*1.4*scale);
-		HUDContext.drawImage(system,0,0,556*scale,250*scale);
+		HUDContext.drawImage(system,0,0,system.width*1.4*scale,system.height*1.4*scale);
 		document.getElementById(`systemDisplay`).innerHTML=`- system -`;
 		document.getElementById(`systemDisplay`).style.color=`rgb(102,102,102)`;
 		document.getElementById(`governmentDisplay`).innerHTML=`- government -`;
 		document.getElementById(`governmentDisplay`).style.color=`rgb(102,102,102)`;
 		document.getElementById(`planetsContainer`).innerHTML=``;
-		HUDContext.drawImage(trade,0,250*scale,556*scale,639*scale);
+		HUDContext.drawImage(trade,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,trade.width*1.4*scale,trade.height*1.4*scale);
 		document.getElementById(`tradeContainer`).innerHTML=``;
 		document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`;
 		document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`;
