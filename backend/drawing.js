@@ -27,7 +27,7 @@ function drawMap(){
 								else{
 									drawLink(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8)-galaxyPosition[0],elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8)-galaxyPosition[1]);
 								}
-								break;
+								break
 							}
 						}
 					}
@@ -51,20 +51,20 @@ function drawMap(){
 			if(elements[0][i1][2]==elements[1][i2][0]){
 				if(style==`original`){
 					if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
-						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
+						drawSystemColour(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],9,elements[1][i2][1]);
 					}
 					else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],9,3.6,`rgb(102,102,102)`);
+						drawSystem(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],9);
 					}
 				}else if(style==`modern`){
 					if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
-						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(`+elements[1][i2][1][0]*255+`,`+elements[1][i2][1][1]*255+`,`+elements[1][i2][1][2]*255+`)`);
+						drawSystemColour(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],1,elements[1][i2][1]);
 					}
 					else{
-						drawArc(canvasContext,2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],1,3.6,`rgb(102,102,102)`);
+						drawSystem(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],1);
 					}
 				}
-				break;
+				break
 			}
 		}
 	}
@@ -79,7 +79,7 @@ function drawMap(){
 		for(i2=i1+1;i2<wormholes.length;i2++){
 			if(wormholes[i1][0]==wormholes[i2][0]){
 				drawWormhole(wormholes[i1][1]-galaxyPosition[0],wormholes[i1][2]-galaxyPosition[1],wormholes[i2][1]-galaxyPosition[0],wormholes[i2][2]-galaxyPosition[1]);
-				break;
+				break
 			}
 		}
 	}

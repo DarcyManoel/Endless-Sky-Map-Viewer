@@ -19,7 +19,7 @@ function loadFiles(that){
 							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`)){
-										break;
+										break
 									}
 									defineSystem(1);
 								}
@@ -30,7 +30,7 @@ function loadFiles(that){
 						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
-								break;
+								break
 							}
 							defineSystem(0);
 						}
@@ -42,7 +42,7 @@ function loadFiles(that){
 							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[1][i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`)){
-										break;
+										break
 									}
 									defineGovernment(1);
 								}
@@ -53,7 +53,7 @@ function loadFiles(that){
 						elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
-								break;
+								break
 							}
 							defineGovernment(0);
 						}
@@ -64,7 +64,7 @@ function loadFiles(that){
 						elements[2].push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
-								break;
+								break
 							}
 							defineGalaxy();
 						}
@@ -75,7 +75,7 @@ function loadFiles(that){
 						elements[3].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0]);
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
-								break;
+								break
 							}
 							definePlanet();
 						}

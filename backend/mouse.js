@@ -98,7 +98,7 @@ function onMouseDown(){
 			if(systemsSelected[i1]==target){
 				systemsSelected.splice(i1,1);
 				spliced=1;
-				break;
+				break
 			}
 		}
 		if(!spliced){
