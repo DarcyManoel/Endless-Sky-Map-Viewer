@@ -1,4 +1,4 @@
-//	Draw a line on the map in the style of a system link with colour
+//	Draw a link on the map
 function drawLink(startX,startY,endX,endY){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
@@ -7,7 +7,7 @@ function drawLink(startX,startY,endX,endY){
 	canvasContext.strokeStyle=`rgb(102,102,102)`;
 	canvasContext.stroke();
 }
-//	Draw a line on the map in the style of a system link with colour
+//	Draw a coloured link on the map
 function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
@@ -16,7 +16,15 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`;
 	canvasContext.stroke();
 }
-//	Draw an arc on the map in the style of a system
+//	Draw jump range on the overlay
+function drawRange(x,y){
+	HUDContext.beginPath();
+	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI);
+	HUDContext.lineWidth=2;
+	HUDContext.strokeStyle=`rgb(102,102,102)`;
+	HUDContext.stroke();
+}
+//	Draw a system on the map
 function drawSystem(x,y,radius){
 	canvasContext.beginPath();
 	canvasContext.arc(2150*scale+ +x,1350*scale+ +y,radius,0,2*Math.PI);
@@ -24,7 +32,7 @@ function drawSystem(x,y,radius){
 	canvasContext.strokeStyle=`rgb(102,102,102)`;
 	canvasContext.stroke();
 }
-//	Draw an arc on the map in the style of a system with colour
+//	Draw a coloured system on the map
 function drawSystemColour(x,y,radius,systemGovernment){
 	canvasContext.beginPath();
 	canvasContext.arc(2150*scale+ +x,1350*scale+ +y,radius,0,2*Math.PI);
@@ -32,7 +40,7 @@ function drawSystemColour(x,y,radius,systemGovernment){
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`;
 	canvasContext.stroke();
 }
-//	Draw a line on the map in the style of a wormhole
+//	Draw a wormhole on the map
 function drawWormhole(startX,startY,endX,endY){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
