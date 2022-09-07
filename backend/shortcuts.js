@@ -3,6 +3,7 @@ function drawLink(startX,startY,endX,endY){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
 	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.setLineDash([0,15,1000])
 	canvasContext.lineWidth=2;
 	canvasContext.strokeStyle=`rgb(102,102,102)`;
 	canvasContext.stroke();
@@ -12,6 +13,7 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
 	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.setLineDash([])
 	canvasContext.lineWidth=2;
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`;
 	canvasContext.stroke();
@@ -20,6 +22,7 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 function drawRange(x,y){
 	HUDContext.beginPath();
 	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI);
+	HUDContext.setLineDash([])
 	HUDContext.lineWidth=2;
 	HUDContext.strokeStyle=`rgb(102,102,102)`;
 	HUDContext.stroke();
@@ -28,6 +31,7 @@ function drawRange(x,y){
 function drawSystem(x,y,radius){
 	canvasContext.beginPath();
 	canvasContext.arc(2150*scale+ +x,1350*scale+ +y,radius,0,2*Math.PI);
+	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6;
 	canvasContext.strokeStyle=`rgb(102,102,102)`;
 	canvasContext.stroke();
@@ -36,6 +40,7 @@ function drawSystem(x,y,radius){
 function drawSystemColour(x,y,radius,systemGovernment){
 	canvasContext.beginPath();
 	canvasContext.arc(2150*scale+ +x,1350*scale+ +y,radius,0,2*Math.PI);
+	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6;
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`;
 	canvasContext.stroke();

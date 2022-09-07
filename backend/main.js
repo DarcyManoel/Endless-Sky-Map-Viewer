@@ -16,7 +16,7 @@ function drawMap(){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
 					if(style==`original`){
-						drawLink(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-galaxyPosition[0],elements[0][i3][1][1]-galaxyPosition[1],[],2,`rgb(102,102,102)`);
+						drawLink(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2)-galaxyPosition[0],elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2)-galaxyPosition[1]);
 					}
 					else if(style==`modern`){
 						for(i4=0;i4<elements[1].length;i4++){
@@ -36,17 +36,6 @@ function drawMap(){
 		}
 	}
 	//	Systems
-	if(style==`original`){
-		canvasContext.beginPath();
-		for(i1=0;i1<elements[0].length;i1++){
-			canvasContext.moveTo(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1]);
-			canvasContext.arc(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],16,0,2*Math.PI);
-		}
-		canvasContext.clip();
-		canvasContext.clearRect(0,0,100000,100000);
-		canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
-	}
-	canvasContext.restore();
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2]==elements[1][i2][0]){
