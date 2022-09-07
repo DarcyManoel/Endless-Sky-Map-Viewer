@@ -43,6 +43,7 @@ function drawMap(){
 			canvasContext.arc(2150*scale+ +elements[0][i1][1][0]-galaxyPosition[0],1350*scale+ +elements[0][i1][1][1]-galaxyPosition[1],16,0,2*Math.PI);
 		}
 		canvasContext.clip();
+		canvasContext.clearRect(0,0,100000,100000);
 		canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1]);
 	}
 	canvasContext.restore();
