@@ -50,6 +50,7 @@ function drawWormhole(startX,startY,endX,endY){
 	canvasContext.beginPath();
 	canvasContext.moveTo(2150*scale+ +startX,1350*scale+ +startY);
 	canvasContext.lineTo(2150*scale+ +endX,1350*scale+ +endY);
+	canvasContext.setLineDash([0,15,1000])
 	canvasContext.lineWidth=2;
 	canvasContext.strokeStyle=`rgb(128,51,230)`;
 	canvasContext.stroke();

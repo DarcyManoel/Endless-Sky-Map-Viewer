@@ -68,7 +68,8 @@ function drawMap(){
 	for(i1=0;i1<wormholes.length;i1++){
 		for(i2=i1+1;i2<wormholes.length;i2++){
 			if(wormholes[i1][0]==wormholes[i2][0]){
-				drawWormhole(wormholes[i1][1]-galaxyPosition[0],wormholes[i1][2]-galaxyPosition[1],wormholes[i2][1]-galaxyPosition[0],wormholes[i2][2]-galaxyPosition[1]);
+				drawWormhole(wormholes[i1][1]-galaxyPosition[0],wormholes[i1][2]-galaxyPosition[1],wormholes[i2][1]-((wormholes[i2][1]-wormholes[i1][1])/2)-galaxyPosition[0],wormholes[i2][2]-((wormholes[i2][2]-wormholes[i1][2])/2)-galaxyPosition[1]);
+				drawWormhole(wormholes[i2][1]-galaxyPosition[0],wormholes[i2][2]-galaxyPosition[1],wormholes[i1][1]-((wormholes[i1][1]-wormholes[i2][1])/2)-galaxyPosition[0],wormholes[i1][2]-((wormholes[i1][2]-wormholes[i2][2])/2)-galaxyPosition[1]);
 				break
 			}
 		}
