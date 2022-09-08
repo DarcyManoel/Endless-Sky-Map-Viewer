@@ -85,8 +85,8 @@ function loadFiles(that){
 			}
 		}
 	}
-	setTimeout(tradeAverages,300)
-	setTimeout(drawMap,300)
+	setTimeout(tradeAverages,500)
+	setTimeout(drawMap,500)
 	console.timeEnd(`Processing`)
 }
 function defineSystem(override){
