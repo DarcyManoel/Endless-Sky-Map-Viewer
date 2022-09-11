@@ -2,8 +2,6 @@ function drawMap(){
 	console.time(`Execution`)
 	headsUp.addEventListener(`mousedown`,onMouseDown)
 	headsUp.addEventListener(`mousemove`,onMouseMove)
-	canvasContext.restore()
-	canvasContext.save()
 	canvasContext.clearRect(0,0,100000,100000)
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
