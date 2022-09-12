@@ -29,19 +29,28 @@ function switchAllocation(){
 	}
 	drawMap()
 }
-function switchScale(){
+function zoomOut(){
 	canvasContext.scale(3*scale,3*scale)
 	HUDContext.scale(3*scale,3*scale)
-	if(document.getElementById(`scaleActive`).innerHTML==1){
+	if(scale==1){
 		scale=1.5
 	}
-	else if(document.getElementById(`scaleActive`).innerHTML==1.5){
+	else if(scale==1.5){
 		scale=2.5
 	}
-	else if(document.getElementById(`scaleActive`).innerHTML==2.5){
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
+}
+function zoomIn(){
+	canvasContext.scale(3*scale,3*scale)
+	HUDContext.scale(3*scale,3*scale)
+	if(scale==2.5){
+		scale=1.5
+	}
+	else if(scale==1.5){
 		scale=1
 	}
-	document.getElementById(`scaleActive`).innerHTML=scale
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
 	drawMap()

@@ -5,9 +5,7 @@ function drawMap(){
 	canvasContext.clearRect(0,0,100000,100000)
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
-	if(elements[0].length){
-		document.getElementById(`switchScale`).classList.remove(`hidden`)
-	}
+	document.getElementById(`zoomContainer`).classList.remove(`hidden`)
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
@@ -84,6 +82,7 @@ function drawMap(){
 	document.getElementById(`tradeContainer`).innerHTML=``
 	document.getElementById(`tradeContainer`).innerHTML+=`<label onClick="resetSelected()" style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+tradeAverage[0].join(`<br>`)+`</label>`
 	document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+99+`px;width:30px;">`+tradeAverage[1].join(`<br>`)+`</label>`
+	HUDContext.drawImage(zoom,canvas.width*scale*2.8,canvas.height*scale*1.6,zoom.width*1.4*scale,zoom.height*1.4*scale)
 	console.timeEnd(`Execution`)
 	console.log(elements)
 }
