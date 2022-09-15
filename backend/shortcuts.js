@@ -30,6 +30,20 @@ function drawRange(x,y){
 	HUDContext.strokeStyle=`rgb(102,102,102)`
 	HUDContext.stroke()
 }
+//	Draw encompassing circle
+function drawSelect(x,y){
+	HUDContext.beginPath()
+	if(style==`original`){
+		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
+	}
+	else if(style==`modern`){
+		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
+	}
+	HUDContext.setLineDash([])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(255,255,255)`
+	HUDContext.stroke()
+}
 //	Draw a system on the map
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()

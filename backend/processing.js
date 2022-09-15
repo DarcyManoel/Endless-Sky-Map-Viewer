@@ -1,6 +1,5 @@
 var elements=[[],[],[],[]]
 var tradeCompendium
-var tradeAverage
 function loadFiles(that){
 	console.time(`Processing`)
 	var files=event.target.files
@@ -85,7 +84,6 @@ function loadFiles(that){
 			}
 		}
 	}
-	setTimeout(tradeAverages,500)
 	setTimeout(drawMap,500)
 	console.timeEnd(`Processing`)
 }
@@ -175,33 +173,5 @@ function definePlanet(){
 	}
 	else if(lines[i3].startsWith(`\toutfitter `)){
 		elements[3][elements[3].length-1][4]=true
-	}
-}
-function tradeAverages(){
-	tradeCompendium=[]
-	tradeAverage=[[],[]]
-	for(i1=0;i1<10;i1++){
-		tradeCompendium.push([])
-		tradeAverage[0].push([])
-		tradeAverage[1].push([0])
-		if(systemsSelected.length){
-			for(i2=0;i2<systemsSelected.length;i2++){
-				if(elements[0][systemsSelected[i2]][5][1][i1]){
-					tradeCompendium[i1].push(elements[0][systemsSelected[i2]][5][1][i1])
-					tradeAverage[0][i1]=elements[0][systemsSelected[i2]][5][0][i1]
-				}
-			}
-		}else{
-			for(i2=0;i2<elements[0].length;i2++){
-				if(elements[0][i2][5][1][i1]){
-					tradeCompendium[i1].push(elements[0][i2][5][1][i1])
-					tradeAverage[0][i1]=elements[0][i2][5][0][i1]
-				}
-			}
-		}
-		for(i2=0;i2<tradeCompendium[i1].length;i2++){
-			tradeAverage[1][i1]=tradeCompendium[i1][i2]+ +tradeAverage[1][i1]
-		}
-		tradeAverage[1][i1]=Math.round(tradeAverage[1][i1]/tradeCompendium[i1].length)
 	}
 }
