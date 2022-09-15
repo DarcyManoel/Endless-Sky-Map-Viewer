@@ -5,7 +5,7 @@ function drawLink(startX,startY,endX,endY){
 	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([])
 	if(style==`original`){
-		canvasContext.setLineDash([0,15,1000])
+		canvasContext.setLineDash([0,15,10000])
 	}
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(102,102,102)`
@@ -67,7 +67,7 @@ function drawWormhole(startX,startY,endX,endY){
 	canvasContext.beginPath()
 	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([0,15,1000])
+	canvasContext.setLineDash([0,15,10000])
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(128,51,230)`
 	canvasContext.stroke()
