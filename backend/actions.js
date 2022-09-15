@@ -14,8 +14,7 @@ function switchGalaxy(id){
 function switchStyle(){
 	if(style==`original`){
 		style=`modern`
-	}
-	else if(style==`modern`){
+	}else if(style==`modern`){
 		style=`original`
 	}
 	drawMap()
@@ -23,8 +22,7 @@ function switchStyle(){
 function switchAllocation(){
 	if(systemAllocation==`inhabited`){
 		systemAllocation=`claimed`
-	}
-	else if(systemAllocation==`claimed`){
+	}else if(systemAllocation==`claimed`){
 		systemAllocation=`inhabited`
 	}
 	drawMap()
@@ -34,8 +32,7 @@ function zoomOut(){
 	HUDContext.scale(3*scale,3*scale)
 	if(scale==1){
 		scale=1.5
-	}
-	else if(scale==1.5){
+	}else if(scale==1.5){
 		scale=2.5
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
@@ -47,8 +44,7 @@ function zoomIn(){
 	HUDContext.scale(3*scale,3*scale)
 	if(scale==2.5){
 		scale=1.5
-	}
-	else if(scale==1.5){
+	}else if(scale==1.5){
 		scale=1
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)

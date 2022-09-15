@@ -35,8 +35,7 @@ function drawSelect(x,y){
 	HUDContext.beginPath()
 	if(style==`original`){
 		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
-	}
-	else if(style==`modern`){
+	}else if(style==`modern`){
 		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
 	}
 	HUDContext.setLineDash([])

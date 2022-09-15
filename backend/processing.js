@@ -89,14 +89,11 @@ function defineSystem(override){
 	if(override){
 		if(lines[i4].startsWith(`\tpos `)){
 			elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-		}
-		else if(lines[i4].startsWith(`\tgovernment `)){
+		}else if(lines[i4].startsWith(`\tgovernment `)){
 			elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)
-		}
-		else if(lines[i4].startsWith(`\tadd link `)){
+		}else if(lines[i4].startsWith(`\tadd link `)){
 			elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``))
-		}
-		else if(lines[i4].startsWith(`\tadd object `)){
+		}else if(lines[i4].startsWith(`\tadd object `)){
 			var segmented=0
 			for(i5=0;i5<elements[0][i3][4].length;i5++){
 				if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
@@ -110,14 +107,11 @@ function defineSystem(override){
 	}else{
 		if(lines[i3].startsWith(`\tpos `)){
 			elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-		}
-		else if(lines[i3].startsWith(`\tgovernment `)){
+		}else if(lines[i3].startsWith(`\tgovernment `)){
 			elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)
-		}
-		else if(lines[i3].startsWith(`\tlink `)){
+		}else if(lines[i3].startsWith(`\tlink `)){
 			elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``))
-		}
-		else if(lines[i3].startsWith(`\tobject `)){
+		}else if(lines[i3].startsWith(`\tobject `)){
 			var segmented=0
 			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
 				if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
@@ -162,14 +156,11 @@ function defineGalaxy(){
 function definePlanet(){
 	if(lines[i3].startsWith(`\tattributes `)){
 		elements[3][elements[3].length-1][1]=lines[i3].slice(12).replaceAll(`\r`,``)
-	}
-	else if(lines[i3].startsWith(`\tspaceport `)){
+	}else if(lines[i3].startsWith(`\tspaceport `)){
 		elements[3][elements[3].length-1][2]=true
-	}
-	else if(lines[i3].startsWith(`\tshipyard `)){
+	}else if(lines[i3].startsWith(`\tshipyard `)){
 		elements[3][elements[3].length-1][3]=true
-	}
-	else if(lines[i3].startsWith(`\toutfitter `)){
+	}else if(lines[i3].startsWith(`\toutfitter `)){
 		elements[3][elements[3].length-1][4]=true
 	}
 }
