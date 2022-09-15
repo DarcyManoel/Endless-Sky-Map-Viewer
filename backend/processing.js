@@ -1,7 +1,6 @@
 var elements=[[],[],[],[]]
 var tradeCompendium
 function loadFiles(that){
-	console.time(`Processing`)
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
@@ -85,7 +84,6 @@ function loadFiles(that){
 		}
 	}
 	setTimeout(drawMap,500)
-	console.timeEnd(`Processing`)
 }
 function defineSystem(override){
 	if(override){

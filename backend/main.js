@@ -1,5 +1,4 @@
 function drawMap(){
-	console.time(`Execution`)
 	headsUp.addEventListener(`mousedown`,onMouseDown)
 	headsUp.addEventListener(`mousemove`,onMouseMove)
 	canvasContext.clearRect(0,0,100000,100000)
@@ -89,6 +88,5 @@ function drawMap(){
 	}
 	HUDContext.drawImage(zoom,canvas.width*scale*2.8,canvas.height*scale*1.6,zoom.width*1.4*scale,zoom.height*1.4*scale)
 	drawSelected()
-	console.timeEnd(`Execution`)
 	console.log(elements)
 }
