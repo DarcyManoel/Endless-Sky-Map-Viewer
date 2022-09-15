@@ -128,6 +128,7 @@ function drawHUD(){
 		}
 		HUDContext.drawImage(zoom,canvas.width*scale*2.8,canvas.height*scale*1.6,zoom.width*1.4*scale,zoom.height*1.4*scale)
 		drawSelect(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
+		drawRange(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
 		if(systemSelected!==target&&systemSelected){
 			drawSelect(elements[0][systemSelected][1][0]-galaxyPosition[0],elements[0][systemSelected][1][1]-galaxyPosition[1])
 		}
