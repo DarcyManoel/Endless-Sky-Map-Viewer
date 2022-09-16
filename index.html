@@ -9,19 +9,12 @@
 	<body onload="initialize()">
 		<img class="hidden" id="galaxy" src="assets/galaxy.png">
 		<img class="hidden" id="galaxies" src="assets/galaxies.png">
-		<img class="hidden" id="system" src="assets/system.png">
-		<img class="hidden" id="planet" src="assets/planet.png">
-		<img class="hidden" id="trade" src="assets/trade.png">
 		<img class="hidden" id="zoom" src="assets/zoom.png">
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input class="hidden" id="file" type="file" webkitdirectory onchange="loadFiles(this)"/>
 		<label id="galaxyDisplay" onclick="switchGalaxy()"></label>
-		<label id="systemDisplay" onclick="switchStyle()"></label>
-		<label id="governmentDisplay" onclick="switchAllocation()"></label>
-		<div id="planetsContainer"></div>
-		<div id="tradeContainer"></div>
 		<div id="zoomContainer" class="hidden">
 			<div id="zoomIn" onClick="zoomIn()">+</div>
 			<div id="zoomOut" onClick="zoomOut()">-</div>

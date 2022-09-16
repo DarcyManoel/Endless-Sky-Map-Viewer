@@ -37,29 +37,11 @@ label:hover{
 	top:5px;
 	width:160px;
 }
-#systemDisplay{
-	font-size:13px;
-	left:16px;
-	position:absolute;
-	top:35px;
-}
-#governmentDisplay{
-	font-size:13px;
-	left:16px;
-	position:absolute;
-	top:53px;
-}
 /*Interactables*/
 #loadFiles{
 	left:50%;
 	transform:translate(-50%,0);
 	position:absolute;
-	top:10px;
-}
-#viewed{
-	position:absolute;
-	right:20px;
-	text-decoration:underline;
 	top:10px;
 }
 #zoomIn{

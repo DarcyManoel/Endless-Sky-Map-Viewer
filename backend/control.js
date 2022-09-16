@@ -1,4 +1,3 @@
-var accessiblePlanets=0
 var xCoordinate
 var yCoordinate
 var oldTarget=0
@@ -22,7 +21,6 @@ function onMouseMove(event){
 			}
 		}
 	}else if(distance>100){
-		accessiblePlanets=0
 		oldTarget=0
 		drawHUD()
 	}

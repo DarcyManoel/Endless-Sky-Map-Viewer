@@ -1,5 +1,4 @@
-var elements=[[],[],[],[]]
-var tradeCompendium
+var elements=[[],[],[]]
 function loadFiles(that){
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
@@ -25,7 +24,7 @@ function loadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[[],[]]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -65,17 +64,6 @@ function loadFiles(that){
 								break
 							}
 							defineGalaxy()
-						}
-						break parseLine
-					//	Planets
-					}else if(lines[i2].startsWith(`planet `)){
-						//	Define
-						elements[3].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),``,0,0,0])
-						for(i3=i2+1;i3<lines.length;i3++){
-							if(!lines[i3].startsWith(`\t`)){
-								break
-							}
-							definePlanet()
 						}
 						break parseLine
 					}
@@ -131,9 +119,6 @@ function defineSystem(override){
 			if(segmented==0){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
-		}else if(lines[i3].startsWith(`\ttrade `)){
-			elements[0][elements[0].length-1][5][0].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/[a-zA-Z]+/g).join(` `))
-			elements[0][elements[0].length-1][5][1].push(parseInt(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).match(/\d+/g).join(` `)))
 		}
 	}
 }
@@ -151,16 +136,5 @@ function defineGovernment(override){
 function defineGalaxy(){
 	if(lines[i3].startsWith(`\tpos `)){
 		elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-	}
-}
-function definePlanet(){
-	if(lines[i3].startsWith(`\tattributes `)){
-		elements[3][elements[3].length-1][1]=lines[i3].slice(12).replaceAll(`\r`,``)
-	}else if(lines[i3].startsWith(`\tspaceport `)){
-		elements[3][elements[3].length-1][2]=true
-	}else if(lines[i3].startsWith(`\tshipyard `)){
-		elements[3][elements[3].length-1][3]=true
-	}else if(lines[i3].startsWith(`\toutfitter `)){
-		elements[3][elements[3].length-1][4]=true
 	}
 }
