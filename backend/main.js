@@ -159,7 +159,7 @@ function drawHUD(){
 			}
 		}
 		HUDContext.drawImage(trade,0,planet.height*1.299*scale*accessiblePlanets+system.height*1.4*scale,trade.width*1.4*scale,trade.height*1.4*scale)
-		document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+elements[0][target][5][0].join(`<br>`)+`</label>`
+		document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+99+`px;width:100px;">`+elements[0][0][5][0].join(`<br>`)+`</label>`
 		if(systemSelected){
 			document.getElementById(`tradeContainer`).innerHTML=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:10px;line-height:140%;position:absolute;top:`+parseInt(99+(121*accessiblePlanets))+`px;">`+elements[0][systemSelected][5][0].join(`<br>`)+`</label>`
 			document.getElementById(`tradeContainer`).innerHTML+=`<label style="animation:none;color:rgb(102,102,102);font-size:13px;left:110px;line-height:140%;position:absolute;text-align:right;top:`+parseInt(99+(121*accessiblePlanets))+`px;width:30px;">`+elements[0][systemSelected][5][1].join(`<br>`)+`</label>`
