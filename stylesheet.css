@@ -40,15 +40,25 @@ label:hover{
 	display:none;
 }
 /*Informational*/
-#inhabited{
+#original{
 	left:20px;
 	position:absolute;
 	top:20px;
 }
-#claimed{
+#modern{
 	position:absolute;
 	left:20px;
 	top:40px;
+}
+#inhabited{
+	left:20px;
+	position:absolute;
+	top:80px;
+}
+#claimed{
+	position:absolute;
+	left:20px;
+	top:100px;
 }
 #galaxyDisplay{
 	font-size:13px;

@@ -1,5 +1,7 @@
 var elements=[[],[],[]]
 function loadFiles(that){
+	document.getElementById(`original`).classList.remove(`blocked`)
+	document.getElementById(`modern`).classList.remove(`blocked`)
 	document.getElementById(`inhabited`).classList.remove(`blocked`)
 	document.getElementById(`claimed`).classList.remove(`blocked`)
 	var files=event.target.files

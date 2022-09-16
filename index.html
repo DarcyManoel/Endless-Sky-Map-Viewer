@@ -13,7 +13,9 @@
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
-		<input class="hidden" id="file" type="file" webkitdirectory onChange="loadFiles(this)"/>
+		<input class="hidden" id="file" type="file" webkitDirectory onChange="loadFiles(this)"/>
+		<label class="blocked" id="original" onClick="switchStyle(this.id)">Original</label>
+		<label class="blocked dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
 		<label class="blocked" id="inhabited" onClick="switchAllocation(this.id)">Inhabited</label>
 		<label class="blocked dark" id="claimed" onClick="switchAllocation(this.id)">Claimed</label>
 		<label id="galaxyDisplay" onClick="switchGalaxy()"></label>

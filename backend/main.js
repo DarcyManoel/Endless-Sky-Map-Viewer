@@ -10,9 +10,9 @@ function drawMap(){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					if(style==`original`){
+					if(mapStyle==`original`){
 						drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
-					}else if(style==`modern`){
+					}else if(mapStyle==`modern`){
 						for(i4=0;i4<elements[1].length;i4++){
 							if(elements[0][i1][2]==elements[1][i4][0]){
 								if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
@@ -32,13 +32,13 @@ function drawMap(){
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2]==elements[1][i2][0]){
-				if(style==`original`){
+				if(mapStyle==`original`){
 					if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
 						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
 					}else{
 						drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
 					}
-				}else if(style==`modern`){
+				}else if(mapStyle==`modern`){
 					if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
 						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
 					}else{

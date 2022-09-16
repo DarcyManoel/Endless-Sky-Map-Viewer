@@ -4,7 +4,7 @@ function drawLink(startX,startY,endX,endY){
 	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([])
-	if(style==`original`){
+	if(mapStyle==`original`){
 		canvasContext.setLineDash([0,15,10000])
 	}
 	canvasContext.lineWidth=2
@@ -33,9 +33,9 @@ function drawRange(x,y){
 //	Draw encompassing circle
 function drawSelect(x,y){
 	HUDContext.beginPath()
-	if(style==`original`){
+	if(mapStyle==`original`){
 		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
-	}else if(style==`modern`){
+	}else if(mapStyle==`modern`){
 		HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
 	}
 	HUDContext.setLineDash([])

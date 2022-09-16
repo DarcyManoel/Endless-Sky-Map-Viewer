@@ -1,5 +1,5 @@
 var scale=1
-var style=`original`
+var mapStyle=`original`
 var systemAllocation=`inhabited`
 var galaxySelected=0
 var galaxyPosition=[0,0]
@@ -11,25 +11,32 @@ function switchGalaxy(id){
 	galaxyPosition=elements[2][galaxySelected][1]
 	drawMap()
 }
-function switchStyle(){
-	if(style==`original`){
-		style=`modern`
-	}else if(style==`modern`){
-		style=`original`
+function switchStyle(id){
+	switch(id){
+		case `original`:
+			document.getElementById(`original`).classList.remove(`dark`)
+			document.getElementById(`modern`).classList.add(`dark`)
+			mapStyle=`original`
+			break
+		case `modern`:
+			document.getElementById(`original`).classList.add(`dark`)
+			document.getElementById(`modern`).classList.remove(`dark`)
+			mapStyle=`modern`
+			break
 	}
 	drawMap()
 }
-function switchAllocation(allocation){
-	switch(allocation){
-		case `claimed`:
-			document.getElementById(`claimed`).classList.remove(`dark`)
-			document.getElementById(`inhabited`).classList.add(`dark`)
-			systemAllocation=`claimed`
-			break
+function switchAllocation(id){
+	switch(id){
 		case `inhabited`:
 			document.getElementById(`claimed`).classList.add(`dark`)
 			document.getElementById(`inhabited`).classList.remove(`dark`)
 			systemAllocation=`inhabited`
+			break
+		case `claimed`:
+			document.getElementById(`claimed`).classList.remove(`dark`)
+			document.getElementById(`inhabited`).classList.add(`dark`)
+			systemAllocation=`claimed`
 			break
 	}
 	drawMap()
