@@ -4,7 +4,6 @@ function drawMap(){
 	canvasContext.clearRect(0,0,100000,100000)
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
-	document.getElementById(`zoomContainer`).classList.remove(`hidden`)
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
@@ -76,7 +75,6 @@ function drawMap(){
 function drawHUD(){
 	if(oldTarget!==target&&distance<=100){
 		HUDContext.clearRect(0,0,100000,100000)
-		HUDContext.drawImage(zoom,canvas.width*scale*2.8,canvas.height*scale*1.6,zoom.width*1.4*scale,zoom.height*1.4*scale)
 		drawSelect(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
 		drawRange(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
 		if(systemSelected!==target&&systemSelected){
@@ -84,7 +82,6 @@ function drawHUD(){
 		}
 	}else{
 		HUDContext.clearRect(0,0,100000,100000)
-		HUDContext.drawImage(zoom,canvas.width*scale*2.8,canvas.height*scale*1.6,zoom.width*1.4*scale,zoom.height*1.4*scale)
 		if(systemSelected){
 			drawSelect(elements[0][systemSelected][1][0]-galaxyPosition[0],elements[0][systemSelected][1][1]-galaxyPosition[1])
 		}

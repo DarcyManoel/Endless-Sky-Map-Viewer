@@ -39,7 +39,13 @@ label:hover{
 .hidden{
 	display:none;
 }
-/*Informational*/
+/*Interactables*/
+#loadFiles{
+	left:50%;
+	transform:translate(-50%,0);
+	position:absolute;
+	top:10px;
+}
 #original{
 	left:20px;
 	position:absolute;
@@ -66,27 +72,18 @@ label:hover{
 	text-align:center;
 	top:20px;
 }
-/*Interactables*/
-#loadFiles{
-	left:50%;
-	transform:translate(-50%,0);
-	position:absolute;
-	top:10px;
-}
 #zoomIn{
-	font-size:1.2vw;
 	position:absolute;
-	top:487px;
-	left:1390px;
+	top:60px;
+	right:20px;
 	width:20px;
 	padding:5px;
 	text-align:center;
 }
 #zoomOut{
-	font-size:1.2vw;
 	position:absolute;
-	top:487px;
-	left:1353px;
+	top:60px;
+	right:40px;
 	width:20px;
 	padding:5px;
 	text-align:center;

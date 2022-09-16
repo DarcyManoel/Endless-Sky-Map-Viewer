@@ -8,7 +8,6 @@
 	</head>
 	<body onLoad="initialize()">
 		<img class="hidden" id="galaxy" src="assets/galaxy.png">
-		<img class="hidden" id="zoom" src="assets/zoom.png">
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
@@ -18,10 +17,8 @@
 		<label class="blocked" id="inhabited" onClick="switchAllocation(this.id)">Inhabited</label>
 		<label class="blocked dark" id="claimed" onClick="switchAllocation(this.id)">Claimed</label>
 		<label class="blocked" id="galaxyDisplay" onClick="switchGalaxy()">MilkyWay</label>
-		<div id="zoomContainer" class="hidden">
-			<div id="zoomIn" onClick="zoomIn()">+</div>
-			<div id="zoomOut" onClick="zoomOut()">-</div>
-		</div>
+		<label class="blocked" id="zoomIn" onClick="zoomIn()">+</label>
+		<label class="blocked" id="zoomOut" onClick="zoomOut()">-</label>
 	</body>
 	<script type="text/javascript" src="backend/actions.js"></script>
 	<script type="text/javascript" src="backend/control.js"></script>
