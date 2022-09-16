@@ -8,7 +8,6 @@
 	</head>
 	<body onLoad="initialize()">
 		<img class="hidden" id="galaxy" src="assets/galaxy.png">
-		<img class="hidden" id="galaxies" src="assets/galaxies.png">
 		<img class="hidden" id="zoom" src="assets/zoom.png">
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
@@ -18,7 +17,7 @@
 		<label class="blocked dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
 		<label class="blocked" id="inhabited" onClick="switchAllocation(this.id)">Inhabited</label>
 		<label class="blocked dark" id="claimed" onClick="switchAllocation(this.id)">Claimed</label>
-		<label id="galaxyDisplay" onClick="switchGalaxy()"></label>
+		<label class="blocked" id="galaxyDisplay" onClick="switchGalaxy()">MilkyWay</label>
 		<div id="zoomContainer" class="hidden">
 			<div id="zoomIn" onClick="zoomIn()">+</div>
 			<div id="zoomOut" onClick="zoomOut()">-</div>

@@ -61,12 +61,10 @@ label:hover{
 	top:100px;
 }
 #galaxyDisplay{
-	font-size:13px;
 	position:absolute;
-	right:10px;
+	right:20px;
 	text-align:center;
-	top:5px;
-	width:160px;
+	top:20px;
 }
 /*Interactables*/
 #loadFiles{

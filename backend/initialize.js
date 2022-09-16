@@ -7,7 +7,6 @@ headsUp.height=screen.height
 headsUp.width=screen.width
 var HUDContext=headsUp.getContext(`2d`)
 var galaxy=document.getElementById(`galaxy`)
-var galaxies=document.getElementById(`galaxies`)
 function initialize(){
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
