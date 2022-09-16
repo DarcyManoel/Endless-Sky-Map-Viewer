@@ -6,15 +6,17 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<title>Map Viewer</title>
 	</head>
-	<body onload="initialize()">
+	<body onLoad="initialize()">
 		<img class="hidden" id="galaxy" src="assets/galaxy.png">
 		<img class="hidden" id="galaxies" src="assets/galaxies.png">
 		<img class="hidden" id="zoom" src="assets/zoom.png">
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
-		<input class="hidden" id="file" type="file" webkitdirectory onchange="loadFiles(this)"/>
-		<label id="galaxyDisplay" onclick="switchGalaxy()"></label>
+		<input class="hidden" id="file" type="file" webkitdirectory onChange="loadFiles(this)"/>
+		<label class="blocked" id="inhabited" onClick="switchAllocation(this.id)">Inhabited</label>
+		<label class="blocked dark" id="claimed" onClick="switchAllocation(this.id)">Claimed</label>
+		<label id="galaxyDisplay" onClick="switchGalaxy()"></label>
 		<div id="zoomContainer" class="hidden">
 			<div id="zoomIn" onClick="zoomIn()">+</div>
 			<div id="zoomOut" onClick="zoomOut()">-</div>

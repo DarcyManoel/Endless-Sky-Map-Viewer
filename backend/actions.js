@@ -19,11 +19,18 @@ function switchStyle(){
 	}
 	drawMap()
 }
-function switchAllocation(){
-	if(systemAllocation==`inhabited`){
-		systemAllocation=`claimed`
-	}else if(systemAllocation==`claimed`){
-		systemAllocation=`inhabited`
+function switchAllocation(allocation){
+	switch(allocation){
+		case `claimed`:
+			document.getElementById(`claimed`).classList.remove(`dark`)
+			document.getElementById(`inhabited`).classList.add(`dark`)
+			systemAllocation=`claimed`
+			break
+		case `inhabited`:
+			document.getElementById(`claimed`).classList.add(`dark`)
+			document.getElementById(`inhabited`).classList.remove(`dark`)
+			systemAllocation=`inhabited`
+			break
 	}
 	drawMap()
 }

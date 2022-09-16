@@ -25,10 +25,31 @@ label:hover{
 	animation:highlightOn .5s forwards;
 	cursor:pointer;
 }
+.blocked,
+.blocked label{
+	animation:none;
+	color:#333;
+	pointer-events:none;
+}
+.dark,
+.dark:hover{
+	animation:none;
+	color:#333;
+}
 .hidden{
 	display:none;
 }
 /*Informational*/
+#inhabited{
+	left:20px;
+	position:absolute;
+	top:20px;
+}
+#claimed{
+	position:absolute;
+	left:20px;
+	top:40px;
+}
 #galaxyDisplay{
 	font-size:13px;
 	position:absolute;

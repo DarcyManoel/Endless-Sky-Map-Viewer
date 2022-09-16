@@ -1,5 +1,7 @@
 var elements=[[],[],[]]
 function loadFiles(that){
+	document.getElementById(`inhabited`).classList.remove(`blocked`)
+	document.getElementById(`claimed`).classList.remove(`blocked`)
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
