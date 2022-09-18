@@ -28,6 +28,7 @@ function toggleHelp(){
 			help=false
 			break
 	}
+	localStorage.setItem(`help`,help)
 	drawHUD()
 }
 function switchStyle(id){
