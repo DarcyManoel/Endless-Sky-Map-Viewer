@@ -42,6 +42,19 @@ function drawRange(x,y){
 	HUDContext.strokeStyle=`rgb(102,102,102)`
 	HUDContext.stroke()
 }
+//	Draw jump range on the overlay
+function drawRestricted(x,y){
+	HUDContext.beginPath()
+	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],40,0,2*Math.PI)
+	HUDContext.setLineDash([])
+	HUDContext.lineWidth=2
+	if(distance>40){
+		HUDContext.fillStyle=`rgba(102,255,102,.2)`
+	}else{
+		HUDContext.fillStyle=`rgba(255,102,102,.2)`
+	}
+	HUDContext.fill()
+}
 //	Draw encompassing circle
 function drawSelect(x,y){
 	HUDContext.beginPath()

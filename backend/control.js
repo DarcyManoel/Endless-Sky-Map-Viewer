@@ -36,13 +36,15 @@ function mouseDown(){
 			drawHUD()
 		}
 	}else{
-		newSystems++
-		elements[0].push([`placeholder`+newSystems,[xCoordinate,yCoordinate],[`Uninhabited`],[],[]])
-		for(i1=0;i1<systemsSelected.length;i1++){
-			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
-			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
+		if(distance>40){
+			newSystems++
+			elements[0].push([`placeholder`+newSystems,[xCoordinate,yCoordinate],[`Uninhabited`],[],[]])
+			for(i1=0;i1<systemsSelected.length;i1++){
+				elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
+				elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
+			}
+			drawMap()
 		}
-		drawMap()
 	}
 }
 function keyDown(event){
