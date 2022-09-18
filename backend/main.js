@@ -69,21 +69,7 @@ function drawMap(){
 			}
 		}
 	}
-	drawHUD()
 	console.log(elements)
-}
-function drawHUD(){
-	if(oldTarget!==target&&distance<=100){
-		HUDContext.clearRect(0,0,100000,100000)
-		drawSelect(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
-		drawRange(elements[0][target][1][0]-galaxyPosition[0],elements[0][target][1][1]-galaxyPosition[1])
-		if(systemSelected!==target&&systemSelected){
-			drawSelect(elements[0][systemSelected][1][0]-galaxyPosition[0],elements[0][systemSelected][1][1]-galaxyPosition[1])
-		}
-	}else{
-		HUDContext.clearRect(0,0,100000,100000)
-		if(systemSelected){
-			drawSelect(elements[0][systemSelected][1][0]-galaxyPosition[0],elements[0][systemSelected][1][1]-galaxyPosition[1])
-		}
-	}
+	HUDContext.clearRect(0,0,100000,100000)
+	drawSelected()
 }
