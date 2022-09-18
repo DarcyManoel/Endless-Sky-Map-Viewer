@@ -1,9 +1,35 @@
+var help=true
 var mapStyle=`original`
 var systemAllocation=`inhabited`
 var systemBuffer=true
 var galaxySelected=0
 var galaxyPosition=[0,0]
 var scale=1
+function toggleHelp(){
+	switch(help){
+		case false:
+			document.getElementById(`help`).innerHTML=`Don't Help Me!`
+			document.getElementById(`helpUpload`).classList.remove(`hidden`)
+			document.getElementById(`helpStyle`).classList.remove(`hidden`)
+			document.getElementById(`helpAllocation`).classList.remove(`hidden`)
+			document.getElementById(`helpBuffer`).classList.remove(`hidden`)
+			document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
+			document.getElementById(`helpZoom`).classList.remove(`hidden`)
+			help=true
+			break
+		case true:
+			document.getElementById(`help`).innerHTML=`Help Me!`
+			document.getElementById(`helpUpload`).classList.add(`hidden`)
+			document.getElementById(`helpStyle`).classList.add(`hidden`)
+			document.getElementById(`helpAllocation`).classList.add(`hidden`)
+			document.getElementById(`helpBuffer`).classList.add(`hidden`)
+			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
+			document.getElementById(`helpZoom`).classList.add(`hidden`)
+			help=false
+			break
+	}
+	drawHUD()
+}
 function switchStyle(id){
 	switch(id){
 		case `original`:

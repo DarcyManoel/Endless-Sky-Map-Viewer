@@ -9,6 +9,12 @@ function loadFiles(that){
 	document.getElementById(`galaxyDisplay`).classList.remove(`blocked`)
 	document.getElementById(`zoomOut`).classList.remove(`blocked`)
 	document.getElementById(`zoomIn`).classList.remove(`blocked`)
+	document.getElementById(`helpUpload`).classList.add(`blocked`)
+	document.getElementById(`helpStyle`).classList.add(`blocked`)
+	document.getElementById(`helpAllocation`).classList.add(`blocked`)
+	document.getElementById(`helpBuffer`).classList.add(`blocked`)
+	document.getElementById(`helpGalaxy`).classList.add(`blocked`)
+	document.getElementById(`helpZoom`).classList.add(`blocked`)
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()

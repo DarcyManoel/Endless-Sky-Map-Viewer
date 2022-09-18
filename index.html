@@ -12,15 +12,22 @@
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input class="hidden" id="file" type="file" webkitDirectory onChange="loadFiles(this)"/>
+		<label id=helpUpload>Upload a data folder or map file to display star systems</label>
+		<label id="help" onClick="toggleHelp()">Don't Help Me!</label>
 		<label class="blocked" id="original" onClick="switchStyle(this.id)">Original</label>
 		<label class="blocked dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
+		<label id=helpStyle>Map styles</label>
 		<label class="blocked" id="inhabited" onClick="switchAllocation(this.id)">Inhabited</label>
 		<label class="blocked dark" id="claimed" onClick="switchAllocation(this.id)">Claimed</label>
+		<label id=helpAllocation>System ownership</label>
 		<label class="blocked" id="bufferOn" onClick="toggleBuffer(this.id)">Buffer On</label>
 		<label class="blocked dark" id="bufferOff" onClick="toggleBuffer(this.id)">Buffer Off</label>
+		<label id=helpBuffer>Minimum distance for new systems</label>
 		<label class="blocked" id="galaxyDisplay" onClick="switchGalaxy()">MilkyWay</label>
+		<label id=helpGalaxy>Currently centered galaxy</label>
 		<label class="blocked" id="zoomOut" onClick="zoomOut()">-</label>
 		<label class="blocked" id="zoomIn" onClick="zoomIn()">+</label>
+		<label id=helpZoom>Zoom in or out</label>
 	</body>
 	<script type="text/javascript" src="backend/actions.js"></script>
 	<script type="text/javascript" src="backend/control.js"></script>
