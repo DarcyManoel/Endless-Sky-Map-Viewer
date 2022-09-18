@@ -1,16 +1,9 @@
-var scale=1
 var mapStyle=`original`
 var systemAllocation=`inhabited`
+var systemBuffer=true
 var galaxySelected=0
 var galaxyPosition=[0,0]
-function switchGalaxy(id){
-	galaxySelected++
-	if(galaxySelected==elements[2].length){
-		galaxySelected=0
-	}
-	galaxyPosition=elements[2][galaxySelected][1]
-	drawMap()
-}
+var scale=1
 function switchStyle(id){
 	switch(id){
 		case `original`:
@@ -40,6 +33,29 @@ function switchAllocation(id){
 			break
 	}
 	drawMap()
+}
+function toggleBuffer(id){
+	switch(id){
+		case `bufferOn`:
+			document.getElementById(`bufferOff`).classList.add(`dark`)
+			document.getElementById(`bufferOn`).classList.remove(`dark`)
+			systemBuffer=true
+			break
+		case `bufferOff`:
+			document.getElementById(`bufferOff`).classList.remove(`dark`)
+			document.getElementById(`bufferOn`).classList.add(`dark`)
+			systemBuffer=false
+			break
+	}
+}
+function switchGalaxy(){
+	galaxySelected++
+	if(galaxySelected==elements[2].length){
+		galaxySelected=0
+	}
+	galaxyPosition=elements[2][galaxySelected][1]
+	drawMap()
+	console.log(galaxyPosition)
 }
 function zoomOut(){
 	canvasContext.scale(3*scale,3*scale)

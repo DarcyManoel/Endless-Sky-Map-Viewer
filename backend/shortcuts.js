@@ -2,7 +2,7 @@
 function drawFakeLink(startX,startY,endX,endY){
 	HUDContext.beginPath()
 	HUDContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	HUDContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	HUDContext.lineTo(2150*scale+ +endX,1350*scale+ +endY)
 	HUDContext.setLineDash([0,15,0])
 	HUDContext.lineWidth=2
 	HUDContext.strokeStyle=`rgb(102,102,102)`
@@ -44,16 +44,24 @@ function drawRange(x,y){
 }
 //	Draw jump range on the overlay
 function drawRestricted(x,y){
-	HUDContext.beginPath()
-	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],40,0,2*Math.PI)
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	if(distance>40){
-		HUDContext.fillStyle=`rgba(102,255,102,.2)`
-	}else{
-		HUDContext.fillStyle=`rgba(255,102,102,.2)`
+	if(systemBuffer){
+		HUDContext.beginPath()
+		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,50,0,2*Math.PI)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=2
+		if(distance>50){
+			HUDContext.fillStyle=`rgba(102,255,102,.2)`
+		}else{
+			HUDContext.fillStyle=`rgba(255,102,102,.2)`
+		}
+		HUDContext.fill()
+		HUDContext.beginPath()
+		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=2
+		HUDContext.strokeStyle=`rgb(102,102,102)`
+		HUDContext.stroke()
 	}
-	HUDContext.fill()
 }
 //	Draw encompassing circle
 function drawSelect(x,y){

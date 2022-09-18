@@ -79,7 +79,6 @@ function drawHUD(){
 	}
 	if(createSystem==true){
 		drawRestricted(xCoordinate,yCoordinate)
-		drawRange(xCoordinate,yCoordinate)
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
 		}

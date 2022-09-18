@@ -4,6 +4,8 @@ function loadFiles(that){
 	document.getElementById(`modern`).classList.remove(`blocked`)
 	document.getElementById(`inhabited`).classList.remove(`blocked`)
 	document.getElementById(`claimed`).classList.remove(`blocked`)
+	document.getElementById(`bufferOn`).classList.remove(`blocked`)
+	document.getElementById(`bufferOff`).classList.remove(`blocked`)
 	document.getElementById(`galaxyDisplay`).classList.remove(`blocked`)
 	document.getElementById(`zoomOut`).classList.remove(`blocked`)
 	document.getElementById(`zoomIn`).classList.remove(`blocked`)
