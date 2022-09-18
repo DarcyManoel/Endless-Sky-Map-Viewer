@@ -1,3 +1,13 @@
+//	Draw a fake link on the hud for possible new linked systems
+function drawFakeLink(startX,startY,endX,endY){
+	HUDContext.beginPath()
+	HUDContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
+	HUDContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	HUDContext.setLineDash([0,15,0])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(102,102,102)`
+	HUDContext.stroke()
+}
 //	Draw a link on the map
 function drawLink(startX,startY,endX,endY){
 	canvasContext.beginPath()

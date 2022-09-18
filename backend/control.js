@@ -3,45 +3,61 @@ var yCoordinate
 var oldTarget=0
 var target=0
 var distance
-var systemsSelected=[];
-function onMouseMove(event){
+var systemsSelected=[]
+var createSystem=false
+var newSystems=0
+function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
 	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
 	distance=100000
-	HUDContext.clearRect(0,0,100000,100000)
 	for(i1=0;i1<elements[0].length;i1++){
 		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
 			target=i1
 			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
-	if(oldTarget!==target&&distance<=100){
-		drawSelect(elements[0][target][1][0],elements[0][target][1][1])
-		drawRange(elements[0][target][1][0],elements[0][target][1][1])
-	}else if(distance>100){
-		oldTarget=0
-	}
-	drawSelected()
+	drawHUD()
 }
-function onMouseDown(){
-	if(distance<=100){
-		var spliced=0
-		for(i1=0;i1<systemsSelected.length;i1++){
-			if(systemsSelected[i1]==target){
-				systemsSelected.splice(i1,1)
-				spliced=1
-				break
+function mouseDown(){
+	if(createSystem==false){
+		if(distance<=100){
+			var spliced=0
+			for(i1=0;i1<systemsSelected.length;i1++){
+				if(systemsSelected[i1]==target){
+					systemsSelected.splice(i1,1)
+					spliced=1
+					break
+				}
 			}
+			if(!spliced){
+				systemsSelected.push(target)
+			}
+			console.log(systemsSelected)
+			drawHUD()
 		}
-		if(!spliced){
-			systemsSelected.push(target)
+	}else{
+		newSystems++
+		elements[0].push([`placeholder`+newSystems,[xCoordinate,yCoordinate],[`Uninhabited`],[],[]])
+		for(i1=0;i1<systemsSelected.length;i1++){
+			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
+			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
 		}
-		console.log(systemsSelected)
-		drawSelected()
+		drawMap()
 	}
 }
-function drawSelected(){
-	for(i1=0;i1<systemsSelected.length;i1++){
-		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
+function keyDown(event){
+	switch(event.keyCode){
+		case 16:
+			createSystem=true
+			break
 	}
+	drawHUD()
+}
+function keyUp(event){
+	switch(event.keyCode){
+		case 16:
+			createSystem=false
+			break
+	}
+	drawHUD()
 }

@@ -1,6 +1,6 @@
 function drawMap(){
-	headsUp.addEventListener(`mousedown`,onMouseDown)
-	headsUp.addEventListener(`mousemove`,onMouseMove)
+	headsUp.addEventListener(`mousedown`,mouseDown)
+	headsUp.addEventListener(`mousemove`,mouseMove)
 	canvasContext.clearRect(0,0,100000,100000)
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
@@ -70,6 +70,20 @@ function drawMap(){
 		}
 	}
 	console.log(elements)
+	drawHUD()
+}
+function drawHUD(){
 	HUDContext.clearRect(0,0,100000,100000)
-	drawSelected()
+	for(i1=0;i1<systemsSelected.length;i1++){
+		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
+	}
+	if(createSystem==true){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
+		}
+	}else{
+		if(oldTarget!==target&&distance<=100){
+			drawRange(elements[0][target][1][0],elements[0][target][1][1])
+		}
+	}
 }
