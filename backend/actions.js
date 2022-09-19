@@ -1,4 +1,4 @@
-var help=true
+var help=false
 var mapStyle=`original`
 var systemAllocation=`inhabited`
 var systemBuffer=true

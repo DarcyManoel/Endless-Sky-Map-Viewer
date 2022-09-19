@@ -8,15 +8,15 @@ headsUp.width=screen.width
 var HUDContext=headsUp.getContext(`2d`)
 var galaxy=document.getElementById(`galaxy`)
 function initialize(){
-	if(localStorage.getItem(`help`)==`false`){
-		document.getElementById(`help`).innerHTML=`Help Me!`
-		document.getElementById(`helpUpload`).classList.add(`hidden`)
-		document.getElementById(`helpStyle`).classList.add(`hidden`)
-		document.getElementById(`helpAllocation`).classList.add(`hidden`)
-		document.getElementById(`helpBuffer`).classList.add(`hidden`)
-		document.getElementById(`helpGalaxy`).classList.add(`hidden`)
-		document.getElementById(`helpZoom`).classList.add(`hidden`)
-		help=false
+	if(localStorage.getItem(`help`)==`true`){
+		document.getElementById(`help`).innerHTML=`Don't Help Me!`
+		document.getElementById(`helpUpload`).classList.remove(`hidden`)
+		document.getElementById(`helpStyle`).classList.remove(`hidden`)
+		document.getElementById(`helpAllocation`).classList.remove(`hidden`)
+		document.getElementById(`helpBuffer`).classList.remove(`hidden`)
+		document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
+		document.getElementById(`helpZoom`).classList.remove(`hidden`)
+		help=true
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
