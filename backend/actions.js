@@ -1,12 +1,25 @@
 var help=false
 var mapStyle=`original`
-var systemAllocation=`inhabited`
+var systemOwnership=`inhabited`
 var systemBuffer=true
 var galaxySelected=0
 var galaxyPosition=[0,0]
 var scale=1
 function toggleHelp(){
 	switch(help){
+		case true:
+			document.getElementById(`help`).innerHTML=`Help Me!`
+			document.getElementById(`helpUpload`).classList.add(`hidden`)
+			document.getElementById(`helpStyle`).classList.add(`hidden`)
+			document.getElementById(`helpAllocation`).classList.add(`hidden`)
+			document.getElementById(`helpBuffer`).classList.add(`hidden`)
+			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
+			document.getElementById(`helpZoom`).classList.add(`hidden`)
+			document.getElementById(`tips`).classList.add(`hidden`)
+			document.getElementById(`tipCreation`).classList.add(`hidden`)
+			document.getElementById(`tipLinking`).classList.add(`hidden`)
+			help=false
+			break
 		case false:
 			document.getElementById(`help`).innerHTML=`Don't Help Me!`
 			document.getElementById(`helpUpload`).classList.remove(`hidden`)
@@ -21,19 +34,6 @@ function toggleHelp(){
 				document.getElementById(`tipLinking`).classList.remove(`hidden`)
 			}
 			help=true
-			break
-		case true:
-			document.getElementById(`help`).innerHTML=`Help Me!`
-			document.getElementById(`helpUpload`).classList.add(`hidden`)
-			document.getElementById(`helpStyle`).classList.add(`hidden`)
-			document.getElementById(`helpAllocation`).classList.add(`hidden`)
-			document.getElementById(`helpBuffer`).classList.add(`hidden`)
-			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
-			document.getElementById(`helpZoom`).classList.add(`hidden`)
-			document.getElementById(`tips`).classList.add(`hidden`)
-			document.getElementById(`tipCreation`).classList.add(`hidden`)
-			document.getElementById(`tipLinking`).classList.add(`hidden`)
-			help=false
 			break
 	}
 	localStorage.setItem(`help`,help)
@@ -52,21 +52,23 @@ function switchStyle(id){
 			mapStyle=`modern`
 			break
 	}
+	localStorage.setItem(`mapStyle`,mapStyle)
 	drawMap()
 }
-function switchAllocation(id){
+function switchOwnership(id){
 	switch(id){
 		case `inhabited`:
 			document.getElementById(`claimed`).classList.add(`dark`)
 			document.getElementById(`inhabited`).classList.remove(`dark`)
-			systemAllocation=`inhabited`
+			systemOwnership=`inhabited`
 			break
 		case `claimed`:
 			document.getElementById(`claimed`).classList.remove(`dark`)
 			document.getElementById(`inhabited`).classList.add(`dark`)
-			systemAllocation=`claimed`
+			systemOwnership=`claimed`
 			break
 	}
+	localStorage.setItem(`systemOwnership`,systemOwnership)
 	drawMap()
 }
 function toggleBuffer(id){
@@ -82,6 +84,7 @@ function toggleBuffer(id){
 			systemBuffer=false
 			break
 	}
+	localStorage.setItem(`systemBuffer`,systemBuffer)
 }
 function switchGalaxy(){
 	galaxySelected++

@@ -11,7 +11,7 @@ function loadFiles(that){
 	document.getElementById(`zoomIn`).classList.remove(`blocked`)
 	document.getElementById(`helpUpload`).classList.add(`blocked`)
 	document.getElementById(`helpStyle`).classList.add(`blocked`)
-	document.getElementById(`helpAllocation`).classList.add(`blocked`)
+	document.getElementById(`helpOwnership`).classList.add(`blocked`)
 	document.getElementById(`helpBuffer`).classList.add(`blocked`)
 	document.getElementById(`helpGalaxy`).classList.add(`blocked`)
 	document.getElementById(`helpZoom`).classList.add(`blocked`)

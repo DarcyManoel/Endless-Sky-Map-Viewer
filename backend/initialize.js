@@ -12,11 +12,26 @@ function initialize(){
 		document.getElementById(`help`).innerHTML=`Don't Help Me!`
 		document.getElementById(`helpUpload`).classList.remove(`hidden`)
 		document.getElementById(`helpStyle`).classList.remove(`hidden`)
-		document.getElementById(`helpAllocation`).classList.remove(`hidden`)
+		document.getElementById(`helpOwnership`).classList.remove(`hidden`)
 		document.getElementById(`helpBuffer`).classList.remove(`hidden`)
 		document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
 		document.getElementById(`helpZoom`).classList.remove(`hidden`)
 		help=true
+	}
+	if(localStorage.getItem(`mapStyle`)==`modern`){
+		document.getElementById(`original`).classList.add(`dark`)
+		document.getElementById(`modern`).classList.remove(`dark`)
+		mapStyle=localStorage.getItem(`mapStyle`)
+	}
+	if(localStorage.getItem(`systemOwnership`)==`claimed`){
+		document.getElementById(`claimed`).classList.remove(`dark`)
+		document.getElementById(`inhabited`).classList.add(`dark`)
+		systemOwnership=localStorage.getItem(`systemOwnership`)
+	}
+	if(localStorage.getItem(`systemBuffer`)==`false`){
+		document.getElementById(`bufferOff`).classList.remove(`dark`)
+		document.getElementById(`bufferOn`).classList.add(`dark`)
+		systemBuffer=localStorage.getItem(`systemBuffer`)
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)

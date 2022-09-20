@@ -16,7 +16,7 @@ function drawMap(){
 						case `modern`:
 							for(i4=0;i4<elements[1].length;i4++){
 								if(elements[0][i1][2]==elements[1][i4][0]){
-									if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
+									if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
 										drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
 									}else{
 										drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
@@ -36,14 +36,14 @@ function drawMap(){
 			if(elements[0][i1][2]==elements[1][i2][0]){
 				switch(mapStyle){
 					case `original`:
-						if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
+						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
 							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
 						}else{
 							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
 						}
 						break
 					case `modern`:
-						if(elements[0][i1][4].length>0||systemAllocation==`claimed`){
+						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
 							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
 						}else{
 							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
