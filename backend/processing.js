@@ -15,6 +15,11 @@ function loadFiles(that){
 	document.getElementById(`helpBuffer`).classList.add(`blocked`)
 	document.getElementById(`helpGalaxy`).classList.add(`blocked`)
 	document.getElementById(`helpZoom`).classList.add(`blocked`)
+	if(help){
+		document.getElementById(`tips`).classList.remove(`hidden`)
+		document.getElementById(`tipCreation`).classList.remove(`hidden`)
+		document.getElementById(`tipLinking`).classList.remove(`hidden`)
+	}
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()

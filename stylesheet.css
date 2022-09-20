@@ -139,6 +139,27 @@ label:hover{
 	right:80px;
 	top:60px;
 }
+#tips{
+	position:absolute;
+	right:40px;
+	text-align:center;
+	top:130px;
+	width:200px;
+}
+#tipCreation{
+	position:absolute;
+	right:40px;
+	text-align:center;
+	top:160px;
+	width:200px;
+}
+#tipLinking{
+	position:absolute;
+	right:40px;
+	text-align:center;
+	top:210px;
+	width:200px;
+}
 /*Blur*/
 @keyframes blurOff{
 	0%{filter:blur(3px);}

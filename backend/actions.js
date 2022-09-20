@@ -15,6 +15,11 @@ function toggleHelp(){
 			document.getElementById(`helpBuffer`).classList.remove(`hidden`)
 			document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
 			document.getElementById(`helpZoom`).classList.remove(`hidden`)
+			if(elements[0].length){
+				document.getElementById(`tips`).classList.remove(`hidden`)
+				document.getElementById(`tipCreation`).classList.remove(`hidden`)
+				document.getElementById(`tipLinking`).classList.remove(`hidden`)
+			}
 			help=true
 			break
 		case true:
@@ -25,6 +30,9 @@ function toggleHelp(){
 			document.getElementById(`helpBuffer`).classList.add(`hidden`)
 			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
 			document.getElementById(`helpZoom`).classList.add(`hidden`)
+			document.getElementById(`tips`).classList.add(`hidden`)
+			document.getElementById(`tipCreation`).classList.add(`hidden`)
+			document.getElementById(`tipLinking`).classList.add(`hidden`)
 			help=false
 			break
 	}
