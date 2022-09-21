@@ -11,7 +11,7 @@ function toggleHelp(){
 			document.getElementById(`help`).innerHTML=`Help Me!`
 			document.getElementById(`helpUpload`).classList.add(`hidden`)
 			document.getElementById(`helpStyle`).classList.add(`hidden`)
-			document.getElementById(`helpAllocation`).classList.add(`hidden`)
+			document.getElementById(`helpOwnership`).classList.add(`hidden`)
 			document.getElementById(`helpBuffer`).classList.add(`hidden`)
 			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
 			document.getElementById(`helpZoom`).classList.add(`hidden`)
@@ -24,7 +24,7 @@ function toggleHelp(){
 			document.getElementById(`help`).innerHTML=`Don't Help Me!`
 			document.getElementById(`helpUpload`).classList.remove(`hidden`)
 			document.getElementById(`helpStyle`).classList.remove(`hidden`)
-			document.getElementById(`helpAllocation`).classList.remove(`hidden`)
+			document.getElementById(`helpOwnership`).classList.remove(`hidden`)
 			document.getElementById(`helpBuffer`).classList.remove(`hidden`)
 			document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
 			document.getElementById(`helpZoom`).classList.remove(`hidden`)
