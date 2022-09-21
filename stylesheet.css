@@ -110,6 +110,7 @@ label:hover{
 #helpUpload{
 	left:50%;
 	position:absolute;
+	text-align:center;
 	top:40px;
 	transform:translate(-50%,0);
 	width:400px;
