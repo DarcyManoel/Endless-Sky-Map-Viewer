@@ -12,25 +12,33 @@
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input class="hidden" id="file" type="file" webkitDirectory onChange="loadFiles(this)"/>
-		<label class="hidden" id=helpUpload>Upload a data folder or map file to display star systems.</label>
-		<label id="help" onClick="toggleHelp()">Help Me!</label>
-		<label class="blocked" id="original" onClick="switchStyle(this.id)">Original</label>
-		<label class="blocked dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
-		<label class="hidden" id=helpStyle>Map styles</label>
-		<label class="blocked" id="inhabited" onClick="switchOwnership(this.id)">Inhabited</label>
-		<label class="blocked dark" id="claimed" onClick="switchOwnership(this.id)">Claimed</label>
-		<label class="hidden" id=helpOwnership>System ownership</label>
-		<label class="blocked" id="bufferOn" onClick="toggleBuffer(this.id)">Buffer On</label>
-		<label class="blocked dark" id="bufferOff" onClick="toggleBuffer(this.id)">Buffer Off</label>
-		<label class="hidden" id=helpBuffer>Minimum distance for new systems</label>
+		<label id="helpToggle" onClick="toggleHelp()">Help Me!</label>
+		<div class="blocked" id="style">
+			<label id="original" onClick="switchStyle(this.id)">Original</label>
+			<label class="dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
+		</div>
+		<div class="blocked" id="ownership">
+			<label id="inhabited" onClick="switchOwnership(this.id)">Inhabited</label>
+			<label class="dark" id="claimed" onClick="switchOwnership(this.id)">Claimed</label>
+		</div>
+		<div class="blocked" id="buffer">
+			<label id="bufferOn" onClick="toggleBuffer(this.id)">Buffer On</label>
+			<label class="dark" id="bufferOff" onClick="toggleBuffer(this.id)">Buffer Off</label>
+		</div>
 		<label class="blocked" id="galaxyDisplay" onClick="switchGalaxy()">MilkyWay</label>
-		<label class="hidden" id=helpGalaxy>Currently centered galaxy</label>
 		<label class="blocked" id="zoomOut" onClick="zoomOut()">-</label>
 		<label class="blocked" id="zoomIn" onClick="zoomIn()">+</label>
-		<label class="hidden" id=helpZoom>Zoom in or out</label>
-		<label class="blocked hidden" id="tips">Psst..</label>
-		<label class="blocked hidden" id="tipCreation">You can create systems by shift clicking on the map.</label>
-		<label class="blocked hidden" id="tipLinking">Selected systems will be linked with newly created systems.</label>
+		<div class="hidden" id="help">
+			<label id=helpUpload>Upload a data folder or map file to display star systems.</label>
+			<label id=helpStyle>Map styles</label>
+			<label id=helpOwnership>System ownership</label>
+			<label id=helpBuffer>Minimum distance for new systems</label>
+			<div class="blocked hidden" id="tips">
+				<label id="psst">Psst..</label>
+				<label id="tipCreation">You can create systems by shift clicking on the map.</label>
+				<label id="tipLinking">Selected systems will be linked with newly created systems.</label>
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript" src="backend/actions.js"></script>
 	<script type="text/javascript" src="backend/control.js"></script>

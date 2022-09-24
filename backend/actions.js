@@ -8,30 +8,21 @@ var scale=1
 function toggleHelp(){
 	switch(help){
 		case true:
-			document.getElementById(`help`).innerHTML=`Help Me!`
-			document.getElementById(`helpUpload`).classList.add(`hidden`)
-			document.getElementById(`helpStyle`).classList.add(`hidden`)
-			document.getElementById(`helpOwnership`).classList.add(`hidden`)
-			document.getElementById(`helpBuffer`).classList.add(`hidden`)
-			document.getElementById(`helpGalaxy`).classList.add(`hidden`)
-			document.getElementById(`helpZoom`).classList.add(`hidden`)
-			document.getElementById(`tips`).classList.add(`hidden`)
-			document.getElementById(`tipCreation`).classList.add(`hidden`)
-			document.getElementById(`tipLinking`).classList.add(`hidden`)
+			document.getElementById(`helpToggle`).innerHTML=`Help Me!`
+			document.getElementById(`help`).classList.add(`hidden`)
+			document.getElementById(`style`).style=``
+			document.getElementById(`ownership`).style=``
+			document.getElementById(`buffer`).style=``
 			help=false
 			break
 		case false:
-			document.getElementById(`help`).innerHTML=`Don't Help Me!`
-			document.getElementById(`helpUpload`).classList.remove(`hidden`)
-			document.getElementById(`helpStyle`).classList.remove(`hidden`)
-			document.getElementById(`helpOwnership`).classList.remove(`hidden`)
-			document.getElementById(`helpBuffer`).classList.remove(`hidden`)
-			document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
-			document.getElementById(`helpZoom`).classList.remove(`hidden`)
+			document.getElementById(`helpToggle`).innerHTML=`Don't Help Me!`
+			document.getElementById(`help`).classList.remove(`hidden`)
+			document.getElementById(`style`).style=`border-right:1px solid #fff`
+			document.getElementById(`ownership`).style=`border-right:1px solid #fff`
+			document.getElementById(`buffer`).style=`border-right:1px solid #fff`
 			if(elements[0].length){
 				document.getElementById(`tips`).classList.remove(`hidden`)
-				document.getElementById(`tipCreation`).classList.remove(`hidden`)
-				document.getElementById(`tipLinking`).classList.remove(`hidden`)
 			}
 			help=true
 			break

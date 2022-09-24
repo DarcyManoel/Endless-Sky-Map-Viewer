@@ -9,13 +9,11 @@ var HUDContext=headsUp.getContext(`2d`)
 var galaxy=document.getElementById(`galaxy`)
 function initialize(){
 	if(localStorage.getItem(`help`)==`true`){
-		document.getElementById(`help`).innerHTML=`Don't Help Me!`
-		document.getElementById(`helpUpload`).classList.remove(`hidden`)
-		document.getElementById(`helpStyle`).classList.remove(`hidden`)
-		document.getElementById(`helpOwnership`).classList.remove(`hidden`)
-		document.getElementById(`helpBuffer`).classList.remove(`hidden`)
-		document.getElementById(`helpGalaxy`).classList.remove(`hidden`)
-		document.getElementById(`helpZoom`).classList.remove(`hidden`)
+		document.getElementById(`helpToggle`).innerHTML=`Don't Help Me!`
+		document.getElementById(`help`).classList.remove(`hidden`)
+		document.getElementById(`style`).style=`border-right:1px solid #fff`
+		document.getElementById(`ownership`).style=`border-right:1px solid #fff`
+		document.getElementById(`buffer`).style=`border-right:1px solid #fff`
 		help=true
 	}
 	if(localStorage.getItem(`mapStyle`)==`modern`){
