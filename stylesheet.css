@@ -118,6 +118,18 @@ label:hover{
 	transform:translate(0,-5px);
 	width:20px;
 }
+#output{
+	font-size:12px;
+	height:85vh;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	position:absolute;
+	right:0;
+	text-align:left;
+	top:80px;
+	white-space:pre;
+	width:240px;
+}
 /*Informational*/
 #helpUpload{
 	left:50%;

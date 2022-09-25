@@ -88,3 +88,12 @@ function drawHUD(){
 		}
 	}
 }
+function printOutput(){
+	elements[3]=[[],[]]
+	document.getElementById(`output`).innerHTML=``
+	for(i1=0;i1<elements[0].length;i1++){
+		if(elements[0][i1][0].startsWith(`placeholder`)){
+			document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[0][i1][0]+`"\n\tpos `+elements[0][i1][1][0]+` `+elements[0][i1][1][1]+`\n\tgovernment "`+elements[0][i1][2]+`"\n\tlink "`+elements[0][i1][3].join(`"\n\tlink "`)+`"`
+		}
+	}
+}

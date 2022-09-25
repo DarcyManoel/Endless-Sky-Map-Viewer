@@ -1,4 +1,4 @@
-var elements=[[],[],[]]
+var elements=[[],[],[],[[],[]]]
 function loadFiles(that){
 	document.getElementById(`style`).classList.remove(`blocked`)
 	document.getElementById(`ownership`).classList.remove(`blocked`)

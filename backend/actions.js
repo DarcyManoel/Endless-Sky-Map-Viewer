@@ -110,3 +110,8 @@ function zoomIn(){
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
 	drawMap()
 }
+function copyOutput(){
+	navigator.clipboard.writeText(
+		document.getElementById(`output`).innerHTML
+	)
+}

@@ -32,7 +32,6 @@ function mouseDown(){
 			if(!spliced){
 				systemsSelected.push(target)
 			}
-			console.log(systemsSelected)
 			drawHUD()
 		}
 	}else{
@@ -44,6 +43,7 @@ function mouseDown(){
 				elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
 			}
 			drawMap()
+			printOutput()
 		}
 	}
 }
