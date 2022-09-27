@@ -1,6 +1,7 @@
 var mapStyle=`original`
 var systemOwnership=`inhabited`
 var buffer=true
+var grid=false
 var galaxySelected=0
 var galaxyPosition=[0,0]
 var scale=1
@@ -48,6 +49,20 @@ function toggleBuffer(){
 			break
 	}
 	localStorage.setItem(`buffer`,buffer)
+}
+function toggleGrid(){
+	switch(grid){
+		case false:
+			document.getElementById(`grid`).classList.remove(`dark`)
+			grid=true
+			break
+		case true:
+			document.getElementById(`grid`).classList.add(`dark`)
+			grid=false
+			break
+	}
+	localStorage.setItem(`grid`,grid)
+	drawHUD()
 }
 function switchGalaxy(){
 	galaxySelected++

@@ -57,6 +57,26 @@ function drawFakeLink(startX,startY,endX,endY){
 	HUDContext.strokeStyle=`rgb(102,102,102)`
 	HUDContext.stroke()
 }
+function drawGrid(){
+	for(i1=100;i1<screen.width*3*scale;i1+=100){
+		HUDContext.beginPath()
+		HUDContext.moveTo(i1,0)
+		HUDContext.lineTo(i1,screen.height*3*scale)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=1
+		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
+		HUDContext.stroke()
+	}
+	for(i1=100;i1<screen.height*3*scale;i1+=100){
+		HUDContext.beginPath()
+		HUDContext.moveTo(0,i1)
+		HUDContext.lineTo(screen.width*3*scale,i1)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=1
+		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
+		HUDContext.stroke()
+	}
+}
 function drawRange(x,y){
 	HUDContext.beginPath()
 	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)

@@ -22,6 +22,10 @@ function initialize(){
 		document.getElementById(`buffer`).classList.add(`dark`)
 		buffer=false
 	}
+	if(localStorage.getItem(`grid`)==`true`){
+		document.getElementById(`grid`).classList.remove(`dark`)
+		grid=true
+	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
 	canvasContext.drawImage(galaxy,400,100)

@@ -87,6 +87,9 @@ function drawHUD(){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 		}
 	}
+	if(grid==true){
+		drawGrid()
+	}
 }
 function printOutput(){
 	elements[3]=[[],[]]
