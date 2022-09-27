@@ -18,10 +18,9 @@ function initialize(){
 		document.getElementById(`inhabited`).classList.add(`dark`)
 		systemOwnership=localStorage.getItem(`systemOwnership`)
 	}
-	if(localStorage.getItem(`systemBuffer`)==`false`){
-		document.getElementById(`bufferOff`).classList.remove(`dark`)
-		document.getElementById(`bufferOn`).classList.add(`dark`)
-		systemBuffer=localStorage.getItem(`systemBuffer`)
+	if(localStorage.getItem(`buffer`)==`false`){
+		document.getElementById(`buffer`).classList.add(`dark`)
+		buffer=false
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)

@@ -1,6 +1,6 @@
 var mapStyle=`original`
 var systemOwnership=`inhabited`
-var systemBuffer=true
+var buffer=true
 var galaxySelected=0
 var galaxyPosition=[0,0]
 var scale=1
@@ -36,20 +36,18 @@ function switchOwnership(id){
 	localStorage.setItem(`systemOwnership`,systemOwnership)
 	drawMap()
 }
-function toggleBuffer(id){
-	switch(id){
-		case `bufferOn`:
-			document.getElementById(`bufferOff`).classList.add(`dark`)
-			document.getElementById(`bufferOn`).classList.remove(`dark`)
-			systemBuffer=true
+function toggleBuffer(){
+	switch(buffer){
+		case true:
+			document.getElementById(`buffer`).classList.add(`dark`)
+			buffer=false
 			break
-		case `bufferOff`:
-			document.getElementById(`bufferOff`).classList.remove(`dark`)
-			document.getElementById(`bufferOn`).classList.add(`dark`)
-			systemBuffer=false
+		case false:
+			document.getElementById(`buffer`).classList.remove(`dark`)
+			buffer=true
 			break
 	}
-	localStorage.setItem(`systemBuffer`,systemBuffer)
+	localStorage.setItem(`buffer`,buffer)
 }
 function switchGalaxy(){
 	galaxySelected++

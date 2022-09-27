@@ -2,7 +2,7 @@ var elements=[[],[],[],[[],[]]]
 function loadFiles(that){
 	document.getElementById(`style`).classList.remove(`blocked`)
 	document.getElementById(`ownership`).classList.remove(`blocked`)
-	document.getElementById(`buffer`).classList.remove(`blocked`)
+	document.getElementById(`modeActions`).classList.remove(`blocked`)
 	document.getElementById(`galaxyDisplay`).classList.remove(`blocked`)
 	document.getElementById(`zoomOut`).classList.remove(`blocked`)
 	document.getElementById(`zoomIn`).classList.remove(`blocked`)

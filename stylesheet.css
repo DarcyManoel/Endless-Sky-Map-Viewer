@@ -74,19 +74,15 @@ label:hover{
 	position:absolute;
 	top:20px;
 }
-#buffer{
+#modeActions{
 	height:40px;
 	left:20px;
 	padding-right:100px;
 	position:absolute;
 	top:140px;
 }
-#bufferOn{
+#buffer{
 	position:absolute;
-}
-#bufferOff{
-	position:absolute;
-	top:20px;
 }
 #galaxyDisplay{
 	position:absolute;

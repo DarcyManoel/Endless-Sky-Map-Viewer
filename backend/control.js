@@ -35,7 +35,7 @@ function mouseDown(){
 			drawHUD()
 		}
 	}else{
-		if(distance>50||!systemBuffer){
+		if(distance>50||!buffer){
 			newSystems++
 			elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
 			for(i1=0;i1<systemsSelected.length;i1++){

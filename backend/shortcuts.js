@@ -66,7 +66,7 @@ function drawRange(x,y){
 	HUDContext.stroke()
 }
 function drawRestricted(x,y){
-	if(systemBuffer==true){
+	if(buffer==true){
 		HUDContext.beginPath()
 		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,50,0,2*Math.PI)
 		HUDContext.setLineDash([])
