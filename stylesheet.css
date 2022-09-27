@@ -46,12 +46,6 @@ label:hover{
 	top:10px;
 	transform:translate(-50%,0);
 }
-#helpToggle{
-	bottom:10px;
-	left:50%;
-	position:absolute;
-	transform:translate(-50%,0);
-}
 #style{
 	height:40px;
 	left:20px;
@@ -129,51 +123,6 @@ label:hover{
 	top:80px;
 	white-space:pre;
 	width:240px;
-}
-/*Informational*/
-#helpUpload{
-	left:50%;
-	position:absolute;
-	text-align:center;
-	top:40px;
-	transform:translate(-50%,0);
-	width:400px;
-}
-#helpStyle{
-	left:110px;
-	position:absolute;
-	top:20px;
-}
-#helpOwnership{
-	left:120px;
-	position:absolute;
-	top:80px;
-}
-#helpBuffer{
-	left:130px;
-	position:absolute;
-	top:140px;
-}
-#psst{
-	position:absolute;
-	right:40px;
-	text-align:center;
-	top:130px;
-	width:200px;
-}
-#tipCreation{
-	position:absolute;
-	right:40px;
-	text-align:center;
-	top:160px;
-	width:200px;
-}
-#tipLinking{
-	position:absolute;
-	right:40px;
-	text-align:center;
-	top:210px;
-	width:200px;
 }
 /*Blur*/
 @keyframes blurOff{

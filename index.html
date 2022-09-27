@@ -12,7 +12,6 @@
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input class="hidden" id="file" type="file" webkitDirectory onChange="loadFiles(this)"/>
-		<label id="helpToggle" onClick="toggleHelp()">Help Me!</label>
 		<div class="blocked" id="style">
 			<label id="original" onClick="switchStyle(this.id)">Original</label>
 			<label class="dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
@@ -29,17 +28,6 @@
 		<label class="blocked" id="zoomOut" onClick="zoomOut()">-</label>
 		<label class="blocked" id="zoomIn" onClick="zoomIn()">+</label>
 		<label id="output" onClick="copyOutput()"></label>
-		<div class="hidden" id="help">
-			<label id=helpUpload>Upload a data folder or map file to display star systems.</label>
-			<label id=helpStyle>Map styles</label>
-			<label id=helpOwnership>System ownership</label>
-			<label id=helpBuffer>Minimum distance for new systems</label>
-			<div class="blocked hidden" id="tips">
-				<label id="psst">Psst..</label>
-				<label id="tipCreation">You can create systems by shift clicking on the map.</label>
-				<label id="tipLinking">Selected systems will be linked with newly created systems.</label>
-			</div>
-		</div>
 	</body>
 	<script type="text/javascript" src="backend/actions.js"></script>
 	<script type="text/javascript" src="backend/control.js"></script>

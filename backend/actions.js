@@ -1,35 +1,9 @@
-var help=false
 var mapStyle=`original`
 var systemOwnership=`inhabited`
 var systemBuffer=true
 var galaxySelected=0
 var galaxyPosition=[0,0]
 var scale=1
-function toggleHelp(){
-	switch(help){
-		case true:
-			document.getElementById(`helpToggle`).innerHTML=`Help Me!`
-			document.getElementById(`help`).classList.add(`hidden`)
-			document.getElementById(`style`).style=``
-			document.getElementById(`ownership`).style=``
-			document.getElementById(`buffer`).style=``
-			help=false
-			break
-		case false:
-			document.getElementById(`helpToggle`).innerHTML=`Don't Help Me!`
-			document.getElementById(`help`).classList.remove(`hidden`)
-			document.getElementById(`style`).style=`border-right:1px solid #fff`
-			document.getElementById(`ownership`).style=`border-right:1px solid #fff`
-			document.getElementById(`buffer`).style=`border-right:1px solid #fff`
-			if(elements[0].length){
-				document.getElementById(`tips`).classList.remove(`hidden`)
-			}
-			help=true
-			break
-	}
-	localStorage.setItem(`help`,help)
-	drawHUD()
-}
 function switchStyle(id){
 	switch(id){
 		case `original`:

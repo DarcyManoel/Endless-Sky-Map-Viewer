@@ -6,8 +6,6 @@ function loadFiles(that){
 	document.getElementById(`galaxyDisplay`).classList.remove(`blocked`)
 	document.getElementById(`zoomOut`).classList.remove(`blocked`)
 	document.getElementById(`zoomIn`).classList.remove(`blocked`)
-	document.getElementById(`help`).classList.add(`blocked`)
-	document.getElementById(`tips`).classList.remove(`hidden`)
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
