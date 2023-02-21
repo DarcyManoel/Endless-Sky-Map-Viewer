@@ -47,7 +47,7 @@ function loadFiles(that){
 									if(!lines[i4].startsWith(`\t`)){
 										break
 									}
-									defineGovernment(1)
+									defineGovernment()
 								}
 								break parseLine
 							}
@@ -58,7 +58,7 @@ function loadFiles(that){
 							if(!lines[i3].startsWith(`\t`)){
 								break
 							}
-							defineGovernment(0)
+							defineGovernment()
 						}
 						break parseLine
 					//	Galaxies
@@ -128,13 +128,17 @@ function defineSystem(override){
 		}
 	}
 }
-function defineGovernment(override){
-	if(override){
-		if(lines[i3].startsWith(`\tcolor `)){
-			elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+function defineGovernment(){
+	if(lines[i3].startsWith(`\tcolor `)){
+		if(lines[i3].includes(`governments:`)){
+			for(i5=0;i5<lines.length;i5++){
+				if(lines[i5].startsWith(`color "governments: `+lines[i3].slice(21,-1)+`"`)){
+					var sliceLength=22+lines[i3].slice(21,-1).length
+					elements[1][elements[1].length-1][1]=lines[i5].slice(sliceLength).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+				}
+			}
 		}
-	}else{
-		if(lines[i3].startsWith(`\tcolor `)){
+		else{
 			elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}
 	}
