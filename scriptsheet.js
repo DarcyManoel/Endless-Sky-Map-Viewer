@@ -23,29 +23,33 @@ var systemsSelected=[]
 var target=0
 var xCoordinate
 var yCoordinate
-function copyOutput(){
-	navigator.clipboard.writeText(
-		document.getElementById(`output`).innerHTML
-	)
+function initialize(){
+	if(localStorage.getItem(`mapStyle`)==`modern`){
+		document.getElementById(`original`).classList.add(`dark`)
+		document.getElementById(`modern`).classList.remove(`dark`)
+		mapStyle=localStorage.getItem(`mapStyle`)
+	}
+	if(localStorage.getItem(`systemOwnership`)==`claimed`){
+		document.getElementById(`claimed`).classList.remove(`dark`)
+		document.getElementById(`inhabited`).classList.add(`dark`)
+		systemOwnership=localStorage.getItem(`systemOwnership`)
+	}
+	if(localStorage.getItem(`buffer`)==`false`){
+		document.getElementById(`buffer`).classList.add(`dark`)
+		buffer=false
+	}
+	if(localStorage.getItem(`grid`)==`true`){
+		document.getElementById(`grid`).classList.remove(`dark`)
+		grid=true
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	canvasContext.drawImage(galaxy,400,100)
 }
+//	Parse Data
 function defineGalaxy(){
 	if(lines[i3].startsWith(`\tpos `)){
 		elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-	}
-}
-function defineGovernment(){
-	if(lines[i3].startsWith(`\tcolor `)){
-		if(lines[i3].includes(`governments:`)){
-			for(i5=0;i5<lines.length;i5++){
-				if(lines[i5].startsWith(`color "governments: `+lines[i3].slice(21,-1)+`"`)){
-					var sliceLength=22+lines[i3].slice(21,-1).length
-					elements[1][elements[1].length-1][1]=lines[i5].slice(sliceLength).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-				}
-			}
-		}
-		else{
-			elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
-		}
 	}
 }
 function defineSystem(override){
@@ -97,259 +101,23 @@ function defineSystem(override){
 		}
 	}
 }
-function drawFakeLink(startX,startY,endX,endY){
-	HUDContext.beginPath()
-	HUDContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	HUDContext.lineTo(2150*scale+ +endX,1350*scale+ +endY)
-	HUDContext.setLineDash([0,15,0])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
-	HUDContext.stroke()
-}
-function drawGrid(){
-	for(i1=100;i1<screen.width*3*scale;i1+=100){
-		HUDContext.beginPath()
-		HUDContext.moveTo(i1,0)
-		HUDContext.lineTo(i1,screen.height*3*scale)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=1
-		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
-		HUDContext.stroke()
-	}
-	for(i1=100;i1<screen.height*3*scale;i1+=100){
-		HUDContext.beginPath()
-		HUDContext.moveTo(0,i1)
-		HUDContext.lineTo(screen.width*3*scale,i1)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=1
-		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
-		HUDContext.stroke()
-	}
-}
-function drawHUD(){
-	HUDContext.clearRect(0,0,100000,100000)
-	for(i1=0;i1<systemsSelected.length;i1++){
-		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
-	}
-	if(createSystem==true){
-		drawRestricted(xCoordinate,yCoordinate)
-		for(i1=0;i1<systemsSelected.length;i1++){
-			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
-		}
-	}else{
-		if(oldTarget!==target&&distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1])
-		}
-	}
-	if(grid==true){
-		drawGrid()
-	}
-}
-function drawLink(startX,startY,endX,endY){
-	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	switch(mapStyle){
-		case `original`:
-			canvasContext.setLineDash([0,15,10000])
-			break
-	}
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(102,102,102)`
-	canvasContext.stroke()
-}
-function drawLinkColour(startX,startY,endX,endY,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-	canvasContext.stroke()
-}
-function drawRange(x,y){
-	HUDContext.beginPath()
-	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
-	HUDContext.stroke()
-}
-function drawRestricted(x,y){
-	if(buffer==true){
-		HUDContext.beginPath()
-		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,50,0,2*Math.PI)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=2
-		if(distance>50){
-			HUDContext.fillStyle=`rgba(102,255,102,.2)`
-		}else{
-			HUDContext.fillStyle=`rgba(255,102,102,.2)`
-		}
-		HUDContext.fill()
-	}
-	HUDContext.beginPath()
-	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
-	HUDContext.stroke()
-}
-function drawSelect(x,y){
-	HUDContext.beginPath()
-	switch(mapStyle){
-		case `original`:
-			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
-			break
-		case `modern`:
-			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
-			break
-	}
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(255,255,255)`
-	HUDContext.stroke()
-}
-function drawSystem(x,y,radius){
-	canvasContext.beginPath()
-	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(102,102,102)`
-	canvasContext.stroke()
-}
-function drawSystemColour(x,y,radius,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-	canvasContext.stroke()
-}
-function drawWormhole(startX,startY,endX,endY){
-	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([0,15,10000])
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(128,51,230)`
-	canvasContext.stroke()
-}
-function drawMap(){
-	headsUp.addEventListener(`mousedown`,mouseDown)
-	headsUp.addEventListener(`mousemove`,mouseMove)
-	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
-	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
-	//	Links
-	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					switch(mapStyle){
-						case `original`:
-							drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
-							break
-						case `modern`:
-							for(i4=0;i4<elements[1].length;i4++){
-								if(elements[0][i1][2]==elements[1][i4][0]){
-									if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
-										drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
-									}else{
-										drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
-									}
-									break
-								}
-							}
-							break
-					}
+function defineGovernment(){
+	if(lines[i3].startsWith(`\tcolor `)){
+		if(lines[i3].includes(`governments:`)){
+			for(i5=0;i5<lines.length;i5++){
+				if(lines[i5].startsWith(`color "governments: `+lines[i3].slice(21,-1)+`"`)){
+					var sliceLength=22+lines[i3].slice(21,-1).length
+					elements[1][elements[1].length-1][1]=lines[i5].slice(sliceLength).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 				}
 			}
 		}
-	}
-	//	Systems
-	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[1].length;i2++){
-			if(elements[0][i1][2]==elements[1][i2][0]){
-				switch(mapStyle){
-					case `original`:
-						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
-							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
-						}else{
-							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
-						}
-						break
-					case `modern`:
-						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
-							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
-						}else{
-							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
-						}
-						break
-				}
-			}
+		else{
+			elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}
 	}
-	//	Wormholes
-	var wormholes=[]
-	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[0][i1][4].length;i2++){
-			wormholes.push([elements[0][i1][4][i2],elements[0][i1][1][0],elements[0][i1][1][1]])
-		}
-	}
-	for(i1=0;i1<wormholes.length;i1++){
-		for(i2=i1+1;i2<wormholes.length;i2++){
-			if(wormholes[i1][0]==wormholes[i2][0]){
-				drawWormhole(wormholes[i1][1],wormholes[i1][2],wormholes[i2][1]-((wormholes[i2][1]-wormholes[i1][1])/2),wormholes[i2][2]-((wormholes[i2][2]-wormholes[i1][2])/2))
-				drawWormhole(wormholes[i2][1],wormholes[i2][2],wormholes[i1][1]-((wormholes[i1][1]-wormholes[i2][1])/2),wormholes[i1][2]-((wormholes[i1][2]-wormholes[i2][2])/2))
-				break
-			}
-		}
-	}
-	console.log(elements)
-	drawHUD()
 }
-function initialize(){
-	if(localStorage.getItem(`mapStyle`)==`modern`){
-		document.getElementById(`original`).classList.add(`dark`)
-		document.getElementById(`modern`).classList.remove(`dark`)
-		mapStyle=localStorage.getItem(`mapStyle`)
-	}
-	if(localStorage.getItem(`systemOwnership`)==`claimed`){
-		document.getElementById(`claimed`).classList.remove(`dark`)
-		document.getElementById(`inhabited`).classList.add(`dark`)
-		systemOwnership=localStorage.getItem(`systemOwnership`)
-	}
-	if(localStorage.getItem(`buffer`)==`false`){
-		document.getElementById(`buffer`).classList.add(`dark`)
-		buffer=false
-	}
-	if(localStorage.getItem(`grid`)==`true`){
-		document.getElementById(`grid`).classList.remove(`dark`)
-		grid=true
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
-	canvasContext.drawImage(galaxy,400,100)
-}
-function keyDown(event){
-	switch(event.keyCode){
-		case 16:
-			createSystem=true
-			break
-	}
-	drawHUD()
-}
-function keyUp(event){
-	switch(event.keyCode){
-		case 16:
-			createSystem=false
-			break
-	}
-	drawHUD()
-}
-function loadFiles(that){
+//	User Input
+function actionLoadFiles(that){
 	document.getElementById(`style`).classList.remove(`blocked`)
 	document.getElementById(`ownership`).classList.remove(`blocked`)
 	document.getElementById(`modeActions`).classList.remove(`blocked`)
@@ -430,6 +198,115 @@ function loadFiles(that){
 	}
 	setTimeout(drawMap,500)
 }
+function actionStyle(id){
+	switch(id){
+		case `original`:
+			document.getElementById(`original`).classList.remove(`dark`)
+			document.getElementById(`modern`).classList.add(`dark`)
+			mapStyle=`original`
+			break
+		case `modern`:
+			document.getElementById(`original`).classList.add(`dark`)
+			document.getElementById(`modern`).classList.remove(`dark`)
+			mapStyle=`modern`
+			break
+	}
+	localStorage.setItem(`mapStyle`,mapStyle)
+	drawMap()
+}
+function actionOwnership(id){
+	switch(id){
+		case `inhabited`:
+			document.getElementById(`claimed`).classList.add(`dark`)
+			document.getElementById(`inhabited`).classList.remove(`dark`)
+			systemOwnership=`inhabited`
+			break
+		case `claimed`:
+			document.getElementById(`claimed`).classList.remove(`dark`)
+			document.getElementById(`inhabited`).classList.add(`dark`)
+			systemOwnership=`claimed`
+			break
+	}
+	localStorage.setItem(`systemOwnership`,systemOwnership)
+	drawMap()
+}
+function actionBuffer(){
+	switch(buffer){
+		case true:
+			document.getElementById(`buffer`).classList.add(`dark`)
+			buffer=false
+			break
+		case false:
+			document.getElementById(`buffer`).classList.remove(`dark`)
+			buffer=true
+			break
+	}
+	localStorage.setItem(`buffer`,buffer)
+}
+function actionGrid(){
+	switch(grid){
+		case false:
+			document.getElementById(`grid`).classList.remove(`dark`)
+			grid=true
+			break
+		case true:
+			document.getElementById(`grid`).classList.add(`dark`)
+			grid=false
+			break
+	}
+	localStorage.setItem(`grid`,grid)
+	drawHUD()
+}
+function actionGalaxy(){
+	galaxySelected++
+	if(galaxySelected==elements[2].length){
+		galaxySelected=0
+	}
+	galaxyPosition=elements[2][galaxySelected][1]
+	drawMap()
+	console.log(galaxyPosition)
+}
+function actionZoomIn(){
+	canvasContext.scale(3*scale,3*scale)
+	HUDContext.scale(3*scale,3*scale)
+	if(scale==2.5){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=1
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
+}
+function actionZoomOut(){
+	canvasContext.scale(3*scale,3*scale)
+	HUDContext.scale(3*scale,3*scale)
+	if(scale==1){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=2.5
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
+}
+function actionCopy(){
+	navigator.clipboard.writeText(
+		document.getElementById(`output`).innerHTML
+	)
+}
+function mouseMove(event){
+	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
+	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
+	distance=100000
+	for(i1=0;i1<elements[0].length;i1++){
+		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i1
+			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
+		}
+	}
+	drawHUD()
+}
 function mouseDown(){
 	if(createSystem==false){
 		if(distance<=100){
@@ -459,18 +336,238 @@ function mouseDown(){
 		}
 	}
 }
-function mouseMove(event){
-	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
-	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
-	distance=100000
-	for(i1=0;i1<elements[0].length;i1++){
-		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-			target=i1
-			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
-		}
+function keyDown(event){
+	switch(event.keyCode){
+		case 16:
+			createSystem=true
+			break
 	}
 	drawHUD()
 }
+function keyUp(event){
+	switch(event.keyCode){
+		case 16:
+			createSystem=false
+			break
+	}
+	drawHUD()
+}
+//	Display Map
+function drawMap(){
+	headsUp.addEventListener(`mousedown`,mouseDown)
+	headsUp.addEventListener(`mousemove`,mouseMove)
+	canvasContext.clearRect(0,0,100000,100000)
+	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
+	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
+	//	Links
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[0][i1][3].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i1][3][i2]==elements[0][i3][0]){
+					switch(mapStyle){
+						case `original`:
+							drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
+							break
+						case `modern`:
+							for(i4=0;i4<elements[1].length;i4++){
+								if(elements[0][i1][2]==elements[1][i4][0]){
+									if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+										drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
+									}else{
+										drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
+									}
+									break
+								}
+							}
+							break
+					}
+				}
+			}
+		}
+	}
+	//	Systems
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[1].length;i2++){
+			if(elements[0][i1][2]==elements[1][i2][0]){
+				switch(mapStyle){
+					case `original`:
+						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
+						}else{
+							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
+						}
+						break
+					case `modern`:
+						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
+						}else{
+							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
+						}
+						break
+				}
+			}
+		}
+	}
+	//	Wormholes
+	var wormholes=[]
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[0][i1][4].length;i2++){
+			wormholes.push([elements[0][i1][4][i2],elements[0][i1][1][0],elements[0][i1][1][1]])
+		}
+	}
+	for(i1=0;i1<wormholes.length;i1++){
+		for(i2=i1+1;i2<wormholes.length;i2++){
+			if(wormholes[i1][0]==wormholes[i2][0]){
+				drawWormhole(wormholes[i1][1],wormholes[i1][2],wormholes[i2][1]-((wormholes[i2][1]-wormholes[i1][1])/2),wormholes[i2][2]-((wormholes[i2][2]-wormholes[i1][2])/2))
+				drawWormhole(wormholes[i2][1],wormholes[i2][2],wormholes[i1][1]-((wormholes[i1][1]-wormholes[i2][1])/2),wormholes[i1][2]-((wormholes[i1][2]-wormholes[i2][2])/2))
+				break
+			}
+		}
+	}
+	console.log(elements)
+	drawHUD()
+}
+function drawSystem(x,y,radius){
+	canvasContext.beginPath()
+	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=3.6
+	canvasContext.strokeStyle=`rgb(102,102,102)`
+	canvasContext.stroke()
+}
+function drawSystemColour(x,y,radius,systemGovernment){
+	canvasContext.beginPath()
+	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=3.6
+	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	canvasContext.stroke()
+}
+function drawLink(startX,startY,endX,endY){
+	canvasContext.beginPath()
+	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([])
+	switch(mapStyle){
+		case `original`:
+			canvasContext.setLineDash([0,15,10000])
+			break
+	}
+	canvasContext.lineWidth=2
+	canvasContext.strokeStyle=`rgb(102,102,102)`
+	canvasContext.stroke()
+}
+function drawLinkColour(startX,startY,endX,endY,systemGovernment){
+	canvasContext.beginPath()
+	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=2
+	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	canvasContext.stroke()
+}
+function drawWormhole(startX,startY,endX,endY){
+	canvasContext.beginPath()
+	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([0,15,10000])
+	canvasContext.lineWidth=2
+	canvasContext.strokeStyle=`rgb(128,51,230)`
+	canvasContext.stroke()
+}
+//	Display Extras
+function drawHUD(){
+	HUDContext.clearRect(0,0,100000,100000)
+	for(i1=0;i1<systemsSelected.length;i1++){
+		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
+	}
+	if(createSystem==true){
+		drawRestricted(xCoordinate,yCoordinate)
+		for(i1=0;i1<systemsSelected.length;i1++){
+			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
+		}
+	}else{
+		if(oldTarget!==target&&distance<=100){
+			drawRange(elements[0][target][1][0],elements[0][target][1][1])
+		}
+	}
+	if(grid==true){
+		drawGrid()
+	}
+}
+function drawSelect(x,y){
+	HUDContext.beginPath()
+	switch(mapStyle){
+		case `original`:
+			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
+			break
+		case `modern`:
+			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
+			break
+	}
+	HUDContext.setLineDash([])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(255,255,255)`
+	HUDContext.stroke()
+}
+function drawFakeLink(startX,startY,endX,endY){
+	HUDContext.beginPath()
+	HUDContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
+	HUDContext.lineTo(2150*scale+ +endX,1350*scale+ +endY)
+	HUDContext.setLineDash([0,15,0])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(102,102,102)`
+	HUDContext.stroke()
+}
+function drawRange(x,y){
+	HUDContext.beginPath()
+	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
+	HUDContext.setLineDash([])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(102,102,102)`
+	HUDContext.stroke()
+}
+function drawRestricted(x,y){
+	if(buffer==true){
+		HUDContext.beginPath()
+		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,50,0,2*Math.PI)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=2
+		if(distance>50){
+			HUDContext.fillStyle=`rgba(102,255,102,.2)`
+		}else{
+			HUDContext.fillStyle=`rgba(255,102,102,.2)`
+		}
+		HUDContext.fill()
+	}
+	HUDContext.beginPath()
+	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
+	HUDContext.setLineDash([])
+	HUDContext.lineWidth=2
+	HUDContext.strokeStyle=`rgb(102,102,102)`
+	HUDContext.stroke()
+}
+function drawGrid(){
+	for(i1=100;i1<screen.width*3*scale;i1+=100){
+		HUDContext.beginPath()
+		HUDContext.moveTo(i1,0)
+		HUDContext.lineTo(i1,screen.height*3*scale)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=1
+		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
+		HUDContext.stroke()
+	}
+	for(i1=100;i1<screen.height*3*scale;i1+=100){
+		HUDContext.beginPath()
+		HUDContext.moveTo(0,i1)
+		HUDContext.lineTo(screen.width*3*scale,i1)
+		HUDContext.setLineDash([])
+		HUDContext.lineWidth=1
+		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
+		HUDContext.stroke()
+	}
+}
+//	Misc
 function printOutput(){
 	elements[3]=[[],[]]
 	document.getElementById(`output`).innerHTML=``
@@ -482,98 +579,6 @@ function printOutput(){
 			}
 		}
 	}
-}
-function switchGalaxy(){
-	galaxySelected++
-	if(galaxySelected==elements[2].length){
-		galaxySelected=0
-	}
-	galaxyPosition=elements[2][galaxySelected][1]
-	drawMap()
-	console.log(galaxyPosition)
-}
-function switchOwnership(id){
-	switch(id){
-		case `inhabited`:
-			document.getElementById(`claimed`).classList.add(`dark`)
-			document.getElementById(`inhabited`).classList.remove(`dark`)
-			systemOwnership=`inhabited`
-			break
-		case `claimed`:
-			document.getElementById(`claimed`).classList.remove(`dark`)
-			document.getElementById(`inhabited`).classList.add(`dark`)
-			systemOwnership=`claimed`
-			break
-	}
-	localStorage.setItem(`systemOwnership`,systemOwnership)
-	drawMap()
-}
-function switchStyle(id){
-	switch(id){
-		case `original`:
-			document.getElementById(`original`).classList.remove(`dark`)
-			document.getElementById(`modern`).classList.add(`dark`)
-			mapStyle=`original`
-			break
-		case `modern`:
-			document.getElementById(`original`).classList.add(`dark`)
-			document.getElementById(`modern`).classList.remove(`dark`)
-			mapStyle=`modern`
-			break
-	}
-	localStorage.setItem(`mapStyle`,mapStyle)
-	drawMap()
-}
-function toggleBuffer(){
-	switch(buffer){
-		case true:
-			document.getElementById(`buffer`).classList.add(`dark`)
-			buffer=false
-			break
-		case false:
-			document.getElementById(`buffer`).classList.remove(`dark`)
-			buffer=true
-			break
-	}
-	localStorage.setItem(`buffer`,buffer)
-}
-function toggleGrid(){
-	switch(grid){
-		case false:
-			document.getElementById(`grid`).classList.remove(`dark`)
-			grid=true
-			break
-		case true:
-			document.getElementById(`grid`).classList.add(`dark`)
-			grid=false
-			break
-	}
-	localStorage.setItem(`grid`,grid)
-	drawHUD()
-}
-function zoomIn(){
-	canvasContext.scale(3*scale,3*scale)
-	HUDContext.scale(3*scale,3*scale)
-	if(scale==2.5){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=1
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
-}
-function zoomOut(){
-	canvasContext.scale(3*scale,3*scale)
-	HUDContext.scale(3*scale,3*scale)
-	if(scale==1){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=2.5
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
 }
 Math.dist=function(x1,y1,x2,y2){ 
 	if(!x2){

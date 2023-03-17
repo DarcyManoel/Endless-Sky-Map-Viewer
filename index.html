@@ -11,24 +11,24 @@
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
-		<input class="hidden" id="file" type="file" webkitDirectory onChange="loadFiles(this)"/>
+		<input class="hidden" id="file" type="file" webkitDirectory onChange="actionLoadFiles(this)"/>
 		<div class="blocked" id="style">
-			<label id="original" onClick="switchStyle(this.id)">Original</label>
-			<label class="dark" id="modern" onClick="switchStyle(this.id)">Modern</label>
+			<label id="original" onClick="actionStyle(this.id)">Original</label>
+			<label class="dark" id="modern" onClick="actionStyle(this.id)">Modern</label>
 		</div>
 		<div class="blocked" id="ownership">
-			<label id="inhabited" onClick="switchOwnership(this.id)">Inhabited</label>
-			<label class="dark" id="claimed" onClick="switchOwnership(this.id)">Claimed</label>
+			<label id="inhabited" onClick="actionOwnership(this.id)">Inhabited</label>
+			<label class="dark" id="claimed" onClick="actionOwnership(this.id)">Claimed</label>
 		</div>
 		<div class="blocked" id="modeActions">
-			<label id="buffer" onClick="toggleBuffer()">Buffer</label>
-			<label class="dark" id="grid" onClick="toggleGrid()">Grid</label>
+			<label id="buffer" onClick="actionBuffer()">Buffer</label>
+			<label class="dark" id="grid" onClick="actionGrid()">Grid</label>
 		</div>
-		<label class="blocked" id="galaxyDisplay" onClick="switchGalaxy()">MilkyWay</label>
-		<label class="blocked" id="zoomOut" onClick="zoomOut()">-</label>
-		<label class="blocked" id="zoomIn" onClick="zoomIn()">+</label>
+		<label class="blocked" id="galaxyDisplay" onClick="actionGalaxy()">MilkyWay</label>
+		<label class="blocked" id="zoomOut" onClick="actionZoomOut()">-</label>
+		<label class="blocked" id="zoomIn" onClick="actionZoomIn()">+</label>
 		<p id="output"></p>
-		<label class="blocked" id="copy" onClick="copyOutput()">Copy</label>
+		<label class="blocked" id="copy" onClick="actionCopy()">Copy</label>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>
