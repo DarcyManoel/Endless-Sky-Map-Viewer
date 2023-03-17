@@ -124,6 +124,11 @@ label:hover{
 	white-space:pre;
 	width:240px;
 }
+#copy{
+	bottom:20px;
+	right:20px;
+	position:absolute;
+}
 /*Blur*/
 @keyframes blurOff{
 	0%{filter:blur(3px);}
