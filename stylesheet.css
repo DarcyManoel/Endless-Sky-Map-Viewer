@@ -1,14 +1,15 @@
 /*Constants*/
-body{
+*{
 	-webkit-user-select:none;
-	animation:highlightOff .5s;
-	background-color:#000;
 	color:#9f9f9f;
-	cursor:default;
 	font-family:Ubuntu;
 	margin:0;
 	overflow:hidden;
 	user-select:none;
+}
+body{
+	animation:highlightOff .5s;
+	background-color:#000;
 }
 canvas{
 	animation:blurOff 1s;
