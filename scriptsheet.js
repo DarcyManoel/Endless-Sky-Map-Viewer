@@ -34,9 +34,9 @@ function initialize(){
 		document.getElementById(`inhabited`).classList.add(`dark`)
 		systemOwnership=localStorage.getItem(`systemOwnership`)
 	}
-	if(localStorage.getItem(`buffer`)==`false`){
-		document.getElementById(`buffer`).classList.add(`dark`)
-		buffer=false
+	if(localStorage.getItem(`buffer`)==`true`){
+		document.getElementById(`buffer`).classList.remove(`dark`)
+		buffer=true
 	}
 	if(localStorage.getItem(`grid`)==`true`){
 		document.getElementById(`grid`).classList.remove(`dark`)
