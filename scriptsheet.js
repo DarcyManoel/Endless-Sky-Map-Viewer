@@ -157,30 +157,14 @@ function actionOwnership(id){
 	drawMap()
 }
 function actionBuffer(){
-	switch(buffer){
-		case true:
-			document.getElementById(`buffer`).classList.add(`dark`)
-			buffer=false
-			break
-		case false:
-			document.getElementById(`buffer`).classList.remove(`dark`)
-			buffer=true
-			break
-	}
+	buffer=!buffer
 	localStorage.setItem(`buffer`,buffer)
+	document.getElementById(`buffer`).classList.toggle(`dark`)
 }
 function actionGrid(){
-	switch(grid){
-		case false:
-			document.getElementById(`grid`).classList.remove(`dark`)
-			grid=true
-			break
-		case true:
-			document.getElementById(`grid`).classList.add(`dark`)
-			grid=false
-			break
-	}
+	grid=!grid
 	localStorage.setItem(`grid`,grid)
+	document.getElementById(`grid`).classList.toggle(`dark`)
 	drawHUD()
 }
 function actionGalaxy(){
