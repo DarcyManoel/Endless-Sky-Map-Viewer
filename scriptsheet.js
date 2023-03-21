@@ -48,13 +48,9 @@ function initialize(){
 }
 //	User Input
 function actionUpload(that){
-	document.getElementById(`style`).classList.remove(`blocked`)
-	document.getElementById(`ownership`).classList.remove(`blocked`)
-	document.getElementById(`modeActions`).classList.remove(`blocked`)
-	document.getElementById(`galaxyDisplay`).classList.remove(`blocked`)
-	document.getElementById(`zoomOut`).classList.remove(`blocked`)
-	document.getElementById(`zoomIn`).classList.remove(`blocked`)
-	document.getElementById(`copy`).classList.remove(`blocked`)
+	document.querySelectorAll('.blocked').forEach((element)=>{
+		element.classList.remove('blocked')
+	})
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
