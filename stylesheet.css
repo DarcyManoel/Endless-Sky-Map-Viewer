@@ -82,12 +82,8 @@ label:hover{
 	position:absolute;
 	top:140px;
 }
-#buffer{
-	position:absolute;
-}
 #grid{
 	position:absolute;
-	top:20px;
 }
 #galaxyDisplay{
 	position:absolute;

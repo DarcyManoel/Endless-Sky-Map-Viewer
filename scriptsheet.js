@@ -1,4 +1,3 @@
-var buffer=true
 var canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -33,10 +32,6 @@ function initialize(){
 		document.getElementById(`claimed`).classList.remove(`dark`)
 		document.getElementById(`inhabited`).classList.add(`dark`)
 		systemOwnership=localStorage.getItem(`systemOwnership`)
-	}
-	if(localStorage.getItem(`buffer`)==`true`){
-		document.getElementById(`buffer`).classList.remove(`dark`)
-		buffer=true
 	}
 	if(localStorage.getItem(`grid`)==`true`){
 		document.getElementById(`grid`).classList.remove(`dark`)
@@ -156,11 +151,6 @@ function actionOwnership(id){
 	localStorage.setItem(`systemOwnership`,systemOwnership)
 	drawMap()
 }
-function actionBuffer(){
-	buffer=!buffer
-	localStorage.setItem(`buffer`,buffer)
-	document.getElementById(`buffer`).classList.toggle(`dark`)
-}
 function actionGrid(){
 	grid=!grid
 	localStorage.setItem(`grid`,grid)
@@ -234,16 +224,14 @@ function mouseDown(){
 			drawHUD()
 		}
 	}else{
-		if(distance>50||!buffer){
-			newSystems++
-			elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
-			for(i1=0;i1<systemsSelected.length;i1++){
-				elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
-				elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
-			}
-			drawMap()
-			printOutput()
+		newSystems++
+		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
+		for(i1=0;i1<systemsSelected.length;i1++){
+			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
+			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
 		}
+		drawMap()
+		printOutput()
 	}
 }
 function keyDown(event){
@@ -508,18 +496,6 @@ function drawRange(x,y){
 	HUDContext.stroke()
 }
 function drawRestricted(x,y){
-	if(buffer==true){
-		HUDContext.beginPath()
-		HUDContext.arc(2150*scale+ +x,1350*scale+ +y,50,0,2*Math.PI)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=2
-		if(distance>50){
-			HUDContext.fillStyle=`rgba(102,255,102,.2)`
-		}else{
-			HUDContext.fillStyle=`rgba(255,102,102,.2)`
-		}
-		HUDContext.fill()
-	}
 	HUDContext.beginPath()
 	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
 	HUDContext.setLineDash([])
