@@ -33,10 +33,6 @@ function initialize(){
 		document.getElementById(`inhabited`).classList.add(`dark`)
 		systemOwnership=localStorage.getItem(`systemOwnership`)
 	}
-	if(localStorage.getItem(`grid`)==`true`){
-		document.getElementById(`grid`).classList.remove(`dark`)
-		grid=true
-	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
 	canvasContext.drawImage(galaxy,400,100)
@@ -154,11 +150,7 @@ function actionOwnership(id){
 function actionCreate(){
 	createSystem=true
 	document.getElementById(`create`).classList.remove(`dark`)
-}
-function actionGrid(){
-	grid=!grid
-	localStorage.setItem(`grid`,grid)
-	document.getElementById(`grid`).classList.toggle(`dark`)
+	grid=true
 	drawHUD()
 }
 function actionGalaxy(){
@@ -229,6 +221,7 @@ function mouseDown(){
 		}
 	}else{
 		createSystem=false
+		grid=false
 		document.getElementById(`create`).classList.add(`dark`)
 		newSystems++
 		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
@@ -244,7 +237,9 @@ function keyDown(event){
 	switch(event.keyCode){
 		case 27:
 			createSystem=false
+			grid=false
 			document.getElementById(`create`).classList.add(`dark`)
+			drawHUD()
 			break
 	}
 	drawHUD()
