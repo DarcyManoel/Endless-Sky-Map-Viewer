@@ -75,15 +75,19 @@ label:hover{
 	position:absolute;
 	top:20px;
 }
-#modeActions{
+#interactionMode{
 	height:40px;
 	left:20px;
 	padding-right:100px;
 	position:absolute;
 	top:140px;
 }
+#create{
+	position:absolute;
+}
 #grid{
 	position:absolute;
+	top:20px;
 }
 #galaxyDisplay{
 	position:absolute;

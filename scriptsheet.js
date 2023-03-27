@@ -151,6 +151,10 @@ function actionOwnership(id){
 	localStorage.setItem(`systemOwnership`,systemOwnership)
 	drawMap()
 }
+function actionCreate(){
+	createSystem=true
+	document.getElementById(`create`).classList.remove(`dark`)
+}
 function actionGrid(){
 	grid=!grid
 	localStorage.setItem(`grid`,grid)
@@ -224,6 +228,8 @@ function mouseDown(){
 			drawHUD()
 		}
 	}else{
+		createSystem=false
+		document.getElementById(`create`).classList.add(`dark`)
 		newSystems++
 		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
 		for(i1=0;i1<systemsSelected.length;i1++){
@@ -236,16 +242,9 @@ function mouseDown(){
 }
 function keyDown(event){
 	switch(event.keyCode){
-		case 16:
-			createSystem=true
-			break
-	}
-	drawHUD()
-}
-function keyUp(event){
-	switch(event.keyCode){
-		case 16:
+		case 27:
 			createSystem=false
+			document.getElementById(`create`).classList.add(`dark`)
 			break
 	}
 	drawHUD()

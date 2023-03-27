@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<title>Map Viewer</title>
 	</head>
-	<body onKeyDown="keyDown(event)" onKeyUp="keyUp(event)" onLoad="initialize()">
+	<body onKeyDown="keyDown(event)" onLoad="initialize()">
 		<img class="hidden" id="galaxy" src="assets/galaxy.png">
 		<canvas id="canvas"></canvas>
 		<canvas id="headsUp"></canvas>
@@ -20,7 +20,8 @@
 			<label id="inhabited" onClick="actionOwnership(this.id)">Inhabited</label>
 			<label class="dark" id="claimed" onClick="actionOwnership(this.id)">Claimed</label>
 		</div>
-		<div class="blocked" id="modeActions">
+		<div class="blocked" id="interactionMode">
+			<label class="dark" id="create" onClick="actionCreate()">Create</label>
 			<label class="dark" id="grid" onClick="actionGrid()">Grid</label>
 		</div>
 		<label class="blocked" id="galaxyDisplay" onClick="actionGalaxy()">MilkyWay</label>
