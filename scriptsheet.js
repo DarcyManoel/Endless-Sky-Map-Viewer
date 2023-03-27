@@ -1,3 +1,4 @@
+var block=false
 var canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -234,15 +235,27 @@ function mouseDown(){
 	}
 }
 function keyDown(event){
-	switch(event.keyCode){
-		case 27:
+	if(!block){
+		if(event.keyCode==27){
 			createSystem=false
 			grid=false
 			document.getElementById(`create`).classList.add(`dark`)
-			drawHUD()
-			break
+		}
+		if(event.keyCode==67){
+			createSystem=true
+			document.getElementById(`create`).classList.remove(`dark`)
+			grid=true
+		}
+	}
+	if(event.keyCode){
+		block=true
 	}
 	drawHUD()
+}
+function keyUp(event){
+	if(event.keyCode){
+		block=false
+	}
 }
 //	Parse Data
 function defineGalaxy(){
