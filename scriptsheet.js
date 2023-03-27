@@ -148,10 +148,16 @@ function actionOwnership(id){
 	localStorage.setItem(`systemOwnership`,systemOwnership)
 	drawMap()
 }
-function actionCreate(){
-	createSystem=true
-	document.getElementById(`create`).classList.remove(`dark`)
-	grid=true
+function actionCreate(bool){
+	if(bool){
+		createSystem=true
+		document.getElementById(`create`).classList.remove(`dark`)
+		grid=true
+	}else{
+		createSystem=false
+		document.getElementById(`create`).classList.add(`dark`)
+		grid=false
+	}
 	drawHUD()
 }
 function actionGalaxy(){
@@ -205,7 +211,7 @@ function mouseMove(event){
 	drawHUD()
 }
 function mouseDown(){
-	if(createSystem==false){
+	if(!createSystem){
 		if(distance<=100){
 			var spliced=0
 			for(i1=0;i1<systemsSelected.length;i1++){
@@ -221,9 +227,7 @@ function mouseDown(){
 			drawHUD()
 		}
 	}else{
-		createSystem=false
-		grid=false
-		document.getElementById(`create`).classList.add(`dark`)
+		actionCreate(0)
 		newSystems++
 		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
 		for(i1=0;i1<systemsSelected.length;i1++){
@@ -237,14 +241,10 @@ function mouseDown(){
 function keyDown(event){
 	if(!block){
 		if(event.keyCode==27){
-			createSystem=false
-			grid=false
-			document.getElementById(`create`).classList.add(`dark`)
+			actionCreate(0)
 		}
 		if(event.keyCode==67){
-			createSystem=true
-			document.getElementById(`create`).classList.remove(`dark`)
-			grid=true
+			actionCreate(1)
 		}
 	}
 	if(event.keyCode){
@@ -278,7 +278,7 @@ function defineSystem(override){
 					segmented=1
 				}
 			}
-			if(segmented==0){
+			if(!segmented){
 				elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}
@@ -296,7 +296,7 @@ function defineSystem(override){
 					segmented=1
 				}
 			}
-			if(segmented==0){
+			if(!segmented){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i3].startsWith(`\t\tobject `)){
@@ -306,7 +306,7 @@ function defineSystem(override){
 					segmented=1
 				}
 			}
-			if(segmented==0){
+			if(!segmented){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}
@@ -456,7 +456,7 @@ function drawHUD(){
 	for(i1=0;i1<systemsSelected.length;i1++){
 		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 	}
-	if(createSystem==true){
+	if(createSystem){
 		drawRestricted(xCoordinate,yCoordinate)
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
@@ -466,7 +466,7 @@ function drawHUD(){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 		}
 	}
-	if(grid==true){
+	if(grid){
 		drawGrid()
 	}
 }
