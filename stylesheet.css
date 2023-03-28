@@ -85,6 +85,10 @@ label:hover{
 #create{
 	position:absolute;
 }
+#translate{
+	position:absolute;
+	top:20px;
+}
 #galaxyDisplay{
 	position:absolute;
 	right:20px;

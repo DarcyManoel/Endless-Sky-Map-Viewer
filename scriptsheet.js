@@ -1,15 +1,19 @@
-var block=false
+var block=0
 var canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
 var canvasContext=canvas.getContext(`2d`)
-var createSystem=false
+var createSystem=0
 var distance
-var elements=[[],[],[],[[],[]]]
+var elements=[[],[],[],[]]
+//	Systems
+//	Governments
+//	Galaxies
+//	Translated Systems
 var galaxy=document.getElementById(`galaxy`)
 var galaxyPosition=[0,0]
 var galaxySelected=0
-var grid=false
+var grid=0
 var headsUp=document.getElementById(`headsUp`)
 	headsUp.height=screen.height
 	headsUp.width=screen.width
@@ -17,10 +21,15 @@ var HUDContext=headsUp.getContext(`2d`)
 var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
+var override=0
 var scale=1
 var systemOwnership=`inhabited`
 var systemsSelected=[]
 var target=0
+var translateBlock=1
+var translateCoordinates=[[],[]]
+var translatePoints=[[[],[]],[[],[]]]
+var translateSystem=0
 var xCoordinate
 var yCoordinate
 function initialize(){
@@ -150,13 +159,25 @@ function actionOwnership(id){
 }
 function actionCreate(bool){
 	if(bool){
-		createSystem=true
+		createSystem=1
 		document.getElementById(`create`).classList.remove(`dark`)
-		grid=true
+		grid=1
 	}else{
-		createSystem=false
+		createSystem=0
 		document.getElementById(`create`).classList.add(`dark`)
-		grid=false
+		grid=0
+	}
+	drawHUD()
+}
+function actionTranslate(bool){
+	if(bool){
+		document.getElementById(`translate`).classList.remove(`dark`)
+		grid=1
+		translateSystem=1
+	}else{
+		document.getElementById(`translate`).classList.add(`dark`)
+		grid=0
+		translateSystem=0
 	}
 	drawHUD()
 }
@@ -198,20 +219,21 @@ function actionCopy(){
 		document.getElementById(`output`).innerHTML
 	)
 }
-function mouseMove(event){
-	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
-	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
-	distance=100000
-	for(i1=0;i1<elements[0].length;i1++){
-		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-			target=i1
-			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
-		}
-	}
-	drawHUD()
-}
 function mouseDown(){
-	if(!createSystem){
+	if(createSystem){
+		actionCreate(0)
+		newSystems++
+		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
+		for(i1=0;i1<systemsSelected.length;i1++){
+			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
+			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
+		}
+		drawMap()
+		printOutput()
+	}else if(translateSystem){
+		translatePoints[0]=[xCoordinate,yCoordinate]
+		translateBlock=0
+	}else{
 		if(distance<=100){
 			var spliced=0
 			for(i1=0;i1<systemsSelected.length;i1++){
@@ -226,35 +248,67 @@ function mouseDown(){
 			}
 			drawHUD()
 		}
-	}else{
-		actionCreate(0)
-		newSystems++
-		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
-		for(i1=0;i1<systemsSelected.length;i1++){
-			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
-			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
-		}
-		drawMap()
-		printOutput()
 	}
+}
+function mouseMove(event){
+	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
+	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
+	distance=100000
+	for(i1=0;i1<elements[0].length;i1++){
+		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i1
+			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
+		}
+	}
+	drawHUD()
+	if(translateSystem&&!translateBlock){
+		translatePoints[1]=[xCoordinate,yCoordinate]
+		drawFakeLink(translatePoints[0][0],translatePoints[0][1],translatePoints[1][0],translatePoints[1][1])
+	}
+}
+function mouseUp(){
+	if(translateSystem){
+		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
+		for(i1=0;i1<systemsSelected.length;i1++){
+			elements[0][systemsSelected[i1]][1]=[elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1]]
+			override=0
+			for(i2=0;i2<elements[3].length;i2++){
+				if(elements[0][systemsSelected[i1]][0]==elements[3][i2][0]){
+					elements[3][i2][1]=elements[0][systemsSelected[i1]][1]
+					override=1
+					console.log(`duplicate`)
+				}
+			}
+			if(!override){
+				elements[3].push([elements[0][systemsSelected[i1]][0],elements[0][systemsSelected[i1]][1]])
+			}
+		}
+	}
+	translatePoints=[[],[]]
+	drawMap()
+	printOutput()
 }
 function keyDown(event){
 	if(!block){
 		if(event.keyCode==27){
 			actionCreate(0)
+			actionTranslate(0)
 		}
 		if(event.keyCode==67){
 			actionCreate(1)
 		}
+		if(event.keyCode==84){
+			actionTranslate(1)
+		}
 	}
 	if(event.keyCode){
-		block=true
+		block=1
 	}
 	drawHUD()
 }
 function keyUp(event){
 	if(event.keyCode){
-		block=false
+		block=0
 	}
 }
 //	Parse Data
@@ -331,6 +385,7 @@ function defineGovernment(){
 function drawMap(){
 	headsUp.addEventListener(`mousedown`,mouseDown)
 	headsUp.addEventListener(`mousemove`,mouseMove)
+	headsUp.addEventListener(`mouseup`,mouseUp)
 	canvasContext.clearRect(0,0,100000,100000)
 	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
@@ -532,7 +587,6 @@ function drawGrid(){
 }
 //	Misc
 function printOutput(){
-	elements[3]=[[],[]]
 	document.getElementById(`output`).innerHTML=``
 	for(i1=0;i1<elements[0].length;i1++){
 		if(elements[0][i1][0].startsWith(`placeholder`)){
@@ -541,6 +595,9 @@ function printOutput(){
 				document.getElementById(`output`).innerHTML+=`\n\tlink "`+elements[0][i1][3].join(`"\n\tlink "`)+`"`
 			}
 		}
+	}
+	for(i1=0;i1<elements[3].length;i1++){
+		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+elements[3][i1][1][0]+` `+elements[3][i1][1][1]
 	}
 }
 Math.dist=function(x1,y1,x2,y2){ 
