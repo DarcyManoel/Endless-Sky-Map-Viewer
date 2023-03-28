@@ -619,7 +619,7 @@ function printOutput(){
 		}
 	}
 	for(i1=0;i1<elements[3].length;i1++){
-		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+elements[3][i1][1][0]+` `+elements[3][i1][1][1]
+		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100
 	}
 }
 Math.dist=function(x1,y1,x2,y2){ 
