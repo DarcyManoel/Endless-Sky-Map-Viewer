@@ -10,6 +10,7 @@ var elements=[[],[],[],[]]
 //	Governments
 //	Galaxies
 //	Translated Systems
+var excludedTarget
 var galaxy=document.getElementById(`galaxy`)
 var galaxyPosition=[0,0]
 var galaxySelected=0
@@ -18,6 +19,7 @@ var headsUp=document.getElementById(`headsUp`)
 	headsUp.height=screen.height
 	headsUp.width=screen.width
 var HUDContext=headsUp.getContext(`2d`)
+var isDragging=0
 var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
@@ -222,6 +224,8 @@ function actionCopy(){
 	)
 }
 function mouseDown(){
+	excludedTarget=target
+	isDragging=1
 	if(createSystem){
 		actionCreate(0)
 		newSystems++
@@ -262,6 +266,18 @@ function mouseMove(event){
 			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
+	if(distance<=100&&isDragging&&!translateSystem&&!createSystem&&target!==excludedTarget){
+		var spliced=0
+		for(i1=0;i1<systemsSelected.length;i1++){
+			if(systemsSelected[i1]==target){
+				spliced=1
+				break
+			}
+		}
+		if(!spliced){
+			systemsSelected.push(target)
+		}
+	}
 	drawHUD()
 	if(translateSystem&&!translateBlock){
 		translatePoints[1]=[xCoordinate,yCoordinate]
@@ -269,6 +285,7 @@ function mouseMove(event){
 	}
 }
 function mouseUp(){
+	isDragging=0
 	if(translateSystem){
 		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
 		for(i1=0;i1<systemsSelected.length;i1++){
