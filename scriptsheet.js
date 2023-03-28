@@ -563,7 +563,11 @@ function drawRestricted(x,y){
 	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
 	HUDContext.setLineDash([])
 	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
+	if(distance<=100){
+		HUDContext.strokeStyle=`rgb(102,255,102)`
+	}else{
+		HUDContext.strokeStyle=`rgb(255,102,102)`
+	}
 	HUDContext.stroke()
 }
 function drawGrid(){
