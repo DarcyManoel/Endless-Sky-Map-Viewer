@@ -159,6 +159,7 @@ function actionOwnership(id){
 }
 function actionCreate(bool){
 	if(bool){
+		actionTranslate(0)
 		createSystem=1
 		document.getElementById(`create`).classList.remove(`dark`)
 		grid=1
@@ -171,6 +172,7 @@ function actionCreate(bool){
 }
 function actionTranslate(bool){
 	if(bool){
+		actionCreate(0)
 		document.getElementById(`translate`).classList.remove(`dark`)
 		grid=1
 		translateSystem=1
