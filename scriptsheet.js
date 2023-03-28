@@ -276,7 +276,6 @@ function mouseUp(){
 				if(elements[0][systemsSelected[i1]][0]==elements[3][i2][0]){
 					elements[3][i2][1]=elements[0][systemsSelected[i1]][1]
 					override=1
-					console.log(`duplicate`)
 				}
 			}
 			if(!override){
