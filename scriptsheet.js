@@ -311,6 +311,9 @@ function mouseUp(){
 function keyDown(event){
 	if(!block){
 		if(event.keyCode==27){
+			if(!createSystem&&!translateSystem){
+				systemsSelected=[]
+			}
 			actionCreate(0)
 			actionTranslate(0)
 		}
