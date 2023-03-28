@@ -518,7 +518,7 @@ function drawHUD(){
 			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
 		}
 	}else{
-		if(oldTarget!==target&&distance<=100){
+		if(oldTarget!==target&&distance<=100&&!translateSystem){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 		}
 	}
