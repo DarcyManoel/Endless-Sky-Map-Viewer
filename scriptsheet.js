@@ -281,13 +281,15 @@ function mouseMove(event){
 	drawHUD()
 	if(translateSystem&&!translateBlock){
 		translatePoints[1]=[xCoordinate,yCoordinate]
-		drawFakeLink(translatePoints[0][0],translatePoints[0][1],translatePoints[1][0],translatePoints[1][1])
+		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
+		for(i1=0;i1<systemsSelected.length;i1++){
+			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
+		}
 	}
 }
 function mouseUp(){
 	isDragging=0
 	if(translateSystem){
-		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
 		for(i1=0;i1<systemsSelected.length;i1++){
 			elements[0][systemsSelected[i1]][1]=[elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1]]
 			override=0
