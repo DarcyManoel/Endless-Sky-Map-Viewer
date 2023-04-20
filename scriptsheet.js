@@ -1,8 +1,14 @@
-var block=0
-var canvas=document.getElementById(`canvas`)
+const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
-var canvasContext=canvas.getContext(`2d`)
+const canvasContext=canvas.getContext(`2d`)
+const galaxy=document.getElementById(`galaxy`)
+const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
+const headsUp=document.getElementById(`headsUp`)
+	headsUp.height=screen.height
+	headsUp.width=screen.width
+const HUDContext=headsUp.getContext(`2d`)
+var block=0
 var createSystem=0
 var distance
 var elements=[[],[],[],[]]
@@ -11,14 +17,9 @@ var elements=[[],[],[],[]]
 //	Galaxies
 //	Translated Systems
 var excludedTarget
-var galaxy=document.getElementById(`galaxy`)
-var galaxyPosition=[0,0]
+var galaxyPosition=[112,22]
 var galaxySelected=0
 var grid=0
-var headsUp=document.getElementById(`headsUp`)
-	headsUp.height=screen.height
-	headsUp.width=screen.width
-var HUDContext=headsUp.getContext(`2d`)
 var isDragging=0
 var mapStyle=`original`
 var newSystems=0
@@ -47,7 +48,7 @@ function initialize(){
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	HUDContext.scale((1/3)/scale,(1/3)/scale)
-	canvasContext.drawImage(galaxy,400,100)
+	drawGalaxy()
 }
 //	User Input
 function actionUpload(that){
@@ -257,8 +258,8 @@ function mouseDown(){
 	}
 }
 function mouseMove(event){
-	xCoordinate=Math.round((event.offsetX*3-2150)*scale)
-	yCoordinate=Math.round((event.offsetY*3-1350)*scale)
+	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
+	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
 	distance=100000
 	for(i1=0;i1<elements[0].length;i1++){
 		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
@@ -409,8 +410,7 @@ function drawMap(){
 	headsUp.addEventListener(`mousedown`,mouseDown)
 	headsUp.addEventListener(`mousemove`,mouseMove)
 	headsUp.addEventListener(`mouseup`,mouseUp)
-	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,400+(2150*scale-2150)-galaxyPosition[0],100+(1350*scale-1350)-galaxyPosition[1])
+	drawGalaxy()
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
@@ -479,6 +479,10 @@ function drawMap(){
 	}
 	console.log(elements)
 	drawHUD()
+}
+function drawGalaxy(){
+	canvasContext.clearRect(0,0,100000,100000)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]+canvas.width*1.5*scale,galaxyCentre[1]+canvas.height*1.5*scale)
 }
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()
