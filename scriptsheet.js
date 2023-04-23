@@ -2,20 +2,16 @@ const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
 const canvasContext=canvas.getContext(`2d`)
+const overlay=document.getElementById(`overlay`)
+	overlay.height=screen.height
+	overlay.width=screen.width
+const overlayContext=overlay.getContext(`2d`)
 const galaxy=document.getElementById(`galaxy`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
-const headsUp=document.getElementById(`headsUp`)
-	headsUp.height=screen.height
-	headsUp.width=screen.width
-const HUDContext=headsUp.getContext(`2d`)
 var block=0
 var createSystem=0
 var distance
-var elements=[[],[],[],[]]
-//	Systems
-//	Governments
-//	Galaxies
-//	Translated Systems
+var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`]]
 var excludedTarget
 var galaxyPosition=[112,22]
 var galaxySelected=0
@@ -47,7 +43,7 @@ function initialize(){
 		systemOwnership=localStorage.getItem(`systemOwnership`)
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawGalaxy()
 }
 //	User Input
@@ -56,6 +52,7 @@ function actionUpload(that){
 		element.classList.remove('blocked')
 	})
 	var files=event.target.files
+	elements=[[],[],[],[]]
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
 		systemsReader.readAsText(files[i1])
@@ -171,7 +168,7 @@ function actionCreate(bool){
 		document.getElementById(`create`).classList.add(`dark`)
 		grid=0
 	}
-	drawHUD()
+	drawOverlay()
 }
 function actionTranslate(bool){
 	if(bool){
@@ -184,7 +181,7 @@ function actionTranslate(bool){
 		grid=0
 		translateSystem=0
 	}
-	drawHUD()
+	drawOverlay()
 }
 function actionGalaxy(){
 	galaxySelected++
@@ -197,26 +194,26 @@ function actionGalaxy(){
 }
 function actionZoomIn(){
 	canvasContext.scale(3*scale,3*scale)
-	HUDContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
 	if(scale==2.5){
 		scale=1.5
 	}else if(scale==1.5){
 		scale=1
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawMap()
 }
 function actionZoomOut(){
 	canvasContext.scale(3*scale,3*scale)
-	HUDContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
 	if(scale==1){
 		scale=1.5
 	}else if(scale==1.5){
 		scale=2.5
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	HUDContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawMap()
 }
 function actionCopy(){
@@ -253,7 +250,7 @@ function mouseDown(){
 			if(!spliced){
 				systemsSelected.push(target)
 			}
-			drawHUD()
+			drawOverlay()
 		}
 	}
 }
@@ -279,14 +276,11 @@ function mouseMove(event){
 			systemsSelected.push(target)
 		}
 	}
-	drawHUD()
 	if(translateSystem&&!translateBlock){
 		translatePoints[1]=[xCoordinate,yCoordinate]
 		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
-		for(i1=0;i1<systemsSelected.length;i1++){
-			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
-		}
 	}
+	drawOverlay()
 }
 function mouseUp(){
 	isDragging=0
@@ -328,7 +322,7 @@ function keyDown(event){
 	if(event.keyCode){
 		block=1
 	}
-	drawHUD()
+	drawOverlay()
 }
 function keyUp(event){
 	if(event.keyCode){
@@ -407,9 +401,9 @@ function defineGovernment(){
 }
 //	Display Map
 function drawMap(){
-	headsUp.addEventListener(`mousedown`,mouseDown)
-	headsUp.addEventListener(`mousemove`,mouseMove)
-	headsUp.addEventListener(`mouseup`,mouseUp)
+	overlay.addEventListener(`mousedown`,mouseDown)
+	overlay.addEventListener(`mousemove`,mouseMove)
+	overlay.addEventListener(`mouseup`,mouseUp)
 	drawGalaxy()
 	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
 	//	Links
@@ -478,7 +472,7 @@ function drawMap(){
 		}
 	}
 	console.log(elements)
-	drawHUD()
+	drawOverlay()
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
@@ -486,7 +480,7 @@ function drawGalaxy(){
 }
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()
-	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
 	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6
 	canvasContext.strokeStyle=`rgb(102,102,102)`
@@ -494,7 +488,7 @@ function drawSystem(x,y,radius){
 }
 function drawSystemColour(x,y,radius,systemGovernment){
 	canvasContext.beginPath()
-	canvasContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
 	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
@@ -502,8 +496,8 @@ function drawSystemColour(x,y,radius,systemGovernment){
 }
 function drawLink(startX,startY,endX,endY){
 	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([])
 	switch(mapStyle){
 		case `original`:
@@ -516,8 +510,8 @@ function drawLink(startX,startY,endX,endY){
 }
 function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([])
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
@@ -525,95 +519,98 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 }
 function drawWormhole(startX,startY,endX,endY){
 	canvasContext.beginPath()
-	canvasContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(2150*scale+ +endX-galaxyPosition[0],1350*scale+ +endY-galaxyPosition[1])
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([0,15,10000])
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(128,51,230)`
 	canvasContext.stroke()
 }
 //	Display Extras
-function drawHUD(){
-	HUDContext.clearRect(0,0,100000,100000)
+function drawOverlay(){
+	overlayContext.clearRect(0,0,100000,100000)
+	if(grid){
+		drawGrid()
+	}
 	for(i1=0;i1<systemsSelected.length;i1++){
 		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 	}
 	if(createSystem){
 		drawRestricted(xCoordinate,yCoordinate)
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate,yCoordinate)
+			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
 		}
 	}else{
 		if(oldTarget!==target&&distance<=100&&!translateSystem){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 		}
 	}
-	if(grid){
-		drawGrid()
+	for(i1=0;i1<systemsSelected.length;i1++){
+		drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
 	}
 }
 function drawSelect(x,y){
-	HUDContext.beginPath()
+	overlayContext.beginPath()
 	switch(mapStyle){
 		case `original`:
-			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
+			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
 			break
 		case `modern`:
-			HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
+			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
 			break
 	}
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(255,255,255)`
-	HUDContext.stroke()
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(255,255,255)`
+	overlayContext.stroke()
 }
 function drawFakeLink(startX,startY,endX,endY){
-	HUDContext.beginPath()
-	HUDContext.moveTo(2150*scale+ +startX-galaxyPosition[0],1350*scale+ +startY-galaxyPosition[1])
-	HUDContext.lineTo(2150*scale+ +endX,1350*scale+ +endY)
-	HUDContext.setLineDash([0,15,0])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
-	HUDContext.stroke()
+	overlayContext.beginPath()
+	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	overlayContext.setLineDash([0,15,0])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
 }
 function drawRange(x,y){
-	HUDContext.beginPath()
-	HUDContext.arc(2150*scale+ +x-galaxyPosition[0],1350*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
-	HUDContext.strokeStyle=`rgb(102,102,102)`
-	HUDContext.stroke()
+	overlayContext.beginPath()
+	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
 }
 function drawRestricted(x,y){
-	HUDContext.beginPath()
-	HUDContext.arc(2150*scale+ +x,1350*scale+ +y,100,0,2*Math.PI)
-	HUDContext.setLineDash([])
-	HUDContext.lineWidth=2
+	overlayContext.beginPath()
+	overlayContext.arc(canvas.width*1.5*scale+ +x,canvas.height*1.5*scale+ +y,100,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
 	if(distance<=100){
-		HUDContext.strokeStyle=`rgb(102,255,102)`
+		overlayContext.strokeStyle=`rgb(102,255,102)`
 	}else{
-		HUDContext.strokeStyle=`rgb(255,102,102)`
+		overlayContext.strokeStyle=`rgb(255,102,102)`
 	}
-	HUDContext.stroke()
+	overlayContext.stroke()
 }
 function drawGrid(){
 	for(i1=100;i1<screen.width*3*scale;i1+=100){
-		HUDContext.beginPath()
-		HUDContext.moveTo(i1,0)
-		HUDContext.lineTo(i1,screen.height*3*scale)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=1
-		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
-		HUDContext.stroke()
+		overlayContext.beginPath()
+		overlayContext.moveTo(i1,0)
+		overlayContext.lineTo(i1,screen.height*3*scale)
+		overlayContext.setLineDash([])
+		overlayContext.lineWidth=1
+		overlayContext.strokeStyle=`rgba(102,102,102,.4)`
+		overlayContext.stroke()
 	}
 	for(i1=100;i1<screen.height*3*scale;i1+=100){
-		HUDContext.beginPath()
-		HUDContext.moveTo(0,i1)
-		HUDContext.lineTo(screen.width*3*scale,i1)
-		HUDContext.setLineDash([])
-		HUDContext.lineWidth=1
-		HUDContext.strokeStyle=`rgba(102,102,102,.4)`
-		HUDContext.stroke()
+		overlayContext.beginPath()
+		overlayContext.moveTo(0,i1)
+		overlayContext.lineTo(screen.width*3*scale,i1)
+		overlayContext.setLineDash([])
+		overlayContext.lineWidth=1
+		overlayContext.strokeStyle=`rgba(102,102,102,.4)`
+		overlayContext.stroke()
 	}
 }
 //	Misc
