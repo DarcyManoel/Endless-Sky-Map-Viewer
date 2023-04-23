@@ -231,6 +231,11 @@ function mouseDown(){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
 			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
+			for(i2=0;i2<elements[3].length;i2++){
+				if(elements[0][systemsSelected[i1]][0]==elements[3][i2][0]){
+					elements[3][i2][2].push(`placeholder`+newSystems)
+				}
+			}
 		}
 		drawMap()
 		printOutput()
@@ -295,7 +300,7 @@ function mouseUp(){
 				}
 			}
 			if(!override){
-				elements[3].push([elements[0][systemsSelected[i1]][0],elements[0][systemsSelected[i1]][1]])
+				elements[3].push([elements[0][systemsSelected[i1]][0],elements[0][systemsSelected[i1]][1],[[]]])
 			}
 		}
 	}
@@ -625,7 +630,7 @@ function printOutput(){
 		}
 	}
 	for(i1=0;i1<elements[3].length;i1++){
-		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100
+		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100+elements[3][i1][2].join(`\n\tadd link `)
 	}
 }
 Math.dist=function(x1,y1,x2,y2){ 
