@@ -32,6 +32,7 @@ var translateSystem=0
 var xCoordinate
 var yCoordinate
 function initialize(){
+	elements=[[],[],[],[]]
 	if(localStorage.getItem(`mapStyle`)==`modern`){
 		document.getElementById(`original`).classList.add(`dark`)
 		document.getElementById(`modern`).classList.remove(`dark`)
@@ -52,7 +53,6 @@ function actionUpload(that){
 		element.classList.remove('blocked')
 	})
 	var files=event.target.files
-	elements=[[],[],[],[]]
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
 		systemsReader.readAsText(files[i1])
