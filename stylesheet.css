@@ -89,6 +89,16 @@ label:hover{
 	position:absolute;
 	top:20px;
 }
+#xCoordinate{
+	bottom:40px;
+	left:20px;
+	position:absolute;
+}
+#yCoordinate{
+	bottom:20px;
+	left:20px;
+	position:absolute;
+}
 #galaxyDisplay{
 	position:absolute;
 	right:20px;

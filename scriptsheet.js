@@ -548,6 +548,8 @@ function drawOverlay(){
 	}else{
 		if(oldTarget!==target&&distance<=100&&!translateSystem){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
+			document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
+			document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
