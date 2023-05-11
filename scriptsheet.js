@@ -481,7 +481,7 @@ function drawMap(){
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
 }
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()
