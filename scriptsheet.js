@@ -11,7 +11,7 @@ const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
 var block=0
 var createSystem=0
 var distance
-var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`]]
+var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`]]
 var excludedTarget
 var galaxyPosition=[112,22]
 var galaxySelected=0
@@ -32,7 +32,7 @@ var translateSystem=0
 var xCoordinate
 var yCoordinate
 function initialize(){
-	elements=[[],[],[],[]]
+	elements=[[],[],[],[],[]]
 	if(localStorage.getItem(`mapStyle`)==`modern`){
 		document.getElementById(`original`).classList.add(`dark`)
 		document.getElementById(`modern`).classList.remove(`dark`)
@@ -116,6 +116,17 @@ function actionUpload(that){
 								break
 							}
 							defineGalaxy()
+						}
+						break parseLine
+					//	Wormholes
+					}else if(lines[i2].startsWith(`wormhole `)){
+						//	Define
+						elements[4].push([lines[i2].slice(9).replaceAll(`\r`,``),0,[]])
+						for(i3=i2+1;i3<lines.length;i3++){
+							if(!lines[i3].startsWith(`\t`)){
+								break
+							}
+							defineWormhole()
 						}
 						break parseLine
 					}
@@ -389,6 +400,23 @@ function defineSystem(override){
 		}
 	}
 }
+function defineWormhole(){
+	if(lines[i3].startsWith(`\tmappable`)){
+		elements[4][elements[4].length-1][1]=1
+	}else if(lines[i3].startsWith(`\tlink `)){
+		if(lines[i3].includes(`" `)){
+			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(`" `))
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1].replaceAll(`"`,``)
+		}else if(lines[i3].includes(` "`)){
+			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(` "`))
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1].replaceAll(`"`,``)
+		}else{
+			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(` `))
+		}
+	}
+}
 function defineGovernment(){
 	if(lines[i3].startsWith(`\tcolor `)){
 		if(lines[i3].includes(`governments:`)){
@@ -461,18 +489,19 @@ function drawMap(){
 		}
 	}
 	//	Wormholes
-	var wormholes=[]
-	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[0][i1][4].length;i2++){
-			wormholes.push([elements[0][i1][4][i2],elements[0][i1][1][0],elements[0][i1][1][1]])
-		}
-	}
-	for(i1=0;i1<wormholes.length;i1++){
-		for(i2=i1+1;i2<wormholes.length;i2++){
-			if(wormholes[i1][0]==wormholes[i2][0]){
-				drawWormhole(wormholes[i1][1],wormholes[i1][2],wormholes[i2][1]-((wormholes[i2][1]-wormholes[i1][1])/2),wormholes[i2][2]-((wormholes[i2][2]-wormholes[i1][2])/2))
-				drawWormhole(wormholes[i2][1],wormholes[i2][2],wormholes[i1][1]-((wormholes[i1][1]-wormholes[i2][1])/2),wormholes[i1][2]-((wormholes[i1][2]-wormholes[i2][2])/2))
-				break
+	var wormholeStart=[[],[]]
+	var wormholeEnd=[[],[]]
+	for(i1=0;i1<elements[4].length;i1++){
+		if(elements[4][i1][1]){
+			for(i2=0;i2<elements[4][i1][2].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0].includes(elements[4][i1][2][i2][0])){
+						wormholeStart=elements[0][i3][1]
+					}else if(elements[0][i3][0].includes(elements[4][i1][2][i2][1])){
+						wormholeEnd=elements[0][i3][1]
+					}
+				}
+				drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1])
 			}
 		}
 	}
