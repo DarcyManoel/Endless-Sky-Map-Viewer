@@ -1,1 +1,0 @@
-# Deveoped on Safari
