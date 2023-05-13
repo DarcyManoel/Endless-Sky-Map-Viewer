@@ -21,6 +21,7 @@ var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
 var override=0
+var rangeCheck=0
 var scale=1
 var systemOwnership=`inhabited`
 var systemsSelected=[]
@@ -186,6 +187,17 @@ function actionCreate(bool){
 	}
 	drawOverlay()
 }
+function actionJump(bool){
+	if(bool){
+		actionJump(0)
+		rangeCheck=1
+		grid=1
+	}else{
+		rangeCheck=0
+		grid=0
+	}
+	drawOverlay()
+}
 function actionTranslate(bool){
 	if(bool){
 		actionCreate(0)
@@ -331,12 +343,22 @@ function keyDown(event){
 				systemsSelected=[]
 			}
 			actionCreate(0)
+			actionJump(0)
 			actionTranslate(0)
 		}
 		if(event.keyCode==67){
 			actionCreate(1)
+			actionJump(0)
+			actionTranslate(0)
+		}
+		if(event.keyCode==74){
+			actionCreate(0)
+			actionJump(1)
+			actionTranslate(0)
 		}
 		if(event.keyCode==84){
+			actionCreate(0)
+			actionJump(0)
 			actionTranslate(1)
 		}
 	}
@@ -584,25 +606,43 @@ function drawWormhole(startX,startY,endX,endY,color){
 //	Display Extras
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
+	if(rangeCheck){
+		for(i1=0;i1<elements[0].length;i1++){
+			for(i2=0;i2<elements[0].length;i2++){
+				if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=100){
+					drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+				}
+			}
+			for(i2=0;i2<elements[0][i1][3].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i1][3][i2]==elements[0][i3][0]){
+						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+					}
+				}
+			}
+		}
+	}
 	if(grid){
 		drawGrid()
 	}
-	for(i1=0;i1<systemsSelected.length;i1++){
-		drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
-	}
-	if(createSystem){
-		drawRestricted(xCoordinate,yCoordinate)
+	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
+			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 		}
-	}else{
-		if(distance>100){
-			document.getElementById(`xCoordinate`).innerHTML=`x:`
-			document.getElementById(`yCoordinate`).innerHTML=`y:`
-		}else if(oldTarget!==target&&distance<=100&&!translateSystem){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1])
-			document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
-			document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
+		if(createSystem){
+			drawRestricted(xCoordinate,yCoordinate)
+			for(i1=0;i1<systemsSelected.length;i1++){
+				drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
+			}
+		}else{
+			if(distance>100){
+				document.getElementById(`xCoordinate`).innerHTML=`x:`
+				document.getElementById(`yCoordinate`).innerHTML=`y:`
+			}else if(oldTarget!==target&&distance<=100&&!translateSystem){
+				drawRange(elements[0][target][1][0],elements[0][target][1][1])
+				document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
+				document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
+			}
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
@@ -672,6 +712,15 @@ function drawGrid(){
 		overlayContext.strokeStyle=`rgba(102,102,102,.4)`
 		overlayContext.stroke()
 	}
+}
+function drawRangeCheck(startX,startY,endX,endY){
+	overlayContext.beginPath()
+	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(0,255,0)`
+	overlayContext.stroke()
 }
 //	Misc
 function printOutput(){
