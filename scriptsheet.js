@@ -575,7 +575,10 @@ function drawOverlay(){
 			drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
 		}
 	}else{
-		if(oldTarget!==target&&distance<=100&&!translateSystem){
+		if(distance>100){
+			document.getElementById(`xCoordinate`).innerHTML=`x:`
+			document.getElementById(`yCoordinate`).innerHTML=`y:`
+		}else if(oldTarget!==target&&distance<=100&&!translateSystem){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 			document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
 			document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
