@@ -11,7 +11,7 @@ const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
 var block=0
 var createSystem=0
 var distance
-var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`]]
+var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`],[`colors`]]
 var excludedTarget
 var galaxyPosition=[112,22]
 var galaxySelected=0
@@ -32,7 +32,7 @@ var translateSystem=0
 var xCoordinate
 var yCoordinate
 function initialize(){
-	elements=[[],[],[],[],[]]
+	elements=[[],[],[],[],[],[]]
 	if(localStorage.getItem(`mapStyle`)==`modern`){
 		document.getElementById(`original`).classList.add(`dark`)
 		document.getElementById(`modern`).classList.remove(`dark`)
@@ -121,13 +121,18 @@ function actionUpload(that){
 					//	Wormholes
 					}else if(lines[i2].startsWith(`wormhole `)){
 						//	Define
-						elements[4].push([lines[i2].slice(9).replaceAll(`\r`,``),0,[]])
+						elements[4].push([lines[i2].slice(9).replaceAll(`\r`,``),0,[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
 							}
 							defineWormhole()
 						}
+						break parseLine
+					//	Colors
+					}else if(lines[i2].startsWith(`color `)){
+						//	Define
+						elements[5].push(lines[i2].slice(7).replaceAll(`\r`,``).split(`" `))
 						break parseLine
 					}
 				}
@@ -415,6 +420,8 @@ function defineWormhole(){
 		}else{
 			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(` `))
 		}
+	}else if(lines[i3].startsWith(`\tcolor `)){
+		elements[4][elements[4].length-1][3]=lines[i3].slice(7)
 	}
 }
 function defineGovernment(){
@@ -501,7 +508,17 @@ function drawMap(){
 						wormholeEnd=elements[0][i3][1]
 					}
 				}
-				drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1])
+				var wormholeColor=0
+				for(i3=0;i3<elements[5].length;i3++){
+					if(elements[4][i1][3].includes(elements[5][i3][0])){
+						drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1],elements[5][i3][1])
+						wormholeColor=1
+						break
+					}
+				}
+				if(!wormholeColor){
+					drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1])
+				}
 			}
 		}
 	}
@@ -551,13 +568,17 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	canvasContext.stroke()
 }
-function drawWormhole(startX,startY,endX,endY){
+function drawWormhole(startX,startY,endX,endY,color){
 	canvasContext.beginPath()
 	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	canvasContext.setLineDash([0,15,10000])
 	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(128,51,230)`
+	if(color){
+		canvasContext.strokeStyle=`rgb(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`)`
+	}else{
+		canvasContext.strokeStyle=`rgb(128,51,230)`
+	}
 	canvasContext.stroke()
 }
 //	Display Extras
