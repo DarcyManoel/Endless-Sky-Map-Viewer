@@ -17,6 +17,7 @@ var galaxyPosition=[112,22]
 var galaxySelected=0
 var grid=0
 var isDragging=0
+var linkLengthCheck=1
 var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
@@ -196,6 +197,13 @@ function actionJump(bool){
 		rangeCheck=0
 		grid=0
 	}
+}
+function actionLinkLengthCheck(){
+	if(linkLengthCheck){
+		linkLengthCheck=0
+	}else{
+		linkLengthCheck=1
+	}
 	drawOverlay()
 }
 function actionTranslate(bool){
@@ -355,6 +363,9 @@ function keyDown(event){
 			actionCreate(0)
 			actionJump(1)
 			actionTranslate(0)
+		}
+		if(event.keyCode==76){
+			actionLinkLengthCheck()
 		}
 		if(event.keyCode==84){
 			actionCreate(0)
@@ -622,6 +633,18 @@ function drawOverlay(){
 			}
 		}
 	}
+	if(linkLengthCheck){
+		drawLinkLengthCore()
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
+						drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+					}
+				}
+			}
+		}
+	}
 	if(grid){
 		drawGrid()
 	}
@@ -648,6 +671,28 @@ function drawOverlay(){
 	for(i1=0;i1<systemsSelected.length;i1++){
 		drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
 	}
+}
+function drawLinkLengthCore(){
+	overlayContext.beginPath()
+	overlayContext.arc(600*scale,200*scale,9*scale,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=3.6*scale
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
+}
+function drawLinkLengthCheck(startX,startY,endX,endY){
+	overlayContext.beginPath()
+	overlayContext.moveTo(600*scale,200*scale)
+	overlayContext.lineTo((endX-startX+600)*scale,(endY-startY+200)*scale)
+	overlayContext.setLineDash([])
+	switch(mapStyle){
+		case `original`:
+			overlayContext.setLineDash([0,15,10000])
+			break
+	}
+	overlayContext.lineWidth=2*scale
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
 }
 function drawSelect(x,y){
 	overlayContext.beginPath()
