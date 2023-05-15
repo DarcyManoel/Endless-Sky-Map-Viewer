@@ -287,18 +287,6 @@ function mouseMove(event){
 			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
-	if(distance<=100&&isDragging&&!translateSystem&&!createSystem&&target!==excludedTarget){
-		var spliced=0
-		for(i1=0;i1<systemsSelected.length;i1++){
-			if(systemsSelected[i1]==target){
-				spliced=1
-				break
-			}
-		}
-		if(!spliced){
-			systemsSelected.push(target)
-		}
-	}
 	if(translateSystem&&!translateBlock){
 		translatePoints[1]=[xCoordinate,yCoordinate]
 		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
