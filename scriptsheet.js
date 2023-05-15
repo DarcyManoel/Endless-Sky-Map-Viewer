@@ -678,6 +678,12 @@ function drawLinkLengthCore(){
 	overlayContext.lineWidth=3.6*scale
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
+	overlayContext.beginPath()
+	overlayContext.arc(600*scale,200*scale,100,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
 }
 function drawLinkLengthCheck(startX,startY,endX,endY){
 	overlayContext.beginPath()
