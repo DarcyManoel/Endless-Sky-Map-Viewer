@@ -17,7 +17,7 @@ var galaxyPosition=[112,22]
 var galaxySelected=0
 var grid=0
 var isDragging=0
-var linkLengthCheck=1
+var linkLengthCheck=0
 var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
@@ -353,6 +353,7 @@ function keyDown(event){
 			actionCreate(0)
 			actionJump(0)
 			actionTranslate(0)
+			linkLengthCheck=0
 		}
 		if(event.keyCode==67){
 			actionCreate(1)
@@ -682,15 +683,9 @@ function drawLinkLengthCore(){
 }
 function drawLinkLengthCheck(startX,startY,endX,endY){
 	overlayContext.beginPath()
-	overlayContext.moveTo(600*scale,200*scale)
-	overlayContext.lineTo((endX-startX+600)*scale,(endY-startY+200)*scale)
+	overlayContext.arc((endX-startX+600)*scale,(endY-startY+200)*scale,1,0,2*Math.PI)
 	overlayContext.setLineDash([])
-	switch(mapStyle){
-		case `original`:
-			overlayContext.setLineDash([0,15,10000])
-			break
-	}
-	overlayContext.lineWidth=2*scale
+	overlayContext.lineWidth=3.6*scale
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
