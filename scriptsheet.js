@@ -188,24 +188,6 @@ function actionCreate(bool){
 	}
 	drawOverlay()
 }
-function actionJump(bool){
-	if(bool){
-		actionJump(0)
-		rangeCheck=1
-		grid=1
-	}else{
-		rangeCheck=0
-		grid=0
-	}
-}
-function actionLinkLengthCheck(){
-	if(linkLengthCheck){
-		linkLengthCheck=0
-	}else{
-		linkLengthCheck=1
-	}
-	drawOverlay()
-}
 function actionTranslate(bool){
 	if(bool){
 		actionCreate(0)
@@ -346,32 +328,48 @@ function mouseUp(){
 }
 function keyDown(event){
 	if(!block){
+		//	Esc
 		if(event.keyCode==27){
 			if(!createSystem&&!translateSystem){
 				systemsSelected=[]
 			}
 			actionCreate(0)
-			actionJump(0)
 			actionTranslate(0)
 			linkLengthCheck=0
+			rangeCheck=0
 		}
+		//	C
 		if(event.keyCode==67){
 			actionCreate(1)
-			actionJump(0)
 			actionTranslate(0)
+			grid=0
+			rangeCheck=0
 		}
+		//	J
 		if(event.keyCode==74){
 			actionCreate(0)
-			actionJump(1)
 			actionTranslate(0)
+			grid=0
+			if(rangeCheck){
+				rangeCheck=0
+			}else{
+				rangeCheck=1
+			}
 		}
+		//	L
 		if(event.keyCode==76){
-			actionLinkLengthCheck()
+			if(linkLengthCheck){
+				linkLengthCheck=0
+			}else{
+				linkLengthCheck=1
+			}
 		}
+		//	T
 		if(event.keyCode==84){
 			actionCreate(0)
-			actionJump(0)
 			actionTranslate(1)
+			grid=0
+			rangeCheck=0
 		}
 	}
 	if(event.keyCode){
