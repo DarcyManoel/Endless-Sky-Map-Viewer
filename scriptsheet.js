@@ -177,26 +177,20 @@ function actionOwnership(id){
 }
 function actionCreate(bool){
 	if(bool){
-		actionTranslate(0)
-		createSystem=1
 		document.getElementById(`create`).classList.remove(`dark`)
-		grid=1
+		createSystem=1
 	}else{
-		createSystem=0
 		document.getElementById(`create`).classList.add(`dark`)
-		grid=0
+		createSystem=0
 	}
 	drawOverlay()
 }
 function actionTranslate(bool){
 	if(bool){
-		actionCreate(0)
 		document.getElementById(`translate`).classList.remove(`dark`)
-		grid=1
 		translateSystem=1
 	}else{
 		document.getElementById(`translate`).classList.add(`dark`)
-		grid=0
 		translateSystem=0
 	}
 	drawOverlay()
@@ -318,19 +312,22 @@ function keyDown(event){
 	if(!block){
 		//	Esc
 		if(event.keyCode==27){
+			actionCreate(0)
+			actionTranslate(0)
+			grid=0
+			rangeCheck=0
 			if(!createSystem&&!translateSystem){
 				systemsSelected=[]
 			}
-			actionCreate(0)
-			actionTranslate(0)
-			linkLengthCheck=0
-			rangeCheck=0
+			if(!createSystem&&!translateSystem&&!rangeCheck){
+				linkLengthCheck=0
+			}
 		}
 		//	C
 		if(event.keyCode==67){
 			actionCreate(1)
 			actionTranslate(0)
-			grid=0
+			grid=1
 			rangeCheck=0
 		}
 		//	J
@@ -338,6 +335,7 @@ function keyDown(event){
 			actionCreate(0)
 			actionTranslate(0)
 			grid=0
+			linkLengthCheck=0
 			if(rangeCheck){
 				rangeCheck=0
 			}else{
@@ -348,7 +346,7 @@ function keyDown(event){
 		if(event.keyCode==76){
 			if(linkLengthCheck){
 				linkLengthCheck=0
-			}else{
+			}else if(!rangeCheck){
 				linkLengthCheck=1
 			}
 		}
@@ -356,7 +354,7 @@ function keyDown(event){
 		if(event.keyCode==84){
 			actionCreate(0)
 			actionTranslate(1)
-			grid=0
+			grid=1
 			rangeCheck=0
 		}
 	}
