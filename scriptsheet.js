@@ -310,6 +310,10 @@ function mouseUp(){
 }
 function keyDown(event){
 	if(!block){
+		//	Left Alt
+		if(event.keyCode==18){
+			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
+		}
 		//	Esc
 		if(event.keyCode==27){
 			actionCreate(0)
@@ -325,10 +329,7 @@ function keyDown(event){
 		}
 		//	C
 		if(event.keyCode==67){
-			actionCreate(1)
-			actionTranslate(0)
-			grid=1
-			rangeCheck=0
+			actionCopy()
 		}
 		//	J
 		if(event.keyCode==74){
@@ -350,6 +351,13 @@ function keyDown(event){
 				linkLengthCheck=1
 			}
 		}
+		//	N
+		if(event.keyCode==78){
+			actionCreate(1)
+			actionTranslate(0)
+			grid=1
+			rangeCheck=0
+		}
 		//	T
 		if(event.keyCode==84){
 			actionCreate(0)
@@ -357,9 +365,13 @@ function keyDown(event){
 			grid=1
 			rangeCheck=0
 		}
-		//	Left Alt
-		if(event.keyCode==18){
-			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
+		//	-
+		if(event.keyCode==189){
+			actionZoomOut()
+		}
+		//	+
+		if(event.keyCode==187){
+			actionZoomIn()
 		}
 	}
 	if(event.keyCode){
