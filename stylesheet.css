@@ -21,6 +21,7 @@ canvas{
 label{
 	-webkit-animation:highlightOff .5s;
 	animation:highlightOff .5s;
+	position:absolute;
 }
 label:hover{
 	animation:highlightOn .5s forwards;
@@ -43,7 +44,6 @@ label:hover{
 /*Interactables*/
 #loadFiles{
 	left:50%;
-	position:absolute;
 	top:10px;
 	transform:translate(-50%,0);
 }
@@ -54,11 +54,7 @@ label:hover{
 	position:absolute;
 	top:20px;
 }
-#original{
-	position:absolute;
-}
 #modern{
-	position:absolute;
 	top:20px;
 }
 #ownership{
@@ -68,11 +64,7 @@ label:hover{
 	position:absolute;
 	top:80px;
 }
-#inhabited{
-	position:absolute;
-}
 #claimed{
-	position:absolute;
 	top:20px;
 }
 #interactionMode{
@@ -82,32 +74,24 @@ label:hover{
 	position:absolute;
 	top:140px;
 }
-#create{
-	position:absolute;
-}
 #translate{
-	position:absolute;
 	top:20px;
 }
 #xCoordinate{
 	bottom:40px;
 	left:20px;
-	position:absolute;
 }
 #yCoordinate{
 	bottom:20px;
 	left:20px;
-	position:absolute;
 }
 #galaxyDisplay{
-	position:absolute;
 	right:20px;
 	text-align:center;
 	top:20px;
 }
 #zoomIn{
 	padding:5px;
-	position:absolute;
 	right:20px;
 	text-align:center;
 	top:60px;
@@ -116,7 +100,6 @@ label:hover{
 }
 #zoomOut{
 	padding:5px;
-	position:absolute;
 	right:40px;
 	text-align:center;
 	top:60px;
@@ -138,7 +121,53 @@ label:hover{
 #copy{
 	bottom:20px;
 	right:20px;
+}
+#hotkeyLegend{
+	backdrop-filter:blur(10px);
+	background-color:rgba(255,255,255,.1);
+	border-radius:30px;
+	height:calc(100% - 80px);
+	left:100px;
 	position:absolute;
+	top:40px;
+	width:calc(100% - 200px);
+}
+.tooltipBottom{
+	padding:2px;
+	padding-bottom:25px;
+	position:absolute;
+}
+.tooltipBottom:hover:after{
+	background:#333;
+	background:rgba(0,0,0,.8);
+	border-radius:10px;
+	bottom:0;
+	color:#fff;
+	content:attr(tooltip);
+	left:50%;
+	padding:2px 15px;
+	position:absolute;
+	text-align:center;
+	transform:translate(-50%);
+	width:20px;
+}
+.tooltipRight{
+	padding:2px;
+	padding-right:60px;
+	position:absolute;
+}
+.tooltipRight:hover:after{
+	background:#333;
+	background:rgba(0,0,0,.8);
+	border-radius:10px;
+	color:#fff;
+	content:attr(tooltip);
+	padding:2px 15px;
+	position:absolute;
+	right:0;
+	text-align:center;
+	top:0;
+	width:20px;
 }
 /*Blur*/
 @keyframes blurOff{

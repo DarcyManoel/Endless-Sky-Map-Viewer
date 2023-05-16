@@ -357,6 +357,10 @@ function keyDown(event){
 			grid=1
 			rangeCheck=0
 		}
+		//	Left Alt
+		if(event.keyCode==18){
+			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
+		}
 	}
 	if(event.keyCode){
 		block=1
@@ -367,6 +371,7 @@ function keyUp(event){
 	if(event.keyCode){
 		block=0
 	}
+	document.getElementById(`hotkeyLegend`).classList.add(`hidden`)
 }
 //	Parse Data
 function defineGalaxy(){
