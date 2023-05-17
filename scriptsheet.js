@@ -661,10 +661,12 @@ function drawOverlay(){
 			}
 		}else{
 			if(distance>100){
+				document.getElementById(`systemName`).innerHTML=``
 				document.getElementById(`xCoordinate`).innerHTML=`x:`
 				document.getElementById(`yCoordinate`).innerHTML=`y:`
 			}else if(oldTarget!==target&&distance<=100&&!translateSystem){
 				drawRange(elements[0][target][1][0],elements[0][target][1][1])
+				document.getElementById(`systemName`).innerHTML=elements[0][target][0]
 				document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
 				document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
 			}

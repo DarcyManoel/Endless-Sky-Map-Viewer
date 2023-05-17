@@ -77,6 +77,10 @@ label:hover{
 #translate{
 	top:20px;
 }
+#systemName{
+	bottom:60px;
+	left:20px;
+}
 #xCoordinate{
 	bottom:40px;
 	left:20px;
