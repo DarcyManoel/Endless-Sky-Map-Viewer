@@ -1,3 +1,4 @@
+var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`],[`colors`]]
 const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -6,51 +7,48 @@ const overlay=document.getElementById(`overlay`)
 	overlay.height=screen.height
 	overlay.width=screen.width
 const overlayContext=overlay.getContext(`2d`)
-const galaxy=document.getElementById(`galaxy`)
+const galaxy=document.getElementById(`background`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
+var edit=0
+var create=0
+var translate=0
+var display=`original`
+var ownership=`inhabited`
+
 var block=0
-var createSystem=0
 var distance
-var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`],[`colors`]]
 var excludedTarget
 var galaxyPosition=[112,22]
 var galaxySelected=0
 var grid=0
 var isDragging=0
 var linkLengthCheck=0
-var mapStyle=`original`
 var newSystems=0
 var oldTarget=0
 var override=0
 var rangeCheck=0
 var scale=1
-var systemOwnership=`inhabited`
 var systemsSelected=[]
 var target=0
 var translateBlock=1
 var translateCoordinates=[[],[]]
 var translatePoints=[[[],[]],[[],[]]]
-var translateSystem=0
 var xCoordinate
 var yCoordinate
 function initialize(){
 	elements=[[],[],[],[],[],[]]
-	if(localStorage.getItem(`mapStyle`)==`modern`){
-		document.getElementById(`original`).classList.add(`dark`)
-		document.getElementById(`modern`).classList.remove(`dark`)
-		mapStyle=localStorage.getItem(`mapStyle`)
+	if(localStorage.getItem(`display`)==`modern`){
+		display=localStorage.getItem(`display`)
 	}
-	if(localStorage.getItem(`systemOwnership`)==`claimed`){
-		document.getElementById(`claimed`).classList.remove(`dark`)
-		document.getElementById(`inhabited`).classList.add(`dark`)
-		systemOwnership=localStorage.getItem(`systemOwnership`)
+	if(localStorage.getItem(`ownership`)==`claimed`){
+		ownership=localStorage.getItem(`ownership`)
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawGalaxy()
 }
-//	User Input
-function actionUpload(that){
+//	Load
+function uploadFiles(that){
 	document.querySelectorAll('.blocked').forEach((element)=>{
 		element.classList.remove('blocked')
 	})
@@ -143,59 +141,26 @@ function actionUpload(that){
 	}
 	setTimeout(drawMap,500)
 }
-function actionStyle(id){
-	switch(id){
-		case `original`:
-			document.getElementById(`original`).classList.remove(`dark`)
-			document.getElementById(`modern`).classList.add(`dark`)
-			mapStyle=`original`
-			break
-		case `modern`:
-			document.getElementById(`original`).classList.add(`dark`)
-			document.getElementById(`modern`).classList.remove(`dark`)
-			mapStyle=`modern`
-			break
+//	Map Manipulation
+function cycleDisplay(){
+	if(display==`original`){
+		display=`modern`
+	}else if(display==`modern`){
+		display=`original`
 	}
-	localStorage.setItem(`mapStyle`,mapStyle)
+	localStorage.setItem(`display`,display)
 	drawMap()
 }
-function actionOwnership(id){
-	switch(id){
-		case `inhabited`:
-			document.getElementById(`claimed`).classList.add(`dark`)
-			document.getElementById(`inhabited`).classList.remove(`dark`)
-			systemOwnership=`inhabited`
-			break
-		case `claimed`:
-			document.getElementById(`claimed`).classList.remove(`dark`)
-			document.getElementById(`inhabited`).classList.add(`dark`)
-			systemOwnership=`claimed`
-			break
+function cycleOwnership(){
+	if(ownership==`inhabited`){
+		ownership=`claimed`
+	}else if(ownership==`claimed`){
+		ownership=`inhabited`
 	}
-	localStorage.setItem(`systemOwnership`,systemOwnership)
+	localStorage.setItem(`ownership`,ownership)
 	drawMap()
 }
-function actionCreate(bool){
-	if(bool){
-		document.getElementById(`create`).classList.remove(`dark`)
-		createSystem=1
-	}else{
-		document.getElementById(`create`).classList.add(`dark`)
-		createSystem=0
-	}
-	drawOverlay()
-}
-function actionTranslate(bool){
-	if(bool){
-		document.getElementById(`translate`).classList.remove(`dark`)
-		translateSystem=1
-	}else{
-		document.getElementById(`translate`).classList.add(`dark`)
-		translateSystem=0
-	}
-	drawOverlay()
-}
-function actionGalaxy(){
+function cycleGalaxy(){
 	galaxySelected++
 	if(galaxySelected==elements[2].length){
 		galaxySelected=0
@@ -204,7 +169,7 @@ function actionGalaxy(){
 	drawMap()
 	console.log(galaxyPosition)
 }
-function actionZoomIn(){
+function zoomIn(){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
 	if(scale==2.5){
@@ -214,9 +179,8 @@ function actionZoomIn(){
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
 }
-function actionZoomOut(){
+function zoomOut(){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
 	if(scale==1){
@@ -226,18 +190,31 @@ function actionZoomOut(){
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
 }
-function actionCopy(){
-	navigator.clipboard.writeText(
-		document.getElementById(`output`).innerHTML
-	)
+//	Interaction
+function mouseMove(event){
+	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
+	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
+	if(edit){
+		distance=100000
+		for(i1=0;i1<elements[0].length;i1++){
+			if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+				target=i1
+				distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
+			}
+		}
+		if(translate&&!translateBlock){
+			translatePoints[1]=[xCoordinate,yCoordinate]
+			translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
+		}
+		drawOverlay()
+	}
 }
 function mouseDown(){
 	excludedTarget=target
 	isDragging=1
-	if(createSystem){
-		actionCreate(0)
+	if(create){
+		createMode(0)
 		newSystems++
 		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
 		for(i1=0;i1<systemsSelected.length;i1++){
@@ -251,7 +228,7 @@ function mouseDown(){
 		}
 		drawMap()
 		printOutput()
-	}else if(translateSystem){
+	}else if(translate){
 		translatePoints[0]=[xCoordinate,yCoordinate]
 		translateBlock=0
 	}else{
@@ -267,29 +244,24 @@ function mouseDown(){
 			if(!spliced){
 				systemsSelected.push(target)
 			}
+			if(systemsSelected.length==1){
+				document.getElementById(`systemName`).classList.remove(`dark`)
+				document.getElementById(`systemPosition`).classList.remove(`dark`)
+				document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
+				document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
+			}else if(systemsSelected.length>1){
+				document.getElementById(`systemName`).classList.remove(`dark`)
+				document.getElementById(`systemPosition`).classList.remove(`dark`)
+				document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
+				document.getElementById(`systemPosition`).innerHTML=`0 0`
+			}
 			drawOverlay()
 		}
 	}
 }
-function mouseMove(event){
-	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
-	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
-	distance=100000
-	for(i1=0;i1<elements[0].length;i1++){
-		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-			target=i1
-			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
-		}
-	}
-	if(translateSystem&&!translateBlock){
-		translatePoints[1]=[xCoordinate,yCoordinate]
-		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
-	}
-	drawOverlay()
-}
 function mouseUp(){
 	isDragging=0
-	if(translateSystem){
+	if(translate){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			elements[0][systemsSelected[i1]][1]=[elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1]]
 			override=0
@@ -316,27 +288,15 @@ function keyDown(event){
 		}
 		//	Esc
 		if(event.keyCode==27){
-			actionCreate(0)
-			actionTranslate(0)
-			grid=0
-			rangeCheck=0
-			if(!createSystem&&!translateSystem){
-				systemsSelected=[]
-			}
-			if(!createSystem&&!translateSystem&&!rangeCheck){
-				linkLengthCheck=0
-			}
+			viewMode()
 		}
 		//	C
 		if(event.keyCode==67){
-			actionCopy()
+			copyChanges()
 		}
 		//	J
 		if(event.keyCode==74){
-			actionCreate(0)
-			actionTranslate(0)
-			grid=0
-			linkLengthCheck=0
+			viewMode(1)
 			if(rangeCheck){
 				rangeCheck=0
 			}else{
@@ -353,30 +313,27 @@ function keyDown(event){
 		}
 		//	N
 		if(event.keyCode==78){
-			actionCreate(1)
-			actionTranslate(0)
-			grid=1
-			rangeCheck=0
+			viewMode()
+			createMode()
 		}
 		//	T
 		if(event.keyCode==84){
-			actionCreate(0)
-			actionTranslate(1)
-			grid=1
-			rangeCheck=0
+			viewMode()
+			translateMode()
 		}
 		//	-
 		if(event.keyCode==189){
-			actionZoomOut()
+			zoomOut()
 		}
 		//	+
 		if(event.keyCode==187){
-			actionZoomIn()
+			zoomIn()
 		}
 	}
 	if(event.keyCode){
 		block=1
 	}
+	drawMap()
 	drawOverlay()
 }
 function keyUp(event){
@@ -384,6 +341,77 @@ function keyUp(event){
 		block=0
 	}
 	document.getElementById(`hotkeyLegend`).classList.add(`hidden`)
+}
+//	Interaction Modes
+function viewMode(skip){
+	edit=0
+	document.getElementById(`edit`).classList.add(`dark`)
+	create=0
+	document.getElementById(`create`).classList.add(`dark`)
+	translate=0
+	document.getElementById(`translate`).classList.add(`dark`)
+	systemsSelected=[]
+	if(!skip){
+		rangeCheck=0
+	}
+	linkLengthCheck=0
+	grid=0
+}
+function editMode(){
+	edit=!edit
+	if(edit){
+		document.getElementById(`edit`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`edit`).classList.add(`dark`)
+	}
+}
+function createMode(){
+	if(!edit){
+		editMode()
+	}
+	if(translate){
+		translateMode()
+	}
+	create=!create
+	if(create){
+		document.getElementById(`create`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`create`).classList.add(`dark`)
+	}
+}
+function translateMode(){
+	if(!edit){
+		editMode()
+	}
+	if(create){
+		createMode()
+	}
+	translate=!translate
+	if(translate){
+		document.getElementById(`translate`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`translate`).classList.add(`dark`)
+	}
+}
+//	Map Changes
+function printOutput(){
+	document.getElementById(`output`).innerHTML=``
+	for(i1=0;i1<elements[0].length;i1++){
+		if(elements[0][i1][0].startsWith(`placeholder`)){
+			document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[0][i1][0]+`"\n\tpos `+elements[0][i1][1][0]+` `+elements[0][i1][1][1]+`\n\tgovernment "`+elements[0][i1][2]+`"`
+			if(elements[0][i1][3].length){
+				document.getElementById(`output`).innerHTML+=`\n\tlink "`+elements[0][i1][3].join(`"\n\tlink "`)+`"`
+			}
+		}
+	}
+	for(i1=0;i1<elements[3].length;i1++){
+		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100+elements[3][i1][2].join(`\n\tadd link `)
+	}
+}
+function copyChanges(){
+	navigator.clipboard.writeText(
+		document.getElementById(`output`).innerHTML
+	)
 }
 //	Parse Data
 function defineGalaxy(){
@@ -480,20 +508,19 @@ function drawMap(){
 	overlay.addEventListener(`mousemove`,mouseMove)
 	overlay.addEventListener(`mouseup`,mouseUp)
 	drawGalaxy()
-	document.getElementById(`galaxyDisplay`).innerHTML=elements[2][galaxySelected][0]
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					switch(mapStyle){
+					switch(display){
 						case `original`:
 							drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
 							break
 						case `modern`:
 							for(i4=0;i4<elements[1].length;i4++){
 								if(elements[0][i1][2]==elements[1][i4][0]){
-									if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+									if(elements[0][i1][4].length>0||ownership==`claimed`){
 										drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
 									}else{
 										drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
@@ -511,16 +538,16 @@ function drawMap(){
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2]==elements[1][i2][0]){
-				switch(mapStyle){
+				switch(display){
 					case `original`:
-						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+						if(elements[0][i1][4].length>0||ownership==`claimed`){
 							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
 						}else{
 							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
 						}
 						break
 					case `modern`:
-						if(elements[0][i1][4].length>0||systemOwnership==`claimed`){
+						if(elements[0][i1][4].length>0||ownership==`claimed`){
 							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
 						}else{
 							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
@@ -560,63 +587,6 @@ function drawMap(){
 	console.log(elements)
 	drawOverlay()
 }
-function drawGalaxy(){
-	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
-}
-function drawSystem(x,y,radius){
-	canvasContext.beginPath()
-	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(102,102,102)`
-	canvasContext.stroke()
-}
-function drawSystemColour(x,y,radius,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-	canvasContext.stroke()
-}
-function drawLink(startX,startY,endX,endY){
-	canvasContext.beginPath()
-	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	switch(mapStyle){
-		case `original`:
-			canvasContext.setLineDash([0,15,10000])
-			break
-	}
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(102,102,102)`
-	canvasContext.stroke()
-}
-function drawLinkColour(startX,startY,endX,endY,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-	canvasContext.stroke()
-}
-function drawWormhole(startX,startY,endX,endY,color){
-	canvasContext.beginPath()
-	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([0,15,10000])
-	canvasContext.lineWidth=2
-	if(color){
-		canvasContext.strokeStyle=`rgb(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`)`
-	}else{
-		canvasContext.strokeStyle=`rgb(128,51,230)`
-	}
-	canvasContext.stroke()
-}
-//	Display Extras
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
 	if(rangeCheck){
@@ -654,53 +624,39 @@ function drawOverlay(){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 		}
-		if(createSystem){
+		if(create){
 			drawRestricted(xCoordinate,yCoordinate)
 			for(i1=0;i1<systemsSelected.length;i1++){
-				drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
+				drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
 			}
 		}else{
-			if(distance>100){
-				document.getElementById(`systemName`).innerHTML=``
-				document.getElementById(`xCoordinate`).innerHTML=`x:`
-				document.getElementById(`yCoordinate`).innerHTML=`y:`
-			}else if(oldTarget!==target&&distance<=100&&!translateSystem){
+			if(!systemsSelected.length){
+				if(distance>100){
+					document.getElementById(`systemName`).innerHTML=``
+					document.getElementById(`systemPosition`).innerHTML=``
+				}else if(distance<=100){
+					document.getElementById(`systemName`).classList.add(`dark`)
+					document.getElementById(`systemPosition`).classList.add(`dark`)
+					document.getElementById(`systemName`).innerHTML=elements[0][target][0]
+					document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
+				}
+			}
+			if(distance<=100){
 				drawRange(elements[0][target][1][0],elements[0][target][1][1])
-				document.getElementById(`systemName`).innerHTML=elements[0][target][0]
-				document.getElementById(`xCoordinate`).innerHTML=`x: `+elements[0][target][1][0]
-				document.getElementById(`yCoordinate`).innerHTML=`y: `+elements[0][target][1][1]
 			}
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
-		drawFakeLink(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
+		drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
 	}
 }
-function drawLinkLengthCore(){
-	overlayContext.beginPath()
-	overlayContext.arc(600*scale,200*scale,9*scale,0,2*Math.PI)
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=3.6*scale
-	overlayContext.strokeStyle=`rgb(102,102,102)`
-	overlayContext.stroke()
-	overlayContext.beginPath()
-	overlayContext.arc(600*scale,200*scale,100*scale,0,2*Math.PI)
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2
-	overlayContext.strokeStyle=`rgb(102,102,102)`
-	overlayContext.stroke()
-}
-function drawLinkLengthCheck(startX,startY,endX,endY){
-	overlayContext.beginPath()
-	overlayContext.arc((endX-startX+600)*scale,(endY-startY+200)*scale,1,0,2*Math.PI)
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=3.6*scale
-	overlayContext.strokeStyle=`rgb(102,102,102)`
-	overlayContext.stroke()
+function drawGalaxy(){
+	canvasContext.clearRect(0,0,100000,100000)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
 }
 function drawSelect(x,y){
 	overlayContext.beginPath()
-	switch(mapStyle){
+	switch(display){
 		case `original`:
 			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
 			break
@@ -711,15 +667,6 @@ function drawSelect(x,y){
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=2
 	overlayContext.strokeStyle=`rgb(255,255,255)`
-	overlayContext.stroke()
-}
-function drawFakeLink(startX,startY,endX,endY){
-	overlayContext.beginPath()
-	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	overlayContext.setLineDash([0,15,0])
-	overlayContext.lineWidth=2
-	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
 function drawRange(x,y){
@@ -742,6 +689,67 @@ function drawRestricted(x,y){
 	}
 	overlayContext.stroke()
 }
+function drawSystem(x,y,radius){
+	canvasContext.beginPath()
+	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=3.6
+	canvasContext.strokeStyle=`rgb(102,102,102)`
+	canvasContext.stroke()
+}
+function drawSystemColour(x,y,radius,systemGovernment){
+	canvasContext.beginPath()
+	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=3.6
+	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	canvasContext.stroke()
+}
+function drawLink(startX,startY,endX,endY){
+	canvasContext.beginPath()
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([])
+	switch(display){
+		case `original`:
+			canvasContext.setLineDash([0,15,10000])
+			break
+	}
+	canvasContext.lineWidth=2
+	canvasContext.strokeStyle=`rgb(102,102,102)`
+	canvasContext.stroke()
+}
+function drawLinkColour(startX,startY,endX,endY,systemGovernment){
+	canvasContext.beginPath()
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([])
+	canvasContext.lineWidth=2
+	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	canvasContext.stroke()
+}
+function drawLinkFake(startX,startY,endX,endY){
+	overlayContext.beginPath()
+	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	overlayContext.setLineDash([0,15,0])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
+}
+function drawWormhole(startX,startY,endX,endY,color){
+	canvasContext.beginPath()
+	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+	canvasContext.setLineDash([0,15,10000])
+	canvasContext.lineWidth=2
+	if(color){
+		canvasContext.strokeStyle=`rgb(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`)`
+	}else{
+		canvasContext.strokeStyle=`rgb(128,51,230)`
+	}
+	canvasContext.stroke()
+}
 function drawGrid(){
 	for(i1=100;i1<screen.width*3*scale;i1+=100){
 		overlayContext.beginPath()
@@ -762,6 +770,28 @@ function drawGrid(){
 		overlayContext.stroke()
 	}
 }
+function drawLinkLengthCore(){
+	overlayContext.beginPath()
+	overlayContext.arc(4100*scale,200*scale,9*scale,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=3.6*scale
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
+	overlayContext.beginPath()
+	overlayContext.arc(4100*scale,200*scale,100*scale,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2*scale
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
+}
+function drawLinkLengthCheck(startX,startY,endX,endY){
+	overlayContext.beginPath()
+	overlayContext.arc((endX-startX+4100)*scale,(endY-startY+200)*scale,1*scale,0,2*Math.PI)
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=3.6*scale
+	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.stroke()
+}
 function drawRangeCheck(startX,startY,endX,endY){
 	overlayContext.beginPath()
 	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
@@ -771,21 +801,7 @@ function drawRangeCheck(startX,startY,endX,endY){
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
 }
-//	Misc
-function printOutput(){
-	document.getElementById(`output`).innerHTML=``
-	for(i1=0;i1<elements[0].length;i1++){
-		if(elements[0][i1][0].startsWith(`placeholder`)){
-			document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[0][i1][0]+`"\n\tpos `+elements[0][i1][1][0]+` `+elements[0][i1][1][1]+`\n\tgovernment "`+elements[0][i1][2]+`"`
-			if(elements[0][i1][3].length){
-				document.getElementById(`output`).innerHTML+=`\n\tlink "`+elements[0][i1][3].join(`"\n\tlink "`)+`"`
-			}
-		}
-	}
-	for(i1=0;i1<elements[3].length;i1++){
-		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100+elements[3][i1][2].join(`\n\tadd link `)
-	}
-}
+//	Shortcuts
 Math.dist=function(x1,y1,x2,y2){ 
 	if(!x2){
 		x2=0

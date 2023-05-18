@@ -1,9 +1,10 @@
-/*Constants*/
+/*	Constants	*/
 *{
 	-webkit-user-select:none;
 	color:#9f9f9f;
 	font-family:Ubuntu;
 	margin:0;
+	outline:none;
 	overflow:hidden;
 	user-select:none;
 }
@@ -21,6 +22,7 @@ canvas{
 label{
 	-webkit-animation:highlightOff .5s;
 	animation:highlightOff .5s;
+	font-size:16px;
 	position:absolute;
 }
 label:hover{
@@ -41,75 +43,48 @@ label:hover{
 .hidden{
 	display:none;
 }
-/*Interactables*/
+/*	Load	*/
 #loadFiles{
-	left:50%;
+	font-size:32px;
+	left:20px;
 	top:10px;
-	transform:translate(-50%,0);
 }
-#style{
-	height:40px;
-	left:20px;
-	padding-right:80px;
-	position:absolute;
-	top:20px;
+/*	Menu Options	*/
+#edit{
+	left:250px;
+	top:10px;
 }
-#modern{
-	top:20px;
-}
-#ownership{
-	height:40px;
-	left:20px;
-	padding-right:90px;
-	position:absolute;
-	top:80px;
-}
-#claimed{
-	top:20px;
-}
-#interactionMode{
-	height:40px;
-	left:20px;
-	padding-right:100px;
-	position:absolute;
-	top:140px;
+#create{
+	left:290px;
+	top:10px;
 }
 #translate{
-	top:20px;
+	left:345px;
+	top:10px;
 }
+/*	Menu Cycles	*/
+#display{
+	left:250px;
+	top:30px;
+}
+#ownership{
+	left:310px;
+	top:30px;
+}
+#galaxy{
+	left:395px;
+	top:30px;
+}
+/*	System Details	*/
 #systemName{
-	bottom:60px;
 	left:20px;
+	top:80px;
 }
-#xCoordinate{
-	bottom:40px;
+#systemPosition{
 	left:20px;
+	top:100px;
 }
-#yCoordinate{
-	bottom:20px;
-	left:20px;
-}
-#galaxyDisplay{
-	right:20px;
-	text-align:center;
-	top:20px;
-}
-#zoomIn{
-	padding:5px;
-	right:20px;
-	text-align:center;
-	top:60px;
-	transform:translate(0,-5px);
-	width:20px;
-}
-#zoomOut{
-	padding:5px;
-	right:40px;
-	text-align:center;
-	top:60px;
-	transform:translate(0,-5px);
-	width:20px;
-}
+/*	Map Changes	*/
 #output{
 	font-size:12px;
 	height:85vh;
@@ -126,6 +101,7 @@ label:hover{
 	bottom:20px;
 	right:20px;
 }
+/*	Hotkeys	*/
 #hotkeyLegend{
 	backdrop-filter:blur(10px);
 	background-color:rgba(255,255,255,.1);
@@ -191,12 +167,12 @@ label:hover{
 	top:0;
 	width:20px;
 }
-/*Blur*/
+/*	Blur	*/
 @keyframes blurOff{
 	0%{filter:blur(3px);}
 	100%{filter:blur(0px);}
 }
-/*Highlight*/
+/*	Highlight	*/
 @keyframes highlightOff{
 	0%{color:#eee;}
 	100%{color:#9f9f9f;}
