@@ -195,20 +195,18 @@ function zoomOut(){
 function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
 	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
-	if(edit){
-		distance=100000
-		for(i1=0;i1<elements[0].length;i1++){
-			if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-				target=i1
-				distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
-			}
+	distance=100000
+	for(i1=0;i1<elements[0].length;i1++){
+		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i1
+			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
-		if(translate&&!translateBlock){
-			translatePoints[1]=[xCoordinate,yCoordinate]
-			translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
-		}
-		drawOverlay()
 	}
+	if(translate&&!translateBlock){
+		translatePoints[1]=[xCoordinate,yCoordinate]
+		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
+	}
+	drawOverlay()
 }
 function mouseDown(){
 	excludedTarget=target
@@ -243,20 +241,25 @@ function mouseDown(){
 			}
 			if(!spliced){
 				systemsSelected.push(target)
-			}
-			if(systemsSelected.length==1){
+			}if(systemsSelected.length){
 				document.getElementById(`systemName`).classList.remove(`dark`)
 				document.getElementById(`systemPosition`).classList.remove(`dark`)
-				document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
-				document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
-			}else if(systemsSelected.length>1){
-				document.getElementById(`systemName`).classList.remove(`dark`)
-				document.getElementById(`systemPosition`).classList.remove(`dark`)
-				document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
-				document.getElementById(`systemPosition`).innerHTML=`0 0`
+				if(systemsSelected.length>1){
+					document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
+					document.getElementById(`systemPosition`).innerHTML=`0 0`
+				}else{
+					document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
+					document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
+				}
 			}
 			drawOverlay()
 		}
+	}
+	if(systemsSelected.length&&!edit){
+		editMode()
+	}
+	if(!systemsSelected.length&&edit){
+		editMode()
 	}
 }
 function mouseUp(){
@@ -313,12 +316,10 @@ function keyDown(event){
 		}
 		//	N
 		if(event.keyCode==78){
-			viewMode()
 			createMode()
 		}
 		//	T
 		if(event.keyCode==84){
-			viewMode()
 			translateMode()
 		}
 		//	-
