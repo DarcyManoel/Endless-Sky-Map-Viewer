@@ -710,11 +710,10 @@ function drawLink(startX,startY,endX,endY){
 	canvasContext.beginPath()
 	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	switch(display){
-		case `original`:
-			canvasContext.setLineDash([0,15,10000])
-			break
+	if(display==`modern`){
+		canvasContext.setLineDash([])
+	}else{
+		canvasContext.setLineDash([0,15,10000])
 	}
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(102,102,102)`
@@ -742,14 +741,32 @@ function drawWormhole(startX,startY,endX,endY,color){
 	canvasContext.beginPath()
 	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([0,15,10000])
-	canvasContext.lineWidth=2
-	if(color){
-		canvasContext.strokeStyle=`rgb(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`)`
+	if(display==`original`){
+		canvasContext.setLineDash([0,15,10000])
+		canvasContext.lineWidth=1
 	}else{
-		canvasContext.strokeStyle=`rgb(128,51,230)`
+		canvasContext.setLineDash([])
+		canvasContext.lineWidth=2
+	}
+	if(color){
+		canvasContext.strokeStyle=`rgba(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`,.5)`
+	}else{
+		canvasContext.strokeStyle=`rgba(128,51,230,.5)`
 	}
 	canvasContext.stroke()
+	if(display==`original`){
+		canvasContext.beginPath()
+		canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
+		canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
+		canvasContext.setLineDash([0,15,25,10000])
+		canvasContext.lineWidth=4
+		if(color){
+			canvasContext.strokeStyle=`rgb(`+color.split(` `)[0]*255+`,`+color.split(` `)[1]*255+`,`+color.split(` `)[2]*255+`)`
+		}else{
+			canvasContext.strokeStyle=`rgb(128,51,230)`
+		}
+		canvasContext.stroke()
+	}
 }
 function drawGrid(){
 	for(i1=100;i1<screen.width*3*scale;i1+=100){
