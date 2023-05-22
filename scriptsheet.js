@@ -241,16 +241,6 @@ function mouseDown(){
 			}
 			if(!spliced){
 				systemsSelected.push(target)
-			}if(systemsSelected.length){
-				document.getElementById(`systemName`).classList.remove(`dark`)
-				document.getElementById(`systemPosition`).classList.remove(`dark`)
-				if(systemsSelected.length>1){
-					document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
-					document.getElementById(`systemPosition`).innerHTML=``
-				}else{
-					document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
-					document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
-				}
 			}
 			drawOverlay()
 		}
@@ -292,6 +282,10 @@ function keyDown(event){
 		//	Esc
 		if(event.keyCode==27){
 			viewMode()
+		}
+		//	A
+		if(event.keyCode==65){
+			selectConnected()
 		}
 		//	C
 		if(event.keyCode==67){
@@ -348,6 +342,19 @@ function updatePosition(){
 		elements[0][systemsSelected[0]][1]=document.getElementById(`systemPosition`).innerHTML.replaceAll(/--*/g,`-`).replaceAll(/[^0-9\- ]/g,``).split(` `)
 	}
 	drawMap()
+}
+function selectConnected(){
+	for(i1=0;i1<systemsSelected.length;i1++){
+		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
+					if(!systemsSelected.includes(i3)){
+						systemsSelected.push(i3)
+					}
+				}
+			}
+		}
+	}
 }
 //	Interaction Modes
 function viewMode(skip){
@@ -655,6 +662,17 @@ function drawOverlay(){
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
 		drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
+	}
+	if(systemsSelected.length){
+		document.getElementById(`systemName`).classList.remove(`dark`)
+		document.getElementById(`systemPosition`).classList.remove(`dark`)
+		if(systemsSelected.length>1){
+			document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
+			document.getElementById(`systemPosition`).innerHTML=``
+		}else{
+			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
+			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
+		}
 	}
 }
 function drawGalaxy(){
