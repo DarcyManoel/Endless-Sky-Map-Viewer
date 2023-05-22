@@ -81,6 +81,7 @@ label:hover{
 	top:80px;
 }
 #systemPosition{
+	cursor:text;
 	left:20px;
 	top:100px;
 }

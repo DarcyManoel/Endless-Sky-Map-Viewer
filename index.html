@@ -24,7 +24,7 @@
 		<label id="galaxy" class="blocked" onClick="cycleGalaxy()">Galaxy</label>
 		<!--	System Details	-->
 		<label class="blocked dark" id="systemName"></label>
-		<label class="blocked dark" id="systemPosition"></label>
+		<label class="blocked dark" id="systemPosition" onKeyUp="updatePosition()" contenteditable></label>
 		<!--	Map Changes	-->
 		<p id="output"></p>
 		<label class="blocked" id="copy" onClick="actionCopy()">Copy</label>

@@ -246,7 +246,7 @@ function mouseDown(){
 				document.getElementById(`systemPosition`).classList.remove(`dark`)
 				if(systemsSelected.length>1){
 					document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
-					document.getElementById(`systemPosition`).innerHTML=`0 0`
+					document.getElementById(`systemPosition`).innerHTML=``
 				}else{
 					document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 					document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
@@ -284,7 +284,7 @@ function mouseUp(){
 	printOutput()
 }
 function keyDown(event){
-	if(!block){
+	if(!block&&document.activeElement!==document.getElementById(`systemPosition`)){
 		//	Left Alt
 		if(event.keyCode==18){
 			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
@@ -342,6 +342,12 @@ function keyUp(event){
 		block=0
 	}
 	document.getElementById(`hotkeyLegend`).classList.add(`hidden`)
+}
+function updatePosition(){
+	if(systemsSelected.length==1){
+		elements[0][systemsSelected[0]][1]=document.getElementById(`systemPosition`).innerHTML.replaceAll(/--*/g,`-`).replaceAll(/[^0-9\- ]/g,``).split(` `)
+	}
+	drawMap()
 }
 //	Interaction Modes
 function viewMode(skip){
