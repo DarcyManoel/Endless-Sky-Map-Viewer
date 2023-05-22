@@ -76,7 +76,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -479,6 +479,8 @@ function defineSystem(override){
 			if(!segmented){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
+		}else if(lines[i3].startsWith(`\t"jump range" `)){
+			elements[0][elements[0].length-1][5].push(lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``))
 		}
 	}
 }
@@ -606,8 +608,14 @@ function drawOverlay(){
 	if(rangeCheck){
 		for(i1=0;i1<elements[0].length;i1++){
 			for(i2=0;i2<elements[0].length;i2++){
-				if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=100){
-					drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+				if(elements[0][i1][5].length){
+					if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=parseInt(elements[0][i1][5])){
+						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+					}
+				}else{
+					if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=100){
+						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+					}
 				}
 			}
 			for(i2=0;i2<elements[0][i1][3].length;i2++){
