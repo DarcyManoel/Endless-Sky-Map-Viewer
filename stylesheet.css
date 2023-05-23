@@ -77,11 +77,16 @@ label:hover{
 }
 /*	System Details	*/
 #systemName{
+	font-size:18px;
 	left:20px;
-	top:80px;
+	top:70px;
 }
 #systemPosition{
 	cursor:text;
+	left:20px;
+	top:100px;
+}
+#selectedHabitation{
 	left:20px;
 	top:100px;
 }

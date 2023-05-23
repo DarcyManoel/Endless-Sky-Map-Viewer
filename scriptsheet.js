@@ -674,12 +674,27 @@ function drawOverlay(){
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
 		document.getElementById(`systemPosition`).classList.remove(`dark`)
+		document.getElementById(`selectedHabitation`).classList.remove(`dark`)
 		if(systemsSelected.length>1){
 			document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`systemPosition`).innerHTML=``
+			var selectedHabitation=0
+			for(i1=0;i1<systemsSelected.length;i1++){
+				var wormholeBlock=0
+				for(i2=0;i2<elements[4].length;i2++){
+					if(elements[4][i2][0].includes(elements[0][systemsSelected[i1]][4][0])){
+						wormholeBlock=1
+					}
+				}
+				if(elements[0][systemsSelected[i1]][4].length&&!wormholeBlock){
+					selectedHabitation++
+				}
+			}
+			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
 		}else{
 			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
+			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
 	}
 }
