@@ -1,4 +1,7 @@
 # Map Viewer
+## 2nd June 2023
+### Minor
+- Display ranges of selected systems when creating or translating systems
 ## 26th May 2023
 ### Major
 ```diff

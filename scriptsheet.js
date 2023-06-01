@@ -663,13 +663,14 @@ function drawOverlay(){
 					document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
 				}
 			}
-			if(distance<=100){
+			if(distance<=100&&!translate){
 				drawRange(elements[0][target][1][0],elements[0][target][1][1])
 			}
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
 		drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
+		drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 	}
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
@@ -696,7 +697,8 @@ function drawOverlay(){
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
-	}
+	}else
+		document.getElementById(`selectedHabitation`).innerHTML=``
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
