@@ -220,11 +220,10 @@ function mouseUp(){
 	drawMap()
 }
 function keyDown(event){
-	if(!block&&document.activeElement!==document.getElementById(`systemPosition`)){
-		//	A
-		if(event.keyCode==65){
-			selectConnected()
-		}
+	if(!block){
+		//	S - Select
+		if(event.keyCode==83)
+			expandSystemSelection()
 		//	J
 		if(event.keyCode==74){
 			if(rangeCheck){
@@ -253,18 +252,25 @@ function keyUp(event){
 		block=0
 	}
 }
-function selectConnected(){
-	for(i1=0;i1<systemsSelected.length;i1++){
-		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-					if(!systemsSelected.includes(i3)){
-						systemsSelected.push(i3)
-					}
+function expandSystemSelection(){
+	var expanded=0
+	if(systemsSelected.length)
+		for(i1=0;i1<systemsSelected.length;i1++)
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++)
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2])
+						if(!systemsSelected.includes(i3)){
+							expanded=1
+							systemsSelected.push(i3)
+						}
 				}
-			}
+	else
+		for(i1=0;i1<elements[0].length;i1++){
+			expanded=1
+			systemsSelected.push(i1)
 		}
-	}
+	if(!expanded)
+		systemsSelected=[]
 }
 //	Parse Data
 function defineGalaxy(){
