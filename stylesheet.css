@@ -76,53 +76,6 @@ label:hover{
 	left:20px;
 	top:100px;
 }
-/*	Hotkeys	*/
-#hotkeyLegend{
-	backdrop-filter:blur(10px);
-	background-color:rgba(255,255,255,.1);
-	border-radius:30px;
-	height:calc(100% - 80px);
-	left:100px;
-	position:absolute;
-	top:40px;
-	width:calc(100% - 200px);
-}
-.tooltipRight{
-	padding:2px;
-	padding-right:60px;
-	position:absolute;
-}
-.tooltipRight:hover:after{
-	background:#333;
-	background:rgba(0,0,0,.8);
-	border-radius:10px;
-	color:#fff;
-	content:attr(tooltip);
-	padding:2px 15px;
-	position:absolute;
-	right:0;
-	text-align:center;
-	top:0;
-	width:20px;
-}
-.tooltipLeft{
-	padding:2px;
-	padding-left:60px;
-	position:absolute;
-}
-.tooltipLeft:hover:after{
-	background:#333;
-	background:rgba(0,0,0,.8);
-	border-radius:10px;
-	color:#fff;
-	content:attr(tooltip);
-	left:0;
-	padding:2px 15px;
-	position:absolute;
-	text-align:center;
-	top:0;
-	width:20px;
-}
 /*	Blur	*/
 @keyframes blurOff{
 	0%{filter:blur(3px);}

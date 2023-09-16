@@ -222,10 +222,6 @@ function mouseUp(){
 }
 function keyDown(event){
 	if(!block&&document.activeElement!==document.getElementById(`systemPosition`)){
-		//	Left Alt
-		if(event.keyCode==18){
-			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
-		}
 		//	A
 		if(event.keyCode==65){
 			selectConnected()
@@ -265,7 +261,6 @@ function keyUp(event){
 	if(event.keyCode){
 		block=0
 	}
-	document.getElementById(`hotkeyLegend`).classList.add(`hidden`)
 }
 function selectConnected(){
 	for(i1=0;i1<systemsSelected.length;i1++){
