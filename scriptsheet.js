@@ -19,7 +19,6 @@ var galaxyPosition=[112,22]
 var galaxySelected=0
 var grid=0
 var isDragging=0
-var linkLengthCheck=0
 var newSystems=0
 var oldTarget=0
 var override=0
@@ -232,14 +231,6 @@ function keyDown(event){
 				rangeCheck=0
 			}else{
 				rangeCheck=1
-			}
-		}
-		//	L
-		if(event.keyCode==76){
-			if(linkLengthCheck){
-				linkLengthCheck=0
-			}else if(!rangeCheck){
-				linkLengthCheck=1
 			}
 		}
 		//	-
@@ -475,14 +466,12 @@ function drawOverlay(){
 			}
 		}
 	}
-	if(linkLengthCheck){
-		drawLinkLengthCore()
-		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-						drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
-					}
+	drawLinkLengthCore()
+	for(i1=0;i1<systemsSelected.length;i1++){
+		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
+					drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
 				}
 			}
 		}
