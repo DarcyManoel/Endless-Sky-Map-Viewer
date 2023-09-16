@@ -14,14 +14,10 @@ var ownership=`inhabited`
 
 var block=0
 var distance
-var excludedTarget
 var galaxyPosition=[112,22]
 var galaxySelected=0
-var grid=0
 var isDragging=0
-var newSystems=0
 var oldTarget=0
-var override=0
 var rangeCheck=0
 var scale=1
 var systemsSelected=[]
@@ -198,7 +194,6 @@ function mouseMove(event){
 	drawOverlay()
 }
 function mouseDown(){
-	excludedTarget=target
 	isDragging=1
 	if(distance<=100){
 		var spliced=0
@@ -222,15 +217,12 @@ function mouseUp(){
 function keyDown(event){
 	if(!block){
 		//	S - Select
-		if(event.keyCode==83)
+		if(event.keyCode==83){
 			expandSystemSelection()
+		}
 		//	J
 		if(event.keyCode==74){
-			if(rangeCheck){
-				rangeCheck=0
-			}else{
-				rangeCheck=1
-			}
+			rangeCheck=!rangeCheck
 		}
 		//	-
 		if(event.keyCode==189){
@@ -254,23 +246,29 @@ function keyUp(event){
 }
 function expandSystemSelection(){
 	var expanded=0
-	if(systemsSelected.length)
-		for(i1=0;i1<systemsSelected.length;i1++)
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++)
+	if(systemsSelected.length){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
 				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2])
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
 						if(!systemsSelected.includes(i3)){
 							expanded=1
 							systemsSelected.push(i3)
 						}
+					}
 				}
-	else
+			}
+		}
+	}
+	else{
 		for(i1=0;i1<elements[0].length;i1++){
 			expanded=1
 			systemsSelected.push(i1)
 		}
-	if(!expanded)
+	}
+	if(!expanded){
 		systemsSelected=[]
+	}
 }
 //	Parse Data
 function defineGalaxy(){
@@ -484,9 +482,6 @@ function drawOverlay(){
 			}
 		}
 	}
-	if(grid){
-		drawGrid()
-	}
 	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
@@ -545,7 +540,7 @@ function drawSelect(x,y){
 	overlayContext.beginPath()
 	switch(display){
 		case `original`:
-			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],18,0,2*Math.PI)
+			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],16,0,2*Math.PI)
 			break
 		case `modern`:
 			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
@@ -560,7 +555,7 @@ function drawRange(x,y){
 	overlayContext.beginPath()
 	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
 	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2
+	overlayContext.lineWidth=1
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
@@ -633,26 +628,6 @@ function drawWormhole(startX,startY,endX,endY,color){
 		canvasContext.stroke()
 	}
 }
-function drawGrid(){
-	for(i1=100;i1<screen.width*3*scale;i1+=100){
-		overlayContext.beginPath()
-		overlayContext.moveTo(i1,0)
-		overlayContext.lineTo(i1,screen.height*3*scale)
-		overlayContext.setLineDash([])
-		overlayContext.lineWidth=1
-		overlayContext.strokeStyle=`rgba(102,102,102,.4)`
-		overlayContext.stroke()
-	}
-	for(i1=100;i1<screen.height*3*scale;i1+=100){
-		overlayContext.beginPath()
-		overlayContext.moveTo(0,i1)
-		overlayContext.lineTo(screen.width*3*scale,i1)
-		overlayContext.setLineDash([])
-		overlayContext.lineWidth=1
-		overlayContext.strokeStyle=`rgba(102,102,102,.4)`
-		overlayContext.stroke()
-	}
-}
 function drawLinkLengthCore(){
 	overlayContext.beginPath()
 	overlayContext.arc(4100*scale,200*scale,9*scale,0,2*Math.PI)
@@ -663,7 +638,7 @@ function drawLinkLengthCore(){
 	overlayContext.beginPath()
 	overlayContext.arc(4100*scale,200*scale,100*scale,0,2*Math.PI)
 	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2*scale
+	overlayContext.lineWidth=1*scale
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
@@ -680,7 +655,7 @@ function drawRangeCheck(startX,startY,endX,endY){
 	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2
+	overlayContext.lineWidth=.5
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
 }
