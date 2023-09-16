@@ -49,19 +49,6 @@ label:hover{
 	left:20px;
 	top:10px;
 }
-/*	Menu Options	*/
-#edit{
-	left:250px;
-	top:10px;
-}
-#create{
-	left:290px;
-	top:10px;
-}
-#translate{
-	left:345px;
-	top:10px;
-}
 /*	Menu Cycles	*/
 #display{
 	left:250px;
@@ -82,30 +69,12 @@ label:hover{
 	top:70px;
 }
 #systemPosition{
-	cursor:text;
 	left:20px;
 	top:100px;
 }
 #selectedHabitation{
 	left:20px;
 	top:100px;
-}
-/*	Map Changes	*/
-#output{
-	font-size:12px;
-	height:85vh;
-	overflow-x:hidden;
-	overflow-y:scroll;
-	position:absolute;
-	right:0;
-	text-align:left;
-	top:80px;
-	white-space:pre;
-	width:240px;
-}
-#copy{
-	bottom:20px;
-	right:20px;
 }
 /*	Hotkeys	*/
 #hotkeyLegend{
@@ -117,25 +86,6 @@ label:hover{
 	position:absolute;
 	top:40px;
 	width:calc(100% - 200px);
-}
-.tooltipBottom{
-	padding:2px;
-	padding-bottom:25px;
-	position:absolute;
-}
-.tooltipBottom:hover:after{
-	background:#333;
-	background:rgba(0,0,0,.8);
-	border-radius:10px;
-	bottom:0;
-	color:#fff;
-	content:attr(tooltip);
-	left:50%;
-	padding:2px 15px;
-	position:absolute;
-	text-align:center;
-	transform:translate(-50%);
-	width:20px;
 }
 .tooltipRight{
 	padding:2px;

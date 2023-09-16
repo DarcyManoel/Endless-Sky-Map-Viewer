@@ -9,9 +9,6 @@ const overlay=document.getElementById(`overlay`)
 const overlayContext=overlay.getContext(`2d`)
 const galaxy=document.getElementById(`background`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
-var edit=0
-var create=0
-var translate=0
 var display=`original`
 var ownership=`inhabited`
 
@@ -30,9 +27,6 @@ var rangeCheck=0
 var scale=1
 var systemsSelected=[]
 var target=0
-var translateBlock=1
-var translateCoordinates=[[],[]]
-var translatePoints=[[[],[]],[[],[]]]
 var xCoordinate
 var yCoordinate
 function initialize(){
@@ -202,76 +196,29 @@ function mouseMove(event){
 			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
-	if(translate&&!translateBlock){
-		translatePoints[1]=[xCoordinate,yCoordinate]
-		translateCoordinates=[Math.round(translatePoints[0][0]-translatePoints[1][0]),Math.round(translatePoints[0][1]-translatePoints[1][1])]
-	}
 	drawOverlay()
 }
 function mouseDown(){
 	excludedTarget=target
 	isDragging=1
-	if(create){
-		createMode(0)
-		newSystems++
-		elements[0].push([`placeholder`+newSystems,[xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1])],[`Uninhabited`],[],[]])
+	if(distance<=100){
+		var spliced=0
 		for(i1=0;i1<systemsSelected.length;i1++){
-			elements[0][elements[0].length-1][3].push(elements[0][systemsSelected[i1]][0])
-			elements[0][systemsSelected[i1]][3].push(`placeholder`+newSystems)
-			for(i2=0;i2<elements[3].length;i2++){
-				if(elements[0][systemsSelected[i1]][0]==elements[3][i2][0]){
-					elements[3][i2][2].push(`placeholder`+newSystems)
-				}
+			if(systemsSelected[i1]==target){
+				systemsSelected.splice(i1,1)
+				spliced=1
+				break
 			}
 		}
-		drawMap()
-		printOutput()
-	}else if(translate){
-		translatePoints[0]=[xCoordinate,yCoordinate]
-		translateBlock=0
-	}else{
-		if(distance<=100){
-			var spliced=0
-			for(i1=0;i1<systemsSelected.length;i1++){
-				if(systemsSelected[i1]==target){
-					systemsSelected.splice(i1,1)
-					spliced=1
-					break
-				}
-			}
-			if(!spliced){
-				systemsSelected.push(target)
-			}
-			drawOverlay()
+		if(!spliced){
+			systemsSelected.push(target)
 		}
-	}
-	if(systemsSelected.length&&!edit){
-		editMode()
-	}
-	if(!systemsSelected.length&&edit){
-		editMode()
+		drawOverlay()
 	}
 }
 function mouseUp(){
 	isDragging=0
-	if(translate){
-		for(i1=0;i1<systemsSelected.length;i1++){
-			elements[0][systemsSelected[i1]][1]=[elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1]]
-			override=0
-			for(i2=0;i2<elements[3].length;i2++){
-				if(elements[0][systemsSelected[i1]][0]==elements[3][i2][0]){
-					elements[3][i2][1]=elements[0][systemsSelected[i1]][1]
-					override=1
-				}
-			}
-			if(!override){
-				elements[3].push([elements[0][systemsSelected[i1]][0],elements[0][systemsSelected[i1]][1],[[]]])
-			}
-		}
-	}
-	translatePoints=[[],[]]
 	drawMap()
-	printOutput()
 }
 function keyDown(event){
 	if(!block&&document.activeElement!==document.getElementById(`systemPosition`)){
@@ -279,21 +226,12 @@ function keyDown(event){
 		if(event.keyCode==18){
 			document.getElementById(`hotkeyLegend`).classList.remove(`hidden`)
 		}
-		//	Esc
-		if(event.keyCode==27){
-			viewMode()
-		}
 		//	A
 		if(event.keyCode==65){
 			selectConnected()
 		}
-		//	C
-		if(event.keyCode==67){
-			copyChanges()
-		}
 		//	J
 		if(event.keyCode==74){
-			viewMode(1)
 			if(rangeCheck){
 				rangeCheck=0
 			}else{
@@ -307,14 +245,6 @@ function keyDown(event){
 			}else if(!rangeCheck){
 				linkLengthCheck=1
 			}
-		}
-		//	N
-		if(event.keyCode==78){
-			createMode()
-		}
-		//	T
-		if(event.keyCode==84){
-			translateMode()
 		}
 		//	-
 		if(event.keyCode==189){
@@ -337,12 +267,6 @@ function keyUp(event){
 	}
 	document.getElementById(`hotkeyLegend`).classList.add(`hidden`)
 }
-function updatePosition(){
-	if(systemsSelected.length==1){
-		elements[0][systemsSelected[0]][1]=document.getElementById(`systemPosition`).innerHTML.replaceAll(/--*/g,`-`).replaceAll(/[^0-9\- ]/g,``).split(` `)
-	}
-	drawMap()
-}
 function selectConnected(){
 	for(i1=0;i1<systemsSelected.length;i1++){
 		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
@@ -355,77 +279,6 @@ function selectConnected(){
 			}
 		}
 	}
-}
-//	Interaction Modes
-function viewMode(skip){
-	edit=0
-	document.getElementById(`edit`).classList.add(`dark`)
-	create=0
-	document.getElementById(`create`).classList.add(`dark`)
-	translate=0
-	document.getElementById(`translate`).classList.add(`dark`)
-	systemsSelected=[]
-	if(!skip){
-		rangeCheck=0
-	}
-	linkLengthCheck=0
-	grid=0
-}
-function editMode(){
-	edit=!edit
-	if(edit){
-		document.getElementById(`edit`).classList.remove(`dark`)
-	}else{
-		document.getElementById(`edit`).classList.add(`dark`)
-	}
-}
-function createMode(){
-	if(!edit){
-		editMode()
-	}
-	if(translate){
-		translateMode()
-	}
-	create=!create
-	if(create){
-		document.getElementById(`create`).classList.remove(`dark`)
-	}else{
-		document.getElementById(`create`).classList.add(`dark`)
-	}
-}
-function translateMode(){
-	if(!edit){
-		editMode()
-	}
-	if(create){
-		createMode()
-	}
-	translate=!translate
-	if(translate){
-		document.getElementById(`translate`).classList.remove(`dark`)
-	}else{
-		document.getElementById(`translate`).classList.add(`dark`)
-	}
-}
-//	Map Changes
-function printOutput(){
-	document.getElementById(`output`).innerHTML=``
-	for(i1=0;i1<elements[0].length;i1++){
-		if(elements[0][i1][0].startsWith(`placeholder`)){
-			document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[0][i1][0]+`"\n\tpos `+elements[0][i1][1][0]+` `+elements[0][i1][1][1]+`\n\tgovernment "`+elements[0][i1][2]+`"`
-			if(elements[0][i1][3].length){
-				document.getElementById(`output`).innerHTML+=`\n\tlink "`+elements[0][i1][3].join(`"\n\tlink "`)+`"`
-			}
-		}
-	}
-	for(i1=0;i1<elements[3].length;i1++){
-		document.getElementById(`output`).innerHTML+=`\nsystem "`+elements[3][i1][0]+`"\n\tpos `+Math.round(elements[3][i1][1][0]*100)/100+` `+Math.round(elements[3][i1][1][1]*100)/100+elements[3][i1][2].join(`\n\tadd link `)
-	}
-}
-function copyChanges(){
-	navigator.clipboard.writeText(
-		document.getElementById(`output`).innerHTML
-	)
 }
 //	Parse Data
 function defineGalaxy(){
@@ -646,30 +499,22 @@ function drawOverlay(){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 		}
-		if(create){
-			drawRestricted(xCoordinate,yCoordinate)
-			for(i1=0;i1<systemsSelected.length;i1++){
-				drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],xCoordinate+parseInt(galaxyPosition[0]),yCoordinate+parseInt(galaxyPosition[1]))
+		if(!systemsSelected.length){
+			if(distance>100){
+				document.getElementById(`systemName`).innerHTML=``
+				document.getElementById(`systemPosition`).innerHTML=``
+			}else if(distance<=100){
+				document.getElementById(`systemName`).classList.add(`dark`)
+				document.getElementById(`systemPosition`).classList.add(`dark`)
+				document.getElementById(`systemName`).innerHTML=elements[0][target][0]
+				document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
 			}
-		}else{
-			if(!systemsSelected.length){
-				if(distance>100){
-					document.getElementById(`systemName`).innerHTML=``
-					document.getElementById(`systemPosition`).innerHTML=``
-				}else if(distance<=100){
-					document.getElementById(`systemName`).classList.add(`dark`)
-					document.getElementById(`systemPosition`).classList.add(`dark`)
-					document.getElementById(`systemName`).innerHTML=elements[0][target][0]
-					document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
-				}
-			}
-			if(distance<=100&&!translate){
-				drawRange(elements[0][target][1][0],elements[0][target][1][1])
-			}
+		}
+		if(distance<=100){
+			drawRange(elements[0][target][1][0],elements[0][target][1][1])
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
-		drawLinkFake(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][1][0]-translateCoordinates[0],elements[0][systemsSelected[i1]][1][1]-translateCoordinates[1])
 		drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 	}
 	if(systemsSelected.length){
@@ -727,18 +572,6 @@ function drawRange(x,y){
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
-function drawRestricted(x,y){
-	overlayContext.beginPath()
-	overlayContext.arc(canvas.width*1.5*scale+ +x,canvas.height*1.5*scale+ +y,100,0,2*Math.PI)
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2
-	if(distance<=100){
-		overlayContext.strokeStyle=`rgb(102,255,102)`
-	}else{
-		overlayContext.strokeStyle=`rgb(255,102,102)`
-	}
-	overlayContext.stroke()
-}
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()
 	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
@@ -776,15 +609,6 @@ function drawLinkColour(startX,startY,endX,endY,systemGovernment){
 	canvasContext.lineWidth=2
 	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	canvasContext.stroke()
-}
-function drawLinkFake(startX,startY,endX,endY){
-	overlayContext.beginPath()
-	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	overlayContext.setLineDash([0,15,0])
-	overlayContext.lineWidth=2
-	overlayContext.strokeStyle=`rgb(102,102,102)`
-	overlayContext.stroke()
 }
 function drawWormhole(startX,startY,endX,endY,color){
 	canvasContext.beginPath()
