@@ -477,7 +477,9 @@ function drawOverlay(){
 		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-					drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+					for(i4=0;i4<elements[1].length;i4++)
+						if(elements[0][i3][2]==elements[1][i4][0])
+							drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1],elements[1][i4][1])
 				}
 			}
 		}
@@ -665,12 +667,12 @@ function drawLinkLengthCore(){
 	overlayContext.strokeStyle=`rgb(102,102,102)`
 	overlayContext.stroke()
 }
-function drawLinkLengthCheck(startX,startY,endX,endY){
+function drawLinkLengthCheck(startX,startY,endX,endY,systemGovernment){
 	overlayContext.beginPath()
 	overlayContext.arc((endX-startX+4100)*scale,(endY-startY+200)*scale,1*scale,0,2*Math.PI)
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=3.6*scale
-	overlayContext.strokeStyle=`rgb(102,102,102)`
+	overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	overlayContext.stroke()
 }
 function drawRangeCheck(startX,startY,endX,endY){
