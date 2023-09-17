@@ -459,22 +459,45 @@ function drawMap(){
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
 	if(rangeCheck){
-		for(i1=0;i1<elements[0].length;i1++){
-			for(i2=0;i2<elements[0].length;i2++){
-				if(elements[0][i1][5].length){
-					if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=parseInt(elements[0][i1][5])){
-						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+		if(systemsSelected.length){
+			for(i1=0;i1<systemsSelected.length;i1++){
+				for(i2=0;i2<systemsSelected.length;i2++){
+					if(elements[0][i1][5].length){
+						if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i2]][1][0],elements[0][systemsSelected[i2]][1][1])<=parseInt(elements[0][systemsSelected[i1]][5])){
+							drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i2]][1][0],elements[0][systemsSelected[i2]][1][1])
+						}
+					}else{
+						if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i2]][1][0],elements[0][systemsSelected[i2]][1][1])<=100){
+							drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i2]][1][0],elements[0][systemsSelected[i2]][1][1])
+						}
 					}
-				}else{
-					if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=100){
-						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+				}
+				for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+					for(i3=0;i3<elements[0].length;i3++){
+						if(elements[0][systemsSelected[i1]][3][i2]==elements[0][i3][0]){
+							drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+						}
 					}
 				}
 			}
-			for(i2=0;i2<elements[0][i1][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i1][3][i2]==elements[0][i3][0]){
-						drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+		}else{
+			for(i1=0;i1<elements[0].length;i1++){
+				for(i2=0;i2<elements[0].length;i2++){
+					if(elements[0][i1][5].length){
+						if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=parseInt(elements[0][i1][5])){
+							drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+						}
+					}else{
+						if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=100){
+							drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])
+						}
+					}
+				}
+				for(i2=0;i2<elements[0][i1][3].length;i2++){
+					for(i3=0;i3<elements[0].length;i3++){
+						if(elements[0][i1][3][i2]==elements[0][i3][0]){
+							drawRangeCheck(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0],elements[0][i3][1][1])
+						}
 					}
 				}
 			}
@@ -485,9 +508,11 @@ function drawOverlay(){
 		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-					for(i4=0;i4<elements[1].length;i4++)
-						if(elements[0][i3][2]==elements[1][i4][0])
+					for(i4=0;i4<elements[1].length;i4++){
+						if(elements[0][i3][2]==elements[1][i4][0]){
 							drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1],elements[1][i4][1])
+						}
+					}
 				}
 			}
 		}
@@ -511,8 +536,10 @@ function drawOverlay(){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5])
 		}
 	}
-	for(i1=0;i1<systemsSelected.length;i1++){
-		drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5])
+	if(!rangeCheck){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5])
+		}
 	}
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
