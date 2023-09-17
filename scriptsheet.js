@@ -68,7 +68,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[100]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -536,9 +536,12 @@ function drawOverlay(){
 		}
 		if(distance<=100){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5])
+			for(i1=0;i1<elements[0].length;i1++){
+				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][i1][1][0],elements[0][i1][1][1])<=elements[0][target][5]){
+					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][i1][1][0],elements[0][i1][1][1],1)
+				}
+			}
 		}
-	}
-	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5])
 		}
@@ -591,11 +594,7 @@ function drawSelect(x,y){
 }
 function drawRange(x,y,range){
 	overlayContext.beginPath()
-	if(range==``){
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
-	}else{
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-	}
+	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=1
 	overlayContext.strokeStyle=`rgb(102,102,102)`
@@ -692,12 +691,16 @@ function drawLinkLengthCheck(startX,startY,endX,endY,systemGovernment){
 	overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	overlayContext.stroke()
 }
-function drawRangeCheck(startX,startY,endX,endY){
+function drawRangeCheck(startX,startY,endX,endY,lineWidth){
 	overlayContext.beginPath()
 	overlayContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	overlayContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
 	overlayContext.setLineDash([])
-	overlayContext.lineWidth=.5
+	if(lineWidth){
+		overlayContext.lineWidth=lineWidth
+	}else{
+		overlayContext.lineWidth=.5
+	}
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
 }
