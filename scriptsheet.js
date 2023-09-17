@@ -323,7 +323,7 @@ function defineSystem(override){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i3].startsWith(`\t"jump range" `)){
-			elements[0][elements[0].length-1][5].push(lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``))
+			elements[0][elements[0].length-1][5]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}
 	}
 }
@@ -498,11 +498,11 @@ function drawOverlay(){
 			}
 		}
 		if(distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1])
+			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5])
 		}
 	}
 	for(i1=0;i1<systemsSelected.length;i1++){
-		drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
+		drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5])
 	}
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
@@ -551,9 +551,13 @@ function drawSelect(x,y){
 	overlayContext.strokeStyle=`rgb(255,255,255)`
 	overlayContext.stroke()
 }
-function drawRange(x,y){
+function drawRange(x,y,range){
 	overlayContext.beginPath()
-	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
+	if(range==``){
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],100,0,2*Math.PI)
+	}else{
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+	}
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=1
 	overlayContext.strokeStyle=`rgb(102,102,102)`
