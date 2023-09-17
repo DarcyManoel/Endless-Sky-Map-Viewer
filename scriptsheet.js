@@ -33,6 +33,8 @@ function initialize(){
 	if(localStorage.getItem(`ownership`)==`claimed`){
 		ownership=localStorage.getItem(`ownership`)
 	}
+	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
+	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawGalaxy()
@@ -138,6 +140,7 @@ function cycleDisplay(){
 	}else if(display==`modern`){
 		display=`original`
 	}
+	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
 	localStorage.setItem(`display`,display)
 	drawMap()
 }
@@ -147,6 +150,7 @@ function cycleOwnership(){
 	}else if(ownership==`claimed`){
 		ownership=`inhabited`
 	}
+	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
 	localStorage.setItem(`ownership`,ownership)
 	drawMap()
 }
@@ -157,7 +161,6 @@ function cycleGalaxy(){
 	}
 	galaxyPosition=elements[2][galaxySelected][1]
 	drawMap()
-	console.log(galaxyPosition)
 }
 function zoomIn(){
 	canvasContext.scale(3*scale,3*scale)
@@ -369,6 +372,7 @@ function defineGovernment(){
 //	Display Map
 function drawMap(){
 	loaded=1
+	document.getElementById(`galaxy`).innerHTML=elements[2][galaxySelected][0]
 	overlay.addEventListener(`mousedown`,mouseDown)
 	overlay.addEventListener(`mousemove`,mouseMove)
 	overlay.addEventListener(`mouseup`,mouseUp)

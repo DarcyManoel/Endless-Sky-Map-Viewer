@@ -15,9 +15,11 @@
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input id="file" class="hidden" onChange="uploadFiles(this)" type="file" webkitDirectory/>
 		<!--	Menu Cycles	-->
-		<label id="display" class="blocked" onClick="cycleDisplay()">Display</label>
-		<label id="ownership" class="blocked" onClick="cycleOwnership()">Ownership</label>
-		<label id="galaxy" class="blocked" onClick="cycleGalaxy()">Galaxy</label>
+		<div id="cycles">
+			<label id="display" class="blocked" onClick="cycleDisplay()"></label>
+			<label id="ownership" class="blocked" onClick="cycleOwnership()"></label>
+			<label id="galaxy" class="blocked" onClick="cycleGalaxy()"></label>
+		</div>
 		<!--	System Details	-->
 		<label class="blocked dark" id="systemName"></label>
 		<label class="blocked dark" id="systemPosition"></label>

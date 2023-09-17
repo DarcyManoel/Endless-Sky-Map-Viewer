@@ -50,17 +50,14 @@ label:hover{
 	top:10px;
 }
 /*	Menu Cycles	*/
-#display{
+#cycles{
 	left:250px;
-	top:30px;
+	position:absolute;
+	top:10px;
 }
-#ownership{
-	left:310px;
-	top:30px;
-}
-#galaxy{
-	left:395px;
-	top:30px;
+#display,#ownership,#galaxy{
+	padding:0 3px 0 3px;
+	position:relative;
 }
 /*	System Details	*/
 #systemName{
