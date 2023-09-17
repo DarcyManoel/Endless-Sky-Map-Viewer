@@ -12,6 +12,7 @@ const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
 var display=`original`
 var ownership=`inhabited`
 
+var loaded=0
 var block=0
 var distance
 var galaxyPosition=[112,22]
@@ -215,29 +216,31 @@ function mouseUp(){
 	drawMap()
 }
 function keyDown(event){
-	if(!block){
-		//	S - Select
-		if(event.keyCode==83){
-			expandSystemSelection()
+	if(loaded){
+		if(!block){
+			//	S - Select
+			if(event.keyCode==83){
+				expandSystemSelection()
+			}
+			//	J
+			if(event.keyCode==74){
+				rangeCheck=!rangeCheck
+			}
+			//	-
+			if(event.keyCode==189){
+				zoomOut()
+			}
+			//	+
+			if(event.keyCode==187){
+				zoomIn()
+			}
 		}
-		//	J
-		if(event.keyCode==74){
-			rangeCheck=!rangeCheck
+		if(event.keyCode){
+			block=1
 		}
-		//	-
-		if(event.keyCode==189){
-			zoomOut()
-		}
-		//	+
-		if(event.keyCode==187){
-			zoomIn()
-		}
+		drawMap()
+		drawOverlay()
 	}
-	if(event.keyCode){
-		block=1
-	}
-	drawMap()
-	drawOverlay()
 }
 function keyUp(event){
 	if(event.keyCode){
@@ -365,6 +368,7 @@ function defineGovernment(){
 }
 //	Display Map
 function drawMap(){
+	loaded=1
 	overlay.addEventListener(`mousedown`,mouseDown)
 	overlay.addEventListener(`mousemove`,mouseMove)
 	overlay.addEventListener(`mouseup`,mouseUp)
