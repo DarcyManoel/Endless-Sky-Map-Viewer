@@ -517,6 +517,8 @@ function drawOverlay(){
 			}
 		}
 	}
+	document.getElementById(`systemName`).innerHTML=``
+	document.getElementById(`selectedHabitation`).innerHTML=``
 	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
@@ -566,8 +568,7 @@ function drawOverlay(){
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
-	}else
-		document.getElementById(`selectedHabitation`).innerHTML=``
+	}
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
