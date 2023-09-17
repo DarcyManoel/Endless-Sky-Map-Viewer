@@ -294,6 +294,8 @@ function defineSystem(override){
 			if(!segmented){
 				elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
+		}else if(lines[i4].startsWith(`\t"jump range" `)){
+			elements[0][i3][5]=lines[i4].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}
 	}else{
 		if(lines[i3].startsWith(`\tpos `)){
@@ -423,9 +425,9 @@ function drawMap(){
 		if(elements[4][i1][1]){
 			for(i2=0;i2<elements[4][i1][2].length;i2++){
 				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0].includes(elements[4][i1][2][i2][0])){
+					if(elements[0][i3][0]==elements[4][i1][2][i2][0]){
 						wormholeStart=elements[0][i3][1]
-					}else if(elements[0][i3][0].includes(elements[4][i1][2][i2][1])){
+					}else if(elements[0][i3][0]==elements[4][i1][2][i2][1]){
 						wormholeEnd=elements[0][i3][1]
 					}
 				}
