@@ -29,6 +29,7 @@ label:hover{
 	animation:highlightOn .5s forwards;
 	cursor:pointer;
 }
+/*	General	*/
 .blocked,
 .blocked label{
 	animation:none;
@@ -43,13 +44,15 @@ label:hover{
 .hidden{
 	display:none;
 }
-/*	Load	*/
+/*	Menu bar	*/
+/*		Load	*/
 #loadFiles{
 	font-size:32px;
 	left:20px;
 	top:10px;
 }
-/*	Menu Cycles	*/
+/*	Menu bar	*/
+/*		Cycles	*/
 #cycles{
 	left:250px;
 	position:absolute;
@@ -58,6 +61,61 @@ label:hover{
 #display,#ownership,#galaxy{
 	padding:0 3px 0 3px;
 	position:relative;
+}
+/*	Hotkey indicators	*/
+/*		General	*/
+.hotkeyIndicator{
+	border-radius:40px 0 0 40px;
+	border:3px solid #333;
+	color:#333;
+	cursor:pointer;
+	height:40px;
+	overflow:visible;
+	position:absolute;
+	right:-160px;
+	transition:border .5s,color .5s;
+	width:200px;
+}
+.hotkey{
+	color:inherit;
+	font-size:32px;
+	left:14px;
+	position:absolute;
+}
+.descriptor{
+	color:inherit;
+	pointer-events:none;
+	position:absolute;
+	right:220px;
+	text-align:right;
+	top:10px;
+	transition:opacity .5s linear 1s;
+	width:1000px;
+}
+.hotkeyIndicator .descriptor{
+	opacity:0;
+}
+.hotkeyIndicator:hover .descriptor{
+	opacity:1;
+	transition:opacity .5s;
+}
+.activeMode{
+	border:3px solid #9f9f9f;
+	color:#9f9f9f;
+}
+/*	Hotkey indicators	*/
+/*		Specificities	*/
+#systemSelection{
+	top:120px;
+}
+#rangeCheck{
+	top:180px;
+}
+#zoomOut{
+	top:240px;
+}
+#zoomIn{
+	top:300px;
 }
 /*	System Details	*/
 #systemName{
@@ -73,12 +131,14 @@ label:hover{
 	left:20px;
 	top:100px;
 }
-/*	Blur	*/
+/*	Animations	*/
+/*		Blur	*/
 @keyframes blurOff{
 	0%{filter:blur(3px);}
 	100%{filter:blur(0px);}
 }
-/*	Highlight	*/
+/*	Animations	*/
+/*		Highlight	*/
 @keyframes highlightOff{
 	0%{color:#eee;}
 	100%{color:#9f9f9f;}

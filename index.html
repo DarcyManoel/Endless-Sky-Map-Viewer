@@ -20,6 +20,38 @@
 			<label id="ownership" class="blocked" onClick="cycleOwnership()"></label>
 			<label id="galaxy" class="blocked" onClick="cycleGalaxy()"></label>
 		</div>
+		<div id="systemSelection" class="hotkeyIndicator hidden" onclick="expandSystemSelection()">
+			<div class="hotkey">
+				S
+			</div>
+			<div id="systemSelectionDescriptor" class="descriptor">
+				Select all systems
+			</div>
+		</div>
+		<div id="rangeCheck" class="hotkeyIndicator hidden" onclick="toggleRangeCheck()">
+			<div class="hotkey">
+				J
+			</div>
+			<div id="rangeCheckDescriptor" class="descriptor">
+				Enable jump targets visualiser
+			</div>
+		</div>
+		<div id="zoomOut" class="hotkeyIndicator hidden" onclick="zoomOut()">
+			<div class="hotkey">
+				-
+			</div>
+			<div class="descriptor">
+				Zoom out
+			</div>
+		</div>
+		<div id="zoomIn" class="hotkeyIndicator hidden" onclick="zoomIn()">
+			<div class="hotkey">
+				+
+			</div>
+			<div class="descriptor">
+				Zoom in
+			</div>
+		</div>
 		<!--	System Details	-->
 		<label class="blocked dark" id="systemName"></label>
 		<label class="blocked dark" id="systemPosition"></label>

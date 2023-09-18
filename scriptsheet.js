@@ -162,28 +162,6 @@ function cycleGalaxy(){
 	galaxyPosition=elements[2][galaxySelected][1]
 	drawMap()
 }
-function zoomIn(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==2.5){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=1
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-}
-function zoomOut(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==1){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=2.5
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-}
 //	Interaction
 function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
@@ -211,8 +189,34 @@ function mouseDown(){
 		if(!spliced){
 			systemsSelected.push(target)
 		}
-		drawOverlay()
 	}
+	var canExpand=0
+	if(systemsSelected.length){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
+						if(!systemsSelected.includes(i3)){
+							canExpand=1
+						}
+					}
+				}
+			}
+		}
+	}
+	if(systemsSelected.length){
+		if(canExpand){
+			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Expand selection to all connected systems`
+		}else{
+			document.getElementById(`systemSelection`).classList.add(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
+		}
+	}else{
+		document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+		document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
+	}
+	drawMap()
 }
 function mouseUp(){
 	isDragging=0
@@ -227,7 +231,7 @@ function keyDown(event){
 			}
 			//	J
 			if(event.keyCode==74){
-				rangeCheck=!rangeCheck
+				toggleRangeCheck()
 			}
 			//	-
 			if(event.keyCode==189){
@@ -241,8 +245,6 @@ function keyDown(event){
 		if(event.keyCode){
 			block=1
 		}
-		drawMap()
-		drawOverlay()
 	}
 }
 function keyUp(event){
@@ -272,9 +274,51 @@ function expandSystemSelection(){
 			systemsSelected.push(i1)
 		}
 	}
-	if(!expanded){
-		systemsSelected=[]
+	if(systemsSelected.length){
+		if(!expanded){
+			systemsSelected=[]
+			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
+		}else{
+			document.getElementById(`systemSelection`).classList.add(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
+		}
 	}
+	drawMap()
+}
+function toggleRangeCheck(){
+	rangeCheck=!rangeCheck
+	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
+	if(rangeCheck){
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
+	}else{
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
+	}
+	drawMap()
+}
+function zoomOut(){
+	canvasContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
+	if(scale==1){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=2.5
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
+}
+function zoomIn(){
+	canvasContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
+	if(scale==2.5){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=1
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
 }
 //	Parse Data
 function defineGalaxy(){
@@ -373,6 +417,10 @@ function defineGovernment(){
 function drawMap(){
 	loaded=1
 	document.getElementById(`galaxy`).innerHTML=elements[2][galaxySelected][0]
+	document.getElementById(`systemSelection`).classList.remove(`hidden`)
+	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
+	document.getElementById(`zoomOut`).classList.remove(`hidden`)
+	document.getElementById(`zoomIn`).classList.remove(`hidden`)
 	overlay.addEventListener(`mousedown`,mouseDown)
 	overlay.addEventListener(`mousemove`,mouseMove)
 	overlay.addEventListener(`mouseup`,mouseUp)
