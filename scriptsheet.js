@@ -1,4 +1,4 @@
-var elements=[[`systems`],[`governments`],[`galaxies`],[`translated systems`],[`wormholes`],[`colors`]]
+var elements=[[`systems`],[`governments`],[`galaxies`],[`cyclable galaxies`],[`wormholes`],[`colors`]]
 const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -156,10 +156,10 @@ function cycleOwnership(){
 }
 function cycleGalaxy(){
 	galaxySelected++
-	if(galaxySelected==elements[2].length){
+	if(galaxySelected==elements[3].length){
 		galaxySelected=0
 	}
-	galaxyPosition=elements[2][galaxySelected][1]
+	galaxyPosition=elements[3][galaxySelected][1]
 	drawMap()
 }
 //	Interaction
@@ -416,7 +416,19 @@ function defineGovernment(){
 //	Display Map
 function drawMap(){
 	loaded=1
-	document.getElementById(`galaxy`).innerHTML=elements[2][galaxySelected][0]
+	elements[3]=[elements[2][0]]
+	for(i1=0;i1<elements[2].length;i1++){
+		var galaxyTooClose=0
+		for(i2=0;i2<elements[3].length;i2++){
+			if(Math.dist(elements[3][i2][1][0],elements[3][i2][1][1],elements[2][i1][1][0],elements[2][i1][1][1])<2000){
+				galaxyTooClose=1
+			}
+		}
+		if(!galaxyTooClose){
+			elements[3].push(elements[2][i1])
+		}
+	}
+	document.getElementById(`galaxy`).innerHTML=elements[3][galaxySelected][0]
 	document.getElementById(`systemSelection`).classList.remove(`hidden`)
 	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
 	document.getElementById(`zoomOut`).classList.remove(`hidden`)
