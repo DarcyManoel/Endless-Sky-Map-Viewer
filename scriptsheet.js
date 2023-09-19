@@ -566,10 +566,18 @@ function drawOverlay(){
 			}
 		}
 		if(distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5])
+			for(i1=0;i1<elements[1].length;i1++){
+				if(elements[0][target][2]==elements[1][i1][0]){
+					drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[1][i1][1])
+				}
+			}
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5])
+			for(i2=0;i2<elements[1].length;i2++){
+				if(elements[0][systemsSelected[i1]][2]==elements[1][i2][0]){
+					drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[1][i2][1])
+				}
+			}
 		}
 	}
 	if(systemsSelected.length){
@@ -617,13 +625,26 @@ function drawSelect(x,y){
 	overlayContext.strokeStyle=`rgb(255,255,255)`
 	overlayContext.stroke()
 }
-function drawRange(x,y,range){
-	overlayContext.beginPath()
-	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=1
-	overlayContext.strokeStyle=`rgb(102,102,102)`
-	overlayContext.stroke()
+function drawRange(x,y,range,systemGovernment){
+	if(display==`original`){
+		overlayContext.beginPath()
+		overlayContext.setLineDash([])
+		overlayContext.lineWidth=1
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+		overlayContext.strokeStyle=`rgb(102,102,102)`
+		overlayContext.stroke()
+	}else{
+		overlayContext.beginPath()
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+		overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,0.1)`
+		overlayContext.fill()
+		overlayContext.beginPath()
+		overlayContext.setLineDash([])
+		overlayContext.lineWidth=1
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+		overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+		overlayContext.stroke()
+	}
 }
 function drawSystem(x,y,radius){
 	canvasContext.beginPath()
