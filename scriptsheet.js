@@ -430,22 +430,19 @@ function drawMap(){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					switch(display){
-						case `original`:
-							drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
-							break
-						case `modern`:
-							for(i4=0;i4<elements[1].length;i4++){
-								if(elements[0][i1][2]==elements[1][i4][0]){
-									if(elements[0][i1][4].length>0||ownership==`claimed`){
-										drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
-									}else{
-										drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
-									}
-									break
+					if(display==`original`){
+						drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
+					}else{
+						for(i4=0;i4<elements[1].length;i4++){
+							if(elements[0][i1][2]==elements[1][i4][0]){
+								if(elements[0][i1][4].length>0||ownership==`claimed`){
+									drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
+								}else{
+									drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
 								}
+								break
 							}
-							break
+						}
 					}
 				}
 			}
@@ -455,21 +452,18 @@ function drawMap(){
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2]==elements[1][i2][0]){
-				switch(display){
-					case `original`:
-						if(elements[0][i1][4].length>0||ownership==`claimed`){
-							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
-						}else{
-							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
-						}
-						break
-					case `modern`:
-						if(elements[0][i1][4].length>0||ownership==`claimed`){
-							drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
-						}else{
-							drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
-						}
-						break
+				if(display==`original`){
+					if(elements[0][i1][4].length>0||ownership==`claimed`){
+						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
+					}else{
+						drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
+					}
+				}else{
+					if(elements[0][i1][4].length>0||ownership==`claimed`){
+						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
+					}else{
+						drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
+					}
 				}
 			}
 		}
@@ -612,13 +606,10 @@ function drawGalaxy(){
 }
 function drawSelect(x,y){
 	overlayContext.beginPath()
-	switch(display){
-		case `original`:
-			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],16,0,2*Math.PI)
-			break
-		case `modern`:
-			overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
-			break
+	if(display==`original`){
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],16,0,2*Math.PI)
+	}else{
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
 	}
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=2
@@ -638,12 +629,6 @@ function drawRange(x,y,range,systemGovernment){
 		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
 		overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,0.1)`
 		overlayContext.fill()
-		overlayContext.beginPath()
-		overlayContext.setLineDash([])
-		overlayContext.lineWidth=1
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-		overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-		overlayContext.stroke()
 	}
 }
 function drawSystem(x,y,radius){
