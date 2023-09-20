@@ -131,194 +131,7 @@ function uploadFiles(that){
 			}
 		}
 	}
-	setTimeout(drawMap,500)
-}
-//	Map Manipulation
-function cycleDisplay(){
-	if(display==`original`){
-		display=`modern`
-	}else if(display==`modern`){
-		display=`original`
-	}
-	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
-	localStorage.setItem(`display`,display)
-	drawMap()
-}
-function cycleOwnership(){
-	if(ownership==`inhabited`){
-		ownership=`claimed`
-	}else if(ownership==`claimed`){
-		ownership=`inhabited`
-	}
-	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
-	localStorage.setItem(`ownership`,ownership)
-	drawMap()
-}
-function cycleGalaxy(){
-	galaxySelected++
-	if(galaxySelected==elements[3].length){
-		galaxySelected=0
-	}
-	galaxyPosition=elements[3][galaxySelected][1]
-	drawMap()
-}
-//	Interaction
-function mouseMove(event){
-	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
-	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
-	distance=100000
-	for(i1=0;i1<elements[0].length;i1++){
-		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
-			target=i1
-			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
-		}
-	}
-	drawOverlay()
-}
-function mouseDown(){
-	isDragging=1
-	if(distance<=100){
-		var spliced=0
-		for(i1=0;i1<systemsSelected.length;i1++){
-			if(systemsSelected[i1]==target){
-				systemsSelected.splice(i1,1)
-				spliced=1
-				break
-			}
-		}
-		if(!spliced){
-			systemsSelected.push(target)
-		}
-	}
-	var canExpand=0
-	if(systemsSelected.length){
-		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-						if(!systemsSelected.includes(i3)){
-							canExpand=1
-						}
-					}
-				}
-			}
-		}
-	}
-	if(systemsSelected.length){
-		if(canExpand){
-			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Expand selection to all connected systems`
-		}else{
-			document.getElementById(`systemSelection`).classList.add(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
-		}
-	}else{
-		document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-		document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
-	}
-	drawMap()
-}
-function mouseUp(){
-	isDragging=0
-	drawMap()
-}
-function keyDown(event){
-	if(loaded){
-		if(!block){
-			//	S - Select
-			if(event.keyCode==83){
-				expandSystemSelection()
-			}
-			//	J
-			if(event.keyCode==74){
-				toggleRangeCheck()
-			}
-			//	-
-			if(event.keyCode==189){
-				zoomOut()
-			}
-			//	+
-			if(event.keyCode==187){
-				zoomIn()
-			}
-		}
-		if(event.keyCode){
-			block=1
-		}
-	}
-}
-function keyUp(event){
-	if(event.keyCode){
-		block=0
-	}
-}
-function expandSystemSelection(){
-	var expanded=0
-	if(systemsSelected.length){
-		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-						if(!systemsSelected.includes(i3)){
-							expanded=1
-							systemsSelected.push(i3)
-						}
-					}
-				}
-			}
-		}
-	}
-	else{
-		for(i1=0;i1<elements[0].length;i1++){
-			expanded=1
-			systemsSelected.push(i1)
-		}
-	}
-	if(systemsSelected.length){
-		if(!expanded){
-			systemsSelected=[]
-			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
-		}else{
-			document.getElementById(`systemSelection`).classList.add(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
-		}
-	}
-	drawMap()
-}
-function toggleRangeCheck(){
-	rangeCheck=!rangeCheck
-	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
-	if(rangeCheck){
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
-	}else{
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
-	}
-	drawMap()
-}
-function zoomOut(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==1){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=2.5
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
-}
-function zoomIn(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==2.5){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=1
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
+	setTimeout(curateData,500)
 }
 //	Parse Data
 function defineGalaxy(){
@@ -384,18 +197,18 @@ function defineWormhole(){
 		elements[4][elements[4].length-1][1]=1
 	}else if(lines[i3].startsWith(`\tlink `)){
 		if(lines[i3].includes(`" `)){
-			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(`" `))
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0].replaceAll(`"`,``)
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(`" `),[]])
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1].replaceAll(`"`,``)
 		}else if(lines[i3].includes(` "`)){
-			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(` "`))
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0].replaceAll(`"`,``)
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][1].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(` "`),[]])
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0].replaceAll(`"`,``)
+			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1].replaceAll(`"`,``)
 		}else{
-			elements[4][elements[4].length-1][2].push(lines[i3].slice(6).split(` `))
+			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(` `),[]])
 		}
 	}else if(lines[i3].startsWith(`\tcolor `)){
-		elements[4][elements[4].length-1][3]=lines[i3].slice(7)
+		elements[4][elements[4].length-1][3]=[lines[i3].slice(7).replaceAll(`"`,``),[]]
 	}
 }
 function defineGovernment(){
@@ -413,9 +226,8 @@ function defineGovernment(){
 		}
 	}
 }
-//	Display Map
-function drawMap(){
-	loaded=1
+function curateData(){
+	//	Galaxies cyclable
 	elements[3]=[elements[2][0]]
 	for(i1=0;i1<elements[2].length;i1++){
 		var galaxyTooClose=0
@@ -428,22 +240,15 @@ function drawMap(){
 			elements[3].push(elements[2][i1])
 		}
 	}
-	document.getElementById(`galaxy`).innerHTML=elements[3][galaxySelected][0]
-	document.getElementById(`systemSelection`).classList.remove(`hidden`)
-	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
-	document.getElementById(`zoomOut`).classList.remove(`hidden`)
-	document.getElementById(`zoomIn`).classList.remove(`hidden`)
-	overlay.addEventListener(`mousedown`,mouseDown)
-	overlay.addEventListener(`mousemove`,mouseMove)
-	overlay.addEventListener(`mouseup`,mouseUp)
-	drawGalaxy()
-	//	Localise Information
+	//	Systems local lookup
 	for(i1=0;i1<elements[0].length;i1++){
+		//	Government
 		for(i2=0;i2<elements[1].length;i2++){
 			if(elements[0][i1][2][0]==elements[1][i2][0]){
 				elements[0][i1][2][1]=elements[1][i2][1]
 			}
 		}
+		//	Links
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2][0]==elements[0][i3][0]){
@@ -452,22 +257,33 @@ function drawMap(){
 			}
 		}
 	}
-	//	Links
-	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			if(display==`original`){
-				drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
-			}else{
-				if(elements[0][i1][4].length>0||ownership==`claimed`){
-					drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8),elements[0][i1][2][1])
-				}else{
-					drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8))
+	//	Wormholes local lookup
+	for(i1=0;i1<elements[4].length;i1++){
+		//	Links
+		for(i2=0;i2<elements[4][i1][2].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i3][0]==elements[4][i1][2][i2][0][0]){
+					elements[4][i1][2][i2][1][0]=elements[0][i3][1]
+				}else if(elements[0][i3][0]==elements[4][i1][2][i2][0][1]){
+					elements[4][i1][2][i2][1][1]=elements[0][i3][1]
 				}
 			}
 		}
+		//	Colour
+		for(i2=0;i2<elements[5].length;i2++){
+			if(elements[4][i1][3][0]==elements[5][i2][0]){
+				elements[4][i1][3][1]=elements[5][i2][1]
+			}
+		}
 	}
-	//	Systems
+	drawMap()
+}
+//	Display Map
+function drawMap(){
+	loaded=1
+	drawGalaxy()
 	for(i1=0;i1<elements[0].length;i1++){
+		//	Systems
 		if(display==`original`){
 			if(elements[0][i1][4].length>0||ownership==`claimed`){
 				drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[0][i1][2][1])
@@ -481,36 +297,45 @@ function drawMap(){
 				drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
 			}
 		}
+		//	Links
+		for(i2=0;i2<elements[0][i1][3].length;i2++){
+			if(display==`original`){
+				drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
+			}else{
+				if(elements[0][i1][4].length>0||ownership==`claimed`){
+					drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8),elements[0][i1][2][1])
+				}else{
+					drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8))
+				}
+			}
+		}
 	}
 	//	Wormholes
-	var wormholeStart=[[],[]]
-	var wormholeEnd=[[],[]]
 	for(i1=0;i1<elements[4].length;i1++){
 		if(elements[4][i1][1]){
 			for(i2=0;i2<elements[4][i1][2].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[4][i1][2][i2][0]){
-						wormholeStart=elements[0][i3][1]
-					}else if(elements[0][i3][0]==elements[4][i1][2][i2][1]){
-						wormholeEnd=elements[0][i3][1]
-					}
-				}
-				var wormholeColor=0
-				for(i3=0;i3<elements[5].length;i3++){
-					if(elements[4][i1][3].includes(elements[5][i3][0])){
-						drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1],elements[5][i3][1])
-						wormholeColor=1
-						break
-					}
-				}
-				if(!wormholeColor){
-					drawWormhole(wormholeStart[0],wormholeStart[1],wormholeEnd[0],wormholeEnd[1])
+				if(elements[4][i1][3].length){
+					drawWormhole(elements[4][i1][2][i2][1][0][0],elements[4][i1][2][i2][1][0][1],elements[4][i1][2][i2][1][1][0],elements[4][i1][2][i2][1][1][1],elements[4][i1][3][1])
+				}else{
+					drawWormhole(elements[4][i1][2][i2][1][0][0],elements[4][i1][2][i2][1][0][1],elements[4][i1][2][i2][1][1][0],elements[4][i1][2][i2][1][1][1])
 				}
 			}
 		}
 	}
 	console.log(elements)
+	document.getElementById(`galaxy`).innerHTML=elements[3][galaxySelected][0]
+	document.getElementById(`systemSelection`).classList.remove(`hidden`)
+	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
+	document.getElementById(`zoomOut`).classList.remove(`hidden`)
+	document.getElementById(`zoomIn`).classList.remove(`hidden`)
+	overlay.addEventListener(`mousedown`,mouseDown)
+	overlay.addEventListener(`mousemove`,mouseMove)
+	overlay.addEventListener(`mouseup`,mouseUp)
 	drawOverlay()
+}
+function drawGalaxy(){
+	canvasContext.clearRect(0,0,100000,100000)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
 }
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
@@ -537,7 +362,7 @@ function drawOverlay(){
 			}
 			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
 				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
 						drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1],1)
 					}
 				}
@@ -547,15 +372,7 @@ function drawOverlay(){
 	drawLinkLengthCore()
 	for(i1=0;i1<systemsSelected.length;i1++){
 		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2]){
-					for(i4=0;i4<elements[1].length;i4++){
-						if(elements[0][i3][2]==elements[1][i4][0]){
-							drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1],elements[1][i4][1])
-						}
-					}
-				}
-			}
+			drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],elements[0][systemsSelected[i1]][2][1])
 		}
 	}
 	document.getElementById(`systemName`).innerHTML=``
@@ -574,18 +391,10 @@ function drawOverlay(){
 			}
 		}
 		if(distance<=100){
-			for(i1=0;i1<elements[1].length;i1++){
-				if(elements[0][target][2]==elements[1][i1][0]){
-					drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[1][i1][1])
-				}
-			}
+			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[0][target][2][1])
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[1].length;i2++){
-				if(elements[0][systemsSelected[i1]][2]==elements[1][i2][0]){
-					drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[1][i2][1])
-				}
-			}
+			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[0][systemsSelected[i1]][2][1])
 		}
 	}
 	if(systemsSelected.length){
@@ -613,10 +422,6 @@ function drawOverlay(){
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
 	}
-}
-function drawGalaxy(){
-	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
 }
 function drawSelect(x,y){
 	overlayContext.beginPath()
@@ -748,6 +553,193 @@ function drawRangeCheck(startX,startY,endX,endY,lineWidth){
 	}
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
+}
+//	Map Manipulation
+function cycleDisplay(){
+	if(display==`original`){
+		display=`modern`
+	}else if(display==`modern`){
+		display=`original`
+	}
+	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
+	localStorage.setItem(`display`,display)
+	drawMap()
+}
+function cycleOwnership(){
+	if(ownership==`inhabited`){
+		ownership=`claimed`
+	}else if(ownership==`claimed`){
+		ownership=`inhabited`
+	}
+	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
+	localStorage.setItem(`ownership`,ownership)
+	drawMap()
+}
+function cycleGalaxy(){
+	galaxySelected++
+	if(galaxySelected==elements[3].length){
+		galaxySelected=0
+	}
+	galaxyPosition=elements[3][galaxySelected][1]
+	drawMap()
+}
+//	Interaction
+function mouseMove(event){
+	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
+	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
+	distance=100000
+	for(i1=0;i1<elements[0].length;i1++){
+		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+			target=i1
+			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
+		}
+	}
+	drawOverlay()
+}
+function mouseDown(){
+	isDragging=1
+	if(distance<=100){
+		var spliced=0
+		for(i1=0;i1<systemsSelected.length;i1++){
+			if(systemsSelected[i1]==target){
+				systemsSelected.splice(i1,1)
+				spliced=1
+				break
+			}
+		}
+		if(!spliced){
+			systemsSelected.push(target)
+		}
+	}
+	var canExpand=0
+	if(systemsSelected.length){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
+						if(!systemsSelected.includes(i3)){
+							canExpand=1
+						}
+					}
+				}
+			}
+		}
+	}
+	if(systemsSelected.length){
+		if(canExpand){
+			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Expand selection to all connected systems`
+		}else{
+			document.getElementById(`systemSelection`).classList.add(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
+		}
+	}else{
+		document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+		document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
+	}
+	drawMap()
+}
+function mouseUp(){
+	isDragging=0
+	drawMap()
+}
+function keyDown(event){
+	if(loaded){
+		if(!block){
+			//	S - Select
+			if(event.keyCode==83){
+				expandSystemSelection()
+			}
+			//	J
+			if(event.keyCode==74){
+				toggleRangeCheck()
+			}
+			//	-
+			if(event.keyCode==189){
+				zoomOut()
+			}
+			//	+
+			if(event.keyCode==187){
+				zoomIn()
+			}
+		}
+		if(event.keyCode){
+			block=1
+		}
+	}
+}
+function keyUp(event){
+	if(event.keyCode){
+		block=0
+	}
+}
+function expandSystemSelection(){
+	var expanded=0
+	if(systemsSelected.length){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<elements[0].length;i3++){
+					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
+						if(!systemsSelected.includes(i3)){
+							expanded=1
+							systemsSelected.push(i3)
+						}
+					}
+				}
+			}
+		}
+	}
+	else{
+		for(i1=0;i1<elements[0].length;i1++){
+			expanded=1
+			systemsSelected.push(i1)
+		}
+	}
+	if(systemsSelected.length){
+		if(!expanded){
+			systemsSelected=[]
+			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
+		}else{
+			document.getElementById(`systemSelection`).classList.add(`activeMode`)
+			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
+		}
+	}
+	drawMap()
+}
+function toggleRangeCheck(){
+	rangeCheck=!rangeCheck
+	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
+	if(rangeCheck){
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
+	}else{
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
+	}
+	drawMap()
+}
+function zoomOut(){
+	canvasContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
+	if(scale==1){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=2.5
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
+}
+function zoomIn(){
+	canvasContext.scale(3*scale,3*scale)
+	overlayContext.scale(3*scale,3*scale)
+	if(scale==2.5){
+		scale=1.5
+	}else if(scale==1.5){
+		scale=1
+	}
+	canvasContext.scale((1/3)/scale,(1/3)/scale)
+	overlayContext.scale((1/3)/scale,(1/3)/scale)
+	drawMap()
 }
 //	Shortcuts
 Math.dist=function(x1,y1,x2,y2){ 
