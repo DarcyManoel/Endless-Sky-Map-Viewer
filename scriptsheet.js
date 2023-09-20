@@ -371,10 +371,10 @@ function drawOverlay(){
 			}
 		}
 		if(distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[0][target][2][1])
+			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[0][target][2][1],elements[0][target][4].length)
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[0][systemsSelected[i1]][2][1])
+			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
 		}
 	}
 	if(systemsSelected.length){
@@ -480,18 +480,20 @@ function drawSelect(x,y){
 	overlayContext.strokeStyle=`rgb(255,255,255)`
 	overlayContext.stroke()
 }
-function drawRange(x,y,range,systemGovernment){
+function drawRange(x,y,range,systemGovernment,planetCount){
+	overlayContext.beginPath()
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=1
+	overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
 	if(display==`original`){
-		overlayContext.beginPath()
-		overlayContext.setLineDash([])
-		overlayContext.lineWidth=1
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
 		overlayContext.strokeStyle=`rgb(102,102,102)`
 		overlayContext.stroke()
 	}else{
-		overlayContext.beginPath()
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-		overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,0.1)`
+		if(planetCount>0||ownership==`claimed`){
+			overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,.1)`
+		}else{
+			overlayContext.fillStyle=`rgba(102,102,102,.1)`
+		}
 		overlayContext.fill()
 	}
 }
