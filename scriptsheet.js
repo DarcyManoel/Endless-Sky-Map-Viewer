@@ -331,9 +331,9 @@ function defineSystem(override){
 		if(lines[i4].startsWith(`\tpos `)){
 			elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}else if(lines[i4].startsWith(`\tgovernment `)){
-			elements[0][i3][2]=lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)
+			elements[0][i3][2]=[lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i4].startsWith(`\tadd link `)){
-			elements[0][i3][3].push(lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``))
+			elements[0][i3][3].push([lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
 		}else if(lines[i4].startsWith(`\tadd object `)){
 			var segmented=0
 			for(i5=0;i5<elements[0][i3][4].length;i5++){
@@ -351,9 +351,9 @@ function defineSystem(override){
 		if(lines[i3].startsWith(`\tpos `)){
 			elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}else if(lines[i3].startsWith(`\tgovernment `)){
-			elements[0][elements[0].length-1][2]=lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)
+			elements[0][elements[0].length-1][2]=[lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i3].startsWith(`\tlink `)){
-			elements[0][elements[0].length-1][3].push(lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``))
+			elements[0][elements[0].length-1][3].push([lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
 		}else if(lines[i3].startsWith(`\tobject `)){
 			var segmented=0
 			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
@@ -437,46 +437,48 @@ function drawMap(){
 	overlay.addEventListener(`mousemove`,mouseMove)
 	overlay.addEventListener(`mouseup`,mouseUp)
 	drawGalaxy()
+	//	Localise Information
+	for(i1=0;i1<elements[0].length;i1++){
+		for(i2=0;i2<elements[1].length;i2++){
+			if(elements[0][i1][2][0]==elements[1][i2][0]){
+				elements[0][i1][2][1]=elements[1][i2][1]
+			}
+		}
+		for(i2=0;i2<elements[0][i1][3].length;i2++){
+			for(i3=0;i3<elements[0].length;i3++){
+				if(elements[0][i1][3][i2][0]==elements[0][i3][0]){
+					elements[0][i1][3][i2][1]=elements[0][i3][1]
+				}
+			}
+		}
+	}
 	//	Links
 	for(i1=0;i1<elements[0].length;i1++){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i1][3][i2]==elements[0][i3][0]){
-					if(display==`original`){
-						drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/2),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/2))
-					}else{
-						for(i4=0;i4<elements[1].length;i4++){
-							if(elements[0][i1][2]==elements[1][i4][0]){
-								if(elements[0][i1][4].length>0||ownership==`claimed`){
-									drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8),elements[1][i4][1])
-								}else{
-									drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i3][1][0]-((elements[0][i3][1][0]-elements[0][i1][1][0])/1.8),elements[0][i3][1][1]-((elements[0][i3][1][1]-elements[0][i1][1][1])/1.8))
-								}
-								break
-							}
-						}
-					}
+			if(display==`original`){
+				drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
+			}else{
+				if(elements[0][i1][4].length>0||ownership==`claimed`){
+					drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8),elements[0][i1][2][1])
+				}else{
+					drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8))
 				}
 			}
 		}
 	}
 	//	Systems
 	for(i1=0;i1<elements[0].length;i1++){
-		for(i2=0;i2<elements[1].length;i2++){
-			if(elements[0][i1][2]==elements[1][i2][0]){
-				if(display==`original`){
-					if(elements[0][i1][4].length>0||ownership==`claimed`){
-						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[1][i2][1])
-					}else{
-						drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
-					}
-				}else{
-					if(elements[0][i1][4].length>0||ownership==`claimed`){
-						drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[1][i2][1])
-					}else{
-						drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
-					}
-				}
+		if(display==`original`){
+			if(elements[0][i1][4].length>0||ownership==`claimed`){
+				drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[0][i1][2][1])
+			}else{
+				drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
+			}
+		}else{
+			if(elements[0][i1][4].length>0||ownership==`claimed`){
+				drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[0][i1][2][1])
+			}else{
+				drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
 			}
 		}
 	}
