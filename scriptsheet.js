@@ -284,30 +284,10 @@ function drawMap(){
 	drawGalaxy()
 	for(i1=0;i1<elements[0].length;i1++){
 		//	Systems
-		if(display==`original`){
-			if(elements[0][i1][4].length>0||ownership==`claimed`){
-				drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],9,elements[0][i1][2][1])
-			}else{
-				drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],9)
-			}
-		}else{
-			if(elements[0][i1][4].length>0||ownership==`claimed`){
-				drawSystemColour(elements[0][i1][1][0],elements[0][i1][1][1],1,elements[0][i1][2][1])
-			}else{
-				drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],1)
-			}
-		}
+		drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][2][1],elements[0][i1][4].length)
 		//	Links
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			if(display==`original`){
-				drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
-			}else{
-				if(elements[0][i1][4].length>0||ownership==`claimed`){
-					drawLinkColour(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8),elements[0][i1][2][1])
-				}else{
-					drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/1.8),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/1.8))
-				}
-			}
+			drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
 		}
 	}
 	//	Wormholes
@@ -423,69 +403,38 @@ function drawOverlay(){
 		}
 	}
 }
-function drawSelect(x,y){
-	overlayContext.beginPath()
+function drawSystem(x,y,systemGovernment,planetCount){
+	var radius;
 	if(display==`original`){
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],16,0,2*Math.PI)
+		radius=9
 	}else{
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
+		radius=1
 	}
-	overlayContext.setLineDash([])
-	overlayContext.lineWidth=2
-	overlayContext.strokeStyle=`rgb(255,255,255)`
-	overlayContext.stroke()
-}
-function drawRange(x,y,range,systemGovernment){
-	if(display==`original`){
-		overlayContext.beginPath()
-		overlayContext.setLineDash([])
-		overlayContext.lineWidth=1
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-		overlayContext.strokeStyle=`rgb(102,102,102)`
-		overlayContext.stroke()
-	}else{
-		overlayContext.beginPath()
-		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
-		overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,0.1)`
-		overlayContext.fill()
-	}
-}
-function drawSystem(x,y,radius){
 	canvasContext.beginPath()
 	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
 	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(102,102,102)`
+	if(planetCount>0||ownership==`claimed`){
+		canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	}else{
+		canvasContext.strokeStyle=`rgb(102,102,102)`
+	}
 	canvasContext.stroke()
 }
-function drawSystemColour(x,y,radius,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=3.6
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
-	canvasContext.stroke()
-}
-function drawLink(startX,startY,endX,endY){
+function drawLink(startX,startY,endX,endY,systemGovernment){
 	canvasContext.beginPath()
 	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
 	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	if(display==`modern`){
-		canvasContext.setLineDash([])
-	}else{
+	canvasContext.lineWidth=2
+	if(display==`original`){
 		canvasContext.setLineDash([0,15,10000])
+		canvasContext.strokeStyle=`rgb(102,102,102)`
+	}else{
+		canvasContext.setLineDash([])
+		if(systemGovernment){
+			canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+		}
 	}
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(102,102,102)`
-	canvasContext.stroke()
-}
-function drawLinkColour(startX,startY,endX,endY,systemGovernment){
-	canvasContext.beginPath()
-	canvasContext.moveTo(canvas.width*1.5*scale+ +startX-galaxyPosition[0],canvas.height*1.5*scale+ +startY-galaxyPosition[1])
-	canvasContext.lineTo(canvas.width*1.5*scale+ +endX-galaxyPosition[0],canvas.height*1.5*scale+ +endY-galaxyPosition[1])
-	canvasContext.setLineDash([])
-	canvasContext.lineWidth=2
-	canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	canvasContext.stroke()
 }
 function drawWormhole(startX,startY,endX,endY,color){
@@ -517,6 +466,33 @@ function drawWormhole(startX,startY,endX,endY,color){
 			canvasContext.strokeStyle=`rgb(128,51,230)`
 		}
 		canvasContext.stroke()
+	}
+}
+function drawSelect(x,y){
+	overlayContext.beginPath()
+	if(display==`original`){
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],16,0,2*Math.PI)
+	}else{
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],4,0,2*Math.PI)
+	}
+	overlayContext.setLineDash([])
+	overlayContext.lineWidth=2
+	overlayContext.strokeStyle=`rgb(255,255,255)`
+	overlayContext.stroke()
+}
+function drawRange(x,y,range,systemGovernment){
+	if(display==`original`){
+		overlayContext.beginPath()
+		overlayContext.setLineDash([])
+		overlayContext.lineWidth=1
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+		overlayContext.strokeStyle=`rgb(102,102,102)`
+		overlayContext.stroke()
+	}else{
+		overlayContext.beginPath()
+		overlayContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],range,0,2*Math.PI)
+		overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,0.1)`
+		overlayContext.fill()
 	}
 }
 function drawLinkLengthCore(){
