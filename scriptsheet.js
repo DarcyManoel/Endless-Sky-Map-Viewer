@@ -146,7 +146,7 @@ function defineSystem(override){
 		}else if(lines[i4].startsWith(`\tgovernment `)){
 			elements[0][i3][2]=[lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i4].startsWith(`\tadd link `)){
-			elements[0][i3][3].push([lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
+			elements[0][i3][3].push([lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
 		}else if(lines[i4].startsWith(`\tadd object `)){
 			var segmented=0
 			for(i5=0;i5<elements[0][i3][4].length;i5++){
@@ -166,7 +166,7 @@ function defineSystem(override){
 		}else if(lines[i3].startsWith(`\tgovernment `)){
 			elements[0][elements[0].length-1][2]=[lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i3].startsWith(`\tlink `)){
-			elements[0][elements[0].length-1][3].push([lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
+			elements[0][elements[0].length-1][3].push([lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
 		}else if(lines[i3].startsWith(`\tobject `)){
 			var segmented=0
 			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
@@ -252,7 +252,10 @@ function curateData(){
 		for(i2=0;i2<elements[0][i1][3].length;i2++){
 			for(i3=0;i3<elements[0].length;i3++){
 				if(elements[0][i1][3][i2][0]==elements[0][i3][0]){
+					//	Position
 					elements[0][i1][3][i2][1]=elements[0][i3][1]
+					//	Government
+					elements[0][i1][3][i2][2]=elements[0][i3][2]
 				}
 			}
 		}
@@ -352,7 +355,7 @@ function drawOverlay(){
 	drawLinkLengthCore()
 	for(i1=0;i1<systemsSelected.length;i1++){
 		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-			drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],elements[0][systemsSelected[i1]][2][1])
+			drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],elements[0][systemsSelected[i1]][3][i2][2][1])
 		}
 	}
 	document.getElementById(`systemName`).innerHTML=``
