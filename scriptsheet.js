@@ -365,14 +365,6 @@ function drawOverlay(){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 		}
-		if(!systemsSelected.length){
-			if(distance<=100){
-				document.getElementById(`systemName`).classList.add(`dark`)
-				document.getElementById(`systemPosition`).classList.add(`dark`)
-				document.getElementById(`systemName`).innerHTML=elements[0][target][0]
-				document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
-			}
-		}
 		if(distance<=100){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[0][target][2][1],elements[0][target][4].length)
 		}
@@ -403,6 +395,13 @@ function drawOverlay(){
 			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
+		}
+	}else{
+		if(distance<=100){
+			document.getElementById(`systemName`).classList.add(`dark`)
+			document.getElementById(`systemPosition`).classList.add(`dark`)
+			document.getElementById(`systemName`).innerHTML=elements[0][target][0]
+			document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
 		}
 	}
 }
