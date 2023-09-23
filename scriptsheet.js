@@ -68,7 +68,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[100]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[100],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -259,6 +259,12 @@ function curateData(){
 				}
 			}
 		}
+		//	Systems in range
+		for(i2=0;i2<elements[0].length;i2++){
+			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][i1][5]&&elements[0][i1][0]!==elements[0][i2][0]){
+				elements[0][i1][6].push([elements[0][i2][0],elements[0][i2][1]])
+			}
+		}
 	}
 	//	Wormholes local lookup
 	for(i1=0;i1<elements[4].length;i1++){
@@ -324,30 +330,22 @@ function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
 	if(rangeCheck){
 		if(distance<=100){
-			for(i1=0;i1<elements[0].length;i1++){
-				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][i1][1][0],elements[0][i1][1][1])<=elements[0][target][5]){
-					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][i1][1][0],elements[0][i1][1][1],1)
-				}
+			for(i2=0;i2<elements[0][target][3].length;i2++){
+				drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][3][i2][1][0],elements[0][target][3][i2][1][1],1)
 			}
-			for(i1=0;i1<elements[0][target][3].length;i1++){
-				for(i2=0;i2<elements[0].length;i2++){
-					if(elements[0][i2][0]==elements[0][target][3][i1]){
-						drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][i2][1][0],elements[0][i2][1][1],1)
-					}
+			for(i2=0;i2<elements[0][target][6].length;i2++){
+				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6][i2][1][0],elements[0][target][6][i2][1][1])<=elements[0][target][5]){
+					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6][i2][1][0],elements[0][target][6][i2][1][1],1)
 				}
 			}
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0].length;i2++){
-				if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][systemsSelected[i1]][5]){
-					drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i2][1][0],elements[0][i2][1][1],1)
-				}
-			}
 			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
-						drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][i3][1][0],elements[0][i3][1][1],1)
-					}
+				drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],1)
+			}
+			for(i2=0;i2<elements[0][systemsSelected[i1]][6].length;i2++){
+				if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6][i2][1][0],elements[0][systemsSelected[i1]][6][i2][1][1])<=elements[0][systemsSelected[i1]][5]){
+					drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6][i2][1][0],elements[0][systemsSelected[i1]][6][i2][1][1],1)
 				}
 			}
 		}
