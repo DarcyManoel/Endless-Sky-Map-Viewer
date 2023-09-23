@@ -10,7 +10,7 @@ const overlayContext=overlay.getContext(`2d`)
 const galaxy=document.getElementById(`background`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
 var display=`original`
-var ownership=`inhabited`
+var ownership=`habitation`
 
 var loaded=0
 var block=0
@@ -30,7 +30,7 @@ function initialize(){
 	if(localStorage.getItem(`display`)==`modern`){
 		display=localStorage.getItem(`display`)
 	}
-	if(localStorage.getItem(`ownership`)==`claimed`){
+	if(localStorage.getItem(`ownership`)==`claims`){
 		ownership=localStorage.getItem(`ownership`)
 	}
 	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
@@ -68,7 +68,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[],[100],[]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -269,11 +269,23 @@ function curateData(){
 			}
 		}
 		//	Systems in range
+		elements[0][i1][7]=[]
 		for(i2=0;i2<elements[0].length;i2++){
 			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][i1][6]&&elements[0][i1][0]!==elements[0][i2][0]){
 				elements[0][i1][7].push([elements[0][i2][0],elements[0][i2][1]])
 			}
 		}
+		//	Systems with overlapping ranges
+		elements[0][i1][8]=[]
+		for(i2=0;i2<elements[0].length;i2++){
+			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=+elements[0][i1][6]+ +elements[0][i2][6]&&elements[0][i1][0]!==elements[0][i2][0]){
+				elements[0][i1][8].push([[elements[0][i2][0],elements[0][i2][1]],0])
+			}
+		}
+		for(i2=0;i2<elements[0][i1][8].length;i2++){
+			elements[0][i1][8][i2][1]=Math.atan2(elements[0][i1][8][i2][0][1][0]-elements[0][i1][1][0],elements[0][i1][8][i2][0][1][1]-elements[0][i1][1][1])
+		}
+		elements[0][i1][8].sort((a,b)=>a[1]-b[1]);
 	}
 	//	Wormholes local lookup
 	for(i1=0;i1<elements[4].length;i1++){
@@ -333,7 +345,7 @@ function drawMap(){
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,galaxyCentre[0]-parseInt(galaxyPosition[0])+canvas.width*1.5*scale+112,galaxyCentre[1]-parseInt(galaxyPosition[1])+canvas.height*1.5*scale+22)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]- +galaxyPosition[0]+canvas.width*1.5*scale+112,galaxyCentre[1]- +galaxyPosition[1]+canvas.height*1.5*scale+22)
 }
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
@@ -371,12 +383,10 @@ function drawOverlay(){
 	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
+			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
 		}
 		if(distance<=100){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6],elements[0][target][2][1],elements[0][target][4].length)
-		}
-		for(i1=0;i1<systemsSelected.length;i1++){
-			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
 		}
 	}
 	if(systemsSelected.length){
@@ -417,7 +427,7 @@ function drawSystem(x,y,systemGovernment,planetCount){
 	canvasContext.arc(canvas.width*1.5*scale+ +x-galaxyPosition[0],canvas.height*1.5*scale+ +y-galaxyPosition[1],radius,0,2*Math.PI)
 	canvasContext.setLineDash([])
 	canvasContext.lineWidth=3.6
-	if(planetCount>0||ownership==`claimed`){
+	if(planetCount>0||ownership==`claims`){
 		canvasContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
 	}else{
 		canvasContext.strokeStyle=`rgb(102,102,102)`
@@ -492,7 +502,7 @@ function drawRange(x,y,range,systemGovernment,planetCount){
 		overlayContext.strokeStyle=`rgb(102,102,102)`
 		overlayContext.stroke()
 	}else{
-		if(planetCount>0||ownership==`claimed`){
+		if(planetCount>0||ownership==`claims`){
 			overlayContext.fillStyle=`rgba(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`,.1)`
 		}else{
 			overlayContext.fillStyle=`rgba(102,102,102,.1)`
@@ -547,10 +557,10 @@ function cycleDisplay(){
 	drawMap()
 }
 function cycleOwnership(){
-	if(ownership==`inhabited`){
-		ownership=`claimed`
-	}else if(ownership==`claimed`){
-		ownership=`inhabited`
+	if(ownership==`habitation`){
+		ownership=`claims`
+	}else if(ownership==`claims`){
+		ownership=`habitation`
 	}
 	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
 	localStorage.setItem(`ownership`,ownership)
