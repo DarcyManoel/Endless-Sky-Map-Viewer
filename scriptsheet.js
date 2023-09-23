@@ -68,7 +68,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[100],[]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Uninhabited`],[],[],[],[100],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -158,7 +158,7 @@ function defineSystem(override){
 				elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i4].startsWith(`\t"jump range" `)){
-			elements[0][i3][5]=lines[i4].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
+			elements[0][i3][6]=lines[i4].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}
 	}else{
 		if(lines[i3].startsWith(`\tpos `)){
@@ -188,7 +188,7 @@ function defineSystem(override){
 				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i3].startsWith(`\t"jump range" `)){
-			elements[0][elements[0].length-1][5]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
+			elements[0][elements[0].length-1][6]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}
 	}
 }
@@ -259,10 +259,19 @@ function curateData(){
 				}
 			}
 		}
+		//	Objects that are wormholes
+		for(i2=0;i2<elements[0][i1][4].length;i2++){
+			for(i3=0;i3<elements[4].length;i3++){
+				if(elements[4][i3][0].includes(elements[0][i1][4][i2])){
+					elements[0][i1][5].push(elements[0][i1][4][i2])
+					elements[0][i1][4].splice(i2,1)
+				}
+			}
+		}
 		//	Systems in range
 		for(i2=0;i2<elements[0].length;i2++){
-			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][i1][5]&&elements[0][i1][0]!==elements[0][i2][0]){
-				elements[0][i1][6].push([elements[0][i2][0],elements[0][i2][1]])
+			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][i1][6]&&elements[0][i1][0]!==elements[0][i2][0]){
+				elements[0][i1][7].push([elements[0][i2][0],elements[0][i2][1]])
 			}
 		}
 	}
@@ -333,9 +342,9 @@ function drawOverlay(){
 			for(i2=0;i2<elements[0][target][3].length;i2++){
 				drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][3][i2][1][0],elements[0][target][3][i2][1][1],1)
 			}
-			for(i2=0;i2<elements[0][target][6].length;i2++){
-				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6][i2][1][0],elements[0][target][6][i2][1][1])<=elements[0][target][5]){
-					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6][i2][1][0],elements[0][target][6][i2][1][1],1)
+			for(i2=0;i2<elements[0][target][7].length;i2++){
+				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][7][i2][1][0],elements[0][target][7][i2][1][1])<=elements[0][target][6]){
+					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][7][i2][1][0],elements[0][target][7][i2][1][1],1)
 				}
 			}
 		}
@@ -343,9 +352,9 @@ function drawOverlay(){
 			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
 				drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],1)
 			}
-			for(i2=0;i2<elements[0][systemsSelected[i1]][6].length;i2++){
-				if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6][i2][1][0],elements[0][systemsSelected[i1]][6][i2][1][1])<=elements[0][systemsSelected[i1]][5]){
-					drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6][i2][1][0],elements[0][systemsSelected[i1]][6][i2][1][1],1)
+			for(i2=0;i2<elements[0][systemsSelected[i1]][7].length;i2++){
+				if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][7][i2][1][0],elements[0][systemsSelected[i1]][7][i2][1][1])<=elements[0][systemsSelected[i1]][6]){
+					drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][7][i2][1][0],elements[0][systemsSelected[i1]][7][i2][1][1],1)
 				}
 			}
 		}
@@ -364,10 +373,10 @@ function drawOverlay(){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
 		}
 		if(distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][5],elements[0][target][2][1],elements[0][target][4].length)
+			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6],elements[0][target][2][1],elements[0][target][4].length)
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][5],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
+			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
 		}
 	}
 	if(systemsSelected.length){
@@ -378,13 +387,7 @@ function drawOverlay(){
 			document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
 			var selectedHabitation=0
 			for(i1=0;i1<systemsSelected.length;i1++){
-				var wormholeBlock=0
-				for(i2=0;i2<elements[4].length;i2++){
-					if(elements[4][i2][0].includes(elements[0][systemsSelected[i1]][4][0])){
-						wormholeBlock=1
-					}
-				}
-				if(elements[0][systemsSelected[i1]][4].length&&!wormholeBlock){
+				if(elements[0][systemsSelected[i1]][4].length){
 					selectedHabitation++
 				}
 			}
