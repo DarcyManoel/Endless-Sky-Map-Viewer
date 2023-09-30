@@ -529,7 +529,11 @@ function drawLinkLengthCheck(startX,startY,endX,endY,systemGovernment){
 	overlayContext.arc((endX-startX+4100)*scale,(endY-startY+200)*scale,1*scale,0,2*Math.PI)
 	overlayContext.setLineDash([])
 	overlayContext.lineWidth=3.6*scale
-	overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	if(systemGovernment){
+		overlayContext.strokeStyle=`rgb(`+systemGovernment[0]*255+`,`+systemGovernment[1]*255+`,`+systemGovernment[2]*255+`)`
+	}else{
+		overlayContext.strokeStyle=`rgb(102,102,102)`
+	}
 	overlayContext.stroke()
 }
 function drawRangeCheck(startX,startY,endX,endY,lineWidth){
