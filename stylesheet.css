@@ -135,6 +135,13 @@ label:hover{
 	left:20px;
 	bottom:20px;
 }
+table{
+	border-spacing:0;
+	font-size:80%;
+}
+td{
+	padding-right:20px;
+}
 /*	Animations	*/
 /*		Blur	*/
 @keyframes blurOff{

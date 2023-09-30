@@ -401,7 +401,6 @@ function drawOverlay(){
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
 		document.getElementById(`systemPosition`).classList.remove(`dark`)
-		document.getElementById(`systemTrade`).classList.remove(`dark`)
 		if(systemsSelected.length>1){
 			document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
 			var selectedHabitation=0
@@ -415,16 +414,15 @@ function drawOverlay(){
 			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
-			document.getElementById(`systemTrade`).innerHTML=elements[0][systemsSelected[0]][9].map(e => e.join(' ')).join('<br>')
+			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td>`+elements[0][systemsSelected[0]][9].map(e => e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}
 	}else{
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
 			document.getElementById(`systemPosition`).classList.add(`dark`)
-			document.getElementById(`systemTrade`).classList.add(`dark`)
 			document.getElementById(`systemName`).innerHTML=elements[0][target][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
-			document.getElementById(`systemTrade`).innerHTML=elements[0][target][9].map(e => e.join(' ')).join('<br>')
+			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+elements[0][target][9].map(e => e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
 		}
 	}
 }
