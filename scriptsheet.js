@@ -208,7 +208,7 @@ function defineWormhole(){
 			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(` `),[]])
 		}
 	}else if(lines[i3].startsWith(`\tcolor `)){
-		elements[4][elements[4].length-1][3]=[lines[i3].slice(7).replaceAll(`"`,``),[]]
+		elements[4][elements[4].length-1][3]=[lines[i3].slice(7).replaceAll(`"`,``),lines[i3].slice(7).replaceAll(`"`,``)]
 	}
 }
 function defineGovernment(){
