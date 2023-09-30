@@ -1,4 +1,5 @@
 var elements=[[`systems`],[`governments`],[`galaxies`],[`cyclable galaxies`],[`wormholes`],[`colors`]]
+var tradeTemplate=[`Food`,`Clothing`,`Metal`,`Plastic`,`Equipment`,`Medical`,`Industrial`,`Electronics`,`Heavy Metals`,`Luxury Goods`]
 const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -68,7 +69,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[]])
+						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -189,6 +190,8 @@ function defineSystem(override){
 			}
 		}else if(lines[i3].startsWith(`\t"jump range" `)){
 			elements[0][elements[0].length-1][6]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
+		}else if(lines[i3].startsWith(`\ttrade `)){
+			elements[0][elements[0].length-1][9].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``))
 		}
 	}
 }
@@ -286,6 +289,11 @@ function curateData(){
 			elements[0][i1][8][i2][1]=Math.atan2(elements[0][i1][8][i2][0][1][0]-elements[0][i1][1][0],elements[0][i1][8][i2][0][1][1]-elements[0][i1][1][1])
 		}
 		elements[0][i1][8].sort((a,b)=>a[1]-b[1]);
+		//	Trade Values
+		for(i2=0;i2<elements[0][i1][9].length;i2++){
+			elements[0][i1][9][i2]=splitLastOccurrence(elements[0][i1][9][i2],` `)
+		}
+		elements[0][i1][9].sort(sortTrade)
 	}
 	//	Wormholes local lookup
 	for(i1=0;i1<elements[4].length;i1++){
@@ -380,6 +388,7 @@ function drawOverlay(){
 	document.getElementById(`systemName`).innerHTML=``
 	document.getElementById(`systemPosition`).innerHTML=``
 	document.getElementById(`selectedHabitation`).innerHTML=``
+	document.getElementById(`systemTrade`).innerHTML=``
 	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
 			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
@@ -392,7 +401,7 @@ function drawOverlay(){
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
 		document.getElementById(`systemPosition`).classList.remove(`dark`)
-		document.getElementById(`selectedHabitation`).classList.remove(`dark`)
+		document.getElementById(`systemTrade`).classList.remove(`dark`)
 		if(systemsSelected.length>1){
 			document.getElementById(`systemName`).innerHTML=systemsSelected.length+` systems selected`
 			var selectedHabitation=0
@@ -406,13 +415,16 @@ function drawOverlay(){
 			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
+			document.getElementById(`systemTrade`).innerHTML=elements[0][systemsSelected[0]][9].map(e => e.join(' ')).join('<br>')
 		}
 	}else{
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
 			document.getElementById(`systemPosition`).classList.add(`dark`)
+			document.getElementById(`systemTrade`).classList.add(`dark`)
 			document.getElementById(`systemName`).innerHTML=elements[0][target][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
+			document.getElementById(`systemTrade`).innerHTML=elements[0][target][9].map(e => e.join(' ')).join('<br>')
 		}
 	}
 }
@@ -745,4 +757,13 @@ Math.dist=function(x1,y1,x2,y2){
 		y2=0
 	}
 	return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1))
+}
+function splitLastOccurrence(string,substring) {
+	var lastIndex=string.lastIndexOf(substring);
+	var before=string.slice(0,lastIndex);
+	var after=string.slice(lastIndex+1);
+	return[before,after];
+}
+function sortTrade(a,b) {
+	return tradeTemplate.indexOf(a[0])-tradeTemplate.indexOf(b[0]);
 }

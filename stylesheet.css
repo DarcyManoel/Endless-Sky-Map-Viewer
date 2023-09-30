@@ -131,6 +131,10 @@ label:hover{
 	left:20px;
 	top:100px;
 }
+#systemTrade{
+	left:20px;
+	bottom:20px;
+}
 /*	Animations	*/
 /*		Blur	*/
 @keyframes blurOff{
