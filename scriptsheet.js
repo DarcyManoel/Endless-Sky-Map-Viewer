@@ -706,11 +706,11 @@ function keyDown(event){
 			}
 			//	-
 			if(event.keyCode==189){
-				zoomOut()
+				changeZoomLevel(0)
 			}
 			//	+
 			if(event.keyCode==187){
-				zoomIn()
+				changeZoomLevel(1)
 			}
 		}
 		if(event.keyCode){
@@ -767,25 +767,20 @@ function toggleRangeCheck(){
 	}
 	drawMap()
 }
-function zoomOut(){
+// Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
+const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25];
+function changeZoomLevel(zoomIn){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
-	if(scale==1){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=2.5
-	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
-}
-function zoomIn(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==2.5){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=1
+	var scaleIndex=zoomLevels.indexOf(scale);
+	if(zoomIn){
+		if((scaleIndex+1)<zoomLevels.length){
+			scale=zoomLevels[scaleIndex+1];
+		}
+	}else{
+		if(scaleIndex>0){
+			scale=zoomLevels[scaleIndex-1];
+		}
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
