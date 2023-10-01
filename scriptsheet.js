@@ -395,11 +395,15 @@ function drawOverlay(){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6],elements[0][target][2][1],elements[0][target][4].length)
 		}
 	}
-	document.getElementById(`systemName`).innerHTML=``
+	if(distance<=100){
+		document.getElementById(`systemName`).innerHTML=elements[0][target][0]
+	}else{
+		document.getElementById(`systemName`).innerHTML=``
+	}
 	document.getElementById(`systemPosition`).innerHTML=``
 	document.getElementById(`selectedCount`).innerHTML=``
 	document.getElementById(`selectedHabitation`).innerHTML=``
-	tradeAverage=[[`Food`,0,0],[`Clothing`,0,0],[`Metal`,0,0],[`Plastic`,0,0],[`Equipment`,0,0],[`Medical`,0,0],[`Industrial`,0,0],[`Electronics`,0,0],[`Heavy Metals`,0,0],[`Luxury Goods`,0,0]]
+	tradeAverage=[[`Food`,0,``,0],[`Clothing`,0,``,0],[`Metal`,0,``,0],[`Plastic`,0,``,0],[`Equipment`,0,``,0],[`Medical`,0,``,0],[`Industrial`,0,``,0],[`Electronics`,0,``,0],[`Heavy Metals`,0,``,0],[`Luxury Goods`,0,``,0]]
 	document.getElementById(`systemTrade`).innerHTML=``
 	if(systemsSelected.length){
 		document.getElementById(`systemName`).classList.remove(`dark`)
@@ -411,16 +415,21 @@ function drawOverlay(){
 				}
 			}
 			for(i2=0;i2<elements[0][systemsSelected[i1]][9].length;i2++){
-				tradeAverage[i2][2]=tradeAverage[i2][2]+parseInt(elements[0][systemsSelected[i1]][9][i2][1])
+				tradeAverage[i2][3]=tradeAverage[i2][3]+parseInt(elements[0][systemsSelected[i1]][9][i2][1])
 			}
 		}
 		for(i1=0;i1<tradeAverage.length;i1++){
-			tradeAverage[i1][2]=Math.round((tradeAverage[i1][2]/systemsSelected.length)*100)/100
+			tradeAverage[i1][3]=Math.round((tradeAverage[i1][3]/systemsSelected.length)*100)/100
+			if(tradeAverage[i1][1]>0&&tradeAverage[i1][3]>0){
+				if(tradeAverage[i1][1]>tradeAverage[i1][3]){
+					tradeAverage[i1][2]=`+`+(Math.round((tradeAverage[i1][1]/tradeAverage[i1][3])*100)-100)+`%`
+				}
+				if(tradeAverage[i1][1]<tradeAverage[i1][3]){
+					tradeAverage[i1][2]=`-`+(100-Math.round((tradeAverage[i1][1]/tradeAverage[i1][3])*100))+`%`
+				}
+			}
 		}
 		if(systemsSelected.length>1){
-			if(distance<=100){
-				document.getElementById(`systemName`).innerHTML=elements[0][target][0]
-			}
 			var selectedHabitation=0
 			for(i1=0;i1<systemsSelected.length;i1++){
 				if(elements[0][systemsSelected[i1]][4].length){
@@ -429,20 +438,18 @@ function drawOverlay(){
 			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>AVG</td></tr></table`
+			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
 			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}else{
-			document.getElementById(`systemName`).innerHTML=elements[0][systemsSelected[0]][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>AVG</td></tr></table`
+			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
 			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}
 	}else{
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
 			document.getElementById(`systemPosition`).classList.add(`dark`)
-			document.getElementById(`systemName`).innerHTML=elements[0][target][0]
 			document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
 			if(elements[0][target][9].length){
 				document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+elements[0][target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
