@@ -395,7 +395,7 @@ function drawOverlay(){
 			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6],elements[0][target][2][1],elements[0][target][4].length)
 		}
 	}
-	if(distance<=100){
+	if(distance<=100||systemsSelected.length==1){
 		document.getElementById(`systemName`).innerHTML=elements[0][target][0]
 	}else{
 		document.getElementById(`systemName`).innerHTML=``
