@@ -127,9 +127,14 @@ label:hover{
 	left:20px;
 	top:100px;
 }
-#selectedHabitation{
+#selectedCount{
+	font-size:18px;
 	left:20px;
 	top:100px;
+}
+#selectedHabitation{
+	left:20px;
+	top:130px;
 }
 #systemTrade{
 	left:20px;
@@ -140,7 +145,8 @@ table{
 	font-size:80%;
 }
 td{
-	padding-right:20px;
+	min-width:30px;
+	padding-right:10px;
 }
 /*	Animations	*/
 /*		Blur	*/
