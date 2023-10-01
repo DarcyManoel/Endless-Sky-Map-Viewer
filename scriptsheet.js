@@ -412,6 +412,8 @@ function drawOverlay(){
 			for(i2=0;i2<elements[0][target][9].length;i2++){
 				if(distance<=100&&elements[0][target][9].length){
 					tradeAverage[i2][1]=elements[0][target][9][i2][1]
+				}else{
+					tradeAverage[i2][1]=elements[0][systemsSelected[systemsSelected.length-1]][9][i2][1]
 				}
 			}
 			for(i2=0;i2<elements[0][systemsSelected[i1]][9].length;i2++){
@@ -446,7 +448,7 @@ function drawOverlay(){
 			`<table>
 				<tr>
 					<th></th>
-					<th title="Cost in target system (hovered)">TGT</th>
+					<th title="Cost in target system (hovered or last selected)">TGT</th>
 					<th title="Cost difference % between target system and average of selected systems">DIFF</th>
 					<th title="Average cost in all selected systems">AVG</th>
 				</tr>
