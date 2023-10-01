@@ -148,6 +148,9 @@ td{
 	min-width:40px;
 	padding-right:15px;
 }
+th{
+	text-align:left;
+}
 /*	Animations	*/
 /*		Blur	*/
 @keyframes blurOff{

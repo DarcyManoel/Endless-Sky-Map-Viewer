@@ -289,7 +289,7 @@ function curateData(){
 		for(i2=0;i2<elements[0][i1][8].length;i2++){
 			elements[0][i1][8][i2][1]=Math.atan2(elements[0][i1][8][i2][0][1][0]-elements[0][i1][1][0],elements[0][i1][8][i2][0][1][1]-elements[0][i1][1][1])
 		}
-		elements[0][i1][8].sort((a,b)=>a[1]-b[1]);
+		elements[0][i1][8].sort((a,b)=>a[1]-b[1])
 		//	Trade Values
 		for(i2=0;i2<elements[0][i1][9].length;i2++){
 			elements[0][i1][9][i2]=splitLastOccurrence(elements[0][i1][9][i2],` `)
@@ -438,14 +438,20 @@ function drawOverlay(){
 			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
-			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}else{
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
-			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}
+		document.getElementById(`systemTrade`).innerHTML=
+			`<table>
+				<tr>
+					<th></th>
+					<th title="Cost in target system (hovered)">TGT</th>
+					<th title="Cost difference % between target system and average of selected systems">DIFF</th>
+					<th title="Average cost in all selected systems">AVG</th>
+				</tr>
+				<tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr>
+			</table>`
 	}else{
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
@@ -472,7 +478,7 @@ function drawOverlay(){
 	}
 }
 function drawSystem(x,y,systemGovernment,planetCount){
-	var radius;
+	var radius
 	if(display==`original`){
 		radius=9
 	}else{
@@ -768,18 +774,18 @@ function toggleRangeCheck(){
 	drawMap()
 }
 // Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
-const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25];
+const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25]
 function changeZoomLevel(zoomIn){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
-	var scaleIndex=zoomLevels.indexOf(scale);
+	var scaleIndex=zoomLevels.indexOf(scale)
 	if(zoomIn){
 		if((scaleIndex+1)<zoomLevels.length){
-			scale=zoomLevels[scaleIndex+1];
+			scale=zoomLevels[scaleIndex+1]
 		}
 	}else{
 		if(scaleIndex>0){
-			scale=zoomLevels[scaleIndex-1];
+			scale=zoomLevels[scaleIndex-1]
 		}
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
@@ -791,11 +797,11 @@ Math.dist=function(x1,y1,x2,y2){
 	return Math.sqrt((+x2-+x1)*(+x2-+x1)+(+y2-+y1)*(+y2-+y1))
 }
 function splitLastOccurrence(string,substring) {
-	var lastIndex=string.lastIndexOf(substring);
-	var before=string.slice(0,lastIndex);
-	var after=string.slice(lastIndex+1);
-	return[before,after];
+	var lastIndex=string.lastIndexOf(substring)
+	var before=string.slice(0,lastIndex)
+	var after=string.slice(lastIndex+1)
+	return[before,after]
 }
 function sortTrade(a,b) {
-	return tradeTemplate.indexOf(a[0])-tradeTemplate.indexOf(b[0]);
+	return tradeTemplate.indexOf(a[0])-tradeTemplate.indexOf(b[0])
 }
