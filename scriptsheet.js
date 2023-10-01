@@ -438,14 +438,16 @@ function drawOverlay(){
 			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
-			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}else{
 			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
-			document.getElementById(`systemTrade`).innerHTML=`<table><tr><td style="opacity:0;">Luxury Goods</td><td>TGT</td><td>DIFF</td><td>AVG</td></tr></table`
-			document.getElementById(`systemTrade`).innerHTML+=`<table><tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr></table>`
 		}
+		
+		document.getElementById(`systemTrade`).innerHTML=
+			`<table>` +
+				`<tr><th></th><th title="Cost in hovered system">TGT</th><th title="Cost difference % between hovered system and average of selected systems">DIFF</th><th title="Average cost in all selected systems">AVG</th></tr>` +
+				`<tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr>` +
+			`</table>`;
 	}else{
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
