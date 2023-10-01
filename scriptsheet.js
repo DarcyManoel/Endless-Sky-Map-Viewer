@@ -706,11 +706,11 @@ function keyDown(event){
 			}
 			//	-
 			if(event.keyCode==189){
-				zoomOut()
+				changeZoomLevel(true);
 			}
 			//	+
 			if(event.keyCode==187){
-				zoomIn()
+				changeZoomLevel(false);
 			}
 		}
 		if(event.keyCode){
@@ -767,30 +767,32 @@ function toggleRangeCheck(){
 	}
 	drawMap()
 }
-function zoomOut(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==1){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=2.5
+
+// Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
+const zoomLevels = [2.8, 2, 1.4, 1, 0.7, 0.5, 0.35, 0.25];
+
+function changeZoomLevel(zoomOut)
+{
+	canvasContext.scale(3*scale,3*scale);
+	overlayContext.scale(3*scale,3*scale);
+
+	var scaleIndex = zoomLevels.indexOf(scale);
+	if (zoomOut)
+	{
+		if (scaleIndex > 0)
+			scale = zoomLevels[scaleIndex - 1];
 	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
-}
-function zoomIn(){
-	canvasContext.scale(3*scale,3*scale)
-	overlayContext.scale(3*scale,3*scale)
-	if(scale==2.5){
-		scale=1.5
-	}else if(scale==1.5){
-		scale=1
+	else
+	{
+		if (scaleIndex + 1 < zoomLevels.length)
+			scale = zoomLevels[scaleIndex + 1];
 	}
-	canvasContext.scale((1/3)/scale,(1/3)/scale)
-	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
+
+	canvasContext.scale((1/3)/scale,(1/3)/scale);
+	overlayContext.scale((1/3)/scale,(1/3)/scale);
+	drawMap();
 }
+
 //	Shortcuts
 Math.dist=function(x1,y1,x2,y2){
 	return Math.sqrt((+x2-+x1)*(+x2-+x1)+(+y2-+y1)*(+y2-+y1))
