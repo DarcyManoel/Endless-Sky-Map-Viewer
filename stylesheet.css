@@ -119,7 +119,6 @@ label:hover{
 }
 /*	System Details	*/
 #systemName{
-	font-size:18px;
 	left:20px;
 	top:70px;
 }
@@ -128,13 +127,12 @@ label:hover{
 	top:100px;
 }
 #selectedCount{
-	font-size:18px;
 	left:20px;
-	top:100px;
+	top:130px;
 }
 #selectedHabitation{
 	left:20px;
-	top:130px;
+	top:160px;
 }
 #systemTrade{
 	left:20px;

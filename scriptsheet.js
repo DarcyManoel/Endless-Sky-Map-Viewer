@@ -383,12 +383,13 @@ function drawOverlay(){
 			drawRange(systems[target][1][0],systems[target][1][1],systems[target][6],systems[target][2][1],systems[target][4].length)
 		}
 	}
-	if(distance<=100||systemsSelected.length==1){
+	if(distance<=100){
 		document.getElementById(`systemName`).innerHTML=systems[target][0]
+		document.getElementById(`systemPosition`).innerHTML=systems[target][1].join(` `)
 	}else{
 		document.getElementById(`systemName`).innerHTML=``
+		document.getElementById(`systemPosition`).innerHTML=``
 	}
-	document.getElementById(`systemPosition`).innerHTML=``
 	document.getElementById(`selectedCount`).innerHTML=``
 	document.getElementById(`selectedHabitation`).innerHTML=``
 	tradeAverage=[[`Food`,0,``,0],[`Clothing`,0,``,0],[`Metal`,0,``,0],[`Plastic`,0,``,0],[`Equipment`,0,``,0],[`Medical`,0,``,0],[`Industrial`,0,``,0],[`Electronics`,0,``,0],[`Heavy Metals`,0,``,0],[`Luxury Goods`,0,``,0]]
@@ -426,10 +427,13 @@ function drawOverlay(){
 					selectedHabitation++
 				}
 			}
+			document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
+			document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
 		}else{
-			document.getElementById(`systemPosition`).innerHTML=systems[systemsSelected[0]][1][0]+` `+systems[systemsSelected[0]][1][1]
+			document.getElementById(`systemName`).innerHTML=systems[systemsSelected[0]][0]
+			document.getElementById(`systemPosition`).innerHTML=systems[systemsSelected[0]][1].join(` `)
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
 		document.getElementById(`systemTrade`).innerHTML=
@@ -446,7 +450,6 @@ function drawOverlay(){
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
 			document.getElementById(`systemPosition`).classList.add(`dark`)
-			document.getElementById(`systemPosition`).innerHTML=systems[target][1][0]+` `+systems[target][1][1]
 			if(systems[target][9].length){
 				document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+systems[target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
 			}else{
@@ -651,6 +654,7 @@ function mouseMove(event){
 	drawOverlay()
 }
 var isDragging=0
+var lastSelected
 function mouseDown(){
 	isDragging=1
 	if(distance<=100){
@@ -664,6 +668,7 @@ function mouseDown(){
 		}
 		if(!spliced){
 			systemsSelected.push(target)
+			lastSelected=target
 		}
 	}
 	var canExpand=0
