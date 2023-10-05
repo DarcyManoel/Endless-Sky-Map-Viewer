@@ -1,6 +1,3 @@
-var elements=[[`systems`],[`governments`],[`galaxies`],[`cyclable galaxies`],[`wormholes`],[`colors`]]
-var tradeTemplate=[`Food`,`Clothing`,`Metal`,`Plastic`,`Equipment`,`Medical`,`Industrial`,`Electronics`,`Heavy Metals`,`Luxury Goods`]
-var tradeAverage=[[`Food`,0,0],[`Clothing`,0,0],[`Metal`,0,0],[`Plastic`,0,0],[`Equipment`,0,0],[`Medical`,0,0],[`Industrial`,0,0],[`Electronics`,0,0],[`Heavy Metals`,0,0],[`Luxury Goods`,0,0]]
 const canvas=document.getElementById(`canvas`)
 	canvas.height=screen.height
 	canvas.width=screen.width
@@ -11,24 +8,7 @@ const overlay=document.getElementById(`overlay`)
 const overlayContext=overlay.getContext(`2d`)
 const galaxy=document.getElementById(`background`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
-var display=`original`
-var ownership=`habitation`
-
-var loaded=0
-var block=0
-var distance
-var galaxyPosition=[112,22]
-var galaxySelected=0
-var isDragging=0
-var oldTarget=0
-var rangeCheck=0
-var scale=1
-var systemsSelected=[]
-var target=0
-var xCoordinate
-var yCoordinate
 function initialize(){
-	elements=[[],[],[],[],[],[]]
 	if(localStorage.getItem(`display`)==`modern`){
 		display=localStorage.getItem(`display`)
 	}
@@ -42,6 +22,11 @@ function initialize(){
 	drawGalaxy()
 }
 //	Load
+var systems=[]
+var governments=[]
+var galaxies=[]
+var wormholes=[]
+var colors=[]
 function uploadFiles(that){
 	document.querySelectorAll('.blocked').forEach((element)=>{
 		element.classList.remove('blocked')
@@ -58,8 +43,8 @@ function uploadFiles(that){
 					//	Systems
 					if(lines[i2].startsWith(`system `)){
 						//	Override
-						for(i3=0;i3<elements[0].length;i3++){
-							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[0][i3][0]){
+						for(i3=0;i3<systems.length;i3++){
+							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==systems[i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`)){
 										break
@@ -70,7 +55,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[0].push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[],[]])
+						systems.push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -81,8 +66,8 @@ function uploadFiles(that){
 					//	Governments
 					}else if(lines[i2].startsWith(`government `)){
 						//	Override
-						for(i3=0;i3<elements[1].length;i3++){
-							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==elements[1][i3][0]){
+						for(i3=0;i3<governments.length;i3++){
+							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==governments[i3][0]){
 								for(i4=i2+1;i4<lines.length;i4++){
 									if(!lines[i4].startsWith(`\t`)){
 										break
@@ -93,7 +78,7 @@ function uploadFiles(that){
 							}
 						}
 						//	Define
-						elements[1].push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
+						governments.push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -104,7 +89,7 @@ function uploadFiles(that){
 					//	Galaxies
 					}else if(lines[i2].startsWith(`galaxy `)){
 						//	Define
-						elements[2].push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
+						galaxies.push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -115,7 +100,7 @@ function uploadFiles(that){
 					//	Wormholes
 					}else if(lines[i2].startsWith(`wormhole `)){
 						//	Define
-						elements[4].push([lines[i2].slice(9).replaceAll(`\r`,``),0,[],[]])
+						wormholes.push([lines[i2].slice(9).replaceAll(`\r`,``),0,[],[]])
 						for(i3=i2+1;i3<lines.length;i3++){
 							if(!lines[i3].startsWith(`\t`)){
 								break
@@ -126,7 +111,7 @@ function uploadFiles(that){
 					//	Colors
 					}else if(lines[i2].startsWith(`color `)){
 						//	Define
-						elements[5].push(lines[i2].slice(7).replaceAll(`\r`,``).split(`" `))
+						colors.push(lines[i2].slice(7).replaceAll(`\r`,``).split(`" `))
 						break parseLine
 					}
 				}
@@ -138,81 +123,81 @@ function uploadFiles(that){
 //	Parse Data
 function defineGalaxy(){
 	if(lines[i3].startsWith(`\tpos `)){
-		elements[2][elements[2].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+		galaxies[galaxies.length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 	}
 }
 function defineSystem(override){
 	if(override){
 		if(lines[i4].startsWith(`\tpos `)){
-			elements[0][i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+			systems[i3][1]=lines[i4].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}else if(lines[i4].startsWith(`\tgovernment `)){
-			elements[0][i3][2]=[lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
+			systems[i3][2]=[lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i4].startsWith(`\tadd link `)){
-			elements[0][i3][3].push([lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
+			systems[i3][3].push([lines[i4].slice(10).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
 		}else if(lines[i4].startsWith(`\tadd object `)){
 			var segmented=0
-			for(i5=0;i5<elements[0][i3][4].length;i5++){
-				if(elements[0][i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
+			for(i5=0;i5<systems[i3][4].length;i5++){
+				if(systems[i3][4][i5]==lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``)){
 					segmented=1
 				}
 			}
 			if(!segmented){
-				elements[0][i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))
+				systems[i3][4].push(lines[i4].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i4].startsWith(`\t"jump range" `)){
-			elements[0][i3][6]=lines[i4].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
+			systems[i3][6]=lines[i4].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}
 	}else{
 		if(lines[i3].startsWith(`\tpos `)){
-			elements[0][elements[0].length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+			systems[systems.length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}else if(lines[i3].startsWith(`\tgovernment `)){
-			elements[0][elements[0].length-1][2]=[lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
+			systems[systems.length-1][2]=[lines[i3].slice(12).replaceAll(`"`,``).replaceAll(`\r`,``),[]]
 		}else if(lines[i3].startsWith(`\tlink `)){
-			elements[0][elements[0].length-1][3].push([lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
+			systems[systems.length-1][3].push([lines[i3].slice(6).replaceAll(`"`,``).replaceAll(`\r`,``),[],[]])
 		}else if(lines[i3].startsWith(`\tobject `)){
 			var segmented=0
-			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-				if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
+			for(i4=0;i4<systems[systems.length-1][4].length;i4++){
+				if(systems[systems.length-1][4][i4]==lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``)){
 					segmented=1
 				}
 			}
 			if(!segmented){
-				elements[0][elements[0].length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``))
+				systems[systems.length-1][4].push(lines[i3].slice(8).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i3].startsWith(`\t\tobject `)){
 			var segmented=0
-			for(i4=0;i4<elements[0][elements[0].length-1][4].length;i4++){
-				if(elements[0][elements[0].length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
+			for(i4=0;i4<systems[systems.length-1][4].length;i4++){
+				if(systems[systems.length-1][4][i4]==lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``)){
 					segmented=1
 				}
 			}
 			if(!segmented){
-				elements[0][elements[0].length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
+				systems[systems.length-1][4].push(lines[i3].slice(9).replaceAll(`"`,``).replaceAll(`\r`,``))
 			}
 		}else if(lines[i3].startsWith(`\t"jump range" `)){
-			elements[0][elements[0].length-1][6]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
+			systems[systems.length-1][6]=lines[i3].slice(14).replaceAll(`"`,``).replaceAll(`\r`,``)
 		}else if(lines[i3].startsWith(`\ttrade `)){
-			elements[0][elements[0].length-1][9].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``))
+			systems[systems.length-1][9].push(lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``))
 		}
 	}
 }
 function defineWormhole(){
 	if(lines[i3].startsWith(`\tmappable`)){
-		elements[4][elements[4].length-1][1]=1
+		wormholes[wormholes.length-1][1]=1
 	}else if(lines[i3].startsWith(`\tlink `)){
 		if(lines[i3].includes(`" `)){
-			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(`" `),[]])
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0].replaceAll(`"`,``)
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1].replaceAll(`"`,``)
+			wormholes[wormholes.length-1][2].push([lines[i3].slice(6).split(`" `),[]])
+			wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][0]=wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][0].replaceAll(`"`,``)
+			wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][1]=wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][1].replaceAll(`"`,``)
 		}else if(lines[i3].includes(` "`)){
-			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(` "`),[]])
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][0].replaceAll(`"`,``)
-			elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1]=elements[4][elements[4].length-1][2][elements[4][elements[4].length-1][2].length-1][0][1].replaceAll(`"`,``)
+			wormholes[wormholes.length-1][2].push([lines[i3].slice(6).split(` "`),[]])
+			wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][0]=wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][0].replaceAll(`"`,``)
+			wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][1]=wormholes[wormholes.length-1][2][wormholes[wormholes.length-1][2].length-1][0][1].replaceAll(`"`,``)
 		}else{
-			elements[4][elements[4].length-1][2].push([lines[i3].slice(6).split(` `),[]])
+			wormholes[wormholes.length-1][2].push([lines[i3].slice(6).split(` `),[]])
 		}
 	}else if(lines[i3].startsWith(`\tcolor `)){
-		elements[4][elements[4].length-1][3]=[lines[i3].slice(7).replaceAll(`"`,``),lines[i3].slice(7).replaceAll(`"`,``)]
+		wormholes[wormholes.length-1][3]=[lines[i3].slice(7).replaceAll(`"`,``),lines[i3].slice(7).replaceAll(`"`,``)]
 	}
 }
 function defineGovernment(){
@@ -221,97 +206,102 @@ function defineGovernment(){
 			for(i5=0;i5<lines.length;i5++){
 				if(lines[i5].startsWith(`color "governments: `+lines[i3].slice(21,-1)+`"`)){
 					var sliceLength=22+lines[i3].slice(21,-1).length
-					elements[1][elements[1].length-1][1]=lines[i5].slice(sliceLength).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+					governments[governments.length-1][1]=lines[i5].slice(sliceLength).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 				}
 			}
 		}
 		else{
-			elements[1][elements[1].length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
+			governments[governments.length-1][1]=lines[i3].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
 		}
 	}
 }
+var loaded=0
+var cyclableGalaxies=[]
+const tradeTemplate=[`Food`,`Clothing`,`Metal`,`Plastic`,`Equipment`,`Medical`,`Industrial`,`Electronics`,`Heavy Metals`,`Luxury Goods`]
+var tradeAverage=[[`Food`,0,0],[`Clothing`,0,0],[`Metal`,0,0],[`Plastic`,0,0],[`Equipment`,0,0],[`Medical`,0,0],[`Industrial`,0,0],[`Electronics`,0,0],[`Heavy Metals`,0,0],[`Luxury Goods`,0,0]]
 function curateData(){
+	loaded=1
 	//	Galaxies cyclable
-	elements[3]=[elements[2][0]]
-	for(i1=0;i1<elements[2].length;i1++){
+	cyclableGalaxies=[galaxies[0]]
+	for(i1=0;i1<galaxies.length;i1++){
 		var galaxyTooClose=0
-		for(i2=0;i2<elements[3].length;i2++){
-			if(Math.dist(elements[3][i2][1][0],elements[3][i2][1][1],elements[2][i1][1][0],elements[2][i1][1][1])<2000){
+		for(i2=0;i2<cyclableGalaxies.length;i2++){
+			if(Math.dist(cyclableGalaxies[i2][1][0],cyclableGalaxies[i2][1][1],galaxies[i1][1][0],galaxies[i1][1][1])<2000){
 				galaxyTooClose=1
 			}
 		}
 		if(!galaxyTooClose){
-			elements[3].push(elements[2][i1])
+			cyclableGalaxies.push(galaxies[i1])
 		}
 	}
 	//	Systems local lookup
-	for(i1=0;i1<elements[0].length;i1++){
+	for(i1=0;i1<systems.length;i1++){
 		//	Government
-		for(i2=0;i2<elements[1].length;i2++){
-			if(elements[0][i1][2][0]==elements[1][i2][0]){
-				elements[0][i1][2][1]=elements[1][i2][1]
+		for(i2=0;i2<governments.length;i2++){
+			if(systems[i1][2][0]==governments[i2][0]){
+				systems[i1][2][1]=governments[i2][1]
 			}
 		}
 		//	Links
-		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i1][3][i2][0]==elements[0][i3][0]){
+		for(i2=0;i2<systems[i1][3].length;i2++){
+			for(i3=0;i3<systems.length;i3++){
+				if(systems[i1][3][i2][0]==systems[i3][0]){
 					//	Position
-					elements[0][i1][3][i2][1]=elements[0][i3][1]
+					systems[i1][3][i2][1]=systems[i3][1]
 					//	Government
-					elements[0][i1][3][i2][2]=elements[0][i3][2]
+					systems[i1][3][i2][2]=systems[i3][2]
 				}
 			}
 		}
 		//	Objects that are wormholes
-		for(i2=0;i2<elements[0][i1][4].length;i2++){
-			for(i3=0;i3<elements[4].length;i3++){
-				if(elements[4][i3][0].includes(elements[0][i1][4][i2])){
-					elements[0][i1][5].push(elements[0][i1][4][i2])
-					elements[0][i1][4].splice(i2,1)
+		for(i2=0;i2<systems[i1][4].length;i2++){
+			for(i3=0;i3<wormholes.length;i3++){
+				if(wormholes[i3][0].includes(systems[i1][4][i2])){
+					systems[i1][5].push(systems[i1][4][i2])
+					systems[i1][4].splice(i2,1)
 				}
 			}
 		}
 		//	Systems in range
-		elements[0][i1][7]=[]
-		for(i2=0;i2<elements[0].length;i2++){
-			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=elements[0][i1][6]&&elements[0][i1][0]!==elements[0][i2][0]){
-				elements[0][i1][7].push([elements[0][i2][0],elements[0][i2][1]])
+		systems[i1][7]=[]
+		for(i2=0;i2<systems.length;i2++){
+			if(Math.dist(systems[i1][1][0],systems[i1][1][1],systems[i2][1][0],systems[i2][1][1])<=systems[i1][6]&&systems[i1][0]!==systems[i2][0]){
+				systems[i1][7].push([systems[i2][0],systems[i2][1]])
 			}
 		}
 		//	Systems with overlapping ranges
-		elements[0][i1][8]=[]
-		for(i2=0;i2<elements[0].length;i2++){
-			if(Math.dist(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i2][1][0],elements[0][i2][1][1])<=+elements[0][i1][6]+ +elements[0][i2][6]&&elements[0][i1][0]!==elements[0][i2][0]){
-				elements[0][i1][8].push([[elements[0][i2][0],elements[0][i2][1]],0])
+		systems[i1][8]=[]
+		for(i2=0;i2<systems.length;i2++){
+			if(Math.dist(systems[i1][1][0],systems[i1][1][1],systems[i2][1][0],systems[i2][1][1])<=+systems[i1][6]+ +systems[i2][6]&&systems[i1][0]!==systems[i2][0]){
+				systems[i1][8].push([[systems[i2][0],systems[i2][1]],0])
 			}
 		}
-		for(i2=0;i2<elements[0][i1][8].length;i2++){
-			elements[0][i1][8][i2][1]=Math.atan2(elements[0][i1][8][i2][0][1][0]-elements[0][i1][1][0],elements[0][i1][8][i2][0][1][1]-elements[0][i1][1][1])
+		for(i2=0;i2<systems[i1][8].length;i2++){
+			systems[i1][8][i2][1]=Math.atan2(systems[i1][8][i2][0][1][0]-systems[i1][1][0],systems[i1][8][i2][0][1][1]-systems[i1][1][1])
 		}
-		elements[0][i1][8].sort((a,b)=>a[1]-b[1])
+		systems[i1][8].sort((a,b)=>a[1]-b[1])
 		//	Trade Values
-		for(i2=0;i2<elements[0][i1][9].length;i2++){
-			elements[0][i1][9][i2]=splitLastOccurrence(elements[0][i1][9][i2],` `)
+		for(i2=0;i2<systems[i1][9].length;i2++){
+			systems[i1][9][i2]=splitLastOccurrence(systems[i1][9][i2],` `)
 		}
-		elements[0][i1][9].sort(sortTrade)
+		systems[i1][9].sort(sortTrade)
 	}
 	//	Wormholes local lookup
-	for(i1=0;i1<elements[4].length;i1++){
+	for(i1=0;i1<wormholes.length;i1++){
 		//	Links
-		for(i2=0;i2<elements[4][i1][2].length;i2++){
-			for(i3=0;i3<elements[0].length;i3++){
-				if(elements[0][i3][0]==elements[4][i1][2][i2][0][0]){
-					elements[4][i1][2][i2][1][0]=elements[0][i3][1]
-				}else if(elements[0][i3][0]==elements[4][i1][2][i2][0][1]){
-					elements[4][i1][2][i2][1][1]=elements[0][i3][1]
+		for(i2=0;i2<wormholes[i1][2].length;i2++){
+			for(i3=0;i3<systems.length;i3++){
+				if(systems[i3][0]==wormholes[i1][2][i2][0][0]){
+					wormholes[i1][2][i2][1][0]=systems[i3][1]
+				}else if(systems[i3][0]==wormholes[i1][2][i2][0][1]){
+					wormholes[i1][2][i2][1][1]=systems[i3][1]
 				}
 			}
 		}
 		//	Colour
-		for(i2=0;i2<elements[5].length;i2++){
-			if(elements[4][i1][3][0]==elements[5][i2][0]){
-				elements[4][i1][3][1]=elements[5][i2][1]
+		for(i2=0;i2<colors.length;i2++){
+			if(wormholes[i1][3][0]==colors[i2][0]){
+				wormholes[i1][3][1]=colors[i2][1]
 			}
 		}
 	}
@@ -319,30 +309,28 @@ function curateData(){
 }
 //	Display Map
 function drawMap(){
-	loaded=1
 	drawGalaxy()
-	for(i1=0;i1<elements[0].length;i1++){
+	for(i1=0;i1<systems.length;i1++){
 		//	Systems
-		drawSystem(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][2][1],elements[0][i1][4].length)
+		drawSystem(systems[i1][1][0],systems[i1][1][1],systems[i1][2][1],systems[i1][4].length)
 		//	Links
-		for(i2=0;i2<elements[0][i1][3].length;i2++){
-			drawLink(elements[0][i1][1][0],elements[0][i1][1][1],elements[0][i1][3][i2][1][0]-((elements[0][i1][3][i2][1][0]-elements[0][i1][1][0])/2),elements[0][i1][3][i2][1][1]-((elements[0][i1][3][i2][1][1]-elements[0][i1][1][1])/2))
+		for(i2=0;i2<systems[i1][3].length;i2++){
+			drawLink(systems[i1][1][0],systems[i1][1][1],systems[i1][3][i2][1][0]-((systems[i1][3][i2][1][0]-systems[i1][1][0])/2),systems[i1][3][i2][1][1]-((systems[i1][3][i2][1][1]-systems[i1][1][1])/2))
 		}
 	}
 	//	Wormholes
-	for(i1=0;i1<elements[4].length;i1++){
-		if(elements[4][i1][1]){
-			for(i2=0;i2<elements[4][i1][2].length;i2++){
-				if(elements[4][i1][3].length){
-					drawWormhole(elements[4][i1][2][i2][1][0][0],elements[4][i1][2][i2][1][0][1],elements[4][i1][2][i2][1][1][0],elements[4][i1][2][i2][1][1][1],elements[4][i1][3][1])
+	for(i1=0;i1<wormholes.length;i1++){
+		if(wormholes[i1][1]){
+			for(i2=0;i2<wormholes[i1][2].length;i2++){
+				if(wormholes[i1][3].length){
+					drawWormhole(wormholes[i1][2][i2][1][0][0],wormholes[i1][2][i2][1][0][1],wormholes[i1][2][i2][1][1][0],wormholes[i1][2][i2][1][1][1],wormholes[i1][3][1])
 				}else{
-					drawWormhole(elements[4][i1][2][i2][1][0][0],elements[4][i1][2][i2][1][0][1],elements[4][i1][2][i2][1][1][0],elements[4][i1][2][i2][1][1][1])
+					drawWormhole(wormholes[i1][2][i2][1][0][0],wormholes[i1][2][i2][1][0][1],wormholes[i1][2][i2][1][1][0],wormholes[i1][2][i2][1][1][1])
 				}
 			}
 		}
 	}
-	console.log(elements)
-	document.getElementById(`galaxy`).innerHTML=elements[3][galaxySelected][0]
+	document.getElementById(`galaxy`).innerHTML=cyclableGalaxies[galaxySelected][0]
 	document.getElementById(`systemSelection`).classList.remove(`hidden`)
 	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
 	document.getElementById(`zoomOut`).classList.remove(`hidden`)
@@ -360,43 +348,43 @@ function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
 	if(rangeCheck){
 		if(distance<=100){
-			for(i2=0;i2<elements[0][target][3].length;i2++){
-				drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][3][i2][1][0],elements[0][target][3][i2][1][1],1)
+			for(i2=0;i2<systems[target][3].length;i2++){
+				drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][3][i2][1][0],systems[target][3][i2][1][1],1)
 			}
-			for(i2=0;i2<elements[0][target][7].length;i2++){
-				if(Math.dist(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][7][i2][1][0],elements[0][target][7][i2][1][1])<=elements[0][target][6]){
-					drawRangeCheck(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][7][i2][1][0],elements[0][target][7][i2][1][1],1)
+			for(i2=0;i2<systems[target][7].length;i2++){
+				if(Math.dist(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1])<=systems[target][6]){
+					drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1],1)
 				}
 			}
 		}
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],1)
+			for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
+				drawRangeCheck(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][3][i2][1][0],systems[systemsSelected[i1]][3][i2][1][1],1)
 			}
-			for(i2=0;i2<elements[0][systemsSelected[i1]][7].length;i2++){
-				if(Math.dist(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][7][i2][1][0],elements[0][systemsSelected[i1]][7][i2][1][1])<=elements[0][systemsSelected[i1]][6]){
-					drawRangeCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][7][i2][1][0],elements[0][systemsSelected[i1]][7][i2][1][1],1)
+			for(i2=0;i2<systems[systemsSelected[i1]][7].length;i2++){
+				if(Math.dist(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][7][i2][1][0],systems[systemsSelected[i1]][7][i2][1][1])<=systems[systemsSelected[i1]][6]){
+					drawRangeCheck(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][7][i2][1][0],systems[systemsSelected[i1]][7][i2][1][1],1)
 				}
 			}
 		}
 	}
 	drawLinkLengthCore()
 	for(i1=0;i1<systemsSelected.length;i1++){
-		for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-			drawLinkLengthCheck(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][3][i2][1][0],elements[0][systemsSelected[i1]][3][i2][1][1],elements[0][systemsSelected[i1]][3][i2][2][1])
+		for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
+			drawLinkLengthCheck(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][3][i2][1][0],systems[systemsSelected[i1]][3][i2][1][1],systems[systemsSelected[i1]][3][i2][2][1])
 		}
 	}
 	if(!rangeCheck){
 		for(i1=0;i1<systemsSelected.length;i1++){
-			drawSelect(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1])
-			drawRange(elements[0][systemsSelected[i1]][1][0],elements[0][systemsSelected[i1]][1][1],elements[0][systemsSelected[i1]][6],elements[0][systemsSelected[i1]][2][1],elements[0][systemsSelected[i1]][4].length)
+			drawSelect(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1])
+			drawRange(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][6],systems[systemsSelected[i1]][2][1],systems[systemsSelected[i1]][4].length)
 		}
 		if(distance<=100){
-			drawRange(elements[0][target][1][0],elements[0][target][1][1],elements[0][target][6],elements[0][target][2][1],elements[0][target][4].length)
+			drawRange(systems[target][1][0],systems[target][1][1],systems[target][6],systems[target][2][1],systems[target][4].length)
 		}
 	}
 	if(distance<=100||systemsSelected.length==1){
-		document.getElementById(`systemName`).innerHTML=elements[0][target][0]
+		document.getElementById(`systemName`).innerHTML=systems[target][0]
 	}else{
 		document.getElementById(`systemName`).innerHTML=``
 	}
@@ -409,15 +397,15 @@ function drawOverlay(){
 		document.getElementById(`systemName`).classList.remove(`dark`)
 		document.getElementById(`systemPosition`).classList.remove(`dark`)
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][target][9].length;i2++){
-				if(distance<=100&&elements[0][target][9].length){
-					tradeAverage[i2][1]=elements[0][target][9][i2][1]
+			for(i2=0;i2<systems[target][9].length;i2++){
+				if(distance<=100&&systems[target][9].length){
+					tradeAverage[i2][1]=systems[target][9][i2][1]
 				}else{
-					tradeAverage[i2][1]=elements[0][systemsSelected[systemsSelected.length-1]][9][i2][1]
+					tradeAverage[i2][1]=systems[systemsSelected[systemsSelected.length-1]][9][i2][1]
 				}
 			}
-			for(i2=0;i2<elements[0][systemsSelected[i1]][9].length;i2++){
-				tradeAverage[i2][3]=tradeAverage[i2][3]+parseInt(elements[0][systemsSelected[i1]][9][i2][1])
+			for(i2=0;i2<systems[systemsSelected[i1]][9].length;i2++){
+				tradeAverage[i2][3]=tradeAverage[i2][3]+parseInt(systems[systemsSelected[i1]][9][i2][1])
 			}
 		}
 		for(i1=0;i1<tradeAverage.length;i1++){
@@ -434,14 +422,14 @@ function drawOverlay(){
 		if(systemsSelected.length>1){
 			var selectedHabitation=0
 			for(i1=0;i1<systemsSelected.length;i1++){
-				if(elements[0][systemsSelected[i1]][4].length){
+				if(systems[systemsSelected[i1]][4].length){
 					selectedHabitation++
 				}
 			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
 		}else{
-			document.getElementById(`systemPosition`).innerHTML=elements[0][systemsSelected[0]][1][0]+` `+elements[0][systemsSelected[0]][1][1]
+			document.getElementById(`systemPosition`).innerHTML=systems[systemsSelected[0]][1][0]+` `+systems[systemsSelected[0]][1][1]
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
 		document.getElementById(`systemTrade`).innerHTML=
@@ -458,9 +446,9 @@ function drawOverlay(){
 		if(distance<=100){
 			document.getElementById(`systemName`).classList.add(`dark`)
 			document.getElementById(`systemPosition`).classList.add(`dark`)
-			document.getElementById(`systemPosition`).innerHTML=elements[0][target][1][0]+` `+elements[0][target][1][1]
-			if(elements[0][target][9].length){
-				document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+elements[0][target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
+			document.getElementById(`systemPosition`).innerHTML=systems[target][1][0]+` `+systems[target][1][1]
+			if(systems[target][9].length){
+				document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+systems[target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
 			}else{
 				document.getElementById(`systemTrade`).innerHTML=
 					`<table>
@@ -613,6 +601,7 @@ function drawRangeCheck(startX,startY,endX,endY,lineWidth){
 	overlayContext.stroke()
 }
 //	Map Manipulation
+var display=`original`
 function cycleDisplay(){
 	if(display==`original`){
 		display=`modern`
@@ -623,6 +612,7 @@ function cycleDisplay(){
 	localStorage.setItem(`display`,display)
 	drawMap()
 }
+var ownership=`habitation`
 function cycleOwnership(){
 	if(ownership==`habitation`){
 		ownership=`claims`
@@ -633,27 +623,34 @@ function cycleOwnership(){
 	localStorage.setItem(`ownership`,ownership)
 	drawMap()
 }
+var galaxySelected=0
+var galaxyPosition=[112,22]
 function cycleGalaxy(){
 	galaxySelected++
-	if(galaxySelected==elements[3].length){
+	if(galaxySelected==cyclableGalaxies.length){
 		galaxySelected=0
 	}
-	galaxyPosition=elements[3][galaxySelected][1]
+	galaxyPosition=cyclableGalaxies[galaxySelected][1]
 	drawMap()
 }
 //	Interaction
+var xCoordinate
+var yCoordinate
+var distance
+var target=0
 function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
 	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
 	distance=100000
-	for(i1=0;i1<elements[0].length;i1++){
-		if(Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+	for(i1=0;i1<systems.length;i1++){
+		if(Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
 			target=i1
-			distance=Math.dist(elements[0][i1][1][0]-galaxyPosition[0],elements[0][i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
+			distance=Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
 	drawOverlay()
 }
+var isDragging=0
 function mouseDown(){
 	isDragging=1
 	if(distance<=100){
@@ -672,9 +669,9 @@ function mouseDown(){
 	var canExpand=0
 	if(systemsSelected.length){
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
+			for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<systems.length;i3++){
+					if(systems[i3][0]==systems[systemsSelected[i1]][3][i2][0]){
 						if(!systemsSelected.includes(i3)){
 							canExpand=1
 						}
@@ -701,6 +698,7 @@ function mouseUp(){
 	isDragging=0
 	drawMap()
 }
+var block=0
 function keyDown(event){
 	if(loaded){
 		if(!block){
@@ -731,13 +729,14 @@ function keyUp(event){
 		block=0
 	}
 }
+var systemsSelected=[]
 function expandSystemSelection(){
 	var expanded=0
 	if(systemsSelected.length){
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<elements[0][systemsSelected[i1]][3].length;i2++){
-				for(i3=0;i3<elements[0].length;i3++){
-					if(elements[0][i3][0]==elements[0][systemsSelected[i1]][3][i2][0]){
+			for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
+				for(i3=0;i3<systems.length;i3++){
+					if(systems[i3][0]==systems[systemsSelected[i1]][3][i2][0]){
 						if(!systemsSelected.includes(i3)){
 							expanded=1
 							systemsSelected.push(i3)
@@ -748,7 +747,7 @@ function expandSystemSelection(){
 		}
 	}
 	else{
-		for(i1=0;i1<elements[0].length;i1++){
+		for(i1=0;i1<systems.length;i1++){
 			expanded=1
 			systemsSelected.push(i1)
 		}
@@ -765,6 +764,7 @@ function expandSystemSelection(){
 	}
 	drawMap()
 }
+var rangeCheck=0
 function toggleRangeCheck(){
 	rangeCheck=!rangeCheck
 	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
@@ -775,8 +775,11 @@ function toggleRangeCheck(){
 	}
 	drawMap()
 }
-// Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
+//	Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
 const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25]
+var scale=1
+//	11.2x diff between min & max zoom
+//		From 4x in to 2.8x out from default
 function changeZoomLevel(zoomIn){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
