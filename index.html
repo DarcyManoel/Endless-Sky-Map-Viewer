@@ -6,21 +6,21 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
 		<title>Map Viewer</title>
 	</head>
-	<body onKeyDown="keyDown(event)" onKeyUp="keyUp(event)" onLoad="initialize()">
+	<body onLoad="initialize()">
 		<!--	Structure	-->
-		<img id="background" class="hidden" src="assets/milky way.jpg">
+		<img id="background" class="hiddenPerm" src="assets/milky way.jpg">
 		<canvas id="canvas"></canvas>
 		<canvas id="overlay"></canvas>
 		<!--	Load	-->
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
-		<input id="file" class="hidden" onChange="uploadFiles(this)" type="file" webkitDirectory/>
+		<input id="file" class="hiddenPerm" onChange="uploadFiles(this)" type="file" webkitDirectory/>
 		<!--	Menu Cycles	-->
 		<div id="cycles">
 			<label id="display" class="blocked" onClick="cycleDisplay()"></label>
 			<label id="ownership" class="blocked" onClick="cycleOwnership()"></label>
 			<label id="galaxy" class="blocked" onClick="cycleGalaxy()"></label>
 		</div>
-		<div id="systemSelection" class="hotkeyIndicator hidden" onclick="expandSystemSelection()">
+		<div id="systemSelection" class="hotkeyIndicator hiddenTemp" onclick="expandSystemSelection()">
 			<div class="hotkey">
 				S
 			</div>
@@ -28,7 +28,7 @@
 				Select all systems
 			</div>
 		</div>
-		<div id="rangeCheck" class="hotkeyIndicator hidden" onclick="toggleRangeCheck()">
+		<div id="rangeCheck" class="hotkeyIndicator hiddenTemp" onclick="toggleRangeCheck()">
 			<div class="hotkey">
 				J
 			</div>
@@ -36,7 +36,7 @@
 				Enable jump targets visualiser
 			</div>
 		</div>
-		<div id="zoomOut" class="hotkeyIndicator hidden" onclick="changeZoomLevel(0)">
+		<div id="zoomOut" class="hotkeyIndicator hiddenTemp" onclick="changeZoomLevel(0)">
 			<div class="hotkey">
 				-
 			</div>
@@ -44,7 +44,7 @@
 				Zoom out
 			</div>
 		</div>
-		<div id="zoomIn" class="hotkeyIndicator hidden" onclick="changeZoomLevel(1)">
+		<div id="zoomIn" class="hotkeyIndicator hiddenTemp" onclick="changeZoomLevel(1)">
 			<div class="hotkey">
 				+
 			</div>
@@ -53,11 +53,11 @@
 			</div>
 		</div>
 		<!--	System Details	-->
-		<label class="blocked dark" id="systemName"></label>
-		<label class="blocked dark" id="systemPosition"></label>
-		<label class="blocked" id="selectedCount"></label>
-		<label class="blocked" id="selectedHabitation"></label>
-		<label class="blocked" id="systemTrade"></label>
+		<label class="dark" id="systemName"></label>
+		<label class="dark" id="systemPosition"></label>
+		<label id="selectedCount"></label>
+		<label id="selectedHabitation"></label>
+		<label id="systemTrade"></label>
 	</body>
 	<script type="text/javascript" src="scriptsheet.js"></script>
 </html>

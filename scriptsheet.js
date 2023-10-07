@@ -28,9 +28,6 @@ var galaxies=[]
 var wormholes=[]
 var colors=[]
 function uploadFiles(that){
-	document.querySelectorAll('.blocked').forEach((element)=>{
-		element.classList.remove('blocked')
-	})
 	var files=event.target.files
 	for(i1=0;i1<files.length;i1++){
 		var systemsReader=new FileReader()
@@ -119,6 +116,7 @@ function uploadFiles(that){
 		}
 	}
 	setTimeout(curateData,500)
+	setTimeout(readyInteractables,500)
 }
 //	Parse Data
 function defineGalaxy(){
@@ -220,7 +218,6 @@ var cyclableGalaxies=[]
 const tradeTemplate=[`Food`,`Clothing`,`Metal`,`Plastic`,`Equipment`,`Medical`,`Industrial`,`Electronics`,`Heavy Metals`,`Luxury Goods`]
 var tradeAverage=[[`Food`,0,0],[`Clothing`,0,0],[`Metal`,0,0],[`Plastic`,0,0],[`Equipment`,0,0],[`Medical`,0,0],[`Industrial`,0,0],[`Electronics`,0,0],[`Heavy Metals`,0,0],[`Luxury Goods`,0,0]]
 function curateData(){
-	loaded=1
 	//	Galaxies cyclable
 	cyclableGalaxies=[galaxies[0]]
 	for(i1=0;i1<galaxies.length;i1++){
@@ -307,6 +304,16 @@ function curateData(){
 	}
 	drawMap()
 }
+function readyInteractables(){
+	loaded=1
+	document.getElementById(`galaxy`).innerHTML=cyclableGalaxies[galaxySelected][0]
+	document.querySelectorAll(`.blocked`).forEach((element)=>{
+		element.classList.remove(`blocked`)
+	})
+	document.querySelectorAll(`.hiddenTemp`).forEach((element)=>{
+		element.classList.remove(`hiddenTemp`)
+	})
+}
 //	Display Map
 function drawMap(){
 	drawGalaxy()
@@ -330,14 +337,6 @@ function drawMap(){
 			}
 		}
 	}
-	document.getElementById(`galaxy`).innerHTML=cyclableGalaxies[galaxySelected][0]
-	document.getElementById(`systemSelection`).classList.remove(`hidden`)
-	document.getElementById(`rangeCheck`).classList.remove(`hidden`)
-	document.getElementById(`zoomOut`).classList.remove(`hidden`)
-	document.getElementById(`zoomIn`).classList.remove(`hidden`)
-	overlay.addEventListener(`mousedown`,mouseDown)
-	overlay.addEventListener(`mousemove`,mouseMove)
-	overlay.addEventListener(`mouseup`,mouseUp)
 	drawOverlay()
 }
 function drawGalaxy(){
@@ -641,6 +640,7 @@ var xCoordinate
 var yCoordinate
 var distance
 var target=0
+document.addEventListener(`mousemove`,mouseMove)
 function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
 	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
@@ -653,10 +653,9 @@ function mouseMove(event){
 	}
 	drawOverlay()
 }
-var isDragging=0
 var lastSelected
+document.addEventListener(`mousedown`,mouseDown)
 function mouseDown(){
-	isDragging=1
 	if(distance<=100){
 		var spliced=0
 		for(i1=0;i1<systemsSelected.length;i1++){
@@ -699,11 +698,8 @@ function mouseDown(){
 	}
 	drawMap()
 }
-function mouseUp(){
-	isDragging=0
-	drawMap()
-}
 var block=0
+document.addEventListener(`keydown`,keyDown)
 function keyDown(event){
 	if(loaded){
 		if(!block){
@@ -729,10 +725,20 @@ function keyDown(event){
 		}
 	}
 }
-function keyUp(event){
-	if(event.keyCode){
-		block=0
+document.addEventListener(`keyup`,keyUp)
+function keyUp(){
+	block=0
+}
+var rangeCheck=0
+function toggleRangeCheck(){
+	rangeCheck=!rangeCheck
+	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
+	if(rangeCheck){
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
+	}else{
+		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
 	}
+	drawMap()
 }
 var systemsSelected=[]
 function expandSystemSelection(){
@@ -769,22 +775,10 @@ function expandSystemSelection(){
 	}
 	drawMap()
 }
-var rangeCheck=0
-function toggleRangeCheck(){
-	rangeCheck=!rangeCheck
-	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
-	if(rangeCheck){
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
-	}else{
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
-	}
-	drawMap()
-}
-//	Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
-const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25]
+const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25]		//	Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
 var scale=1
 //	11.2x diff between min & max zoom
-//		From 4x in to 2.8x out from default
+//	From 4x in to 2.8x out from default
 function changeZoomLevel(zoomIn){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
