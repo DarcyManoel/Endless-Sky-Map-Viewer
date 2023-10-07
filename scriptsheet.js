@@ -426,8 +426,10 @@ function drawOverlay(){
 					selectedHabitation++
 				}
 			}
-			document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
-			document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
+			if(lastSelected){
+				document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
+				document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
+			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
 		}else{
