@@ -317,13 +317,15 @@ function drawMap(){
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
 	if(rangeCheck){
-		if(distance<=100){
-			for(i2=0;i2<systems[target][3].length;i2++){
-				drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][3][i2][1][0],systems[target][3][i2][1][1],1)
-			}
-			for(i2=0;i2<systems[target][7].length;i2++){
-				if(Math.dist(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1])<=systems[target][6]){
-					drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1],1)
+		if(target){
+			if(distance<=systems[target][6]){
+				for(i2=0;i2<systems[target][3].length;i2++){
+					drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][3][i2][1][0],systems[target][3][i2][1][1],1)
+				}
+				for(i2=0;i2<systems[target][7].length;i2++){
+					if(Math.dist(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1])<=systems[target][6]){
+						drawRangeCheck(systems[target][1][0],systems[target][1][1],systems[target][7][i2][1][0],systems[target][7][i2][1][1],1)
+					}
 				}
 			}
 		}
@@ -349,16 +351,23 @@ function drawOverlay(){
 			drawSelect(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1])
 			drawRange(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][6],systems[systemsSelected[i1]][2][1],systems[systemsSelected[i1]][4].length)
 		}
-		if(distance<=100){
-			drawRange(systems[target][1][0],systems[target][1][1],systems[target][6],systems[target][2][1],systems[target][4].length)
+		if(target){
+			if(distance<=systems[target][6]){
+				drawRange(systems[target][1][0],systems[target][1][1],systems[target][6],systems[target][2][1],systems[target][4].length)
+			}
 		}
 	}
-	if(distance<=100){
-		document.getElementById(`systemName`).innerHTML=systems[target][0]
-		document.getElementById(`systemPosition`).innerHTML=systems[target][1].join(` `)
-	}else{
-		document.getElementById(`systemName`).innerHTML=``
-		document.getElementById(`systemPosition`).innerHTML=``
+	drawTrade()
+}
+function drawTrade(){
+	if(target){
+		if(distance<=systems[target][6]){
+			document.getElementById(`systemName`).innerHTML=systems[target][0]
+			document.getElementById(`systemPosition`).innerHTML=systems[target][1].join(` `)
+		}else{
+			document.getElementById(`systemName`).innerHTML=``
+			document.getElementById(`systemPosition`).innerHTML=``
+		}
 	}
 	document.getElementById(`selectedCount`).innerHTML=``
 	document.getElementById(`selectedHabitation`).innerHTML=``
@@ -368,11 +377,13 @@ function drawOverlay(){
 		document.getElementById(`systemName`).classList.remove(`dark`)
 		document.getElementById(`systemPosition`).classList.remove(`dark`)
 		for(i1=0;i1<systemsSelected.length;i1++){
-			for(i2=0;i2<systems[target][9].length;i2++){
-				if(distance<=100&&systems[target][9].length){
-					tradeAverage[i2][1]=systems[target][9][i2][1]
-				}else{
-					tradeAverage[i2][1]=systems[systemsSelected[systemsSelected.length-1]][9][i2][1]
+			if(target){
+				for(i2=0;i2<systems[target][9].length;i2++){
+					if(distance<=systems[target][6]&&systems[target][9].length){
+						tradeAverage[i2][1]=systems[target][9][i2][1]
+					}else{
+						tradeAverage[i2][1]=systems[systemsSelected[systemsSelected.length-1]][9][i2][1]
+					}
 				}
 			}
 			for(i2=0;i2<systems[systemsSelected[i1]][9].length;i2++){
@@ -397,9 +408,11 @@ function drawOverlay(){
 					selectedHabitation++
 				}
 			}
-			if(lastSelected){
-				document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
-				document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
+			if(target){
+				if(lastSelected&&distance>systems[target][6]){
+					document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
+					document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
+				}
 			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
@@ -419,25 +432,27 @@ function drawOverlay(){
 				<tr><td>`+tradeAverage.map(e=>e.join(`</td><td>`)).join('</td></tr><tr><td>')+`</td></tr>
 			</table>`
 	}else{
-		if(distance<=100){
-			document.getElementById(`systemName`).classList.add(`dark`)
-			document.getElementById(`systemPosition`).classList.add(`dark`)
-			if(systems[target][9].length){
-				document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+systems[target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
-			}else{
-				document.getElementById(`systemTrade`).innerHTML=
-					`<table>
-						<tr><td class="dark">Food</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Clothing</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Metal</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Plastic</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Equipment</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Medical</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Industrial</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Electronics</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Heavy Metals</td><td class="dark">0</td></tr>
-						<tr><td class="dark">Luxury Goods</td><td class="dark">0</td></tr>
-					</table>`
+		if(target){
+			if(distance<=systems[target][6]){
+				document.getElementById(`systemName`).classList.add(`dark`)
+				document.getElementById(`systemPosition`).classList.add(`dark`)
+				if(systems[target][9].length){
+					document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+systems[target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
+				}else{
+					document.getElementById(`systemTrade`).innerHTML=
+						`<table>
+							<tr><td class="dark">Food</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Clothing</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Metal</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Plastic</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Equipment</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Medical</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Industrial</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Electronics</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Heavy Metals</td><td class="dark">0</td></tr>
+							<tr><td class="dark">Luxury Goods</td><td class="dark">0</td></tr>
+						</table>`
+				}
 			}
 		}
 	}
@@ -625,8 +640,8 @@ function mouseMove(event){
 			distance=Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
+	inRangePrev=inRange
 	if(target){
-		inRangePrev=inRange
 		if(distance>systems[target][6]){
 			inRange=0
 		}else{
@@ -641,18 +656,20 @@ function mouseMove(event){
 var lastSelected
 document.addEventListener(`mousedown`,mouseDown)
 function mouseDown(){
-	if(distance<=100){
-		var spliced=0
-		for(i1=0;i1<systemsSelected.length;i1++){
-			if(systemsSelected[i1]==target){
-				systemsSelected.splice(i1,1)
-				spliced=1
-				break
+	if(target){
+		if(distance<=systems[target][6]){
+			var spliced=0
+			for(i1=0;i1<systemsSelected.length;i1++){
+				if(systemsSelected[i1]==target){
+					systemsSelected.splice(i1,1)
+					spliced=1
+					break
+				}
 			}
-		}
-		if(!spliced){
-			systemsSelected.push(target)
-			lastSelected=target
+			if(!spliced){
+				systemsSelected.push(target)
+				lastSelected=target
+			}
 		}
 	}
 	var canExpand=0
