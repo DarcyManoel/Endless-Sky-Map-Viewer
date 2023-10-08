@@ -610,7 +610,10 @@ function cycleGalaxy(){
 var xCoordinate
 var yCoordinate
 var distance
+var targetPrev=0
 var target=0
+var inRangePrev=0
+var inRange=0
 document.addEventListener(`mousemove`,mouseMove)
 function mouseMove(event){
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
@@ -622,7 +625,18 @@ function mouseMove(event){
 			distance=Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
 	}
-	drawOverlay()
+	if(target){
+		inRangePrev=inRange
+		if(distance>systems[target][6]){
+			inRange=0
+		}else{
+			inRange=1
+		}
+	}
+	if(inRange!==inRangePrev||(inRange&&target!==targetPrev)){
+		targetPrev=target
+		drawOverlay()
+	}
 }
 var lastSelected
 document.addEventListener(`mousedown`,mouseDown)
