@@ -21,7 +21,6 @@ function initialize(){
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawGalaxy()
 }
-//	Load
 var systems=[]
 var governments=[]
 var galaxies=[]
@@ -37,7 +36,6 @@ function uploadFiles(that){
 			lines=output.split(`\n`)
 			for(i2=0;i2<lines.length;i2++){
 				parseLine:{
-					//	Systems
 					if(lines[i2].startsWith(`system `)){
 						//	Override
 						for(i3=0;i3<systems.length;i3++){
@@ -60,7 +58,6 @@ function uploadFiles(that){
 							defineSystem(0)
 						}
 						break parseLine
-					//	Governments
 					}else if(lines[i2].startsWith(`government `)){
 						//	Override
 						for(i3=0;i3<governments.length;i3++){
@@ -83,7 +80,6 @@ function uploadFiles(that){
 							defineGovernment()
 						}
 						break parseLine
-					//	Galaxies
 					}else if(lines[i2].startsWith(`galaxy `)){
 						//	Define
 						galaxies.push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
@@ -94,7 +90,6 @@ function uploadFiles(that){
 							defineGalaxy()
 						}
 						break parseLine
-					//	Wormholes
 					}else if(lines[i2].startsWith(`wormhole `)){
 						//	Define
 						wormholes.push([lines[i2].slice(9).replaceAll(`\r`,``),0,[],[]])
@@ -105,7 +100,6 @@ function uploadFiles(that){
 							defineWormhole()
 						}
 						break parseLine
-					//	Colors
 					}else if(lines[i2].startsWith(`color `)){
 						//	Define
 						colors.push(lines[i2].slice(7).replaceAll(`\r`,``).split(`" `))
@@ -118,7 +112,6 @@ function uploadFiles(that){
 	setTimeout(curateData,500)
 	setTimeout(readyInteractables,500)
 }
-//	Parse Data
 function defineGalaxy(){
 	if(lines[i3].startsWith(`\tpos `)){
 		galaxies[galaxies.length-1][1]=lines[i3].slice(5).replaceAll(`"`,``).replaceAll(`\r`,``).split(` `)
@@ -302,7 +295,7 @@ function curateData(){
 			}
 		}
 	}
-	drawMap()
+	drawGalaxy()
 }
 function readyInteractables(){
 	loaded=1
@@ -314,18 +307,18 @@ function readyInteractables(){
 		element.classList.remove(`hiddenTemp`)
 	})
 }
-//	Display Map
+function drawGalaxy(){
+	canvasContext.clearRect(0,0,100000,100000)
+	canvasContext.drawImage(galaxy,galaxyCentre[0]- +galaxyPosition[0]+canvas.width*1.5*scale+112,galaxyCentre[1]- +galaxyPosition[1]+canvas.height*1.5*scale+22)
+	drawMap()
+}
 function drawMap(){
-	drawGalaxy()
 	for(i1=0;i1<systems.length;i1++){
-		//	Systems
 		drawSystem(systems[i1][1][0],systems[i1][1][1],systems[i1][2][1],systems[i1][4].length)
-		//	Links
 		for(i2=0;i2<systems[i1][3].length;i2++){
 			drawLink(systems[i1][1][0],systems[i1][1][1],systems[i1][3][i2][1][0]-((systems[i1][3][i2][1][0]-systems[i1][1][0])/2),systems[i1][3][i2][1][1]-((systems[i1][3][i2][1][1]-systems[i1][1][1])/2))
 		}
 	}
-	//	Wormholes
 	for(i1=0;i1<wormholes.length;i1++){
 		if(wormholes[i1][1]){
 			for(i2=0;i2<wormholes[i1][2].length;i2++){
@@ -338,10 +331,6 @@ function drawMap(){
 		}
 	}
 	drawOverlay()
-}
-function drawGalaxy(){
-	canvasContext.clearRect(0,0,100000,100000)
-	canvasContext.drawImage(galaxy,galaxyCentre[0]- +galaxyPosition[0]+canvas.width*1.5*scale+112,galaxyCentre[1]- +galaxyPosition[1]+canvas.height*1.5*scale+22)
 }
 function drawOverlay(){
 	overlayContext.clearRect(0,0,100000,100000)
@@ -604,7 +593,6 @@ function drawRangeCheck(startX,startY,endX,endY,lineWidth){
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
 }
-//	Map Manipulation
 var display=`original`
 function cycleDisplay(){
 	if(display==`original`){
@@ -614,7 +602,7 @@ function cycleDisplay(){
 	}
 	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
 	localStorage.setItem(`display`,display)
-	drawMap()
+	drawGalaxy()
 }
 var ownership=`habitation`
 function cycleOwnership(){
@@ -625,7 +613,7 @@ function cycleOwnership(){
 	}
 	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
 	localStorage.setItem(`ownership`,ownership)
-	drawMap()
+	drawGalaxy()
 }
 var galaxySelected=0
 var galaxyPosition=[112,22]
@@ -635,9 +623,8 @@ function cycleGalaxy(){
 		galaxySelected=0
 	}
 	galaxyPosition=cyclableGalaxies[galaxySelected][1]
-	drawMap()
+	drawGalaxy()
 }
-//	Interaction
 var xCoordinate
 var yCoordinate
 var distance
@@ -698,28 +685,24 @@ function mouseDown(){
 		document.getElementById(`systemSelection`).classList.remove(`activeMode`)
 		document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
 	}
-	drawMap()
+	drawGalaxy()
 }
 var block=0
 document.addEventListener(`keydown`,keyDown)
 function keyDown(event){
 	if(loaded){
 		if(!block){
-			//	S - Select
-			if(event.keyCode==83){
-				expandSystemSelection()
-			}
-			//	J
-			if(event.keyCode==74){
+			if(event.keyCode==74){		//	J
 				toggleRangeCheck()
 			}
-			//	-
-			if(event.keyCode==189){
-				changeZoomLevel(0)
+			if(event.keyCode==83){		//	S
+				expandSystemSelection()
 			}
-			//	+
-			if(event.keyCode==187){
+			if(event.keyCode==187){		//	+
 				changeZoomLevel(1)
+			}
+			if(event.keyCode==189){		//	-
+				changeZoomLevel(0)
 			}
 		}
 		if(event.keyCode){
@@ -740,7 +723,7 @@ function toggleRangeCheck(){
 	}else{
 		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
 	}
-	drawMap()
+	drawGalaxy()
 }
 var systemsSelected=[]
 function expandSystemSelection(){
@@ -775,12 +758,21 @@ function expandSystemSelection(){
 			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
 		}
 	}
-	drawMap()
+	drawGalaxy()
 }
-const zoomLevels=[2.8,2,1.4,1,0.7,0.5,0.35,0.25]		//	Root of 8, 4, 2, 1, 0.5, 0.25, 0.125, 0.0625
-var scale=1
 //	11.2x diff between min & max zoom
 //	From 4x in to 2.8x out from default
+const zoomLevels=[	//	Root of
+	2.8,			//	8
+	2,				//	4
+	1.4,			//	2
+	1,				//	1
+	0.7,			//	0.5
+	0.5,			//	0.25
+	0.35,			//	0.125
+	0.25			//	0.0625
+]
+var scale=1
 function changeZoomLevel(zoomIn){
 	canvasContext.scale(3*scale,3*scale)
 	overlayContext.scale(3*scale,3*scale)
@@ -796,7 +788,7 @@ function changeZoomLevel(zoomIn){
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
-	drawMap()
+	drawGalaxy()
 }
 //	Shortcuts
 Math.dist=function(x1,y1,x2,y2){
