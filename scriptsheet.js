@@ -40,10 +40,7 @@ function uploadFiles(that){
 						//	Override
 						for(i3=0;i3<systems.length;i3++){
 							if(lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``)==systems[i3][0]){
-								for(i4=i2+1;i4<lines.length;i4++){
-									if(!lines[i4].startsWith(`\t`)){
-										break
-									}
+								for(i4=i2+1;i4<lines.length,lines[i4].startsWith(`\t`);i4++){
 									defineSystem(1)
 								}
 								break parseLine
@@ -51,10 +48,7 @@ function uploadFiles(that){
 						}
 						//	Define
 						systems.push([lines[i2].slice(7).replaceAll(`"`,``).replaceAll(`\r`,``),[],[`Unhabitation`],[],[],[],[100],[],[],[]])
-						for(i3=i2+1;i3<lines.length;i3++){
-							if(!lines[i3].startsWith(`\t`)){
-								break
-							}
+						for(i3=i2+1;i3<lines.length,lines[i3].startsWith(`\t`);i3++){
 							defineSystem(0)
 						}
 						break parseLine
@@ -62,10 +56,7 @@ function uploadFiles(that){
 						//	Override
 						for(i3=0;i3<governments.length;i3++){
 							if(lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``)==governments[i3][0]){
-								for(i4=i2+1;i4<lines.length;i4++){
-									if(!lines[i4].startsWith(`\t`)){
-										break
-									}
+								for(i4=i2+1;i4<lines.length,lines[i4].startsWith(`\t`);i4++){
 									defineGovernment()
 								}
 								break parseLine
@@ -73,30 +64,21 @@ function uploadFiles(that){
 						}
 						//	Define
 						governments.push([lines[i2].slice(11).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
-						for(i3=i2+1;i3<lines.length;i3++){
-							if(!lines[i3].startsWith(`\t`)){
-								break
-							}
+						for(i3=i2+1;i3<lines.length,lines[i3].startsWith(`\t`);i3++){
 							defineGovernment()
 						}
 						break parseLine
 					}else if(lines[i2].startsWith(`galaxy `)){
 						//	Define
 						galaxies.push([lines[i2].slice(7).replaceAll(` `,``).replaceAll(`"`,``).replaceAll(`\r`,``),[]])
-						for(i3=i2+1;i3<lines.length;i3++){
-							if(!lines[i3].startsWith(`\t`)){
-								break
-							}
+						for(i3=i2+1;i3<lines.length,lines[i3].startsWith(`\t`);i3++){
 							defineGalaxy()
 						}
 						break parseLine
 					}else if(lines[i2].startsWith(`wormhole `)){
 						//	Define
 						wormholes.push([lines[i2].slice(9).replaceAll(`\r`,``),0,[],[]])
-						for(i3=i2+1;i3<lines.length;i3++){
-							if(!lines[i3].startsWith(`\t`)){
-								break
-							}
+						for(i3=i2+1;i3<lines.length,lines[i3].startsWith(`\t`);i3++){
 							defineWormhole()
 						}
 						break parseLine
