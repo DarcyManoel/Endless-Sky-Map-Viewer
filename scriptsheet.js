@@ -188,7 +188,7 @@ function defineGovernment(){
 		}
 	}
 }
-var loaded=0
+var isLoaded=0
 var cyclableGalaxies=[]
 const tradeTemplate=[`Food`,`Clothing`,`Metal`,`Plastic`,`Equipment`,`Medical`,`Industrial`,`Electronics`,`Heavy Metals`,`Luxury Goods`]
 var tradeAverage=[[`Food`,0,0],[`Clothing`,0,0],[`Metal`,0,0],[`Plastic`,0,0],[`Equipment`,0,0],[`Medical`,0,0],[`Industrial`,0,0],[`Electronics`,0,0],[`Heavy Metals`,0,0],[`Luxury Goods`,0,0]]
@@ -280,7 +280,7 @@ function curateData(){
 	drawGalaxy()
 }
 function readyInteractables(){
-	loaded=1
+	isLoaded=1
 	document.getElementById(`galaxy`).innerHTML=cyclableGalaxies[galaxySelected][0]
 	document.querySelectorAll(`.blocked`).forEach((element)=>{
 		element.classList.remove(`blocked`)
@@ -700,11 +700,11 @@ function mouseDown(){
 	}
 	drawGalaxy()
 }
-var block=0
+var isBlocked=0
 document.addEventListener(`keydown`,keyDown)
 function keyDown(event){
-	if(loaded){
-		if(!block){
+	if(isLoaded){
+		if(!isBlocked){
 			if(event.keyCode==74){		//	J
 				toggleRangeCheck()
 			}
@@ -719,13 +719,13 @@ function keyDown(event){
 			}
 		}
 		if(event.keyCode){
-			block=1
+			isBlocked=1
 		}
 	}
 }
 document.addEventListener(`keyup`,keyUp)
 function keyUp(){
-	block=0
+	isBlocked=0
 }
 var rangeCheck=0
 function toggleRangeCheck(){
