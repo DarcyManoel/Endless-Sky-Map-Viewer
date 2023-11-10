@@ -14,47 +14,65 @@
 		<!--	Load	-->
 		<label id="loadFiles" for="file">&#10162; Upload Files</label>
 		<input id="file" class="hiddenPerm" onChange="uploadFiles(this)" type="file" webkitDirectory/>
-		<!--	Menu Cycles	-->
-		<div id="cycles">
-			<label id="display" class="blocked" onClick="cycleDisplay()"></label>
-			<label id="ownership" class="blocked" onClick="cycleOwnership()"></label>
-			<label id="galaxy" class="blocked" onClick="cycleGalaxy()"></label>
-		</div>
-		<div id="systemSelection" class="hotkeyIndicator hiddenTemp" onclick="expandSystemSelection()">
-			<div class="hotkey">
-				S
+		<!--	Options	-->
+		<div id="optionsMenus" class="hiddenPerm">
+			<div id="options1">
+				<div class="optionsTitle">View Options</div>
+				Map Display
+				<hr>
+				<div id="display" class="optionsGroup">
+				</div>
+				System Ownership
+				<hr>
+				<div id="ownership" class="optionsGroup">
+				</div>
+				Galaxy Focus
+				<hr>
+				<div id="galaxies" class="optionsGroup">
+				</div>
+				Zoom
+				<hr>
+				<div class="optionsGroup">
+					<label id="zoomIn" class="dark" onclick="changeZoomLevel(1)">Zoom In <sup id="zoomInSuper">+</sup></label>
+					<br>
+					<label id="zoomOut" class="dark" onclick="changeZoomLevel(0)">Zoom Out <sup id="zoomOutSuper">-</sup></label>
+					<br>
+				</div>
 			</div>
-			<div id="systemSelectionDescriptor" class="descriptor">
-				Select all systems
+			<div id="options2">
+				<div class="optionsTitle">Information</div>
+				Map
+				<hr>
+				<div class="optionsGroup">
+					<label id="systemInformation" class="dark" onclick="toggleSystemInformation()">System Information <sup>I</sup></label>
+					<br>
+					<label id="jumpTargets" class="dark" onclick="toggleRangeCheck()">Jump Targets <sup>J</sup></label>
+					<br>
+				</div>
+				Top Right
+				<hr>
+				<div class="optionsGroup">
+					<label id="linkLength" class="dark" onclick="toggleLinkLengthCheck()">Link Length <sup>L</sup></label>
+					<br>
+				</div>
+				Bottom Left
+				<hr>
+				<div class="optionsGroup">
+					<label id="tradeValues" class="dark" onclick="toggleTrade()">Commodity Trade Values <sup>T</sup></label>
+					<br>
+				</div>
 			</div>
-		</div>
-		<div id="rangeCheck" class="hotkeyIndicator hiddenTemp" onclick="toggleRangeCheck()">
-			<div class="hotkey">
-				J
-			</div>
-			<div id="rangeCheckDescriptor" class="descriptor">
-				Enable jump targets visualiser
-			</div>
-		</div>
-		<div id="zoomOut" class="hotkeyIndicator hiddenTemp" onclick="changeZoomLevel(0)">
-			<div class="hotkey">
-				-
-			</div>
-			<div class="descriptor">
-				Zoom out
-			</div>
-		</div>
-		<div id="zoomIn" class="hotkeyIndicator hiddenTemp" onclick="changeZoomLevel(1)">
-			<div class="hotkey">
-				+
-			</div>
-			<div class="descriptor">
-				Zoom in
+			<div id="options3">
+				<div class="optionsTitle">Miscellaneous</div>
+				<div class="optionsGroup">
+					<label id="hotkeys" class="dark" onclick="toggleHotkeys()">Hotkeys for Options</label>
+					<br>
+					<label id="systemSelection" class="dark" onclick="expandSystemSelection()">Expand/Clear System Selection <sup>S</sup></label>
+					<br>
+				</div>
 			</div>
 		</div>
 		<!--	System Details	-->
-		<label class="dark" id="systemName"></label>
-		<label class="dark" id="systemPosition"></label>
 		<label id="selectedCount"></label>
 		<label id="selectedHabitation"></label>
 		<label id="systemTrade"></label>

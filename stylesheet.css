@@ -1,4 +1,3 @@
-/*	Constants	*/
 *{
 	-webkit-user-select:none;
 	color:#9f9f9f;
@@ -9,7 +8,6 @@
 	user-select:none;
 }
 body{
-	animation:highlightOff .5s;
 	background-color:#000;
 }
 canvas{
@@ -20,47 +18,69 @@ canvas{
 	width:100vw;
 }
 label{
-	-webkit-animation:highlightOff .5s;
-	animation:highlightOff .5s;
+	cursor:pointer;
 	font-size:16px;
 	position:absolute;
 }
-label:hover{
-	animation:highlightOn .5s forwards;
-	cursor:pointer;
-}
-/*	General	*/
 .blocked,
 .blocked label{
 	animation:none;
 	color:#333;
 	pointer-events:none;
 }
-.dark,
-.dark:hover{
+.dark{
 	animation:none;
-	color:#333;
+	color:#555;
 }
 .hiddenPerm,.hiddenTemp{
 	display:none;
 }
-/*	Menu bar	*/
-/*		Load	*/
 #loadFiles{
 	font-size:32px;
 	left:20px;
 	top:10px;
 }
-/*	Menu bar	*/
-/*		Cycles	*/
-#cycles{
-	left:250px;
+#loadFiles:hover{
+	color:#eee;
+}
+/*	Options	*/
+#optionsMenus{
+	background:rgba(0,0,0,.6);
+	height:100%;
+	position:absolute;
+	width:100%;
+	z-index:100;
+}
+#options1,#options2,#options3{
+	backdrop-filter:blur(10px);
+	background-color:rgba(255,255,255,.1);
+	border-radius:30px;
+	height:calc(100% - 140px);
+	padding:10px;
+	padding-top:60px;
+	position:absolute;
+	top:40px;
+	width:calc(33% - 100px);
+}
+#options1{
+	left:80px;
+}
+#options2{
+	left:50%;
+	transform:translate(-50%);
+}
+#options3{
+	right:80px;
+}
+.optionsTitle{
+	font-size:32px;
+	left:50%;
 	position:absolute;
 	top:10px;
+	transform:translate(-50%);
 }
-#display,#ownership,#galaxy{
-	padding:0 3px 0 3px;
-	position:relative;
+.optionsGroup{
+	padding:5px 0 10px 20px;
 }
 /*	Hotkey indicators	*/
 /*		General	*/
@@ -103,29 +123,7 @@ label:hover{
 	border:3px solid #9f9f9f;
 	color:#9f9f9f;
 }
-/*	Hotkey indicators	*/
-/*		Specificities	*/
-#systemSelection{
-	top:120px;
-}
-#rangeCheck{
-	top:180px;
-}
-#zoomOut{
-	top:240px;
-}
-#zoomIn{
-	top:300px;
-}
 /*	System Details	*/
-#systemName{
-	left:20px;
-	top:70px;
-}
-#systemPosition{
-	left:20px;
-	top:100px;
-}
 #selectedCount{
 	left:20px;
 	top:130px;
@@ -154,13 +152,4 @@ th{
 @keyframes blurOff{
 	0%{filter:blur(3px);}
 	100%{filter:blur(0px);}
-}
-/*	Animations	*/
-/*		Highlight	*/
-@keyframes highlightOff{
-	0%{color:#eee;}
-	100%{color:#9f9f9f;}
-}
-@keyframes highlightOn{
-	100%{color:#eee;}
 }

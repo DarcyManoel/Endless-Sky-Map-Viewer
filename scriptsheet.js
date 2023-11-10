@@ -9,14 +9,20 @@ const overlayContext=overlay.getContext(`2d`)
 const galaxy=document.getElementById(`background`)
 const galaxyCentre=[galaxy.width/2*-1,galaxy.height/2*-1]
 function initialize(){
-	if(localStorage.getItem(`display`)==`modern`){
-		display=localStorage.getItem(`display`)
+	display=localStorage.getItem(`display`)
+	for(i1=0;i1<displayOptions.length;i1++){
+		document.getElementById(`display`).innerHTML+=`<label id="`+displayOptions[i1]+`" class="dark" onclick="cycleDisplay(this.id)">`+displayOptions[i1][0].toUpperCase()+displayOptions[i1].slice(1)+`</label><br>`
 	}
-	if(localStorage.getItem(`ownership`)==`claims`){
-		ownership=localStorage.getItem(`ownership`)
+	highlightDisplay()
+	ownership=localStorage.getItem(`ownership`)
+	for(i1=0;i1<ownershipOptions.length;i1++){
+		document.getElementById(`ownership`).innerHTML+=`<label id="`+ownershipOptions[i1]+`" class="dark" onclick="cycleOwnership(this.id)">`+ownershipOptions[i1][0].toUpperCase()+ownershipOptions[i1].slice(1)+`</label><br>`
 	}
-	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
-	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
+	highlightOwnership()
+	if(localStorage.getItem(`showHotkeys`)==`true`){
+		showHotkeys=1
+	}
+	highlightHotkeys()
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
 	drawGalaxy()
@@ -281,13 +287,17 @@ function curateData(){
 }
 function readyInteractables(){
 	isLoaded=1
-	document.getElementById(`galaxy`).innerHTML=cyclableGalaxies[galaxySelected][0]
+	document.getElementById(`galaxies`).innerHTML=``
+	for(i1=0;i1<cyclableGalaxies.length;i1++){
+		document.getElementById(`galaxies`).innerHTML+=`<label id="`+cyclableGalaxies[i1][0]+`" class="dark" onclick="cycleGalaxy(this.id)">`+cyclableGalaxies[i1][0]+`</label><br>`
+	}
 	document.querySelectorAll(`.blocked`).forEach((element)=>{
 		element.classList.remove(`blocked`)
 	})
 	document.querySelectorAll(`.hiddenTemp`).forEach((element)=>{
 		element.classList.remove(`hiddenTemp`)
 	})
+	highlightGalaxy()
 }
 function drawGalaxy(){
 	canvasContext.clearRect(0,0,100000,100000)
@@ -340,10 +350,12 @@ function drawOverlay(){
 			}
 		}
 	}
-	drawLinkLengthCore()
-	for(i1=0;i1<systemsSelected.length;i1++){
-		for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
-			drawLinkLengthCheck(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][3][i2][1][0],systems[systemsSelected[i1]][3][i2][1][1],systems[systemsSelected[i1]][3][i2][2][1])
+	if(linklengthCheck){
+		drawLinkLengthCore()
+		for(i1=0;i1<systemsSelected.length;i1++){
+			for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
+				drawLinkLengthCheck(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i1]][3][i2][1][0],systems[systemsSelected[i1]][3][i2][1][1],systems[systemsSelected[i1]][3][i2][2][1])
+			}
 		}
 	}
 	if(!rangeCheck){
@@ -354,28 +366,35 @@ function drawOverlay(){
 		if(target){
 			if(distance<=systems[target][6]){
 				drawRange(systems[target][1][0],systems[target][1][1],systems[target][6],systems[target][2][1],systems[target][4].length)
+				if(showSystemInformation){
+					drawSystemInformation(target)
+				}
 			}
 		}
 	}
-	drawTrade()
-}
-function drawTrade(){
-	if(target){
-		if(distance<=systems[target][6]){
-			document.getElementById(`systemName`).innerHTML=systems[target][0]
-			document.getElementById(`systemPosition`).innerHTML=systems[target][1].join(` `)
-		}else{
-			document.getElementById(`systemName`).innerHTML=``
-			document.getElementById(`systemPosition`).innerHTML=``
+	if(showTrade){
+		drawTrade()
+	}
+	if(showSystemInformation){
+		for(i1=0;i1<systemsSelected.length;i1++){
+			drawSystemInformation(systemsSelected[i1])
 		}
 	}
+}
+function drawSystemInformation(system){
+	overlayContext.beginPath()
+	overlayContext.textAlign=`center`
+	overlayContext.font=32*scale+`px Ubuntu`
+	overlayContext.fillStyle=`#9f9f9f`
+	overlayContext.fillText(systems[system][0],canvas.width*1.5*scale+ +systems[system][1][0]-galaxyPosition[0],canvas.height*1.5*scale+ +systems[system][1][1]-galaxyPosition[1]+(40*scale))
+	overlayContext.fillText(systems[system][1].join(`  `),canvas.width*1.5*scale+ +systems[system][1][0]-galaxyPosition[0],canvas.height*1.5*scale+ +systems[system][1][1]-galaxyPosition[1]+(80*scale))
+}
+function drawTrade(){
 	document.getElementById(`selectedCount`).innerHTML=``
 	document.getElementById(`selectedHabitation`).innerHTML=``
 	tradeAverage=[[`Food`,0,``,0],[`Clothing`,0,``,0],[`Metal`,0,``,0],[`Plastic`,0,``,0],[`Equipment`,0,``,0],[`Medical`,0,``,0],[`Industrial`,0,``,0],[`Electronics`,0,``,0],[`Heavy Metals`,0,``,0],[`Luxury Goods`,0,``,0]]
 	document.getElementById(`systemTrade`).innerHTML=``
 	if(systemsSelected.length){
-		document.getElementById(`systemName`).classList.remove(`dark`)
-		document.getElementById(`systemPosition`).classList.remove(`dark`)
 		for(i1=0;i1<systemsSelected.length;i1++){
 			if(target){
 				for(i2=0;i2<systems[target][9].length;i2++){
@@ -408,17 +427,9 @@ function drawTrade(){
 					selectedHabitation++
 				}
 			}
-			if(target){
-				if(lastSelected&&distance>systems[target][6]){
-					document.getElementById(`systemName`).innerHTML=systems[lastSelected][0]
-					document.getElementById(`systemPosition`).innerHTML=systems[lastSelected][1].join(` `)
-				}
-			}
 			document.getElementById(`selectedCount`).innerHTML=systemsSelected.length+` systems selected`
 			document.getElementById(`selectedHabitation`).innerHTML=Math.round(selectedHabitation*100/systemsSelected.length*100)/100+`% Habitation`
 		}else{
-			document.getElementById(`systemName`).innerHTML=systems[systemsSelected[0]][0]
-			document.getElementById(`systemPosition`).innerHTML=systems[systemsSelected[0]][1].join(` `)
 			document.getElementById(`selectedHabitation`).innerHTML=``
 		}
 		document.getElementById(`systemTrade`).innerHTML=
@@ -434,8 +445,6 @@ function drawTrade(){
 	}else{
 		if(target){
 			if(distance<=systems[target][6]){
-				document.getElementById(`systemName`).classList.add(`dark`)
-				document.getElementById(`systemPosition`).classList.add(`dark`)
 				if(systems[target][9].length){
 					document.getElementById(`systemTrade`).innerHTML=`<table><tr><td class="dark">`+systems[target][9].map(e=>e.join(`</td><td class="dark">`)).join('</td></tr><tr><td class="dark">')+`</td></tr></table>`
 				}else{
@@ -590,37 +599,59 @@ function drawRangeCheck(startX,startY,endX,endY,lineWidth){
 	overlayContext.strokeStyle=`rgb(0,255,0)`
 	overlayContext.stroke()
 }
-var display=`original`
-function cycleDisplay(){
-	if(display==`original`){
-		display=`modern`
-	}else if(display==`modern`){
-		display=`original`
-	}
-	document.getElementById(`display`).innerHTML=display[0].toUpperCase()+display.slice(1)
+const displayOptions=[`original`,`modern`]
+var display=displayOptions[0]
+function cycleDisplay(id){
+	display=displayOptions[displayOptions.indexOf(id)]
 	localStorage.setItem(`display`,display)
+	highlightDisplay()
 	drawGalaxy()
 }
-var ownership=`habitation`
-function cycleOwnership(){
-	if(ownership==`habitation`){
-		ownership=`claims`
-	}else if(ownership==`claims`){
-		ownership=`habitation`
+function highlightDisplay(){
+	for(i1=0;i1<displayOptions.length;i1++){
+		document.getElementById(displayOptions[i1]).classList.add(`dark`)
 	}
-	document.getElementById(`ownership`).innerHTML=ownership[0].toUpperCase()+ownership.slice(1)
+	if(display==`original`){
+		document.getElementById(`original`).classList.remove(`dark`)
+	}else if(display==`modern`){
+		document.getElementById(`modern`).classList.remove(`dark`)
+	}
+}
+const ownershipOptions=[`habitation`,`claims`]
+var ownership=ownershipOptions[0]
+function cycleOwnership(id){
+	ownership=ownershipOptions[ownershipOptions.indexOf(id)]
 	localStorage.setItem(`ownership`,ownership)
+	highlightOwnership()
 	drawGalaxy()
+}
+function highlightOwnership(){
+	for(i1=0;i1<ownershipOptions.length;i1++){
+		document.getElementById(ownershipOptions[i1]).classList.add(`dark`)
+	}
+	if(ownership==`habitation`){
+		document.getElementById(`habitation`).classList.remove(`dark`)
+	}else if(ownership==`claims`){
+		document.getElementById(`claims`).classList.remove(`dark`)
+	}
 }
 var galaxySelected=0
 var galaxyPosition=[112,22]
-function cycleGalaxy(){
-	galaxySelected++
-	if(galaxySelected==cyclableGalaxies.length){
-		galaxySelected=0
+function cycleGalaxy(id){
+	for(i1=0;i1<cyclableGalaxies.length;i1++){
+		if(cyclableGalaxies[i1][0]==id){
+			galaxySelected=i1
+			galaxyPosition=cyclableGalaxies[i1][1]
+		}
 	}
-	galaxyPosition=cyclableGalaxies[galaxySelected][1]
+	highlightGalaxy()
 	drawGalaxy()
+}
+function highlightGalaxy(){
+	for(i1=0;i1<cyclableGalaxies.length;i1++){
+		document.getElementById(cyclableGalaxies[i1][0]).classList.add(`dark`)
+	}
+	document.getElementById(cyclableGalaxies[galaxySelected][0]).classList.remove(`dark`)
 }
 var xCoordinate
 var yCoordinate
@@ -631,11 +662,13 @@ var inRangePrev=0
 var inRange=0
 document.addEventListener(`mousemove`,mouseMove)
 function mouseMove(event){
+	if(isBlockedInteraction){
+		return
+	}
 	xCoordinate=Math.round((event.offsetX*3-canvas.width*1.5)*scale)
 	yCoordinate=Math.round((event.offsetY*3-canvas.height*1.5)*scale)
-	distance=100000
 	for(i1=0;i1<systems.length;i1++){
-		if(Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance){
+		if(Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)<distance||i1==0){
 			target=i1
 			distance=Math.dist(systems[i1][1][0]-galaxyPosition[0],systems[i1][1][1]-galaxyPosition[1],xCoordinate,yCoordinate)
 		}
@@ -654,8 +687,13 @@ function mouseMove(event){
 	}
 }
 var lastSelected
+var closestDistances
+var closestDistance
 document.addEventListener(`mousedown`,mouseDown)
 function mouseDown(){
+	if(isBlockedInteraction){
+		return
+	}
 	if(target){
 		if(distance<=systems[target][6]){
 			var spliced=0
@@ -673,7 +711,9 @@ function mouseDown(){
 		}
 	}
 	var canExpand=0
+	closestDistances=[]
 	if(systemsSelected.length){
+		closestDistances.length=systemsSelected.length
 		for(i1=0;i1<systemsSelected.length;i1++){
 			for(i2=0;i2<systems[systemsSelected[i1]][3].length;i2++){
 				for(i3=0;i3<systems.length;i3++){
@@ -684,59 +724,132 @@ function mouseDown(){
 					}
 				}
 			}
+			closestDistance=100000
+			for(i2=0;i2<systemsSelected.length;i2++){
+				currentDistance=Math.dist(systems[systemsSelected[i1]][1][0],systems[systemsSelected[i1]][1][1],systems[systemsSelected[i2]][1][0],systems[systemsSelected[i2]][1][1])
+				if(currentDistance<closestDistance){
+					closestDistance=currentDistance
+				}
+			}
+			closestDistances[i1]=closestDistance
 		}
-	}
-	if(systemsSelected.length){
-		if(canExpand){
-			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Expand selection to all connected systems`
-		}else{
-			document.getElementById(`systemSelection`).classList.add(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
-		}
-	}else{
-		document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-		document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
+		console.log(closestDistances)
 	}
 	drawGalaxy()
 }
-var isBlocked=0
+var showHotkeys=0
+function toggleHotkeys(){
+	showHotkeys=!showHotkeys
+	localStorage.setItem(`showHotkeys`,showHotkeys)
+	highlightHotkeys()
+}
+function highlightHotkeys(){
+	document.getElementById(`hotkeys`).classList.toggle(`dark`)
+	var hotkeys=document.getElementsByTagName("sup")
+	if(showHotkeys){
+		document.getElementById(`hotkeys`).classList.remove(`dark`)
+		for(i1=0;i1<hotkeys.length;i1++){
+			document.getElementsByTagName("sup")[i1].classList.remove(`hiddenPerm`)
+		}
+	}else{
+		document.getElementById(`hotkeys`).classList.add(`dark`)
+		for(i1=0;i1<hotkeys.length;i1++){
+			document.getElementsByTagName("sup")[i1].classList.add(`hiddenPerm`)
+		}
+	}
+}
+var isBlockedKeyDown=0
 document.addEventListener(`keydown`,keyDown)
 function keyDown(event){
 	if(isLoaded){
-		if(!isBlocked){
-			if(event.keyCode==74){		//	J
-				toggleRangeCheck()
+		if(!isBlockedKeyDown){
+			if(event.keyCode==18){		//	Alt
+				toggleOptionsMenu(1)
 			}
-			if(event.keyCode==83){		//	S
-				expandSystemSelection()
-			}
-			if(event.keyCode==187){		//	+
-				changeZoomLevel(1)
-			}
-			if(event.keyCode==189){		//	-
-				changeZoomLevel(0)
+			if(showHotkeys){
+				if(event.keyCode==73){		//	I
+					toggleSystemInformation()
+				}
+				if(event.keyCode==74){		//	J
+					toggleRangeCheck()
+				}
+				if(event.keyCode==76){		//	L
+					toggleLinkLengthCheck()
+				}
+				if(event.keyCode==83){		//	S
+					expandSystemSelection()
+				}
+				if(event.keyCode==84){		//	T
+					toggleTrade()
+				}
+				if(event.keyCode==187){		//	+
+					changeZoomLevel(1)
+				}
+				if(event.keyCode==189){		//	-
+					changeZoomLevel(0)
+				}
 			}
 		}
 		if(event.keyCode){
-			isBlocked=1
+			isBlockedKeyDown=1
 		}
 	}
 }
 document.addEventListener(`keyup`,keyUp)
-function keyUp(){
-	isBlocked=0
+function keyUp(event){
+	isBlockedKeyDown=0
+	if(event.keyCode==18){		//	Alt
+		toggleOptionsMenu(0)
+	}
+}
+var isBlockedInteraction=0
+function toggleOptionsMenu(call){
+	if(call){
+		document.getElementById(`optionsMenus`).classList.remove(`hiddenPerm`)
+		isBlockedInteraction=1
+	}else{
+		document.getElementById(`optionsMenus`).classList.add(`hiddenPerm`)
+		isBlockedInteraction=0
+	}
+}
+var showSystemInformation=0
+function toggleSystemInformation(){
+	showSystemInformation=!showSystemInformation
+	highlightSystemInformation()
+	drawOverlay()
+}
+function highlightSystemInformation(){
+	if(showSystemInformation){
+		document.getElementById(`systemInformation`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`systemInformation`).classList.add(`dark`)
+	}
 }
 var rangeCheck=0
 function toggleRangeCheck(){
 	rangeCheck=!rangeCheck
-	document.getElementById(`rangeCheck`).classList.toggle(`activeMode`)
-	if(rangeCheck){
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Disable jump targets visualiser`
-	}else{
-		document.getElementById(`rangeCheckDescriptor`).innerHTML=`Enable jump targets visualiser`
-	}
+	highlightRangeCheck()
 	drawGalaxy()
+}
+function highlightRangeCheck(){
+	if(rangeCheck){
+		document.getElementById(`jumpTargets`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`jumpTargets`).classList.add(`dark`)
+	}
+}
+var linklengthCheck=0
+function toggleLinkLengthCheck(){
+	linklengthCheck=!linklengthCheck
+	highlightLinkLengthCheck()
+	drawGalaxy()
+}
+function highlightLinkLengthCheck(){
+	if(linklengthCheck){
+		document.getElementById(`linkLength`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`linkLength`).classList.add(`dark`)
+	}
 }
 var systemsSelected=[]
 function expandSystemSelection(){
@@ -764,14 +877,25 @@ function expandSystemSelection(){
 	if(systemsSelected.length){
 		if(!expanded){
 			systemsSelected=[]
-			document.getElementById(`systemSelection`).classList.remove(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Select all systems`
-		}else{
-			document.getElementById(`systemSelection`).classList.add(`activeMode`)
-			document.getElementById(`systemSelectionDescriptor`).innerHTML=`Clear system selection`
 		}
 	}
 	drawGalaxy()
+}
+var showTrade=0
+function toggleTrade(){
+	showTrade=!showTrade
+	highlightTrade()
+	document.getElementById(`systemTrade`).innerHTML=``
+	if(showTrade){
+		drawTrade()
+	}
+}
+function highlightTrade(){
+	if(showTrade){
+		document.getElementById(`tradeValues`).classList.remove(`dark`)
+	}else{
+		document.getElementById(`tradeValues`).classList.add(`dark`)
+	}
 }
 //	11.2x diff between min & max zoom
 //	From 4x in to 2.8x out from default
@@ -798,6 +922,22 @@ function changeZoomLevel(zoomIn){
 		if(scaleIndex>0){
 			scale=zoomLevels[scaleIndex-1]
 		}
+	}
+	if(scale==zoomLevels[zoomLevels.length-1]){
+		document.getElementById(`zoomIn`).classList.remove(`dark`)
+		document.getElementById(`zoomInSuper`).classList.add(`dark`)
+		document.getElementById(`zoomOut`).classList.add(`dark`)
+		document.getElementById(`zoomOutSuper`).classList.remove(`dark`)
+	}else if(scale==zoomLevels[0]){
+		document.getElementById(`zoomIn`).classList.add(`dark`)
+		document.getElementById(`zoomInSuper`).classList.remove(`dark`)
+		document.getElementById(`zoomOut`).classList.remove(`dark`)
+		document.getElementById(`zoomOutSuper`).classList.add(`dark`)
+	}else{
+		document.getElementById(`zoomIn`).classList.add(`dark`)
+		document.getElementById(`zoomInSuper`).classList.remove(`dark`)
+		document.getElementById(`zoomOut`).classList.add(`dark`)
+		document.getElementById(`zoomOutSuper`).classList.remove(`dark`)
 	}
 	canvasContext.scale((1/3)/scale,(1/3)/scale)
 	overlayContext.scale((1/3)/scale,(1/3)/scale)
